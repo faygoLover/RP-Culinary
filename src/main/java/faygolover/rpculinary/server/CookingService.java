@@ -47,7 +47,7 @@ public final class CookingService {
     /** Моды готовки: их блоки и окна — «плита». */
     static final Set<String> COOKING_MODS = Set.of("farmersdelight", "kaleidoscope_cookery", "kaleidoscope_tavern", "brewery", "vinery",
             "candlelight", "farm_and_charm", "herbalbrews", "bakery", "meadow");
-    /** Моды со своим качеством блюд (Kaleidoscope): наше не ставим, только опыт. */
+    /** Моды со своим качеством блюд (Kaleidoscope): наше не ставим — сдвигаем их (если умеем) и даём опыт. */
     static final Set<String> OWN_QUALITY = Set.of("kaleidoscope_cookery", "kaleidoscope_tavern");
     /** Ещё «плиты» — датапаком: блоки в теге {@code rpculinary:cooking_stations}. */
     static final TagKey<Block> STATIONS = BlockTags.create(new ResourceLocation(RpCulinary.MODID, "cooking_stations"));
@@ -225,6 +225,7 @@ public final class CookingService {
         int complexity = NutritionTable.complexity(sp.server, item);
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
         if (id != null && OWN_QUALITY.contains(id.getNamespace())) {
+            if (id.getNamespace().equals("kaleidoscope_cookery")) shiftKaleidoscope(sp, item, n, cookLevel, complexity, s);
             award(sp, item, level, complexity, n);
             return;
         }
@@ -241,6 +242,50 @@ public final class CookingService {
                 sp.displayClientMessage(Component.translatable("rpculinary.msg.burnt").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), true);
         }
         if (done > 0) award(sp, item, level, complexity, done);
+    }
+
+    /** Качество Kaleidoscope в NBT предмета: 0 — превосходное, 1 — отличное, 2 — обычное, 3 — плохое. */
+    static final String KC_QUALITY = "kaleidoscope_cookery:quality";
+
+    /**
+     * Kaleidoscope оценивает блюдо сам (ловкость при готовке); навык сдвигает его оценку на ступень: наш бросок
+     * «отлично» и выше — на ступень лучше, «подгорело» — на ступень хуже.
+     */
+    private static void shiftKaleidoscope(ServerPlayer sp, Item item, int n, int cookLevel, int complexity, Settings s) {
+        int up = 0, down = 0;
+        for (int i = 0; i < n; i++) {
+            int q = Cooking.roll(cookLevel, complexity, RANDOM.nextGaussian(), s);
+            if (q >= Cooking.EXCELLENT) up++;
+            else if (q == Cooking.BURNT) down++;
+        }
+        shiftKaleidoscope(sp, item, up, -1);
+        shiftKaleidoscope(sp, item, down, +1);
+    }
+
+    /** Сдвинуть качество {@code k} штук (−1 — лучше, +1 — хуже). Стопку целиком — на месте, иначе отделить. */
+    private static void shiftKaleidoscope(ServerPlayer sp, Item item, int k, int delta) {
+        Inventory inv = sp.getInventory();
+        java.util.List<ItemStack> sources = new java.util.ArrayList<>();
+        sources.add(sp.containerMenu.getCarried());
+        for (int i = 0; i < inv.getContainerSize(); i++) sources.add(inv.getItem(i));
+        for (ItemStack st : sources) {
+            if (k <= 0) return;
+            if (!st.is(item) || stamped(st) || st.getTag() == null || !st.getTag().contains(KC_QUALITY)) continue;
+            int q = st.getTag().getInt(KC_QUALITY);
+            int nq = Math.max(0, Math.min(3, q + delta));
+            if (nq == q) continue;
+            int take = Math.min(k, st.getCount());
+            if (take == st.getCount()) {
+                st.getTag().putInt(KC_QUALITY, nq);
+            } else {
+                st.shrink(take);
+                ItemStack out = new ItemStack(item, take);
+                out.setTag(st.getTag().copy());
+                out.getTag().putInt(KC_QUALITY, nq);
+                if (!sp.getInventory().add(out)) sp.drop(out, false);
+            }
+            k -= take;
+        }
     }
 
     /**

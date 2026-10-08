@@ -267,8 +267,29 @@ public final class CulinaryGameTests {
             RpCulinary.LOGGER.info("RP Culinary audit {}: {} ; estimated: {}", ns, counts, estimated);
         }
         dish(h, "kaleidoscope_cookery", "borscht");
+        kaleidoscopeQualityShift(h);
         dish(h, "farmersdelight", "beef_stew");
         h.succeed();
+    }
+
+    /** Kaleidoscope: мастер (без RP Perks — уровень 10) поднимает их качество на ступень: обычное → отличное. */
+    private static void kaleidoscopeQualityShift(GameTestHelper h) {
+        if (!net.minecraftforge.fml.ModList.get().isLoaded("kaleidoscope_cookery") || RpCoreAPI.isSkillManaged(RpIds.COOKING)) return;
+        var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("kaleidoscope_cookery", "borscht"));
+        ServerPlayer p = player(h);
+        ItemStack bowl = new ItemStack(item, 2);
+        bowl.getOrCreateTag().putInt("kaleidoscope_cookery:quality", 2);
+        p.getInventory().add(bowl);
+        MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent(p, new ItemStack(item, 2), p.getInventory()));
+        p.tickCount = 10;
+        tick(p, 1);
+        int better = 0;
+        for (int i = 0; i < p.getInventory().getContainerSize(); i++) {
+            ItemStack st = p.getInventory().getItem(i);
+            if (st.is(item) && st.getTag() != null && st.getTag().getInt("kaleidoscope_cookery:quality") == 1) better += st.getCount();
+        }
+        h.assertTrue(better == 2, "борщ мастера — отличный, было " + better);
+        remove(h, p);
     }
 
     private static void dish(GameTestHelper h, String ns, String path) {
