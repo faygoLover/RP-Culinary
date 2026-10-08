@@ -80,6 +80,11 @@ public final class Metabolism {
      * (не ниже {@code monotonyUptakeMin}). Другой вид еды чуть «освежает» остальные.
      */
     public static boolean eat(NutritionState m, Food f, int cat, Settings s) {
+        return eat(m, f, cat, s, 1);
+    }
+
+    /** То же; {@code monotonyWeight} — насколько порция приедается (вкусное — меньше 1). */
+    public static boolean eat(NutritionState m, Food f, int cat, Settings s, double monotonyWeight) {
         boolean fed = Nutrients.fedUp(m, cat, s);
         double k = 1;
         if (fed) k = Math.max(s.monotonyUptakeMin, 1 - s.monotonyUptakeStep * (m.monotony[cat] - s.monotonyThreshold + 1));
@@ -95,7 +100,7 @@ public final class Metabolism {
         m.water = Math.max(0, Math.min(100, m.water + g.water()));
         if (s.monotonyEnabled && cat >= 0 && cat < NutritionState.CATEGORIES.length) {
             for (int i = 0; i < NutritionState.CATEGORIES.length; i++)
-                m.monotony[i] = i == cat ? m.monotony[i] + 1 : Math.max(0, m.monotony[i] - s.monotonyVarietyRelief);
+                m.monotony[i] = i == cat ? m.monotony[i] + monotonyWeight : Math.max(0, m.monotony[i] - s.monotonyVarietyRelief);
         }
         return fed;
     }

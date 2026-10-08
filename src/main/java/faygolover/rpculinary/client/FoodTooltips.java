@@ -35,6 +35,17 @@ public final class FoodTooltips {
         Food f = id != null ? ClientNutrition.FOODS.get(id) : null;
         if (f == null || f.kcal() <= 0 && f.water() <= 0) return;
         List<Component> t = e.getToolTip();
+        int q = faygolover.rpculinary.server.CookingService.quality(e.getItemStack());
+        if (q >= 0 && q < faygolover.rpculinary.core.Cooking.QUALITY.length) {
+            ChatFormatting c = switch (q) {
+                case 0 -> ChatFormatting.DARK_GRAY;
+                case 2 -> ChatFormatting.GREEN;
+                case 3 -> ChatFormatting.AQUA;
+                case 4 -> ChatFormatting.GOLD;
+                default -> ChatFormatting.WHITE;
+            };
+            t.add(tr("quality", Component.translatable("rpculinary.quality." + faygolover.rpculinary.core.Cooking.QUALITY[q])).withStyle(c));
+        }
         int lvl = level();
         int cat = ClientNutrition.CATEGORIES.getOrDefault(id, -1);
         if (lvl < 2) {

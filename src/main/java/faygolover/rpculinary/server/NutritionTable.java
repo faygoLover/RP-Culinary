@@ -41,6 +41,8 @@ public final class NutritionTable {
     public enum Source { RULE, RECIPE, ESTIMATE }
 
     private static final Map<Item, Source> SOURCE = new HashMap<>();
+    /** Сложность блюда: сколько разных ингредиентов в рецепте (базовый продукт — 0). */
+    private static final Map<Item, Integer> COMPLEXITY = new HashMap<>();
     @Nullable
     private static Map<Item, List<Recipe<?>>> byResult;
     @Nullable
@@ -50,6 +52,7 @@ public final class NutritionTable {
         CACHE.clear();
         CATEGORY.clear();
         SOURCE.clear();
+        COMPLEXITY.clear();
         byResult = null;
     }
 
@@ -93,11 +96,13 @@ public final class NutritionTable {
         List<Recipe<?>> recipes = byResult != null ? byResult.getOrDefault(item, List.of()) : List.of();
         int foundCat = -1;
         int foundKnown = 0;
+        int foundDistinct = 0;
         // Из всех рецептов блюда — тот, где известно больше всего ингредиентов (у Kaleidoscope есть «гибкие»
         // рецепты с минимумом ингредиентов рядом с полными); при равенстве — первый по id.
         for (Recipe<?> r : recipes) {
             Food sum = Food.ZERO;
             int known = 0;
+            Set<Item> distinct = new HashSet<>();
             double[] byCat = new double[NutritionState.CATEGORIES.length];
             for (Ingredient ing : r.getIngredients()) {
                 Item src = ingredientItem(ing, depth, path);
@@ -106,6 +111,7 @@ public final class NutritionTable {
                 if (part == null) continue;
                 sum = sum.plus(part);
                 known++;
+                distinct.add(src);
                 int c = CATEGORY.getOrDefault(src, -1);
                 if (c >= 0) byCat[c] += Math.max(1, part.kcal());
             }
@@ -113,6 +119,7 @@ public final class NutritionTable {
             int count = Math.max(1, r.getResultItem(access).getCount());
             found = sum.scale(1.0 / count);
             foundKnown = known;
+            foundDistinct = distinct.size();
             // Вид блюда — вид ингредиента с наибольшими калориями.
             double best = 0;
             foundCat = -1;
@@ -135,6 +142,7 @@ public final class NutritionTable {
             CACHE.put(item, found);
             CATEGORY.put(item, foundCat);
             SOURCE.put(item, source);
+            COMPLEXITY.put(item, source == Source.RECIPE ? Math.max(1, foundDistinct) : 0);
         }
         return found;
     }
@@ -153,6 +161,12 @@ public final class NutritionTable {
     public static synchronized Source source(MinecraftServer server, Item item) {
         if (get(server, item) == null) return null;
         return SOURCE.get(item);
+    }
+
+    /** Сложность блюда: разных ингредиентов в рецепте; базовый продукт и неизвестное — 0. */
+    public static synchronized int complexity(MinecraftServer server, Item item) {
+        if (get(server, item) == null) return 0;
+        return COMPLEXITY.getOrDefault(item, 0);
     }
 
     /** Вид еды предмета (−1 — не считается). */

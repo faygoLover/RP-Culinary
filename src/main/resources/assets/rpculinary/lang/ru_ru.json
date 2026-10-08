@@ -87,5 +87,15 @@
   "rpculinary.cmd.status_starving": " Голодает %s мин, без воды %s мин",
   "rpculinary.cmd.status_iv": " Капельница: ещё %s ккал за %s мин",
   "rpculinary.cmd.audit": "Состав еды: из датапака %s, по рецептам %s, только оценка %s. Полный список — rpculinary-audit.txt в папке сервера.",
-  "rpculinary.cmd.audit_estimated": "Оценено по ванильной сытости (добавить в датапак rpculinary/nutrition): %s"
+  "rpculinary.cmd.audit_estimated": "Оценено по ванильной сытости (добавить в датапак rpculinary/nutrition): %s",
+
+  "rpculinary.msg.masterpiece": "Получилось просто великолепно!",
+  "rpculinary.msg.burnt": "Подгорело...",
+  "rpculinary.msg.raw_meat": "Сырое мясо... живот крутит.",
+  "rpculinary.tooltip.quality": "Качество: %s",
+  "rpculinary.quality.burnt": "подгорело",
+  "rpculinary.quality.normal": "обычное",
+  "rpculinary.quality.good": "хорошее",
+  "rpculinary.quality.excellent": "отличное",
+  "rpculinary.quality.masterpiece": "шедевр"
 }

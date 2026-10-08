@@ -58,6 +58,13 @@ public class RpCulinary {
         bus.addListener(CulinaryService::onLogin);
         bus.addListener(CulinaryService::onRespawn);
         bus.addListener(CulinaryService::onDatapackSync);
+        bus.addListener(faygolover.rpculinary.server.CookingService::onRightClickBlock);
+        bus.addListener(faygolover.rpculinary.server.CookingService::onContainerOpen);
+        bus.addListener(faygolover.rpculinary.server.CookingService::onContainerClose);
+        bus.addListener(faygolover.rpculinary.server.CookingService::onCrafted);
+        bus.addListener(faygolover.rpculinary.server.CookingService::onSmelted);
+        bus.addListener(faygolover.rpculinary.server.CookingService::onPlayerTick);
+        bus.addListener(faygolover.rpculinary.server.CookingService::forget);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> faygolover.rpculinary.client.ClientSetup.init(modBus));
     }
 

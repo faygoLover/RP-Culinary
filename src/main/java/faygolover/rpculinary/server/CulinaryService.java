@@ -318,8 +318,22 @@ public final class CulinaryService {
         if (food == null && water <= 0) return;
         if (used.isEdible()) d.ateItemTick = sp.server.getTickCount();
         if (food == null) food = Food.ZERO;
+        int quality = CookingService.quality(used);
+        if (quality >= 0) food = faygolover.rpculinary.core.Cooking.apply(food, quality, s);
         if (water > 0) food = food.plus(new Food(0, 0, 0, 0, 0, water));
-        consume(sp, d, food, NutritionTable.category(sp.server, used.getItem()), used);
+        int cat = NutritionTable.category(sp.server, used.getItem());
+        consume(sp, d, food, cat, used, quality >= 0 ? faygolover.rpculinary.core.Cooking.monotonyWeight(quality) : 1);
+        if (rawMeat(sp, used, cat) && sp.getRandom().nextDouble() < s.rawMeatPoisonChance) {
+            sp.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0));
+            sp.displayClientMessage(Component.translatable("rpculinary.msg.raw_meat").withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC), true);
+        }
+    }
+
+    /** Сырое мясо и рыба: базовый продукт (не блюдо) вида «мясо» или «рыба»; тухлятину и паучий глаз ведёт ваниль. */
+    static boolean rawMeat(ServerPlayer sp, ItemStack st, int cat) {
+        if (cat != NutritionState.category("meat") && cat != NutritionState.category("fish")) return false;
+        if (st.is(net.minecraft.world.item.Items.ROTTEN_FLESH) || st.is(net.minecraft.world.item.Items.SPIDER_EYE)) return false;
+        return NutritionTable.source(sp.server, st.getItem()) == NutritionTable.Source.RULE;
     }
 
     /** Суп, похлёбка, рагу — по названию предмета (у модов готовки их десятки). */
@@ -362,14 +376,14 @@ public final class CulinaryService {
         Food base = item != null ? NutritionTable.get(sp.server, item) : null;
         Food food = base != null ? base.withKcalScaled(kcal) : new Food(kcal, kcal * 0.08 / 4, kcal * 0.12 / 9, kcal * 0.8 / 4, 2, 0);
         int cat = item != null ? NutritionTable.category(sp.server, item) : -1;
-        consume(sp, d, food, cat, item != null ? new ItemStack(item) : ItemStack.EMPTY);
+        consume(sp, d, food, cat, item != null ? new ItemStack(item) : ItemStack.EMPTY, 1);
     }
 
     /** Учесть съеденное: в желудок и нутриенты, сообщения, событие для других модов. */
-    public static void consume(ServerPlayer sp, NutritionData d, Food food, int cat, ItemStack stack) {
+    public static void consume(ServerPlayer sp, NutritionData d, Food food, int cat, ItemStack stack, double monotonyWeight) {
         Settings s = Settings.get();
         NutritionState m = d.state;
-        boolean fed = Metabolism.eat(m, food, cat, s);
+        boolean fed = Metabolism.eat(m, food, cat, s, monotonyWeight);
         if (fed) sp.displayClientMessage(Component.translatable("rpculinary.monotony." + NutritionState.CATEGORIES[cat])
                 .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), true);
         boolean room = Metabolism.hasRoom(m, s, stomachMult(sp, m, s));

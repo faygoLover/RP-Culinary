@@ -16,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.server.level.ServerPlayer;
@@ -211,6 +212,34 @@ public final class CulinaryGameTests {
         copy.load(d.save());
         h.assertTrue(Math.abs(copy.state.weightKg() - 85) < 1e-6 && Math.abs(copy.state.fatPercent() - 28) < 1e-6, "вес и жир сохраняются");
         h.assertTrue(copy.state.nutrients[NutritionState.VITAMINS] == 7 && copy.state.water == 33, "нутриенты и вода сохраняются");
+        remove(h, p);
+        h.succeed();
+    }
+
+    /** Готовка: стейк из печи помечается качеством; пустой опыт без RP Perks (уровень 10 — жарка без опыта). */
+    @GameTest(template = T)
+    public static void cookingMarksQuality(GameTestHelper h) {
+        ServerPlayer p = player(h);
+        p.getInventory().add(new ItemStack(Items.COOKED_BEEF, 3));
+        MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerEvent.ItemSmeltedEvent(p, new ItemStack(Items.COOKED_BEEF, 3)));
+        p.tickCount = 10;
+        tick(p, 1);
+        int marked = 0;
+        for (int i = 0; i < p.getInventory().getContainerSize(); i++) {
+            ItemStack st = p.getInventory().getItem(i);
+            if (st.is(Items.COOKED_BEEF) && faygolover.rpculinary.server.CookingService.quality(st) >= 0) marked += st.getCount();
+        }
+        h.assertTrue(marked == 3, "три стейка с качеством, было " + marked);
+        // Качество при еде: хорошее — витамины сохраннее, подгоревшее — меньше калорий.
+        ItemStack burnt = new ItemStack(Items.COOKED_BEEF);
+        CompoundTag q = new CompoundTag();
+        q.putInt(faygolover.rpculinary.server.CookingService.Q, faygolover.rpculinary.core.Cooking.BURNT);
+        burnt.getOrCreateTag().put(faygolover.rpculinary.server.CookingService.TAG, q);
+        NutritionState m = state(p);
+        double before = m.stomach;
+        finish(p, burnt);
+        double kcal = NutritionTable.get(h.getLevel().getServer(), Items.COOKED_BEEF).kcal();
+        h.assertTrue(Math.abs(m.stomach - before - kcal * 0.85) < 1e-6, "подгорело — 85 % калорий, было " + (m.stomach - before));
         remove(h, p);
         h.succeed();
     }

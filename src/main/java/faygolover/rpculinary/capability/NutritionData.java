@@ -40,6 +40,12 @@ public final class NutritionData {
     public int lastHungerStage = -1;
     public int lastThirstStage = -1;
     public boolean lastRoom = true;
+    /** Готовка: «у плиты» до такого тика, открыто окно плиты, сколько было блюд, сколько сделано верстаком/печью. */
+    public long cookUntil = -1;
+    public boolean cookMenu;
+    @Nullable
+    public java.util.Map<net.minecraft.world.item.Item, Integer> cookBaseline;
+    public final java.util.Map<net.minecraft.world.item.Item, Integer> cookPending = new java.util.HashMap<>();
 
     @Nullable
     public static NutritionData get(Player p) {
