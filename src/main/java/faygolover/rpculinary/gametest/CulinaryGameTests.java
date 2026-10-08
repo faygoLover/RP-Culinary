@@ -251,7 +251,8 @@ public final class CulinaryGameTests {
     @GameTest(template = T)
     public static void packDishesFromRecipes(GameTestHelper h) {
         var server = h.getLevel().getServer();
-        for (String ns : java.util.List.of("minecraft", "kaleidoscope_cookery", "kaleidoscope_tavern", "farmersdelight")) {
+        for (String ns : java.util.List.of("minecraft", "kaleidoscope_cookery", "kaleidoscope_tavern", "farmersdelight", "farm_and_charm",
+                "brewery", "vinery", "candlelight", "herbalbrews")) {
             if (!ns.equals("minecraft") && !net.minecraftforge.fml.ModList.get().isLoaded(ns)) continue;
             java.util.EnumMap<NutritionTable.Source, Integer> counts = new java.util.EnumMap<>(NutritionTable.Source.class);
             java.util.List<String> estimated = new java.util.ArrayList<>();

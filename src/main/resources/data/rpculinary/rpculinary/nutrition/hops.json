@@ -1,0 +1,10 @@
+{
+  "items": [
+    "brewery:hops"
+  ],
+  "protein": 0,
+  "fat": 0,
+  "carbs": 1,
+  "vitamins": 1,
+  "exempt": true
+}

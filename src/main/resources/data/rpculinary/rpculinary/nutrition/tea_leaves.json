@@ -1,0 +1,19 @@
+{
+  "items": [
+    "herbalbrews:tea_blossom",
+    "herbalbrews:yerba_mate_leaf",
+    "herbalbrews:rooibos_leaf",
+    "herbalbrews:dried_green_tea",
+    "herbalbrews:dried_black_tea",
+    "herbalbrews:dried_oolong_tea",
+    "herbalbrews:hibiscus",
+    "herbalbrews:lavender",
+    "farm_and_charm:nettle",
+    "farm_and_charm:ribwort"
+  ],
+  "protein": 0,
+  "fat": 0,
+  "carbs": 1,
+  "vitamins": 2,
+  "exempt": true
+}

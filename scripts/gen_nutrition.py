@@ -109,6 +109,11 @@ NUTRITION = {
     "coffee": (ns("herbalbrews", "coffee_block"), 0, 0, 0, 2, 0),
     "coffee_milk": (ns("herbalbrews", "milk_coffee_block"), 0, 3, 3, 5, 0),
     "tea": ([f"herbalbrews:{t}_tea_block" for t in ["black", "green", "oolong", "yerba_mate", "hibiscus", "lavender", "rooibos"]], 0, 0, 0, 1, 3),
+    # Let's Do: сырьё для чая, кофе и пива (в рецепты; сами по себе почти не питают).
+    "tea_leaves": (ns("herbalbrews", "tea_blossom", "yerba_mate_leaf", "rooibos_leaf", "dried_green_tea", "dried_black_tea",
+                      "dried_oolong_tea", "hibiscus", "lavender") + ns("farm_and_charm", "nettle", "ribwort"), 0, 0, 0, 1, 2),
+    "coffee_beans": (ns("herbalbrews", "coffee_beans"), 0, 1, 1, 2, 0),
+    "hops": (ns("brewery", "hops"), 0, 0, 0, 1, 1),
 }
 # Вид еды для «приелось»; напитки и пищевые добавки не надоедают (exempt).
 FOOD_CATEGORY = {
@@ -138,6 +143,13 @@ DRINKS = {
     "honey": {"items": ["minecraft:honey_bottle"], "amount": 10},
     "soups": {"items": ["minecraft:mushroom_stew", "minecraft:beetroot_soup", "minecraft:rabbit_stew", "minecraft:suspicious_stew"], "amount": 10},
     "melon": {"items": ["minecraft:melon_slice"], "amount": 5},
+    # Let's Do: напитки поят (крепкое — нет).
+    "letsdo_beer": {"items": NUTRITION["beer"][0], "amount": 15},
+    "letsdo_wine": {"items": NUTRITION["wine"][0], "amount": 8},
+    "letsdo_juice": {"items": NUTRITION["juice"][0], "amount": 25},
+    "letsdo_tea": {"items": NUTRITION["tea"][0] + ns("farm_and_charm", "strawberry_tea_cup", "nettle_tea_cup", "ribwort_tea_cup",
+                                                     "nettle_tea", "ribwort_tea"), "amount": 25},
+    "letsdo_coffee": {"items": NUTRITION["coffee"][0] + NUTRITION["coffee_milk"][0], "amount": 20},
 }
 for name, obj in DRINKS.items():
     write(f"{DATA}/drinks/{name}.json", obj)
