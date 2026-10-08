@@ -35,3 +35,24 @@
 
 ## Отложено (не в Кулинарии)
 Профессии (наборы навыков), проверка в игре роста навыков/динамических перков/Пацифиста/телосложения, LR-предметы (пачка 3 Medicine), RP Core «модификаторы».
+
+## Состояние (08.10.2026, вечер)
+Этап 1 сделан (подробно — `docs/01_design.md` §8.1).
+
+**Сборка:** `gradlew.bat build`.
+
+**Проверка загрузки и тесты:** `gradlew.bat runGameTestServer`.
+- Вместе с семьёй: `-Pwith_family=true`.
+- С модами готовки из `libs/pack` (Kaleidoscope, Farmer's Delight): `-Pwith_pack=true`.
+- С LSO: `-Pwith_lso=true`.
+
+**Medicine с Кулинарией:** `-Pwith_culinary=true`.
+
+**Команды ГМа:**
+- `/rpculinary status [игрок]`;
+- `/rpculinary set <игроки> satiety|water|protein|fat|carbs|vitamins|weight|bodyfat <число>`;
+- `/rpculinary advance <игроки> <часы>`;
+- `/rpculinary reset <игроки>`;
+- `/rpculinary audit [мод]` — откуда известен состав еды.
+
+**Конфиг:** `serverconfig/rpculinary-server.toml`. Пункты: `hours_per_rp_day`, `weight_change_speed` и другие.
