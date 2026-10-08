@@ -21,10 +21,15 @@ import java.util.List;
 public final class FoodTooltips {
     private FoodTooltips() {}
 
+    static boolean dietitian() {
+        Minecraft mc = Minecraft.getInstance();
+        return mc.player != null && RpCoreAPI.hasTrait(mc.player, RpIds.DIETITIAN);
+    }
+
     static int level() {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return 0;
-        if (mc.player.isCreative()) return 10;
+        if (mc.player.isCreative() || dietitian()) return 10;
         var lvl = RpCoreAPI.skill(mc.player, RpIds.COOKING);
         return lvl.isPresent() ? lvl.getAsInt() : 10;
     }
@@ -67,7 +72,41 @@ public final class FoodTooltips {
                     .withStyle(ChatFormatting.GOLD));
         }
         if (f.water() > 0) t.add(tr("water", Math.round(f.water())).withStyle(ChatFormatting.AQUA));
+        if (dietitian()) advice(t, f);
     }
+
+    /** Диетолог: совет лично тебе — по своему состоянию (что прислал сервер). */
+    private static void advice(List<Component> t, Food f) {
+        var p = ClientNutrition.self;
+        if (p == null) return;
+        if (p.hunger() && (!p.room() || p.satiety() > 1.0)) {
+            t.add(tr("advice_full").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+            return;
+        }
+        if (p.nutrientsOn() && p.nutrients().length >= NutritionState.COUNT) {
+            float[] n = p.nutrients();
+            double[] gain = {f.protein() * 0.9, f.fat() * 1.2, f.carbs() * 0.45, f.vitamins()};
+            MutableComponent list = null;
+            for (int i = 0; i < NutritionState.COUNT; i++) {
+                if (n[i] >= LOW || gain[i] < 8) continue;
+                Component name = tr("nutrient_" + NutritionState.NUTRIENTS[i]);
+                list = list == null ? name.copy() : list.append(", ").append(name);
+            }
+            if (list != null) {
+                t.add(tr("advice_covers", list).withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+                return;
+            }
+            if (n[NutritionState.FAT] > HIGH && gain[NutritionState.FAT] >= 8) {
+                t.add(tr("advice_too_fatty").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+                return;
+            }
+        }
+        if (p.thirstMode() != 0 && p.thirstStage() >= 1 && f.water() > 0)
+            t.add(tr("advice_thirst").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+    }
+
+    /** Пороги нехватки и избытка — как на сервере по умолчанию (для совета, не для механики). */
+    private static final float LOW = 20, HIGH = 100;
 
     /** Словами: сытность, чего много, витамины. */
     private static void words(List<Component> t, Food f) {

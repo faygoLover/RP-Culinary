@@ -97,5 +97,15 @@
   "rpculinary.quality.normal": "ordinary",
   "rpculinary.quality.good": "good",
   "rpculinary.quality.excellent": "excellent",
-  "rpculinary.quality.masterpiece": "masterpiece"
+  "rpculinary.quality.masterpiece": "masterpiece",
+
+  "rpculinary.tooltip.advice_full": "Dietitian: you're full — better wait.",
+  "rpculinary.tooltip.advice_covers": "Dietitian: covers your lack of %s.",
+  "rpculinary.tooltip.advice_too_fatty": "Dietitian: you've had plenty of fat already.",
+  "rpculinary.tooltip.advice_thirst": "Dietitian: it will also quench thirst.",
+  "rpculinary.tooltip.nutrient_protein": "protein",
+  "rpculinary.tooltip.nutrient_fat": "fat",
+  "rpculinary.tooltip.nutrient_carbs": "carbs",
+  "rpculinary.tooltip.nutrient_vitamins": "vitamins",
+  "rpculinary.screen.dietitian_numbers": "Satiety %s%%, water %s%% · P %s · F %s · C %s · vit. %s · recent %s kcal"
 }

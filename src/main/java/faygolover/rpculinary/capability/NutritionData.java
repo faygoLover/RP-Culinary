@@ -43,6 +43,8 @@ public final class NutritionData {
     /** Готовка: «у плиты» до такого тика, открыто окно плиты, сколько было блюд, сколько сделано верстаком/печью. */
     public long cookUntil = -1;
     public boolean cookMenu;
+    /** Готовит «в поле»: костёр, коптильня (Полевой повар). */
+    public boolean cookField;
     @Nullable
     public java.util.Map<net.minecraft.world.item.Item, Integer> cookBaseline;
     public final java.util.Map<net.minecraft.world.item.Item, Integer> cookPending = new java.util.HashMap<>();

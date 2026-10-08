@@ -140,7 +140,7 @@ public final class CulinaryCommands {
         int mode = CulinaryService.thirstMode(sp, s);
         Metabolism.Input base = new Metabolism.Input();
         base.ownWater = mode == 1;
-        base.metabolism = CulinaryService.anorexic(sp) ? s.anorexicMetabolism : 1;
+        base.metabolism = CulinaryService.metabolism(sp, s);
         if (mode == 2) Lso.addWater(sp, -s.waterLossPerHour * s.nutrientTimeScale() * hours);
         Metabolism.advance(m, hours, base, s);
         changed(sp);

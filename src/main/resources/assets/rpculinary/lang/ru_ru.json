@@ -97,5 +97,15 @@
   "rpculinary.quality.normal": "обычное",
   "rpculinary.quality.good": "хорошее",
   "rpculinary.quality.excellent": "отличное",
-  "rpculinary.quality.masterpiece": "шедевр"
+  "rpculinary.quality.masterpiece": "шедевр",
+
+  "rpculinary.tooltip.advice_full": "Диетолог: вы сыты — лучше подождать.",
+  "rpculinary.tooltip.advice_covers": "Диетолог: закроет нехватку — %s.",
+  "rpculinary.tooltip.advice_too_fatty": "Диетолог: жирного у вас и так много.",
+  "rpculinary.tooltip.advice_thirst": "Диетолог: заодно утолит жажду.",
+  "rpculinary.tooltip.nutrient_protein": "белка",
+  "rpculinary.tooltip.nutrient_fat": "жиров",
+  "rpculinary.tooltip.nutrient_carbs": "углеводов",
+  "rpculinary.tooltip.nutrient_vitamins": "витаминов",
+  "rpculinary.screen.dietitian_numbers": "Сытость %s%%, вода %s%% · Б %s · Ж %s · У %s · вит. %s · недавно %s ккал"
 }

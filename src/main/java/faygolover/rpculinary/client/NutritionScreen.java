@@ -99,6 +99,13 @@ public class NutritionScreen extends Screen {
             g.drawString(font, tr("fed_up", list).withStyle(ChatFormatting.GOLD), l + 10, t + H - 39, 0xFFFFFF, false);
         }
         g.drawString(font, build(p).copy().withStyle(ChatFormatting.GRAY), l + 10, t + H - 26, 0xFFFFFF, false);
+        // Диетолог знает цифры: свои запасы, сытость, воду, съеденное.
+        if (FoodTooltips.dietitian() && p.nutrients().length >= NutritionState.COUNT) {
+            float[] n = p.nutrients();
+            g.drawString(font, tr("dietitian_numbers", Math.round(p.satiety() * 100), Math.round(p.hydration() * 100), Math.round(n[0]),
+                    Math.round(n[1]), Math.round(n[2]), Math.round(n[3]), Math.round(p.recentKcal())).withStyle(ChatFormatting.LIGHT_PURPLE),
+                    l + 10, t + H - 52, 0xFFFFFF, false);
+        }
         g.drawString(font, tr("lab_hint").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC), l + 10, t + H - 13, 0xFFFFFF, false);
         super.render(g, mx, my, pt);
     }

@@ -125,6 +125,12 @@ public final class Settings {
     public double anorexicStomach = 0.6;
     @Cfg(section = "appetite", doc = "Анорексия: обмен веществ выше во столько раз.")
     public double anorexicMetabolism = 1.1;
+    @Cfg(section = "appetite", doc = "Быстрый обмен веществ (черта rpcore:fast_metabolism): расход во столько раз.")
+    public double fastMetabolism = 1.15;
+    @Cfg(section = "appetite", doc = "Склонность к полноте (черта rpcore:slow_metabolism): расход во столько раз.")
+    public double slowMetabolism = 0.85;
+    @Cfg(section = "appetite", doc = "Гурман (черта rpcore:gourmet): обычная еда приедается во столько раз быстрее.")
+    public double gourmetMonotony = 1.5;
     @Cfg(section = "appetite", doc = "Плохой аппетит: желудок меньше во столько раз.")
     public double poorAppetiteStomach = 0.7;
     @Cfg(section = "appetite", doc = "После внутривенного питания плохой аппетит столько часов игры.")
@@ -195,6 +201,12 @@ public final class Settings {
     public double cookContextSeconds = 5;
     @Cfg(section = "cooking", doc = "Сырое мясо и рыба: шанс пищевого отравления (тошнота; с RP Medicine — рвота).")
     public double rawMeatPoisonChance = 0.3;
+    @Cfg(section = "cooking", doc = "Чистюля (черта rpcore:clean): шанс отравления во столько раз ниже.")
+    public double cleanPoisonFactor = 0.2;
+    @Cfg(section = "cooking", doc = "Полевой повар (черта rpcore:field_cook): на костре и в коптильне — плюс столько уровней.")
+    public double fieldCookBonus = 2;
+    @Cfg(section = "cooking", doc = "Кухонный кошмар (черта rpcore:kitchen_nightmare): минус столько уровней при готовке.")
+    public double kitchenNightmarePenalty = 3;
 
     // ------------------------------------------------------------------ производные
 

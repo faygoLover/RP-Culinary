@@ -104,6 +104,14 @@ public final class CulinaryService {
         return RpCoreAPI.hasTrait(p, RpIds.ANOREXIC);
     }
 
+    /** Обмен веществ от черт: анорексия, быстрый обмен, склонность к полноте. */
+    public static double metabolism(Player p, Settings s) {
+        double k = anorexic(p) ? s.anorexicMetabolism : 1;
+        if (RpCoreAPI.hasTrait(p, RpIds.FAST_METABOLISM)) k *= s.fastMetabolism;
+        if (RpCoreAPI.hasTrait(p, RpIds.SLOW_METABOLISM)) k *= s.slowMetabolism;
+        return k;
+    }
+
     /** Во сколько раз желудок меньше обычного: анорексия, плохой аппетит. */
     public static double stomachMult(Player p, NutritionState m, Settings s) {
         return (anorexic(p) ? s.anorexicStomach : 1) * (Nutrients.poorAppetite(m, s) ? s.poorAppetiteStomach : 1);
@@ -178,7 +186,7 @@ public final class CulinaryService {
         d.sprintTicks = 0;
         in.sleeping = sp.isSleeping();
         in.cold = Lso.cold(sp);
-        in.metabolism = anorexic(sp) ? s.anorexicMetabolism : 1;
+        in.metabolism = metabolism(sp, s);
         in.ownWater = thirst == 1;
         in.externalHydration = thirst == 2 ? Lso.hydration(sp) : -1;
         in.random = RANDOM;
@@ -319,11 +327,18 @@ public final class CulinaryService {
         if (used.isEdible()) d.ateItemTick = sp.server.getTickCount();
         if (food == null) food = Food.ZERO;
         int quality = CookingService.quality(used);
+        boolean gourmet = RpCoreAPI.hasTrait(sp, RpIds.GOURMET);
         if (quality >= 0) food = faygolover.rpculinary.core.Cooking.apply(food, quality, s);
+        // Гурман: хорошее радует сильнее (витамины), однообразное надоедает быстрее.
+        if (gourmet && quality >= faygolover.rpculinary.core.Cooking.GOOD)
+            food = new Food(food.kcal(), food.protein(), food.fat(), food.carbs(), food.vitamins() * 1.1, food.water());
+        double monotony = quality >= 0 ? faygolover.rpculinary.core.Cooking.monotonyWeight(quality) : 1;
+        if (gourmet) monotony *= quality >= faygolover.rpculinary.core.Cooking.GOOD ? 0.5 : s.gourmetMonotony;
         if (water > 0) food = food.plus(new Food(0, 0, 0, 0, 0, water));
         int cat = NutritionTable.category(sp.server, used.getItem());
-        consume(sp, d, food, cat, used, quality >= 0 ? faygolover.rpculinary.core.Cooking.monotonyWeight(quality) : 1);
-        if (rawMeat(sp, used, cat) && sp.getRandom().nextDouble() < s.rawMeatPoisonChance) {
+        consume(sp, d, food, cat, used, monotony);
+        double poison = s.rawMeatPoisonChance * (RpCoreAPI.hasTrait(sp, RpIds.CLEAN) ? s.cleanPoisonFactor : 1);
+        if (rawMeat(sp, used, cat) && sp.getRandom().nextDouble() < poison) {
             sp.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0));
             sp.displayClientMessage(Component.translatable("rpculinary.msg.raw_meat").withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC), true);
         }

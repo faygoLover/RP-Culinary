@@ -93,6 +93,20 @@ public final class CookingService {
         return id != null && COOKING_MODS.contains(id.getNamespace());
     }
 
+    /** Костёр и коптильня — «в поле» (Полевой повар). */
+    static boolean field(Block b) {
+        return b == Blocks.CAMPFIRE || b == Blocks.SOUL_CAMPFIRE || b == Blocks.SMOKER;
+    }
+
+    /** Уровень, с которым блюдо готовится: навык, Кухонный кошмар, Полевой повар у костра. */
+    static int cookingLevel(ServerPlayer sp, NutritionData d) {
+        Settings s = Settings.get();
+        double l = level(sp);
+        if (RpCoreAPI.hasTrait(sp, RpIds.KITCHEN_NIGHTMARE)) l -= s.kitchenNightmarePenalty;
+        if (d != null && d.cookField && RpCoreAPI.hasTrait(sp, RpIds.FIELD_COOK)) l += s.fieldCookBonus;
+        return (int) Math.max(0, Math.min(10, Math.round(l)));
+    }
+
     /** Начать (или продлить) «готовку»: запомнить, сколько блюд уже было, чтобы новые узнать. */
     static void open(ServerPlayer sp, NutritionData d) {
         long now = sp.server.getTickCount();
@@ -102,9 +116,12 @@ public final class CookingService {
 
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
         if (!(e.getEntity() instanceof ServerPlayer sp) || !Settings.get().cookingEnabled) return;
-        if (!station(sp.level().getBlockState(e.getPos()).getBlock())) return;
+        Block b = sp.level().getBlockState(e.getPos()).getBlock();
+        if (!station(b)) return;
         NutritionData d = NutritionData.get(sp);
-        if (d != null) open(sp, d);
+        if (d == null) return;
+        open(sp, d);
+        d.cookField = field(b);
     }
 
     public static void onContainerOpen(PlayerContainerEvent.Open e) {
@@ -124,6 +141,7 @@ public final class CookingService {
         if (d == null) return;
         open(sp, d);
         d.cookMenu = true;
+        d.cookField = menu instanceof net.minecraft.world.inventory.SmokerMenu;
     }
 
     public static void onContainerClose(PlayerContainerEvent.Close e) {
@@ -201,7 +219,9 @@ public final class CookingService {
     static void stamp(ServerPlayer sp, Item item, int n) {
         if (n <= 0) return;
         Settings s = Settings.get();
+        // Опыт — от настоящего уровня навыка, качество — с поправками перков.
         int level = level(sp);
+        int cookLevel = cookingLevel(sp, NutritionData.get(sp));
         int complexity = NutritionTable.complexity(sp.server, item);
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
         if (id != null && OWN_QUALITY.contains(id.getNamespace())) {
@@ -209,7 +229,7 @@ public final class CookingService {
             return;
         }
         int[] byQuality = new int[Cooking.QUALITY.length];
-        for (int i = 0; i < n; i++) byQuality[Cooking.roll(level, complexity, RANDOM.nextGaussian(), s)]++;
+        for (int i = 0; i < n; i++) byQuality[Cooking.roll(cookLevel, complexity, RANDOM.nextGaussian(), s)]++;
         int done = 0;
         for (int q = 0; q < byQuality.length; q++) {
             if (byQuality[q] == 0) continue;
