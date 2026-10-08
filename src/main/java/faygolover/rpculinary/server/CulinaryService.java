@@ -146,11 +146,10 @@ public final class CulinaryService {
         FoodData fd = sp.getFoodData();
         if (s.hungerEnabled) {
             int cur = fd.getFoodLevel();
-            // Прирост ванильной сытости не от предмета — съел с блока (торт, тарелка).
-            if (d.mirroredFood >= 0 && cur > d.mirroredFood && d.ateItemTick != tick && active(sp)) {
-                Block b = d.clickedTick >= tick - 1 ? d.clickedBlock : null;
-                eatFromBlock(sp, d, b, cur - d.mirroredFood);
-            }
+            // Прирост ванильной сытости сразу после клика по блоку — съел с блока (торт, тарелка). Без клика прирост
+            // не считаем: на «Мирной» ваниль сама подкармливает игрока — это не еда.
+            if (d.mirroredFood >= 0 && cur > d.mirroredFood && d.ateItemTick != tick && d.clickedTick >= tick - 1 && active(sp))
+                eatFromBlock(sp, d, d.clickedBlock, cur - d.mirroredFood);
             int lock = Metabolism.hasRoom(d.state, s, stomachMult(sp, d.state, s)) ? FOOD_ROOM : FOOD_FULL;
             fd.setFoodLevel(lock);
             fd.setSaturation(0);

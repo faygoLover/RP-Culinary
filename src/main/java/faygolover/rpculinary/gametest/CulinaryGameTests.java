@@ -156,6 +156,12 @@ public final class CulinaryGameTests {
         double got = m.stomach - before;
         h.assertTrue(Math.abs(got - 2 * Settings.get().kcalPerFoodPoint) < 1e-6, "кусок торта = 2 ед. × ккал, было " + got);
         h.assertTrue(p.getFoodData().getFoodLevel() == CulinaryService.FOOD_ROOM, "замок вернулся");
+        // Без клика прирост ванильной сытости (подкормка на «Мирной») — не еда.
+        double s2 = m.stomach;
+        p.getFoodData().setFoodLevel(CulinaryService.FOOD_ROOM + 3);
+        NutritionData.get(p).clickedTick = -100;
+        tick(p, 1);
+        h.assertTrue(m.stomach == s2, "подкормка «Мирной» не считается едой");
         remove(h, p);
         h.succeed();
     }
