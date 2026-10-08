@@ -1,0 +1,10 @@
+build/
+.gradle/
+run/
+out/
+*.log
+.idea/
+# Моды сборки для запуска разработки (Kaleidoscope, Farmer's Delight…): не в git, оригиналы — в docs/reference/jars.
+libs/pack/
+# Скачанные моды готовки (Kaleidoscope…) — для разбора, не в git.
+docs/reference/jars/

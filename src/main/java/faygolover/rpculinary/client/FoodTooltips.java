@@ -1,0 +1,84 @@
+package faygolover.rpculinary.client;
+
+import faygolover.rpcore.api.RpCoreAPI;
+import faygolover.rpcore.api.RpIds;
+import faygolover.rpculinary.core.Food;
+import faygolover.rpculinary.core.NutritionState;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.List;
+
+/**
+ * Подсказка у еды по навыку «Кулинария» (дизайн, §6.1): 0–1 — «съедобно», 2–3 — вид еды, 4–5 — словами, 6–8 —
+ * округлённо, 9–10 — точно. Без RP Perks навык не ведётся — всё видно, как на 10.
+ */
+public final class FoodTooltips {
+    private FoodTooltips() {}
+
+    static int level() {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) return 0;
+        if (mc.player.isCreative()) return 10;
+        var lvl = RpCoreAPI.skill(mc.player, RpIds.COOKING);
+        return lvl.isPresent() ? lvl.getAsInt() : 10;
+    }
+
+    public static void onTooltip(ItemTooltipEvent e) {
+        if (!ClientNutrition.known || e.getEntity() == null) return;
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(e.getItemStack().getItem());
+        Food f = id != null ? ClientNutrition.FOODS.get(id) : null;
+        if (f == null || f.kcal() <= 0 && f.water() <= 0) return;
+        List<Component> t = e.getToolTip();
+        int lvl = level();
+        int cat = ClientNutrition.CATEGORIES.getOrDefault(id, -1);
+        if (lvl < 2) {
+            t.add(tr("edible").withStyle(ChatFormatting.GRAY));
+            return;
+        }
+        if (cat >= 0) t.add(tr("category", Component.translatable("rpculinary.food_category." + NutritionState.CATEGORIES[cat])).withStyle(ChatFormatting.GRAY));
+        if (lvl < 4) return;
+        if (lvl < 6) {
+            words(t, f);
+            return;
+        }
+        if (lvl < 9) {
+            long kcal = Math.round(f.kcal() / 10.0) * 10;
+            t.add(tr("rounded", kcal, amount(f.protein() * 4, f.kcal()), amount(f.fat() * 9, f.kcal()), amount(f.carbs() * 4, f.kcal()))
+                    .withStyle(ChatFormatting.GOLD));
+        } else {
+            t.add(tr("exact", Math.round(f.kcal()), Math.round(f.protein()), Math.round(f.fat()), Math.round(f.carbs()), Math.round(f.vitamins()))
+                    .withStyle(ChatFormatting.GOLD));
+        }
+        if (f.water() > 0) t.add(tr("water", Math.round(f.water())).withStyle(ChatFormatting.AQUA));
+    }
+
+    /** Словами: сытность, чего много, витамины. */
+    private static void words(List<Component> t, Food f) {
+        String size = f.kcal() < 120 ? "light" : f.kcal() < 350 ? "filling" : "very_filling";
+        MutableComponent line = tr("size_" + size);
+        double k = Math.max(1, f.kcal());
+        if (f.protein() * 4 / k > 0.3) line.append(", ").append(tr("much_protein"));
+        if (f.fat() * 9 / k > 0.45) line.append(", ").append(tr("fatty"));
+        if (f.carbs() * 4 / k > 0.6) line.append(", ").append(tr("much_carbs"));
+        if (f.vitamins() >= 8) line.append(", ").append(tr("vitamins"));
+        else if (f.vitamins() <= 1) line.append(", ").append(tr("no_vitamins"));
+        t.add(line.withStyle(ChatFormatting.GOLD));
+        if (f.water() > 0) t.add(tr("water_words").withStyle(ChatFormatting.AQUA));
+    }
+
+    /** Доля калорий от нутриента: много / средне / мало. */
+    private static Component amount(double part, double kcal) {
+        double share = part / Math.max(1, kcal);
+        return tr(share > 0.35 ? "much" : share > 0.12 ? "some" : "little");
+    }
+
+    private static MutableComponent tr(String key, Object... args) {
+        return Component.translatable("rpculinary.tooltip." + key, args);
+    }
+}

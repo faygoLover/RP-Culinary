@@ -1,0 +1,14 @@
+{
+  "items": [
+    "kaleidoscope_cookery:red_chili",
+    "kaleidoscope_cookery:green_chili",
+    "#forge:crops/chili",
+    "#forge:crops/chilipepper"
+  ],
+  "protein": 1,
+  "fat": 0,
+  "carbs": 5,
+  "vitamins": 15,
+  "water": 1,
+  "category": "vegetables"
+}
