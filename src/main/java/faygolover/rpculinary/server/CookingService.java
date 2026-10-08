@@ -110,7 +110,8 @@ public final class CookingService {
     /** Начать (или продлить) «готовку»: запомнить, сколько блюд уже было, чтобы новые узнать. */
     static void open(ServerPlayer sp, NutritionData d) {
         long now = sp.server.getTickCount();
-        if (d.cookUntil < now && !d.cookMenu) d.cookBaseline = counts(sp);
+        // Отсчёт — если его ещё нет (после верстака в инвентаре «готовка» уже идёт, а отсчёта нет).
+        if (d.cookBaseline == null || (d.cookUntil < now && !d.cookMenu)) d.cookBaseline = counts(sp);
         d.cookUntil = Math.max(d.cookUntil, now + (long) (Settings.get().cookContextSeconds * 20));
     }
 
