@@ -51,8 +51,16 @@
 **Команды ГМа:**
 - `/rpculinary status [игрок]`;
 - `/rpculinary set <игроки> satiety|water|protein|fat|carbs|vitamins|weight|bodyfat <число>`;
-- `/rpculinary advance <игроки> <часы>`;
 - `/rpculinary reset <игроки>`;
-- `/rpculinary audit [мод]` — откуда известен состав еды.
+- `/rpculinary audit [мод]` — откуда известен состав еды (отладочная: `debug_commands` в `config/rpcore-common.toml`).
+- Прокрутка голода — `/rptime sleep|skip <время> <игроки> [all|food]` (RP Core); `/rpculinary advance` убран.
 
 **Конфиг:** `serverconfig/rpculinary-server.toml`. Пункты: `hours_per_rp_day`, `weight_change_speed` и другие.
+
+### Блок 1 (13.10.2026) — Culinary 0.2.0 на Core 0.4.0
+- «Нет сил» режет максимум выносливости через розетку выносливости Core (`RpCoreAPI.staminaAttribute`), а не ищет
+  `rpstamina:max_stamina` по имени. Нагрузка без мода выносливости — по бегу, как раньше (`RpCoreAPI.stamina() == null`).
+- Время RP: пока `/rptime stop`, шаг обмена веществ не идёт; `/rptime sleep|skip` прокручивает голод (событие
+  `RpTimeSkipEvent`, во сне — со сниженным обменом). `NutritionProvider.advance` оставлен для Medicine до блока 5.
+- `CookingService.REPEATS` не копит старые блюда; GameTest и площадка исключены из релизного jar.
+- Команды — в общем списке `/rpcore commands`. В игре не проверено.
