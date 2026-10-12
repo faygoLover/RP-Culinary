@@ -142,6 +142,9 @@ tasks.named('jar', Jar).configure {
         ])
     }
 
+    // В сборку для игроков не идут игровые тесты и их площадка (ревью 11.10, п. 4).
+    exclude 'faygolover/rpculinary/gametest/**', 'data/rpculinary/structures/**'
+
     finalizedBy 'reobfJar'
 }
 

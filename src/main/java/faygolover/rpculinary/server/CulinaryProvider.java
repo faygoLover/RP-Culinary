@@ -107,7 +107,7 @@ public final class CulinaryProvider implements NutritionProvider {
     @Override
     public void advance(Player player, double hours) {
         if (!(player instanceof ServerPlayer sp)) return;
-        CulinaryCommands.advance(sp, hours);
+        CulinaryCommands.advance(sp, hours, false);
     }
 
     private static void changed(Player player) {

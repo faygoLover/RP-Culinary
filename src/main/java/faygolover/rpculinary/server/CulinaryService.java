@@ -3,6 +3,7 @@ package faygolover.rpculinary.server;
 import faygolover.rpcore.api.BodyProvider;
 import faygolover.rpcore.api.RpCoreAPI;
 import faygolover.rpcore.api.RpIds;
+import faygolover.rpcore.api.StaminaProvider;
 import faygolover.rpcore.api.event.ExertionEvent;
 import faygolover.rpcore.api.event.FoodEatenEvent;
 import faygolover.rpculinary.capability.NutritionData;
@@ -48,7 +49,6 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
@@ -74,7 +74,6 @@ public final class CulinaryService {
     private static final UUID SPEED_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c11");
     private static final UUID ATTACK_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c12");
     private static final UUID STAMINA_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c13");
-    private static final ResourceLocation MAX_STAMINA = new ResourceLocation("rpstamina", "max_stamina");
     private static final ResourceKey<DamageType> LSO_DEHYDRATION = ResourceKey.create(Registries.DAMAGE_TYPE,
             new ResourceLocation("legendarysurvivaloverhaul", "dehydration"));
     private static final Random RANDOM = new Random();
@@ -180,7 +179,7 @@ public final class CulinaryService {
         Metabolism.Input in = new Metabolism.Input();
         in.dt = 1;
         if (d.exertionStamina > 0) in.exertionKcal = d.exertionStamina / 100.0 * s.kcalPer100Stamina;
-        else if (!ModList.get().isLoaded("rpstamina")) in.exertionKcal = d.sprintTicks / 20.0 / 60.0 * s.sprintKcalPerMinute;
+        else if (RpCoreAPI.stamina() == null) in.exertionKcal = d.sprintTicks / 20.0 / 60.0 * s.sprintKcalPerMinute;
         d.exertionStamina = 0;
         d.sprintTicks = 0;
         in.sleeping = sp.isSleeping();
@@ -189,8 +188,11 @@ public final class CulinaryService {
         in.ownWater = thirst == 1;
         in.externalHydration = thirst == 2 ? Lso.hydration(sp) : -1;
         in.random = RANDOM;
-        int faint = Metabolism.tick(m, in, s);
-        if (faint > 0) faint(sp, faint);
+        // Время RP стоит (/rptime stop) — голод, вода и вес не меняются.
+        if (RpCoreAPI.timeRunning()) {
+            int faint = Metabolism.tick(m, in, s);
+            if (faint > 0) faint(sp, faint);
+        }
         double hydration = hydration(sp, m, s);
         applyEffects(sp, m, s, hydration);
         if (!RpCoreAPI.bodyHandles(RpIds.BODY_HEALTH)) withoutBody(sp, m, s, hydration);
@@ -232,7 +234,8 @@ public final class CulinaryService {
         }
         modifier(sp, Attributes.MOVEMENT_SPEED, SPEED_ID, "rpculinary.weak_speed", -Math.min(0.5, speed));
         modifier(sp, Attributes.ATTACK_DAMAGE, ATTACK_ID, "rpculinary.weak_attack", -Math.min(0.8, attack));
-        Attribute max = ForgeRegistries.ATTRIBUTES.getValue(MAX_STAMINA);
+        // Максимум выносливости — через розетку выносливости RP Core (без мода выносливости — пропускаем).
+        Attribute max = RpCoreAPI.staminaAttribute(StaminaProvider.Stat.MAX);
         if (max != null) modifier(sp, max, STAMINA_ID, "rpculinary.weak_stamina", stamina - 1);
     }
 

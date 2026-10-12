@@ -76,7 +76,6 @@
   "rpculinary.screen.build_obese": "heavy",
   "rpculinary.screen.lab_hint": "Exact values — only by a lab blood test.",
 
-  "rpculinary.cmd.advanced": "Hunger and thirst advanced for %s players by %s h.",
   "rpculinary.cmd.reset": "Nutrition reset for %s players (weight and fat kept).",
   "rpculinary.cmd.set": "%s = %s for %s players.",
   "rpculinary.cmd.status_title": "Nutrition: %s",
@@ -107,5 +106,10 @@
   "rpculinary.tooltip.nutrient_fat": "fat",
   "rpculinary.tooltip.nutrient_carbs": "carbs",
   "rpculinary.tooltip.nutrient_vitamins": "vitamins",
-  "rpculinary.screen.dietitian_numbers": "Satiety %s%%, water %s%% · P %s · F %s · C %s · vit. %s · recent %s kcal"
+  "rpculinary.screen.dietitian_numbers": "Satiety %s%%, water %s%% · P %s · F %s · C %s · vit. %s · recent %s kcal",
+
+  "rpculinary.help.status": "player's nutrition in detail",
+  "rpculinary.help.set": "set a nutrition value",
+  "rpculinary.help.reset": "reset nutrition",
+  "rpculinary.help.audit": "where food composition comes from (debug; file rpculinary-audit.txt)"
 }

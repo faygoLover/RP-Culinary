@@ -323,7 +323,10 @@ public final class CookingService {
 
     private static void award(ServerPlayer sp, Item item, int level, int complexity, int count) {
         long now = sp.level().getGameTime();
-        long[] rep = REPEATS.computeIfAbsent(sp.getUUID(), k -> new HashMap<>()).computeIfAbsent(item, k -> new long[]{0, now});
+        Map<Item, long[]> mine = REPEATS.computeIfAbsent(sp.getUUID(), k -> new HashMap<>());
+        // Старые блюда (счёт уже обнулился бы) не копим, пока повар в сети.
+        mine.values().removeIf(r -> now - r[1] > REPEAT_RESET_TICKS || now < r[1]);
+        long[] rep = mine.computeIfAbsent(item, k -> new long[]{0, now});
         if (now - rep[1] > REPEAT_RESET_TICKS) rep[0] = 0;
         double xp = Cooking.xp(level, complexity, count, (int) rep[0]);
         rep[0]++;
@@ -333,5 +336,9 @@ public final class CookingService {
 
     public static void forget(PlayerEvent.PlayerLoggedOutEvent e) {
         REPEATS.remove(e.getEntity().getUUID());
+    }
+
+    public static void onServerStopped(net.minecraftforge.event.server.ServerStoppedEvent e) {
+        REPEATS.clear();
     }
 }

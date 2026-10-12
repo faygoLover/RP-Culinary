@@ -39,9 +39,11 @@
 |---|---|
 | `/rpculinary status <игрок>` | питание игрока подробно |
 | `/rpculinary set <игроки> satiety\|water\|protein\|fat\|carbs\|vitamins\|weight\|bodyfat <число>` | выставить значение |
-| `/rpculinary advance <игроки> <часы>` | прокрутить голод и жажду на N часов |
 | `/rpculinary reset <игроки>` | сбросить питание |
-| `/rpculinary audit <мод>` | откуда известен состав еды мода (файл `rpculinary-audit.txt`) |
+| `/rpculinary audit <мод>` | откуда известен состав еды мода (файл `rpculinary-audit.txt`); отладочная — включается в `config/rpcore-common.toml` (`debug_commands`) |
+
+Прокрутка голода и жажды — `/rptime sleep|skip <время> <игроки> [all\|food]` (RP Core; во сне голод медленнее).
+Пока время RP стоит (`/rptime stop`), голод, вода и вес не меняются. Все команды семейства — `/rpcore commands`.
 
 ## Настройки
 - `<мир>/serverconfig/rpculinary-server.toml`:

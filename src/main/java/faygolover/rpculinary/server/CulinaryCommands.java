@@ -6,6 +6,8 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import faygolover.rpcore.api.RpCoreAPI;
+import faygolover.rpcore.api.event.RpTimeSkipEvent;
 import faygolover.rpculinary.capability.NutritionData;
 import faygolover.rpculinary.core.Metabolism;
 import faygolover.rpculinary.core.NutritionState;
@@ -25,8 +27,8 @@ import java.util.Locale;
 import java.util.function.BiConsumer;
 
 /**
- * {@code /rpculinary} (ГМ, уровень 2): посмотреть питание игрока, выставить сытость, воду, нутриенты, вес и жир,
- * прокрутить часы голода (бывшая {@code /rpmedicine food add}).
+ * {@code /rpculinary} (ГМ, уровень 2): посмотреть питание игрока, выставить сытость, воду, нутриенты, вес и жир.
+ * Прокрутка голода — {@code /rptime sleep|skip} (RP Core, {@link #onTimeSkip}); {@code audit} — отладочная.
  */
 public final class CulinaryCommands {
     private CulinaryCommands() {}
@@ -55,15 +57,7 @@ public final class CulinaryCommands {
                         .then(Commands.argument("player", EntityArgument.player())
                                 .executes(c -> status(c.getSource(), EntityArgument.getPlayer(c, "player")))))
                 .then(set)
-                .then(Commands.literal("advance").then(Commands.argument("targets", EntityArgument.players())
-                        .then(Commands.argument("hours", DoubleArgumentType.doubleArg(0, 72)).executes(c -> {
-                            double h = DoubleArgumentType.getDouble(c, "hours");
-                            Collection<ServerPlayer> ps = EntityArgument.getPlayers(c, "targets");
-                            for (ServerPlayer sp : ps) advance(sp, h);
-                            c.getSource().sendSuccess(() -> Component.translatable("rpculinary.cmd.advanced", ps.size(), fmt(h)), true);
-                            return ps.size();
-                        }))))
-                .then(Commands.literal("audit")
+                .then(Commands.literal("audit").requires(src -> RpCoreAPI.debugCommands())
                         .executes(c -> audit(c.getSource(), ""))
                         .then(Commands.argument("namespace", StringArgumentType.word()).executes(c -> audit(c.getSource(),
                                 StringArgumentType.getString(c, "namespace")))))
@@ -132,13 +126,29 @@ public final class CulinaryCommands {
         return estimated.size();
     }
 
-    /** Прокрутка голода и жажды на {@code hours} часов игры (без обмороков). */
-    public static void advance(ServerPlayer sp, double hours) {
+    /** Команды для общего списка {@code /rpcore commands}. */
+    public static void describe() {
+        String m = faygolover.rpculinary.RpCulinary.MODID;
+        RpCoreAPI.registerCommand(m, "/rpculinary status [игрок]", "rpculinary.help.status", 2, false);
+        RpCoreAPI.registerCommand(m, "/rpculinary set <игроки> satiety|water|protein|fat|carbs|vitamins|weight|bodyfat <число>",
+                "rpculinary.help.set", 2, false);
+        RpCoreAPI.registerCommand(m, "/rpculinary reset <игроки>", "rpculinary.help.reset", 2, false);
+        RpCoreAPI.registerCommand(m, "/rpculinary audit [мод]", "rpculinary.help.audit", 2, true);
+    }
+
+    /** Время RP: {@code /rptime sleep|skip} — прокрутить голод, воду и вес (кроме «только раны»). */
+    public static void onTimeSkip(RpTimeSkipEvent e) {
+        if (e.food() && e.getEntity() instanceof ServerPlayer sp) advance(sp, e.hours(), e.sleeping());
+    }
+
+    /** Прокрутка голода и жажды на {@code hours} часов (без обмороков); во сне обмен веществ медленнее. */
+    public static void advance(ServerPlayer sp, double hours, boolean sleeping) {
         NutritionState m = CulinaryService.state(sp);
         if (m == null || hours <= 0) return;
         Settings s = Settings.get();
         int mode = CulinaryService.thirstMode(sp, s);
         Metabolism.Input base = new Metabolism.Input();
+        base.sleeping = sleeping;
         base.ownWater = mode == 1;
         base.metabolism = CulinaryService.metabolism(sp, s);
         if (mode == 2) Lso.addWater(sp, -s.waterLossPerHour * s.nutrientTimeScale() * hours);

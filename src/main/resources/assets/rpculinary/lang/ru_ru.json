@@ -76,7 +76,6 @@
   "rpculinary.screen.build_obese": "полное",
   "rpculinary.screen.lab_hint": "Точно — только анализом крови в лаборатории.",
 
-  "rpculinary.cmd.advanced": "Голод и жажда прокручены у %s игроков на %s ч.",
   "rpculinary.cmd.reset": "Питание сброшено у %s игроков (вес и жир сохранены).",
   "rpculinary.cmd.set": "%s = %s у %s игроков.",
   "rpculinary.cmd.status_title": "Питание: %s",
@@ -107,5 +106,10 @@
   "rpculinary.tooltip.nutrient_fat": "жиров",
   "rpculinary.tooltip.nutrient_carbs": "углеводов",
   "rpculinary.tooltip.nutrient_vitamins": "витаминов",
-  "rpculinary.screen.dietitian_numbers": "Сытость %s%%, вода %s%% · Б %s · Ж %s · У %s · вит. %s · недавно %s ккал"
+  "rpculinary.screen.dietitian_numbers": "Сытость %s%%, вода %s%% · Б %s · Ж %s · У %s · вит. %s · недавно %s ккал",
+
+  "rpculinary.help.status": "питание игрока подробно",
+  "rpculinary.help.set": "выставить значение питания",
+  "rpculinary.help.reset": "сбросить питание",
+  "rpculinary.help.audit": "откуда известен состав еды (отладка; файл rpculinary-audit.txt)"
 }

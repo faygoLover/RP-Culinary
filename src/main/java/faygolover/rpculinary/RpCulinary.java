@@ -65,6 +65,8 @@ public class RpCulinary {
         bus.addListener(faygolover.rpculinary.server.CookingService::onSmelted);
         bus.addListener(faygolover.rpculinary.server.CookingService::onPlayerTick);
         bus.addListener(faygolover.rpculinary.server.CookingService::forget);
+        bus.addListener(faygolover.rpculinary.server.CookingService::onServerStopped);
+        bus.addListener(CulinaryCommands::onTimeSkip);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> faygolover.rpculinary.client.ClientSetup.init(modBus));
     }
 
@@ -73,6 +75,7 @@ public class RpCulinary {
         e.enqueueWork(() -> {
             RpCoreAPI.registerModule(MODID, "питание: сытость в калориях, вода, нутриенты, вес");
             RpCoreAPI.registerNutrition(new CulinaryProvider());
+            CulinaryCommands.describe();
         });
     }
 
