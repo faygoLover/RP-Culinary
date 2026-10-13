@@ -1,19 +1,16 @@
 {
   "key.categories.rpculinary": "RP Culinary",
   "key.rpculinary.nutrition": "Nutrition",
-
   "rpculinary.hud.satiety": "Satiety",
   "rpculinary.hud.water": "Water",
-
   "rpculinary.msg.faint": "Your vision darkens... your legs give way.",
-  "rpculinary.msg.full": "You're full — can't eat another bite.",
+  "rpculinary.msg.full": "Stomach is full. Only by force from now on…",
   "rpculinary.msg.hunger_1": "Your stomach growls. Time to eat.",
   "rpculinary.msg.hunger_2": "Severe hunger. No strength left.",
   "rpculinary.msg.hunger_3": "Your body is eating itself. You need food now.",
   "rpculinary.msg.thirst_1": "You're thirsty.",
   "rpculinary.msg.thirst_2": "Dry mouth, a pounding headache.",
   "rpculinary.msg.thirst_3": "Dehydration. You need water!",
-
   "rpculinary.food_category.meat": "meat",
   "rpculinary.food_category.fish": "fish",
   "rpculinary.food_category.grain": "bread and grains",
@@ -21,7 +18,6 @@
   "rpculinary.food_category.fruit": "fruit",
   "rpculinary.food_category.sweet": "sweets",
   "rpculinary.food_category.dairy": "dairy and eggs",
-
   "rpculinary.monotony.meat": "Meat again... you can barely swallow it.",
   "rpculinary.monotony.fish": "Fish again. It's getting sickening.",
   "rpculinary.monotony.grain": "Porridge and bread again. You're sick of it.",
@@ -29,7 +25,6 @@
   "rpculinary.monotony.fruit": "You're tired of fruit.",
   "rpculinary.monotony.sweet": "Too sweet. The sweets are making you queasy.",
   "rpculinary.monotony.dairy": "Dairy again. No appetite.",
-
   "rpculinary.tooltip.edible": "Edible",
   "rpculinary.tooltip.category": "Food: %s",
   "rpculinary.tooltip.size_light": "Light",
@@ -47,7 +42,6 @@
   "rpculinary.tooltip.little": "low",
   "rpculinary.tooltip.exact": "%s kcal · P %s · F %s · C %s · vit. %s",
   "rpculinary.tooltip.water": "Water: +%s%%",
-
   "rpculinary.screen.title": "Nutrition",
   "rpculinary.screen.unknown": "The server sent no nutrition data.",
   "rpculinary.screen.hunger_0": "Not hungry.",
@@ -75,7 +69,6 @@
   "rpculinary.screen.build_overweight": "chubby",
   "rpculinary.screen.build_obese": "heavy",
   "rpculinary.screen.lab_hint": "Exact values — only by a lab blood test.",
-
   "rpculinary.cmd.reset": "Nutrition reset for %s players (weight and fat kept).",
   "rpculinary.cmd.set": "%s = %s for %s players.",
   "rpculinary.cmd.status_title": "Nutrition: %s",
@@ -87,7 +80,6 @@
   "rpculinary.cmd.status_iv": " IV feeding: %s kcal left over %s min",
   "rpculinary.cmd.audit": "Food composition: datapack %s, from recipes %s, estimated only %s. Full list — rpculinary-audit.txt in the server folder.",
   "rpculinary.cmd.audit_estimated": "Estimated from vanilla nutrition (add to datapack rpculinary/nutrition): %s",
-
   "rpculinary.msg.masterpiece": "It turned out simply superb!",
   "rpculinary.msg.burnt": "Burnt...",
   "rpculinary.msg.raw_meat": "Raw meat... your stomach churns.",
@@ -97,7 +89,6 @@
   "rpculinary.quality.good": "good",
   "rpculinary.quality.excellent": "excellent",
   "rpculinary.quality.masterpiece": "masterpiece",
-
   "rpculinary.tooltip.advice_full": "Dietitian: you're full — better wait.",
   "rpculinary.tooltip.advice_covers": "Dietitian: covers your lack of %s.",
   "rpculinary.tooltip.advice_too_fatty": "Dietitian: you've had plenty of fat already.",
@@ -107,9 +98,27 @@
   "rpculinary.tooltip.nutrient_carbs": "carbs",
   "rpculinary.tooltip.nutrient_vitamins": "vitamins",
   "rpculinary.screen.dietitian_numbers": "Satiety %s%%, water %s%% · P %s · F %s · C %s · vit. %s · recent %s kcal",
-
   "rpculinary.help.status": "player's nutrition in detail",
   "rpculinary.help.set": "set a nutrition value",
   "rpculinary.help.reset": "reset nutrition",
-  "rpculinary.help.audit": "where food composition comes from (debug; file rpculinary-audit.txt)"
+  "rpculinary.help.audit": "where food composition comes from (debug; file rpculinary-audit.txt)",
+  "rpculinary.sense.forced": "Forcing it down…",
+  "rpculinary.sense.heavy": "Your stomach feels heavy.",
+  "rpculinary.sense.nausea": "You feel sick…",
+  "rpculinary.sense.stomach_pain": "Sharp stomach pain — you overate.",
+  "rpculinary.sense.vomit": "You threw up.",
+  "rpculinary.sense.stomach_injury": "Sharp pain in your belly — something's wrong.",
+  "rpculinary.sense.overdrink": "Bloated with water.",
+  "rpculinary.sense.water_intoxication": "Head buzzing, feeling sick.",
+  "rpculinary.sense.brain_edema": "Everything swims, splitting headache.",
+  "rpculinary.sense.protein_deficiency": "Weakness, legs swelling.",
+  "rpculinary.sense.kidney": "Sharp pain in your side.",
+  "rpculinary.sense.pressure": "Ringing in your head, pressure in the temples.",
+  "rpculinary.sense.scurvy": "Your gums are bleeding.",
+  "rpculinary.sense.scurvy_severe": "Gums bleeding, aching all over, loose teeth.",
+  "rpculinary.sense.dizzy": "Dizzy.",
+  "rpculinary.sense.fat_nausea": "Fatty food makes you sick.",
+  "rpculinary.sense.drowsy": "Sleepy after the sweets.",
+  "rpculinary.sense.sick": "Something you ate was off…",
+  "rpculinary.sense.teeth": "A tooth aches."
 }

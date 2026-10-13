@@ -34,7 +34,30 @@ public final class CulinaryProvider implements NutritionProvider {
     public double hydration(Player player) {
         NutritionState m = CulinaryService.state(player);
         if (m == null || !(player instanceof ServerPlayer sp)) return 1;
-        return CulinaryService.hydration(sp, m, Settings.get());
+        // Выпитое через силу (больше 100 %) — для других модов просто «напоен»: перепой ведёт сама Кулинария.
+        return Math.min(1, CulinaryService.hydration(sp, m, Settings.get()));
+    }
+
+    @Override
+    public int thirstStage(Player player) {
+        if (!(player instanceof ServerPlayer sp)) return 0;
+        NutritionState m = CulinaryService.state(player);
+        if (m == null || CulinaryService.thirstMode(sp, Settings.get()) == 0) return 0;
+        return Metabolism.thirstStage(CulinaryService.hydration(sp, m, Settings.get()), Settings.get());
+    }
+
+    @Override
+    public void consumeNutrient(Player player, String id, double amount) {
+        NutritionState m = CulinaryService.state(player);
+        if (m == null || amount <= 0 || !Settings.get().nutrientsEnabled) return;
+        for (int i = 0; i < NutritionState.COUNT; i++)
+            if (NutritionState.NUTRIENTS[i].equals(id)) m.nutrients[i] = Math.max(0, m.nutrients[i] - amount);
+    }
+
+    @Override
+    public void burnKcal(Player player, double kcal) {
+        NutritionData d = player.level().isClientSide ? null : NutritionData.get(player);
+        if (d != null && kcal > 0) d.extraKcal += kcal;
     }
 
     @Override
@@ -84,7 +107,7 @@ public final class CulinaryProvider implements NutritionProvider {
         if (m == null) return;
         int mode = CulinaryService.thirstMode(sp, Settings.get());
         if (mode == 2) Lso.addWater(sp, percent);
-        else if (mode == 1) m.water = Math.max(0, Math.min(100, m.water + percent));
+        else if (mode == 1) m.water = Math.max(0, Math.min(Math.max(100, m.water), m.water + percent));
         changed(player);
     }
 

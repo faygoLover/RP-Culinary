@@ -1,19 +1,16 @@
 {
   "key.categories.rpculinary": "RP Culinary",
   "key.rpculinary.nutrition": "Питание",
-
   "rpculinary.hud.satiety": "Сытость",
   "rpculinary.hud.water": "Вода",
-
   "rpculinary.msg.faint": "Темнеет в глазах... ноги подкашиваются.",
-  "rpculinary.msg.full": "Наелся — больше не лезет.",
+  "rpculinary.msg.full": "Желудок полон. Дальше — только через силу…",
   "rpculinary.msg.hunger_1": "Урчит в животе. Пора бы поесть.",
   "rpculinary.msg.hunger_2": "Сильный голод. Нет сил.",
   "rpculinary.msg.hunger_3": "Тело ест само себя. Срочно нужна еда.",
   "rpculinary.msg.thirst_1": "Хочется пить.",
   "rpculinary.msg.thirst_2": "Во рту пересохло, болит голова.",
   "rpculinary.msg.thirst_3": "Обезвоживание. Нужна вода!",
-
   "rpculinary.food_category.meat": "мясо",
   "rpculinary.food_category.fish": "рыба",
   "rpculinary.food_category.grain": "хлеб и каши",
@@ -21,7 +18,6 @@
   "rpculinary.food_category.fruit": "фрукты",
   "rpculinary.food_category.sweet": "сладкое",
   "rpculinary.food_category.dairy": "молочное и яйца",
-
   "rpculinary.monotony.meat": "Опять мясо... кусок в горло не лезет.",
   "rpculinary.monotony.fish": "Снова рыба. Уже воротит.",
   "rpculinary.monotony.grain": "Опять каша да хлеб. Надоело.",
@@ -29,7 +25,6 @@
   "rpculinary.monotony.fruit": "Фрукты уже приелись.",
   "rpculinary.monotony.sweet": "Приторно. От сладкого уже мутит.",
   "rpculinary.monotony.dairy": "Опять молочное. Без аппетита.",
-
   "rpculinary.tooltip.edible": "Съедобно",
   "rpculinary.tooltip.category": "Еда: %s",
   "rpculinary.tooltip.size_light": "Лёгкое",
@@ -47,7 +42,6 @@
   "rpculinary.tooltip.little": "мало",
   "rpculinary.tooltip.exact": "%s ккал · Б %s · Ж %s · У %s · вит. %s",
   "rpculinary.tooltip.water": "Вода: +%s%%",
-
   "rpculinary.screen.title": "Питание",
   "rpculinary.screen.unknown": "Сервер не прислал данные о питании.",
   "rpculinary.screen.hunger_0": "Сыт.",
@@ -75,7 +69,6 @@
   "rpculinary.screen.build_overweight": "полноватое",
   "rpculinary.screen.build_obese": "полное",
   "rpculinary.screen.lab_hint": "Точно — только анализом крови в лаборатории.",
-
   "rpculinary.cmd.reset": "Питание сброшено у %s игроков (вес и жир сохранены).",
   "rpculinary.cmd.set": "%s = %s у %s игроков.",
   "rpculinary.cmd.status_title": "Питание: %s",
@@ -87,7 +80,6 @@
   "rpculinary.cmd.status_iv": " Капельница: ещё %s ккал за %s мин",
   "rpculinary.cmd.audit": "Состав еды: из датапака %s, по рецептам %s, только оценка %s. Полный список — rpculinary-audit.txt в папке сервера.",
   "rpculinary.cmd.audit_estimated": "Оценено по ванильной сытости (добавить в датапак rpculinary/nutrition): %s",
-
   "rpculinary.msg.masterpiece": "Получилось просто великолепно!",
   "rpculinary.msg.burnt": "Подгорело...",
   "rpculinary.msg.raw_meat": "Сырое мясо... живот крутит.",
@@ -97,7 +89,6 @@
   "rpculinary.quality.good": "хорошее",
   "rpculinary.quality.excellent": "отличное",
   "rpculinary.quality.masterpiece": "шедевр",
-
   "rpculinary.tooltip.advice_full": "Диетолог: вы сыты — лучше подождать.",
   "rpculinary.tooltip.advice_covers": "Диетолог: закроет нехватку — %s.",
   "rpculinary.tooltip.advice_too_fatty": "Диетолог: жирного у вас и так много.",
@@ -107,9 +98,27 @@
   "rpculinary.tooltip.nutrient_carbs": "углеводов",
   "rpculinary.tooltip.nutrient_vitamins": "витаминов",
   "rpculinary.screen.dietitian_numbers": "Сытость %s%%, вода %s%% · Б %s · Ж %s · У %s · вит. %s · недавно %s ккал",
-
   "rpculinary.help.status": "питание игрока подробно",
   "rpculinary.help.set": "выставить значение питания",
   "rpculinary.help.reset": "сбросить питание",
-  "rpculinary.help.audit": "откуда известен состав еды (отладка; файл rpculinary-audit.txt)"
+  "rpculinary.help.audit": "откуда известен состав еды (отладка; файл rpculinary-audit.txt)",
+  "rpculinary.sense.forced": "Через силу…",
+  "rpculinary.sense.heavy": "Живот тяжёлый, двигаться не хочется.",
+  "rpculinary.sense.nausea": "Подташнивает…",
+  "rpculinary.sense.stomach_pain": "Живот режет — переел.",
+  "rpculinary.sense.vomit": "Вырвало.",
+  "rpculinary.sense.stomach_injury": "Острая боль в животе — что-то не так.",
+  "rpculinary.sense.overdrink": "Распирает от воды.",
+  "rpculinary.sense.water_intoxication": "Голова гудит, мутит.",
+  "rpculinary.sense.brain_edema": "Всё плывёт, голова раскалывается.",
+  "rpculinary.sense.protein_deficiency": "Слабость, ноги отекают.",
+  "rpculinary.sense.kidney": "Резкая боль в боку.",
+  "rpculinary.sense.pressure": "Шумит в голове, давит в висках.",
+  "rpculinary.sense.scurvy": "Дёсны кровоточат.",
+  "rpculinary.sense.scurvy_severe": "Дёсны кровоточат, ноет всё тело, шатаются зубы.",
+  "rpculinary.sense.dizzy": "Голова кружится.",
+  "rpculinary.sense.fat_nausea": "От жирного мутит.",
+  "rpculinary.sense.drowsy": "После сладкого клонит в сон.",
+  "rpculinary.sense.sick": "Что-то не то съел…",
+  "rpculinary.sense.teeth": "Зуб ноет."
 }

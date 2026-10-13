@@ -21,6 +21,10 @@ public final class Metabolism {
         public boolean cold;
         /** Множитель обмена веществ (перки, анорексия). */
         public double metabolism = 1;
+        /** Скорость переваривания (Малоежка медленнее, Обжора быстрее). */
+        public double digest = 1;
+        /** Трата воды (Мало пьёт, Много пьёт). */
+        public double water = 1;
         /** Вести свою воду (нет LSO, жажда включена). */
         public boolean ownWater = true;
         /** Вода из другого мода (LSO), 0–1; −1 — нет. От неё считаются обмороки от жажды. */
@@ -63,6 +67,12 @@ public final class Metabolism {
         return basalKcalPerDay(m) / 24.0 * s.activityFactor * s.bodyTimeScale();
     }
 
+    /** Переполнение желудка: доля сверх вместимости (0 — есть место, 1 — вдвое больше, «до предела»). */
+    public static double overfill(NutritionState m, Settings s, double mult) {
+        double cap = stomachCapacity(s, mult);
+        return cap <= 0 ? 0 : Math.max(0, (m.stomach - cap) / cap);
+    }
+
     /** Сколько ккал влезает в желудок ({@code mult} — анорексия, плохой аппетит). */
     public static double stomachCapacity(Settings s, double mult) {
         return s.stomachKcal * mult;
@@ -97,7 +107,8 @@ public final class Metabolism {
             add(m, NutritionState.CARBS, g.carbs() * s.carbsPerGram, s);
             add(m, NutritionState.VITAMINS, g.vitamins() * s.vitaminsPerUnit, s);
         }
-        m.water = Math.max(0, Math.min(100, m.water + g.water()));
+        // Пить можно и через силу — до maxWater (лишнее уходит быстрее и вредит).
+        m.water = Math.max(0, Math.min(Math.max(100, s.maxWater), m.water + g.water()));
         if (s.monotonyEnabled && cat >= 0 && cat < NutritionState.CATEGORIES.length) {
             for (int i = 0; i < NutritionState.CATEGORIES.length; i++)
                 m.monotony[i] = i == cat ? m.monotony[i] + monotonyWeight : Math.max(0, m.monotony[i] - s.monotonyVarietyRelief);
@@ -161,10 +172,24 @@ public final class Metabolism {
         }
 
         if (s.hungerEnabled) {
-            double rate = s.stomachKcal / Math.max(60, s.stomachEmptyHours * 3600);
+            double rate = s.stomachKcal * Math.max(0.1, in.digest) / Math.max(60, s.stomachEmptyHours * 3600);
             double digested = Math.min(m.stomach, rate * dt);
             m.stomach -= digested;
-            m.energy += digested + ivKcal - spend;
+            // Вес меняется плавно (решение 14.10.2026): сытый выше fatGainAbove — часть съеденного сразу в жир;
+            // ниже fatBurnBelow — часть расхода тело берёт из жира (чем голоднее, тем больше). Худеть можно без обмороков.
+            double sat = satiety(m, s);
+            double toFat = 0, fromFat = 0;
+            if (s.weightEnabled && sat > s.fatGainAbove) {
+                double k = Math.min(1, (sat - s.fatGainAbove) / Math.max(0.01, 1 - s.fatGainAbove)) * s.fatGainShare;
+                if (m.condActive[Conditions.CARBS_HIGH]) k *= s.carbsFatMult;
+                toFat = digested * Math.min(1, k);
+            }
+            if (s.weightEnabled && sat < s.fatBurnBelow && m.fatPercent() > s.minFatPercent) {
+                fromFat = spend * Math.min(1, (s.fatBurnBelow - sat) / Math.max(0.01, s.fatBurnBelow));
+            }
+            gainFat(m, toFat, s);
+            burn(m, fromFat, s);
+            m.energy += digested - toFat + ivKcal - (spend - fromFat);
             if (m.energy > s.reserveKcal) {
                 gainFat(m, m.energy - s.reserveKcal, s);
                 m.energy = s.reserveKcal;
@@ -182,7 +207,8 @@ public final class Metabolism {
         double nts = s.nutrientTimeScale();
         double hydration = -1;
         if (in.ownWater && s.thirstEnabled) {
-            m.water = Math.max(0, m.water - s.waterLossPerHour * nts * activity * dt / 3600.0);
+            m.water = Math.max(0, m.water - s.waterLossPerHour * nts * activity * Math.max(0, in.water) * dt / 3600.0);
+            if (m.water > 100) m.water = Math.max(100, m.water - s.overWaterLossPerHour * dt / 3600.0);
             hydration = m.water / 100;
         } else if (in.externalHydration >= 0) {
             hydration = in.externalHydration;
@@ -197,6 +223,11 @@ public final class Metabolism {
                 m.nutrients[i] = Math.max(0, m.nutrients[i] - decay[i] * nts * activity * dt / 3600.0);
         }
         for (int i = 0; i < m.monotony.length; i++) m.monotony[i] = Math.max(0, m.monotony[i] - s.monotonyDecayPerHour * nts * dt / 3600.0);
+        Conditions.update(m, s, hydration < 0 ? -1 : Math.min(1, hydration), dt);
+        if (m.overfillWindowSeconds > 0) {
+            m.overfillWindowSeconds = Math.max(0, m.overfillWindowSeconds - dt);
+            if (m.overfillWindowSeconds <= 0) m.overfillLimitHits = 0;
+        }
         m.recentKcal = Math.max(0, m.recentKcal * (1 - Math.min(1, dt / (Math.max(0.5, s.hoursPerRpDay) * 3600))));
         m.poorAppetiteSeconds = Math.max(0, m.poorAppetiteSeconds - dt);
 
@@ -244,6 +275,8 @@ public final class Metabolism {
             in.dt = Math.min(60, left);
             in.sleeping = base.sleeping;
             in.metabolism = base.metabolism;
+            in.digest = base.digest;
+            in.water = base.water;
             in.ownWater = base.ownWater;
             in.externalHydration = base.externalHydration;
             in.random = base.random;

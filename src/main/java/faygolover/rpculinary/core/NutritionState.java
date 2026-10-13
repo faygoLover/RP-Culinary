@@ -22,7 +22,7 @@ public final class NutritionState {
     public double energy;
     /** Съедено, но ещё не переварено, ккал. */
     public double stomach;
-    /** Вода, % (0–100). */
+    /** Вода, % (0–100; выпитое через силу — до {@code maxWater}). */
     public double water = 100;
     public final double[] nutrients = {60, 60, 60, 60};
     /** Недавние порции по видам («приелось»). */
@@ -43,6 +43,16 @@ public final class NutritionState {
     public double poorAppetiteSeconds;
     /** Внутривенное питание: сколько ещё влить и за сколько секунд. */
     public double ivKcal, ivProtein, ivFat, ivCarbs, ivVitamins, ivSeconds;
+
+    /** Долгие последствия ({@link Conditions}): прогресс, выздоровление, есть ли состояние. */
+    public final double[] condProgress = new double[Conditions.COUNT];
+    public final double[] condRecover = new double[Conditions.COUNT];
+    public final boolean[] condActive = new boolean[Conditions.COUNT];
+    /** Сколько раз за сутки тела впихивал «до предела» и сколько секунд ещё считаются эти сутки. */
+    public int overfillLimitHits;
+    public double overfillWindowSeconds;
+    /** Особенность веса, уже применённая к стартовому телу (emaciated, overweight, obese; пусто — нет). */
+    public String appliedBodyTrait = "";
 
     /** Счётчики «раз в N секунд» без мода тела (восстановление и истощение). */
     public double regenTimer;
@@ -96,5 +106,11 @@ public final class NutritionState {
         ivCarbs = o.ivCarbs;
         ivVitamins = o.ivVitamins;
         ivSeconds = o.ivSeconds;
+        System.arraycopy(o.condProgress, 0, condProgress, 0, Conditions.COUNT);
+        System.arraycopy(o.condRecover, 0, condRecover, 0, Conditions.COUNT);
+        System.arraycopy(o.condActive, 0, condActive, 0, Conditions.COUNT);
+        overfillLimitHits = o.overfillLimitHits;
+        overfillWindowSeconds = o.overfillWindowSeconds;
+        appliedBodyTrait = o.appliedBodyTrait;
     }
 }

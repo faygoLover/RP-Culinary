@@ -53,7 +53,7 @@ public final class Settings {
     public double sleepFactor = 0.9;
     @Cfg(section = "energy", doc = "Холод (LSO) — множитель расхода.")
     public double coldFactor = 1.15;
-    @Cfg(section = "energy", doc = "RP Stamina: ккал на каждые 100 потраченной выносливости (минута бега ≈ 960).")
+    @Cfg(section = "energy", doc = "RP Stamina: ккал на каждые 100 ВОССТАНОВЛЕННОЙ выносливости (калории уходят на отдых после нагрузки; минута бега ≈ 960).")
     public double kcalPer100Stamina = 5;
     @Cfg(section = "energy", doc = "Без RP Stamina: ккал за минуту бега.")
     public double sprintKcalPerMinute = 50;
@@ -207,6 +207,94 @@ public final class Settings {
     public double fieldCookBonus = 2;
     @Cfg(section = "cooking", doc = "Кухонный кошмар (черта rpcore:kitchen_nightmare): минус столько уровней при готовке.")
     public double kitchenNightmarePenalty = 3;
+
+    // ------------------------------------------------------------------ вес плавно (решение 14.10.2026)
+    @Cfg(section = "weight", doc = "Сытость выше этой доли — часть съеденного сразу уходит в жир (толстеет).")
+    public double fatGainAbove = 0.8;
+    @Cfg(section = "weight", doc = "При полной сытости в жир уходит такая доля перевариваемого (плавно от fat_gain_above).")
+    public double fatGainShare = 0.5;
+    @Cfg(section = "weight", doc = "Сытость ниже этой доли — часть расхода тело берёт из жира (худеет); чем голоднее, тем больше, при 0 — весь.")
+    public double fatBurnBelow = 0.5;
+    @Cfg(section = "weight", doc = "Вес выше нормы (по полу и возрасту, RP Core): минус к скорости.")
+    public double overweightSpeedPenalty = 0.03;
+    @Cfg(section = "weight", doc = "Ожирение: минус к скорости.")
+    public double obeseSpeedPenalty = 0.07;
+
+    // ------------------------------------------------------------------ еда и питьё через силу
+    @Cfg(section = "overfill", doc = "Желудок полон — еда всё равно естся, но во столько раз медленнее (и питьё, когда воды больше 100 %).")
+    public double forcedEatSlow = 2;
+    @Cfg(section = "overfill", doc = "Переполнение (доля сверх желудка): до этой — тяжесть, дальше — тошнота.")
+    public double overfillNausea = 0.3;
+    @Cfg(section = "overfill", doc = "Переполнение: дальше этой — сильная боль в животе.")
+    public double overfillPain = 0.6;
+    @Cfg(section = "overfill", doc = "Железный желудок: тошнота с такого переполнения.")
+    public double overfillNauseaIron = 0.6;
+    @Cfg(section = "overfill", doc = "Железный желудок: боль с такого переполнения.")
+    public double overfillPainIron = 0.8;
+    @Cfg(section = "overfill", doc = "Слабый желудок: тошнота с такого переполнения.")
+    public double overfillNauseaWeak = 0.15;
+    @Cfg(section = "overfill", doc = "Слабый желудок: боль с такого переполнения.")
+    public double overfillPainWeak = 0.4;
+    @Cfg(section = "overfill", doc = "Тошнота: шанс рвоты в минуту.")
+    public double nauseaVomitPerMinute = 0.1;
+    @Cfg(section = "overfill", doc = "Боль: шанс рвоты в минуту.")
+    public double painVomitPerMinute = 0.3;
+    @Cfg(section = "overfill", doc = "Тяжесть: минус к скорости и к восстановлению выносливости.")
+    public double heavySpeedPenalty = 0.1;
+    @Cfg(section = "overfill", doc = "Тяжесть: минус к восстановлению выносливости.")
+    public double heavyRegenPenalty = 0.2;
+    @Cfg(section = "overfill", doc = "Второе «до предела» за сутки тела — травма желудка.")
+    public double stomachInjuryAfter = 2;
+    @Cfg(section = "water", doc = "Пить через силу: вода до стольких процентов.")
+    public double maxWater = 150;
+    @Cfg(section = "water", doc = "Лишняя вода (выше 100 %) уходит со скоростью, % в час игры.")
+    public double overWaterLossPerHour = 60;
+    @Cfg(section = "water", doc = "Перепил: с такой воды (%) — водная интоксикация (тошнота, слабость, меньше выносливости).")
+    public double waterIntoxicationAt = 120;
+    @Cfg(section = "water", doc = "Перепил: с такой воды (%) — отёк мозга (обмороки; с RP Medicine — повреждение мозга).")
+    public double brainEdemaAt = 140;
+
+    // ------------------------------------------------------------------ долгие последствия (сутки тела)
+    @Cfg(section = "conditions", doc = "Долгие последствия нехватки и избытка: включены.")
+    public boolean conditionsEnabled = true;
+    @Cfg(section = "conditions", doc = "Мало белка столько суток тела подряд — белковая недостаточность.")
+    public double proteinDeficiencyDays = 2;
+    @Cfg(section = "conditions", doc = "Много белка столько суток — камни в почках.")
+    public double kidneyProteinDays = 4;
+    @Cfg(section = "conditions", doc = "Мало воды (ниже 30 %) столько суток — камни в почках.")
+    public double kidneyWaterDays = 3;
+    @Cfg(section = "conditions", doc = "Много жиров столько суток — тошнота после жирного.")
+    public double fatNauseaDays = 2;
+    @Cfg(section = "conditions", doc = "Много жиров столько суток — повышенное давление.")
+    public double pressureDays = 5;
+    @Cfg(section = "conditions", doc = "Мало углеводов столько суток — головокружение на бегу.")
+    public double carbsDizzyDays = 1;
+    @Cfg(section = "conditions", doc = "Много углеводов столько суток — лишнее быстрее идёт в жир.")
+    public double carbsFatDays = 1;
+    @Cfg(section = "conditions", doc = "Много углеводов: лишнее идёт в жир во столько раз быстрее.")
+    public double carbsFatMult = 1.5;
+    @Cfg(section = "conditions", doc = "Мало витаминов столько суток — цинга (вдвое дольше — тяжёлая).")
+    public double scurvyDays = 3;
+    @Cfg(section = "conditions", doc = "Белковая недостаточность без RP Medicine: минус к скорости (отёки).")
+    public double proteinDeficiencySpeed = 0.05;
+
+    // ------------------------------------------------------------------ особенности (RP Perks)
+    @Cfg(section = "traits", doc = "Железный желудок: шанс отравления едой во столько раз.")
+    public double ironStomachPoison = 0.5;
+    @Cfg(section = "traits", doc = "Слабый желудок: шанс отравления во столько раз.")
+    public double weakStomachPoison = 1.5;
+    @Cfg(section = "traits", doc = "Слабый желудок: любая еда — такой шанс отравиться.")
+    public double weakStomachAnyFood = 0.05;
+    @Cfg(section = "traits", doc = "Малоежка: желудок и переваривание во столько раз (меньше и медленнее — голод позже).")
+    public double lightEaterStomach = 0.8;
+    @Cfg(section = "traits", doc = "Обжора: желудок и переваривание во столько раз.")
+    public double bigEaterStomach = 1.2;
+    @Cfg(section = "traits", doc = "Мало пьёт: вода тратится во столько раз.")
+    public double lowThirstWater = 0.75;
+    @Cfg(section = "traits", doc = "Много пьёт: вода тратится во столько раз.")
+    public double highThirstWater = 1.25;
+    @Cfg(section = "traits", doc = "Плохие зубы: шанс боли при еде (плюс доля от калорий порции на 2000 ккал).")
+    public double badTeethChance = 0.2;
 
     // ------------------------------------------------------------------ производные
 

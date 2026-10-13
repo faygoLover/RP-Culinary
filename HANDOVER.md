@@ -64,3 +64,13 @@
   `RpTimeSkipEvent`, во сне — со сниженным обменом). `NutritionProvider.advance` оставлен для Medicine до блока 5.
 - `CookingService.REPEATS` не копит старые блюда; GameTest и площадка исключены из релизного jar.
 - Команды — в общем списке `/rpcore commands`. В игре не проверено.
+
+## Состояние (14.10.2026) — Culinary 0.3.0 на Core 0.5.0
+План — `RP Stamina Sports/docs/09_deploy_plan.md`, шаг 4; дизайн — `07_catalog_speed_weight.md` п. 3 и
+`08_overeating_and_nutrient_conditions.md`. В игре не проверено.
+- Калории — за восстановленную выносливость (`StaminaRestoredEvent`), `burnKcal`, `consumeNutrient`, `thirstStage`.
+- Вес плавно (`[weight]`), нормы по полу и возрасту, штраф скорости за полноту.
+- Еда и питьё через силу (`[overfill]`, вода до 150 %), состояния через Medicine (`BodyProvider.condition`), иначе —
+  простые скрытые эффекты. Ощущения — `rpculinary.sense.*` (через Medicine, если она умеет).
+- Долгие последствия — `core/Conditions` (`[conditions]`).
+- Особенности: желудок, аппетит, жажда, зубы, стартовый вес (`[traits]`).

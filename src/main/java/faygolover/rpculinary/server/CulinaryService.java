@@ -4,7 +4,7 @@ import faygolover.rpcore.api.BodyProvider;
 import faygolover.rpcore.api.RpCoreAPI;
 import faygolover.rpcore.api.RpIds;
 import faygolover.rpcore.api.StaminaProvider;
-import faygolover.rpcore.api.event.ExertionEvent;
+import faygolover.rpcore.api.event.StaminaRestoredEvent;
 import faygolover.rpcore.api.event.FoodEatenEvent;
 import faygolover.rpculinary.capability.NutritionData;
 import faygolover.rpculinary.core.Food;
@@ -74,6 +74,7 @@ public final class CulinaryService {
     private static final UUID SPEED_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c11");
     private static final UUID ATTACK_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c12");
     private static final UUID STAMINA_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c13");
+    private static final UUID REGEN_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c14");
     private static final ResourceKey<DamageType> LSO_DEHYDRATION = ResourceKey.create(Registries.DAMAGE_TYPE,
             new ResourceLocation("legendarysurvivaloverhaul", "dehydration"));
     private static final Random RANDOM = new Random();
@@ -111,9 +112,28 @@ public final class CulinaryService {
         return k;
     }
 
-    /** Во сколько раз желудок меньше обычного: анорексия, плохой аппетит. */
+    /** Во сколько раз желудок меньше обычного: анорексия, плохой аппетит, Малоежка, Обжора. */
     public static double stomachMult(Player p, NutritionState m, Settings s) {
-        return (anorexic(p) ? s.anorexicStomach : 1) * (Nutrients.poorAppetite(m, s) ? s.poorAppetiteStomach : 1);
+        double k = (anorexic(p) ? s.anorexicStomach : 1) * (Nutrients.poorAppetite(m, s) ? s.poorAppetiteStomach : 1);
+        if (RpCoreAPI.hasTrait(p, RpIds.LIGHT_EATER)) k *= s.lightEaterStomach;
+        if (RpCoreAPI.hasTrait(p, RpIds.BIG_EATER)) k *= s.bigEaterStomach;
+        return k;
+    }
+
+    /** Скорость переваривания (Малоежка — медленнее, голод приходит позже; Обжора — быстрее). */
+    static double digest(Player p, Settings s) {
+        double k = 1;
+        if (RpCoreAPI.hasTrait(p, RpIds.LIGHT_EATER)) k *= s.lightEaterStomach;
+        if (RpCoreAPI.hasTrait(p, RpIds.BIG_EATER)) k *= s.bigEaterStomach;
+        return k;
+    }
+
+    /** Трата воды (Мало пьёт, Много пьёт). */
+    static double waterUse(Player p, Settings s) {
+        double k = 1;
+        if (RpCoreAPI.hasTrait(p, RpIds.LOW_THIRST)) k *= s.lowThirstWater;
+        if (RpCoreAPI.hasTrait(p, RpIds.HIGH_THIRST)) k *= s.highThirstWater;
+        return k;
     }
 
     /** 0 — жажды нет, 1 — своя, 2 — LSO. */
@@ -149,7 +169,8 @@ public final class CulinaryService {
             // не считаем: на «Мирной» ваниль сама подкармливает игрока — это не еда.
             if (d.mirroredFood >= 0 && cur > d.mirroredFood && d.ateItemTick != tick && d.clickedTick >= tick - 1 && active(sp))
                 eatFromBlock(sp, d, d.clickedBlock, cur - d.mirroredFood);
-            int lock = Metabolism.hasRoom(d.state, s, stomachMult(sp, d.state, s)) ? FOOD_ROOM : FOOD_FULL;
+            // Полный желудок не мешает есть — через силу (медленнее, переполнение). Не лезет только «до предела».
+            int lock = Metabolism.overfill(d.state, s, stomachMult(sp, d.state, s)) >= 1 ? FOOD_FULL : FOOD_ROOM;
             fd.setFoodLevel(lock);
             fd.setSaturation(0);
             fd.setExhaustion(0);
@@ -178,10 +199,15 @@ public final class CulinaryService {
         int thirst = thirstMode(sp, s);
         Metabolism.Input in = new Metabolism.Input();
         in.dt = 1;
+        // Калории за отдых: сколько выносливости восстановилось (RP Stamina); без неё — по бегу.
         if (d.exertionStamina > 0) in.exertionKcal = d.exertionStamina / 100.0 * s.kcalPer100Stamina;
         else if (RpCoreAPI.stamina() == null) in.exertionKcal = d.sprintTicks / 20.0 / 60.0 * s.sprintKcalPerMinute;
+        in.exertionKcal += d.extraKcal;
         d.exertionStamina = 0;
+        d.extraKcal = 0;
         d.sprintTicks = 0;
+        in.digest = digest(sp, s);
+        in.water = waterUse(sp, s);
         in.sleeping = sp.isSleeping();
         in.cold = Lso.cold(sp);
         in.metabolism = metabolism(sp, s);
@@ -194,7 +220,8 @@ public final class CulinaryService {
             if (faint > 0) faint(sp, faint);
         }
         double hydration = hydration(sp, m, s);
-        applyEffects(sp, m, s, hydration);
+        BodyEffects.Mods mods = BodyEffects.step(sp, d, s, hydration);
+        applyEffects(sp, m, s, Math.min(1, hydration), mods);
         if (!RpCoreAPI.bodyHandles(RpIds.BODY_HEALTH)) withoutBody(sp, m, s, hydration);
         stageMessages(sp, d, m, s, hydration);
         sync(sp, d, false);
@@ -213,8 +240,8 @@ public final class CulinaryService {
     }
 
     /** «Нет сил» от голода и жажды; без мода тела — ещё и нехватка нутриентов (с Medicine их действие ведёт она). */
-    static void applyEffects(ServerPlayer sp, NutritionState m, Settings s, double hydration) {
-        double speed = 0, attack = 0, stamina = 1;
+    static void applyEffects(ServerPlayer sp, NutritionState m, Settings s, double hydration, BodyEffects.Mods mods) {
+        double speed = mods.speed(), attack = 0, stamina = mods.staminaCap();
         boolean weak = Metabolism.hungerStage(m, s) >= 2 || Metabolism.thirstStage(hydration, s) >= 2;
         if (weak) {
             speed += s.weakSpeedPenalty;
@@ -237,6 +264,9 @@ public final class CulinaryService {
         // Максимум выносливости — через розетку выносливости RP Core (без мода выносливости — пропускаем).
         Attribute max = RpCoreAPI.staminaAttribute(StaminaProvider.Stat.MAX);
         if (max != null) modifier(sp, max, STAMINA_ID, "rpculinary.weak_stamina", stamina - 1);
+        // Тяжесть в животе, сонливость после сладкого — медленнее отдыхает.
+        Attribute regen = RpCoreAPI.staminaAttribute(StaminaProvider.Stat.REGEN);
+        if (regen != null) modifier(sp, regen, REGEN_ID, "rpculinary.regen", mods.regen() - 1);
     }
 
     private static void modifier(ServerPlayer sp, Attribute attr, UUID id, String name, double amount) {
@@ -303,7 +333,18 @@ public final class CulinaryService {
             NutritionState m = state(p);
             fedUp = m != null && p instanceof ServerPlayer sp && Nutrients.fedUp(m, NutritionTable.category(sp.server, e.getItem().getItem()), s);
         }
-        if (fedUp && slowTick(p.tickCount, s.monotonyEatSlow) && e.getDuration() < e.getItem().getUseDuration())
+        // Через силу: желудок полон (или воды уже больше 100 % и это питьё) — медленнее.
+        boolean drink = e.getItem().getUseAnimation() == net.minecraft.world.item.UseAnim.DRINK;
+        boolean forced;
+        if (p.level().isClientSide) {
+            forced = faygolover.rpculinary.client.ClientNutrition.forced(drink);
+        } else {
+            NutritionState m = state(p);
+            forced = m != null && (drink ? thirstMode((ServerPlayer) p, s) == 1 && m.water >= 100
+                    : s.hungerEnabled && !Metabolism.hasRoom(m, s, stomachMult(p, m, s)));
+        }
+        double factor = (fedUp ? s.monotonyEatSlow : 1) * (forced ? s.forcedEatSlow : 1);
+        if (factor > 1 && slowTick(p.tickCount, factor) && e.getDuration() < e.getItem().getUseDuration())
             e.setDuration(e.getDuration() + 1);
     }
 
@@ -338,8 +379,10 @@ public final class CulinaryService {
         if (gourmet) monotony *= quality >= faygolover.rpculinary.core.Cooking.GOOD ? 0.5 : s.gourmetMonotony;
         if (water > 0) food = food.plus(new Food(0, 0, 0, 0, 0, water));
         int cat = NutritionTable.category(sp.server, used.getItem());
+        boolean wasFull = s.hungerEnabled && !Metabolism.hasRoom(d.state, s, stomachMult(sp, d.state, s));
         consume(sp, d, food, cat, used, monotony);
-        double poison = s.rawMeatPoisonChance * (RpCoreAPI.hasTrait(sp, RpIds.CLEAN) ? s.cleanPoisonFactor : 1);
+        BodyEffects.afterEating(sp, d, s, food, wasFull);
+        double poison = s.rawMeatPoisonChance * BodyEffects.poisonFactor(sp, s);
         if (rawMeat(sp, used, cat) && sp.getRandom().nextDouble() < poison) {
             sp.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0));
             sp.displayClientMessage(Component.translatable("rpculinary.msg.raw_meat").withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC), true);
@@ -417,9 +460,10 @@ public final class CulinaryService {
 
     // ------------------------------------------------------------------ прочие события
 
-    public static void onExertion(ExertionEvent e) {
+    /** Калории платятся за отдых после нагрузки: сколько выносливости восстановилось (RP Stamina 1.4+). */
+    public static void onStaminaRestored(StaminaRestoredEvent e) {
         NutritionData d = NutritionData.get(e.getEntity());
-        if (d != null) d.exertionStamina += e.stamina();
+        if (d != null) d.exertionStamina += e.amount();
     }
 
     /** Голод и жажда больше не убивают: ванильный голодный урон и обезвоживание LSO отменяются (обмороки — наши). */

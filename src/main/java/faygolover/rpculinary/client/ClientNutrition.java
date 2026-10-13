@@ -48,6 +48,13 @@ public final class ClientNutrition {
         return cat != null && cat >= 0 && (self.fedUpMask() & (1 << cat)) != 0;
     }
 
+    /** Ест (или пьёт) через силу: желудок полон / воды уже больше 100 % — медленнее. */
+    public static boolean forced(boolean drink) {
+        if (!known) return false;
+        if (drink) return self.thirstMode() == 1 && self.hydration() >= 1f;
+        return self.hunger() && !self.room();
+    }
+
     /** 0 — жажды нет, 1 — своя, 2 — LSO. */
     public static int thirstMode() {
         return known ? self.thirstMode() : 0;

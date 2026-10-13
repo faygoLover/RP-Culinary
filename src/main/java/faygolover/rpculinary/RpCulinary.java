@@ -52,7 +52,7 @@ public class RpCulinary {
         bus.addListener(CulinaryService::onUseTick);
         bus.addListener(CulinaryService::onUseFinish);
         bus.addListener(CulinaryService::onRightClickBlock);
-        bus.addListener(CulinaryService::onExertion);
+        bus.addListener(CulinaryService::onStaminaRestored);
         bus.addListener(CulinaryService::onAttack);
         bus.addListener(CulinaryService::onClone);
         bus.addListener(CulinaryService::onLogin);

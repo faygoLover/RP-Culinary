@@ -31,8 +31,20 @@ public final class NutritionData {
     @Nullable
     public Block clickedBlock;
     public long clickedTick = -1;
-    /** Нагрузка с прошлого шага: выносливость RP Stamina, тики бега без неё. */
+    /** С прошлого шага: восстановленная выносливость RP Stamina (калории за отдых), тики бега без неё. */
     public double exertionStamina;
+    /** Сверх обычного с прошлого шага (спорт: восстановление мышц, дожигание), ккал. */
+    public double extraKcal;
+    /** Последние отправленные мод тела тяжести состояний (слать только изменения). */
+    public final java.util.Map<String, Double> sentConditions = new java.util.HashMap<>();
+    /** Ощущения: ключ → тик, когда показано в последний раз. */
+    public final java.util.Map<String, Long> sensationTicks = new java.util.HashMap<>();
+    /** Тик, до которого «сонливость после сладкого» (−10 % восстановления выносливости). */
+    public long drowsyUntil = -1;
+    /** Тик, когда в последний раз был «обморок от отёка мозга» (без мода тела). */
+    public long edemaFaintTick = -1;
+    /** Ел через силу — сообщение один раз за приём. */
+    public boolean forcedNoted;
     public int sprintTicks;
     public int stepTicks;
     /** Последнее, что ушло клиенту (слать, только когда изменилось). */
@@ -71,6 +83,19 @@ public final class NutritionData {
         t.putDouble("dehydrated", m.dehydratedSeconds);
         t.putDouble("faint_in", m.faintCountdown);
         t.putDouble("poor_appetite", m.poorAppetiteSeconds);
+        CompoundTag cond = new CompoundTag();
+        for (int i = 0; i < faygolover.rpculinary.core.Conditions.COUNT; i++) {
+            if (m.condProgress[i] <= 0 && !m.condActive[i]) continue;
+            CompoundTag c = new CompoundTag();
+            c.putDouble("p", m.condProgress[i]);
+            c.putDouble("r", m.condRecover[i]);
+            c.putBoolean("a", m.condActive[i]);
+            cond.put(faygolover.rpculinary.core.Conditions.IDS[i], c);
+        }
+        t.put("conditions", cond);
+        t.putInt("overfill_hits", m.overfillLimitHits);
+        t.putDouble("overfill_window", m.overfillWindowSeconds);
+        t.putString("body_trait", m.appliedBodyTrait);
         if (m.ivSeconds > 0) {
             CompoundTag iv = new CompoundTag();
             iv.putDouble("kcal", m.ivKcal);
@@ -100,6 +125,16 @@ public final class NutritionData {
         m.dehydratedSeconds = t.getDouble("dehydrated");
         m.faintCountdown = t.contains("faint_in") ? t.getDouble("faint_in") : -1;
         m.poorAppetiteSeconds = t.getDouble("poor_appetite");
+        CompoundTag cond = t.getCompound("conditions");
+        for (int i = 0; i < faygolover.rpculinary.core.Conditions.COUNT; i++) {
+            CompoundTag c = cond.getCompound(faygolover.rpculinary.core.Conditions.IDS[i]);
+            m.condProgress[i] = c.getDouble("p");
+            m.condRecover[i] = c.getDouble("r");
+            m.condActive[i] = c.getBoolean("a");
+        }
+        m.overfillLimitHits = t.getInt("overfill_hits");
+        m.overfillWindowSeconds = t.getDouble("overfill_window");
+        m.appliedBodyTrait = t.getString("body_trait");
         CompoundTag iv = t.getCompound("iv");
         m.ivKcal = iv.getDouble("kcal");
         m.ivProtein = iv.getDouble("protein");

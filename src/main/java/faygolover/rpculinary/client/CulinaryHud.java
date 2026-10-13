@@ -83,8 +83,10 @@ public final class CulinaryHud {
             g.fill(x0 + 1, 1, x0 + 1 + full, 8, color);
             // Ещё в желудке — светлее (правый край полосы).
             if (stomach > 0) g.fill(x0 + 1 + Math.max(0, full - stomach), 1, x0 + 1 + full, 8, 0xFFE6C27A);
+            // Переел — шкала идёт вторым кругом другим цветом (это не значок: видно, что съел через силу).
             if (sat > 1.0) {
                 int over = (int) Math.round(Math.min(1, (sat - 1) / 0.75) * (BAR - 2));
+                g.fill(x0 + 1, 1, x0 + 1 + over, 8, 0xFFD0502A);
                 g.fill(x0 + 1, 1, x0 + 1 + over, 3, 0xFFFF8A30);
             }
             g.renderOutline(x0, 0, BAR, 9, 0xC0303030);
@@ -143,6 +145,11 @@ public final class CulinaryHud {
             int fill = (int) Math.round(Math.max(0, Math.min(1, hyd)) * (bw - 2));
             int color = stage >= 2 ? (blink() ? 0xFFB03020 : 0xFF3050A0) : stage == 1 ? 0xFF3A78B8 : 0xFF3C9BE0;
             g.fill(x0 + 1, 1, x0 + 1 + fill, 6, color);
+            // Выпил через силу (воды больше 100 %) — второй круг.
+            if (hyd > 1.0) {
+                int over = (int) Math.round(Math.min(1, (hyd - 1) / 0.5) * (bw - 2));
+                g.fill(x0 + 1, 1, x0 + 1 + over, 6, 0xFF6A3CC8);
+            }
             g.renderOutline(x0, 0, bw, 7, 0xC0303030);
         }
     }
