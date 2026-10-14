@@ -52,6 +52,11 @@ public final class CulinaryHud {
         }
 
         @Override
+        public boolean hasIcon() {
+            return true;
+        }
+
+        @Override
         public Anchor defaultAnchor() {
             return Anchor.BOTTOM_CENTER;
         }
@@ -74,7 +79,7 @@ public final class CulinaryHud {
             double sat = preview ? 0.7 : p.satiety();
             double stomachShare = preview ? 0.2 : Math.max(0, Math.min(sat, p.stomach()));
             int stage = preview ? 0 : p.hungerStage();
-            g.blit(ICONS, 0, 0, 0, 0, 9, 9, 32, 16);
+            if (faygolover.rpcore.client.hud.HudLayout.iconShown(this)) g.blit(ICONS, 0, 0, 0, 0, 9, 9, 32, 16);
             int x0 = 10;
             g.fill(x0, 0, x0 + BAR, 9, 0xA0000000);
             int full = (int) Math.round(Math.min(1, sat) * (BAR - 2));
@@ -118,6 +123,11 @@ public final class CulinaryHud {
         }
 
         @Override
+        public boolean hasIcon() {
+            return true;
+        }
+
+        @Override
         public Anchor defaultAnchor() {
             return Anchor.BOTTOM_CENTER;
         }
@@ -139,7 +149,7 @@ public final class CulinaryHud {
             SyncPacket p = ClientNutrition.self;
             double hyd = preview ? 0.6 : p.hydration();
             int stage = preview ? 0 : p.thirstStage();
-            g.blit(ICONS, 0, 0, 9, 0, 7, 7, 32, 16);
+            if (faygolover.rpcore.client.hud.HudLayout.iconShown(this)) g.blit(ICONS, 0, 0, 9, 0, 7, 7, 32, 16);
             int x0 = 9, bw = W - x0;
             g.fill(x0, 0, x0 + bw, 7, 0xA0000000);
             int fill = (int) Math.round(Math.max(0, Math.min(1, hyd)) * (bw - 2));
