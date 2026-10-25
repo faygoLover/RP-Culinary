@@ -1,12 +1,12 @@
 {
   "items": [
-    "herbalbrews:black_tea_block",
-    "herbalbrews:green_tea_block",
-    "herbalbrews:oolong_tea_block",
-    "herbalbrews:yerba_mate_tea_block",
-    "herbalbrews:hibiscus_tea_block",
-    "herbalbrews:lavender_tea_block",
-    "herbalbrews:rooibos_tea_block"
+    "herbalbrews:black_tea",
+    "herbalbrews:green_tea",
+    "herbalbrews:oolong_tea",
+    "herbalbrews:yerba_mate_tea",
+    "herbalbrews:hibiscus_tea",
+    "herbalbrews:lavender_tea",
+    "herbalbrews:rooibos_tea"
   ],
   "protein": 0,
   "fat": 0,

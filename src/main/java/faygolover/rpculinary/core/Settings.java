@@ -111,6 +111,8 @@ public final class Settings {
     public double waterLossPerHour = 15;
     @Cfg(section = "water", doc = "Суп, похлёбка, рагу (по названию предмета) поят на столько процентов, если их нет в датапаке drinks.")
     public double soupWater = 10;
+    @Cfg(section = "water", doc = "Пьётся (анимация питья), но нет ни в базе RP Core, ни в drinks: поит на столько процентов (и строка в лог).")
+    public double unknownDrinkWater = 10;
     @Cfg(section = "water", doc = "Вода нового игрока, %.")
     public double startWater = 90;
     @Cfg(section = "water", doc = "Вода ниже этой доли (0–1) — «хочется пить».")

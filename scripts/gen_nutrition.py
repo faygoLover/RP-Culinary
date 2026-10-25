@@ -1,6 +1,8 @@
-# Датапак RP Culinary по умолчанию: состав базовых ингредиентов (rpculinary/nutrition) и напитки (rpculinary/drinks).
+# Датапак RP Culinary по умолчанию: состав базовых ингредиентов (rpculinary/nutrition).
+# Напитки (сколько поят) с Culinary 0.4.0 — в общей базе RP Core (rpcore/consumables, scripts/gen_consumables.py там);
+# свой датапак rpculinary/drinks остаётся для сторонних наборов, по умолчанию пуст.
 # Перенесено из RP Medicine (scripts/gen_data.py) в 0.3.0; дополнено продуктами Kaleidoscope и Farmer's Delight.
-# Запуск: python scripts/gen_nutrition.py — перезаписывает src/main/resources/data/rpculinary/rpculinary/{nutrition,drinks}.
+# Запуск: python scripts/gen_nutrition.py — перезаписывает src/main/resources/data/rpculinary/rpculinary/nutrition (и стирает старую drinks).
 # Руками JSON там не править: правки — здесь.
 import json
 import os
@@ -106,9 +108,9 @@ NUTRITION = {
     "wine": ([f"vinery:{w}" for w in WINES] + ns("vinery", "apple_cider", "kelp_cider", "mead"), 120, 0, 0, 4, 1),
     "juice": (ns("vinery", "apple_juice", "red_grapejuice", "white_grapejuice", "red_jungle_grapejuice", "white_jungle_grapejuice",
                  "red_savanna_grapejuice", "white_savanna_grapejuice", "red_taiga_grapejuice", "white_taiga_grapejuice"), 0, 0, 0, 25, 10),
-    "coffee": (ns("herbalbrews", "coffee_block"), 0, 0, 0, 2, 0),
-    "coffee_milk": (ns("herbalbrews", "milk_coffee_block"), 0, 3, 3, 5, 0),
-    "tea": ([f"herbalbrews:{t}_tea_block" for t in ["black", "green", "oolong", "yerba_mate", "hibiscus", "lavender", "rooibos"]], 0, 0, 0, 1, 3),
+    "coffee": (ns("herbalbrews", "coffee"), 0, 0, 0, 2, 0),
+    "coffee_milk": (ns("herbalbrews", "milk_coffee"), 0, 3, 3, 5, 0),
+    "tea": ([f"herbalbrews:{t}_tea" for t in ["black", "green", "oolong", "yerba_mate", "hibiscus", "lavender", "rooibos"]], 0, 0, 0, 1, 3),
     # Let's Do: сырьё для чая, кофе и пива (в рецепты; сами по себе почти не питают).
     "tea_leaves": (ns("herbalbrews", "tea_blossom", "yerba_mate_leaf", "rooibos_leaf", "dried_green_tea", "dried_black_tea",
                       "dried_oolong_tea", "hibiscus", "lavender") + ns("farm_and_charm", "nettle", "ribwort"), 0, 0, 0, 1, 2),
@@ -135,21 +137,3 @@ for name, (items, kcal, prot, fat, carbs, vit) in NUTRITION.items():
     if kcal:
         obj["kcal"] = kcal
     write(f"{DATA}/nutrition/{name}.json", obj)
-
-# ---------------------------------------------------------------- напитки для своей воды (без LSO)
-DRINKS = {
-    "water": {"items": ["minecraft:potion"], "potion": "minecraft:water", "amount": 35},
-    "milk": {"items": ["minecraft:milk_bucket"], "amount": 25},
-    "honey": {"items": ["minecraft:honey_bottle"], "amount": 10},
-    "soups": {"items": ["minecraft:mushroom_stew", "minecraft:beetroot_soup", "minecraft:rabbit_stew", "minecraft:suspicious_stew"], "amount": 10},
-    "melon": {"items": ["minecraft:melon_slice"], "amount": 5},
-    # Let's Do: напитки поят (крепкое — нет).
-    "letsdo_beer": {"items": NUTRITION["beer"][0], "amount": 15},
-    "letsdo_wine": {"items": NUTRITION["wine"][0], "amount": 8},
-    "letsdo_juice": {"items": NUTRITION["juice"][0], "amount": 25},
-    "letsdo_tea": {"items": NUTRITION["tea"][0] + ns("farm_and_charm", "strawberry_tea_cup", "nettle_tea_cup", "ribwort_tea_cup",
-                                                     "nettle_tea", "ribwort_tea"), "amount": 25},
-    "letsdo_coffee": {"items": NUTRITION["coffee"][0] + NUTRITION["coffee_milk"][0], "amount": 20},
-}
-for name, obj in DRINKS.items():
-    write(f"{DATA}/drinks/{name}.json", obj)

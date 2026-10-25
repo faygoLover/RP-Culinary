@@ -363,10 +363,9 @@ public final class CulinaryService {
         ensureInit(sp, d);
         ItemStack used = e.getItem();
         Settings s = Settings.get();
-        double water = thirstMode(sp, s) == 1 ? DrinkRules.water(used) : 0;
-        if (water <= 0 && thirstMode(sp, s) == 1 && soup(used)) water = s.soupWater;
+        double water = thirstMode(sp, s) == 1 ? drinkWater(used, s) : 0;
         Food food = itemFood(sp, used);
-        if (food == null && water <= 0) return;
+        if (food == null && water == 0) return;
         if (used.isEdible()) d.ateItemTick = sp.server.getTickCount();
         if (food == null) food = Food.ZERO;
         int quality = CookingService.quality(used);
@@ -377,7 +376,7 @@ public final class CulinaryService {
             food = new Food(food.kcal(), food.protein(), food.fat(), food.carbs(), food.vitamins() * 1.1, food.water());
         double monotony = quality >= 0 ? faygolover.rpculinary.core.Cooking.monotonyWeight(quality) : 1;
         if (gourmet) monotony *= quality >= faygolover.rpculinary.core.Cooking.GOOD ? 0.5 : s.gourmetMonotony;
-        if (water > 0) food = food.plus(new Food(0, 0, 0, 0, 0, water));
+        if (water != 0) food = food.plus(new Food(0, 0, 0, 0, 0, water));
         int cat = NutritionTable.category(sp.server, used.getItem());
         boolean wasFull = s.hungerEnabled && !Metabolism.hasRoom(d.state, s, stomachMult(sp, d.state, s));
         consume(sp, d, food, cat, used, monotony);
@@ -396,6 +395,28 @@ public final class CulinaryService {
         return NutritionTable.source(sp.server, st.getItem()) == NutritionTable.Source.RULE;
     }
 
+    /** Предметы, о которых уже написано «неизвестный напиток» (раз на предмет за запуск). */
+    private static final java.util.Set<Item> UNKNOWN_DRINKS = java.util.concurrent.ConcurrentHashMap.newKeySet();
+
+    /**
+     * Сколько поит выпитое (проценты; минус — сушит): общая база RP Core, затем свой датапак {@code drinks},
+     * затем суп по названию. Пьётся, но нигде не записано — немного воды и строка в лог, чтобы дописать базу.
+     */
+    static double drinkWater(ItemStack used, Settings s) {
+        faygolover.rpcore.api.Consumables.Entry c = faygolover.rpcore.api.Consumables.forItem(used);
+        if (c != null && c.hasWater()) return c.water();
+        double w = DrinkRules.water(used);
+        if (w > 0) return w;
+        if (soup(used)) return s.soupWater;
+        if (c == null && used.getUseAnimation() == net.minecraft.world.item.UseAnim.DRINK) {
+            if (UNKNOWN_DRINKS.add(used.getItem()))
+                faygolover.rpculinary.RpCulinary.LOGGER.warn("RP Culinary: неизвестный напиток {} — даёт {} % воды; допишите в rpcore/consumables",
+                        ForgeRegistries.ITEMS.getKey(used.getItem()), s.unknownDrinkWater);
+            return s.unknownDrinkWater;
+        }
+        return 0;
+    }
+
     /** Суп, похлёбка, рагу — по названию предмета (у модов готовки их десятки). */
     static boolean soup(ItemStack stack) {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
@@ -409,6 +430,9 @@ public final class CulinaryService {
     @Nullable
     public static Food itemFood(ServerPlayer sp, ItemStack stack) {
         Item item = stack.getItem();
+        // Вода в бутылке и т. п. (общая база RP Core, "calories": false) — не еда, сытости не даёт.
+        faygolover.rpcore.api.Consumables.Entry c = faygolover.rpcore.api.Consumables.forItem(stack);
+        if (c != null && !c.calories()) return null;
         FoodProperties fp = stack.getFoodProperties(sp);
         if (fp == null && NutritionRules.base(item) == null) return null;
         Food base = NutritionTable.get(sp.server, item);
