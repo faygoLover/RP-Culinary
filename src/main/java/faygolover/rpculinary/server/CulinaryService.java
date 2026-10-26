@@ -341,8 +341,8 @@ public final class CulinaryService {
     public static void onUseTick(LivingEntityUseItemEvent.Tick e) {
         if (!(e.getEntity() instanceof Player p) || !e.getItem().isEdible()) return;
         Settings s = Settings.get();
-        // Еда по частям: укус большого блюда — вместо «доел» откусил, предмет остаётся (сервер; доедание — onUseFinish).
-        if (e.getDuration() <= 1 && p instanceof ServerPlayer sp && active(sp) && bite(sp)) {
+        // Еда по частям и глотки: вместо «доел» откусил или отпил, предмет остаётся (сервер; последний — onUseFinish).
+        if (e.getDuration() <= 1 && p instanceof ServerPlayer sp && (sip(sp) || active(sp) && bite(sp))) {
             e.setDuration(0);
             sp.stopUsingItem();
             return;
@@ -378,18 +378,48 @@ public final class CulinaryService {
 
     /** Доел или допил предмет (у большого блюда — последний укус: ровно остаток). */
     public static void onUseFinish(LivingEntityUseItemEvent.Finish e) {
-        if (!(e.getEntity() instanceof ServerPlayer sp) || !active(sp)) return;
-        NutritionData d = NutritionData.get(sp);
-        if (d == null) return;
-        ensureInit(sp, d);
+        if (!(e.getEntity() instanceof ServerPlayer sp)) return;
         ItemStack used = e.getItem();
         double fraction = 1;
+        int sips = Sips.total(used);
         int n = used.hasTag() ? used.getTag().getInt(BITES_N) : 0;
-        if (n > 1) {
+        if (sips > 1) {
+            fraction = 1.0 / sips;
+        } else if (n > 1) {
             double kcal = dishKcal(sp, used, Settings.get());
             if (kcal > 0) fraction = Math.max(0.05, 1 - (n - 1) * Settings.get().portionStepKcal / kcal);
         }
+        // Вещества, бодрость, кофеин — по доле (RP Core), и в творческом тоже.
+        MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpConsumeEvent(sp, used.copy(), fraction));
+        if (!active(sp)) return;
+        NutritionData d = NutritionData.get(sp);
+        if (d == null) return;
+        ensureInit(sp, d);
         eatPortion(sp, d, used, fraction);
+    }
+
+    /**
+     * Глоток напитка в руке (пьётся глотками — база RP Core): вода и вещества — долей, предмет остаётся, отпитый
+     * лежит отдельно (со свежими не складывается). false — не глоток (один глоток или последний — onUseFinish).
+     */
+    public static boolean sip(ServerPlayer sp) {
+        ItemStack held = sp.getItemInHand(sp.getUsedItemHand());
+        int n = Sips.total(held);
+        int left = Sips.left(held);
+        if (n <= 1 || left <= 1) return false;
+        ItemStack piece = held.getCount() > 1 ? held.split(1) : held;
+        ItemStack before = piece.copy();
+        Sips.set(piece, left - 1, n);
+        if (piece != held && !sp.getInventory().add(piece)) sp.drop(piece, false);
+        MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpConsumeEvent(sp, before, 1.0 / n));
+        NutritionData d = NutritionData.get(sp);
+        if (d != null && active(sp)) {
+            ensureInit(sp, d);
+            eatPortion(sp, d, before, 1.0 / n);
+        }
+        sp.level().playSound(null, sp.getX(), sp.getY(), sp.getZ(), SoundEvents.GENERIC_DRINK, SoundSource.PLAYERS, 0.5f,
+                0.9f + sp.getRandom().nextFloat() * 0.2f);
+        return true;
     }
 
     /** Сколько укусов у целого блюда: от двух шагов — по шагу, остаток от 1 до 2 шагов — последним укусом. */
@@ -425,6 +455,7 @@ public final class CulinaryService {
         if (kcal <= 0) return false;
         ensureInit(sp, d);
         ItemStack piece = held.getCount() > 1 ? held.split(1) : held;
+        MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpConsumeEvent(sp, piece.copy(), s.portionStepKcal / kcal));
         eatPortion(sp, d, piece.copy(), s.portionStepKcal / kcal);
         piece.getOrCreateTag().putInt(BITES_N, n);
         piece.getTag().putInt(BITES, left - 1);
@@ -686,7 +717,18 @@ public final class CulinaryService {
 
     static void sendFoodTable(ServerPlayer sp) {
         MinecraftServer server = sp.server;
-        Net.send(sp, new FoodTablePacket(NutritionTable.snapshot(server), NutritionTable.categories(server)));
+        Net.send(sp, new FoodTablePacket(NutritionTable.snapshot(server), NutritionTable.categories(server), drinkTable()));
+    }
+
+    /** Глотки и вода (всего, %) по общей базе RP Core — для подсказок и шкалы на клиенте. */
+    static java.util.Map<ResourceLocation, int[]> drinkTable() {
+        java.util.Map<ResourceLocation, int[]> out = new java.util.HashMap<>();
+        faygolover.rpcore.api.Consumables.snapshot().forEach((id, e) -> {
+            if (e.hasWater() || e.sips() > 1) out.put(id, new int[]{e.sips(), (int) Math.round(e.hasWater() ? e.water() : 0)});
+        });
+        var w = faygolover.rpcore.api.Consumables.waterPotion();
+        if (w != null) out.put(FoodTablePacket.WATER_POTION, new int[]{w.sips(), (int) Math.round(w.water())});
+        return out;
     }
 
     // ------------------------------------------------------------------ клиенту

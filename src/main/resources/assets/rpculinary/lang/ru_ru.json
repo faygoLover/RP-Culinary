@@ -131,5 +131,7 @@
   "rpculinary.taste.disliked": "Фу... ну и гадость.",
   "rpculinary.msg.content": "Сыт и доволен.",
   "rpculinary.tooltip.bites_left": "Надкусано: осталось %s из %s",
-  "rpculinary.tooltip.bites": "Большая порция: на %s укусов"
+  "rpculinary.tooltip.bites": "Большая порция: на %s укусов",
+  "rpculinary.tooltip.sips": "Глотков: %s из %s — вода +%s%% за глоток",
+  "rpculinary.tooltip.drink_water": "Вода: +%s%%"
 }

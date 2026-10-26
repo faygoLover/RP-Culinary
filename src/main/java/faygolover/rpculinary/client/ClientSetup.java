@@ -28,6 +28,7 @@ public final class ClientSetup {
     public static void init(IEventBus modBus) {
         modBus.addListener(ClientSetup::setup);
         modBus.addListener(ClientSetup::keys);
+        modBus.addListener(PortionBars::register);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onOverlay);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onLogout);

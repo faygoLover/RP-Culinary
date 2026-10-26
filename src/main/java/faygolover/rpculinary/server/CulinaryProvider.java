@@ -21,6 +21,7 @@ public final class CulinaryProvider implements NutritionProvider {
         if (feature.equals(RpIds.FOOD_HUNGER)) return s.hungerEnabled;
         if (feature.equals(RpIds.FOOD_THIRST)) return s.thirstEnabled || Lso.loaded();
         if (feature.equals(RpIds.FOOD_WEIGHT)) return s.weightEnabled;
+        if (feature.equals(RpIds.FOOD_PORTIONS)) return true;
         return false;
     }
 

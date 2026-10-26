@@ -183,8 +183,17 @@ public final class CulinaryGameTests {
         m.water = 50;
         finish(p, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SWIFTNESS));
         h.assertTrue(m.water == 50, "зелье скорости — не вода");
+        // Бутылка воды — 2 глотка по 20 % (база RP Core): «допил» — последний глоток.
         finish(p, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER));
-        h.assertTrue(Math.abs(m.water - 85) < 1e-6, "вода +35, было " + m.water);
+        h.assertTrue(Math.abs(m.water - 70) < 1e-6, "последний глоток +20, было " + m.water);
+        // Глоток из полной бутылки в руке: бутылка остаётся, глотков 1 из 2.
+        ItemStack bottle = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
+        p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, bottle);
+        p.startUsingItem(net.minecraft.world.InteractionHand.MAIN_HAND);
+        h.assertTrue(CulinaryService.sip(p), "глоток");
+        h.assertTrue(faygolover.rpculinary.server.Sips.left(p.getMainHandItem()) == 1, "остался 1 глоток из 2");
+        h.assertTrue(Math.abs(m.water - 90) < 1e-6, "глоток +20, было " + m.water);
+        p.stopUsingItem();
         remove(h, p);
         h.succeed();
     }

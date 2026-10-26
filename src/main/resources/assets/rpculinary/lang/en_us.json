@@ -131,5 +131,7 @@
   "rpculinary.taste.disliked": "Ugh... disgusting.",
   "rpculinary.msg.content": "Full and content.",
   "rpculinary.tooltip.bites_left": "Bitten: %s of %s left",
-  "rpculinary.tooltip.bites": "A big portion: %s bites"
+  "rpculinary.tooltip.bites": "A big portion: %s bites",
+  "rpculinary.tooltip.sips": "Sips: %s of %s — water +%s%% per sip",
+  "rpculinary.tooltip.drink_water": "Water: +%s%%"
 }

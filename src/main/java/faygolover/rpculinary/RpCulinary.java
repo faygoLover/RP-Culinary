@@ -51,6 +51,8 @@ public class RpCulinary {
         bus.addListener(CulinaryService::onPlayerTick);
         bus.addListener(CulinaryService::onUseTick);
         bus.addListener(CulinaryService::onUseFinish);
+        bus.addListener(faygolover.rpculinary.server.Sips::onStackedOnOther);
+        bus.addListener(faygolover.rpculinary.server.Sips::onRightClick);
         bus.addListener(CulinaryService::onRightClickBlock);
         bus.addListener(CulinaryService::onStaminaRestored);
         bus.addListener(CulinaryService::onAttack);

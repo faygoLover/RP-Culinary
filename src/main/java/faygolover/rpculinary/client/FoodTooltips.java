@@ -36,6 +36,7 @@ public final class FoodTooltips {
 
     public static void onTooltip(ItemTooltipEvent e) {
         if (!ClientNutrition.known || e.getEntity() == null) return;
+        drinkLine(e);
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(e.getItemStack().getItem());
         Food f = id != null ? ClientNutrition.FOODS.get(id) : null;
         if (f == null || f.kcal() <= 0 && f.water() <= 0) return;
@@ -83,6 +84,20 @@ public final class FoodTooltips {
         }
         if (f.water() > 0) t.add(tr("water", Math.round(f.water())).withStyle(ChatFormatting.AQUA));
         if (dietitian()) advice(t, f);
+    }
+
+    /** Напиток: сколько воды (голубым), у пьющихся глотками — сколько осталось. */
+    static void drinkLine(ItemTooltipEvent e) {
+        if (ClientNutrition.thirstMode() == 0) return;
+        int[] d = ClientNutrition.drink(e.getItemStack());
+        if (d == null) return;
+        int n = Math.max(1, d[0]), water = d[1];
+        if (n > 1) {
+            int left = faygolover.rpculinary.server.Sips.left(e.getItemStack());
+            e.getToolTip().add(tr("sips", left, n, Math.round(water / (double) n)).withStyle(ChatFormatting.AQUA));
+        } else if (water != 0) {
+            e.getToolTip().add(tr("drink_water", water).withStyle(ChatFormatting.AQUA));
+        }
     }
 
     /** Диетолог: совет лично тебе — по своему состоянию (что прислал сервер). */

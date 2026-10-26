@@ -16,17 +16,35 @@ public final class ClientNutrition {
     public static SyncPacket self;
     public static final Map<ResourceLocation, Food> FOODS = new HashMap<>();
     public static final Map<ResourceLocation, Integer> CATEGORIES = new HashMap<>();
+    /** Напитки: глотков, вода всего (%) — по базе RP Core с сервера. */
+    public static final Map<ResourceLocation, int[]> DRINKS = new HashMap<>();
 
     public static void set(SyncPacket p) {
         self = p;
         known = true;
     }
 
-    public static void setFoods(Map<ResourceLocation, Food> foods, Map<ResourceLocation, Integer> cats) {
+    public static void setFoods(Map<ResourceLocation, Food> foods, Map<ResourceLocation, Integer> cats, Map<ResourceLocation, int[]> drinks) {
         FOODS.clear();
         FOODS.putAll(foods);
         CATEGORIES.clear();
         CATEGORIES.putAll(cats);
+        DRINKS.clear();
+        DRINKS.putAll(drinks);
+        faygolover.rpculinary.server.Sips.clientTotal = st -> {
+            int[] d = drink(st);
+            return d == null ? 1 : d[0];
+        };
+    }
+
+    /** Глотки и вода напитка по таблице (зелье воды — отдельно), или null. */
+    public static int[] drink(net.minecraft.world.item.ItemStack st) {
+        if (st.getItem() instanceof net.minecraft.world.item.PotionItem) {
+            var potion = net.minecraft.world.item.alchemy.PotionUtils.getPotion(st);
+            return potion == net.minecraft.world.item.alchemy.Potions.WATER
+                    ? DRINKS.get(faygolover.rpculinary.network.FoodTablePacket.WATER_POTION) : null;
+        }
+        return DRINKS.get(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(st.getItem()));
     }
 
     /** Вышли из мира — забыть. */
@@ -35,6 +53,7 @@ public final class ClientNutrition {
         self = null;
         FOODS.clear();
         CATEGORIES.clear();
+        DRINKS.clear();
     }
 
     public static boolean hunger() {
