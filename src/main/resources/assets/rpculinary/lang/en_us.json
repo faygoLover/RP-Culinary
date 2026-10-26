@@ -17,7 +17,7 @@
   "rpculinary.food_category.vegetables": "vegetables",
   "rpculinary.food_category.fruit": "fruit",
   "rpculinary.food_category.sweet": "sweets",
-  "rpculinary.food_category.dairy": "dairy and eggs",
+  "rpculinary.food_category.dairy": "dairy",
   "rpculinary.monotony.meat": "Meat again... you can barely swallow it.",
   "rpculinary.monotony.fish": "Fish again. It's getting sickening.",
   "rpculinary.monotony.grain": "Porridge and bread again. You're sick of it.",
@@ -120,5 +120,16 @@
   "rpculinary.sense.fat_nausea": "Fatty food makes you sick.",
   "rpculinary.sense.drowsy": "Sleepy after the sweets.",
   "rpculinary.sense.sick": "Something you ate was off…",
-  "rpculinary.sense.teeth": "A tooth aches."
+  "rpculinary.sense.teeth": "A tooth aches.",
+  "rpculinary.food_category.mushrooms": "mushrooms",
+  "rpculinary.food_category.eggs": "eggs",
+  "rpculinary.monotony.mushrooms": "Mushrooms again... can't stomach them.",
+  "rpculinary.monotony.eggs": "Eggs again. Sick of them.",
+  "rpculinary.monotony.dish": "This again...",
+  "rpculinary.monotony.method": "Always the same thing. I want something different.",
+  "rpculinary.taste.favourite": "Now that was tasty.",
+  "rpculinary.taste.disliked": "Ugh... disgusting.",
+  "rpculinary.msg.content": "Full and content.",
+  "rpculinary.tooltip.bites_left": "Bitten: %s of %s left",
+  "rpculinary.tooltip.bites": "A big portion: %s bites"
 }

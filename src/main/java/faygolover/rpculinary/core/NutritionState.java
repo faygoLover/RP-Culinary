@@ -8,10 +8,19 @@ public final class NutritionState {
      * Виды еды для «приелось»: однообразная еда одного вида надоедает (по виду, а не по предмету). Вид блюда — вид
      * ингредиента с наибольшими калориями.
      */
-    public static final String[] CATEGORIES = {"meat", "fish", "grain", "vegetables", "fruit", "sweet", "dairy"};
+    public static final String[] CATEGORIES = {"meat", "fish", "grain", "vegetables", "fruit", "sweet", "dairy", "mushrooms", "eggs"};
+    /** Способы «как приготовлено» (вторая ось «приелось»; решения Alex 26.10). */
+    public static final String[] METHODS = {"soup", "fried", "sandwich", "baked", "porridge", "fresh", "canned", "dessert"};
+    /** Сколько последних блюд помнит счётчик «приелось» по блюду. */
+    public static final int DISH_MEMORY = 24;
 
     public static int category(String id) {
         for (int i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].equals(id)) return i;
+        return -1;
+    }
+
+    public static int method(String id) {
+        for (int i = 0; i < METHODS.length; i++) if (METHODS[i].equals(id)) return i;
         return -1;
     }
 
@@ -27,6 +36,13 @@ public final class NutritionState {
     public final double[] nutrients = {60, 60, 60, 60};
     /** Недавние порции по видам («приелось»). */
     public final double[] monotony = new double[CATEGORIES.length];
+    /** То же по способам и по блюдам (id предмета → порции; старые вытесняются). */
+    public final double[] methodMono = new double[METHODS.length];
+    public final java.util.LinkedHashMap<String, Double> dishMono = new java.util.LinkedHashMap<>();
+    /** «Сыт и доволен»: RP-сутки ({@code dayTime / 24000}), какие виды за них ели (биты), уже было ли. */
+    public long varietyDay = -1;
+    public int varietyMask;
+    public boolean contentGiven;
     /** Съедено за последние часы, ккал (для подсказок Диетолога). */
     public double recentKcal;
 
@@ -82,6 +98,8 @@ public final class NutritionState {
         water = s.startWater;
         java.util.Arrays.fill(nutrients, s.nutrientStart);
         java.util.Arrays.fill(monotony, 0);
+        java.util.Arrays.fill(methodMono, 0);
+        dishMono.clear();
         setBody(Double.isNaN(weightKg) ? s.defaultWeightKg : weightKg, Double.isNaN(fatPercent) ? s.defaultFatPercent : fatPercent, s);
         initialized = true;
     }
@@ -93,6 +111,12 @@ public final class NutritionState {
         water = o.water;
         System.arraycopy(o.nutrients, 0, nutrients, 0, COUNT);
         System.arraycopy(o.monotony, 0, monotony, 0, monotony.length);
+        System.arraycopy(o.methodMono, 0, methodMono, 0, methodMono.length);
+        dishMono.clear();
+        dishMono.putAll(o.dishMono);
+        varietyDay = o.varietyDay;
+        varietyMask = o.varietyMask;
+        contentGiven = o.contentGiven;
         recentKcal = o.recentKcal;
         fatKg = o.fatKg;
         leanKg = o.leanKg;

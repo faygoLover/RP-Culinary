@@ -130,9 +130,10 @@ public final class CulinaryGameTests {
         tick(p, 1);
         h.assertTrue(p.getFoodData().getFoodLevel() == CulinaryService.FOOD_ROOM, "есть место — замок " + CulinaryService.FOOD_ROOM);
         h.assertTrue(p.getFoodData().getSaturationLevel() == 0, "насыщения нет");
-        m.stomach = Settings.get().stomachKcal;
+        // С 0.3.0 полный желудок не мешает есть (через силу); не лезет только «до предела» — вдвое больше объёма.
+        m.stomach = Settings.get().stomachKcal * 2;
         tick(p, 1);
-        h.assertTrue(p.getFoodData().getFoodLevel() == CulinaryService.FOOD_FULL, "желудок полон — ванильная еда не лезет");
+        h.assertTrue(p.getFoodData().getFoodLevel() == CulinaryService.FOOD_FULL, "желудок до предела — ванильная еда не лезет");
         h.assertFalse(p.canEat(false), "есть нельзя");
         h.assertTrue(p.canEat(true), "золотое яблоко — можно");
         remove(h, p);
@@ -184,6 +185,32 @@ public final class CulinaryGameTests {
         h.assertTrue(m.water == 50, "зелье скорости — не вода");
         finish(p, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER));
         h.assertTrue(Math.abs(m.water - 85) < 1e-6, "вода +35, было " + m.water);
+        remove(h, p);
+        h.succeed();
+    }
+
+    /** Еда по частям: большое блюдо — укус шагом, предмет остаётся с пометкой; последний укус — ровно остаток. */
+    @GameTest(template = T)
+    public static void bigDishIsEatenInBites(GameTestHelper h) {
+        ServerPlayer p = player(h);
+        NutritionState m = state(p);
+        Settings s = Settings.get();
+        ItemStack stew = new ItemStack(Items.RABBIT_STEW);
+        // Шаг поменьше, чтобы тушёный кролик (сколько бы ни дала таблица) точно елся укусами.
+        double oldStep = s.portionStepKcal;
+        s.portionStepKcal = 100;
+        int n = CulinaryService.bitesFor(p, stew, s);
+        h.assertTrue(n >= 2, "кролик укусами: " + n);
+        double before = m.stomach;
+        p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, stew);
+        p.startUsingItem(net.minecraft.world.InteractionHand.MAIN_HAND);
+        h.assertTrue(CulinaryService.bite(p), "первый укус");
+        ItemStack held = p.getMainHandItem();
+        h.assertTrue(!held.isEmpty() && held.getTag() != null && held.getTag().getInt(CulinaryService.BITES) == n - 1,
+                "блюдо осталось, укусов " + (n - 1));
+        h.assertTrue(Math.abs(m.stomach - before - s.portionStepKcal) < 1, "в желудке шаг: " + (m.stomach - before));
+        p.stopUsingItem();
+        s.portionStepKcal = oldStep;
         remove(h, p);
         h.succeed();
     }

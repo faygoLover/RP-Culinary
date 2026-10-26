@@ -75,6 +75,10 @@ public final class CulinaryService {
     private static final UUID ATTACK_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c12");
     private static final UUID STAMINA_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c13");
     private static final UUID REGEN_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c14");
+    /** «Сыт и доволен»: чуть быстрее восстанавливается выносливость до конца RP-суток. */
+    private static final UUID CONTENT_ID = UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c15");
+    /** Еда по частям: сколько укусов осталось и сколько их у целого блюда (NBT предмета). */
+    public static final String BITES = "rpculinary_bites", BITES_N = "rpculinary_bites_n";
     private static final ResourceKey<DamageType> LSO_DEHYDRATION = ResourceKey.create(Registries.DAMAGE_TYPE,
             new ResourceLocation("legendarysurvivaloverhaul", "dehydration"));
     private static final Random RANDOM = new Random();
@@ -266,7 +270,16 @@ public final class CulinaryService {
         if (max != null) modifier(sp, max, STAMINA_ID, "rpculinary.weak_stamina", stamina - 1);
         // Тяжесть в животе, сонливость после сладкого — медленнее отдыхает.
         Attribute regen = RpCoreAPI.staminaAttribute(StaminaProvider.Stat.REGEN);
-        if (regen != null) modifier(sp, regen, REGEN_ID, "rpculinary.regen", mods.regen() - 1);
+        if (regen != null) {
+            modifier(sp, regen, REGEN_ID, "rpculinary.regen", mods.regen() - 1);
+            boolean content = m.contentGiven && m.varietyDay == rpDay(sp);
+            modifier(sp, regen, CONTENT_ID, "rpculinary.content", content ? Settings.get().contentStaminaRegen : 0);
+        }
+    }
+
+    /** RP-сутки: время мира / 24000 (RP Time растягивает сутки — и они растягиваются). */
+    static long rpDay(ServerPlayer sp) {
+        return Math.floorDiv(sp.level().getDayTime(), 24000L);
     }
 
     private static void modifier(ServerPlayer sp, Attribute attr, UUID id, String name, double amount) {
@@ -326,6 +339,12 @@ public final class CulinaryService {
     public static void onUseTick(LivingEntityUseItemEvent.Tick e) {
         if (!(e.getEntity() instanceof Player p) || !e.getItem().isEdible()) return;
         Settings s = Settings.get();
+        // Еда по частям: укус большого блюда — вместо «доел» откусил, предмет остаётся (сервер; доедание — onUseFinish).
+        if (e.getDuration() <= 1 && p instanceof ServerPlayer sp && active(sp) && bite(sp)) {
+            e.setDuration(0);
+            sp.stopUsingItem();
+            return;
+        }
         boolean fedUp;
         if (p.level().isClientSide) {
             fedUp = faygolover.rpculinary.client.ClientNutrition.fedUp(e.getItem());
@@ -343,7 +362,7 @@ public final class CulinaryService {
             forced = m != null && (drink ? thirstMode((ServerPlayer) p, s) == 1 && m.water >= 100
                     : s.hungerEnabled && !Metabolism.hasRoom(m, s, stomachMult(p, m, s)));
         }
-        double factor = (fedUp ? s.monotonyEatSlow : 1) * (forced ? s.forcedEatSlow : 1);
+        double factor = (fedUp ? s.monotonyEatSlow : 1) * (forced ? s.forcedEatSlow : 1) * (dislikedKind(p, e.getItem()) ? s.dislikedEatSlow : 1);
         if (factor > 1 && slowTick(p.tickCount, factor) && e.getDuration() < e.getItem().getUseDuration())
             e.setDuration(e.getDuration() + 1);
     }
@@ -355,15 +374,81 @@ public final class CulinaryService {
         return Math.floor(tick * k) != Math.floor((tick - 1) * k);
     }
 
-    /** Доел или допил предмет. */
+    /** Доел или допил предмет (у большого блюда — последний укус: ровно остаток). */
     public static void onUseFinish(LivingEntityUseItemEvent.Finish e) {
         if (!(e.getEntity() instanceof ServerPlayer sp) || !active(sp)) return;
         NutritionData d = NutritionData.get(sp);
         if (d == null) return;
         ensureInit(sp, d);
         ItemStack used = e.getItem();
+        double fraction = 1;
+        int n = used.hasTag() ? used.getTag().getInt(BITES_N) : 0;
+        if (n > 1) {
+            double kcal = dishKcal(sp, used, Settings.get());
+            if (kcal > 0) fraction = Math.max(0.05, 1 - (n - 1) * Settings.get().portionStepKcal / kcal);
+        }
+        eatPortion(sp, d, used, fraction);
+    }
+
+    /** Сколько укусов у целого блюда: от двух шагов — по шагу, остаток от 1 до 2 шагов — последним укусом. */
+    public static int bitesFor(ServerPlayer sp, ItemStack st, Settings s) {
+        if (!s.bitesEnabled || s.portionStepKcal <= 0 || st.getUseAnimation() != net.minecraft.world.item.UseAnim.EAT) return 1;
+        double kcal = dishKcal(sp, st, s);
+        return kcal < 2 * s.portionStepKcal ? 1 : (int) Math.floor(kcal / s.portionStepKcal);
+    }
+
+    /** Калории целого блюда с качеством готовки. */
+    static double dishKcal(ServerPlayer sp, ItemStack st, Settings s) {
+        Food f = itemFood(sp, st);
+        if (f == null) return 0;
+        int q = CookingService.quality(st);
+        if (q >= 0) f = faygolover.rpculinary.core.Cooking.apply(f, q, s);
+        return f.kcal();
+    }
+
+    /**
+     * Укус большого блюда в руке: съесть шаг, записать, сколько осталось. Из стопки откусывается один предмет —
+     * надкусанный кладётся отдельно (со свежими не складывается). false — это не укус (обычная еда или последний).
+     */
+    public static boolean bite(ServerPlayer sp) {
         Settings s = Settings.get();
-        double water = thirstMode(sp, s) == 1 ? drinkWater(used, s) : 0;
+        NutritionData d = NutritionData.get(sp);
+        if (d == null) return false;
+        ItemStack held = sp.getItemInHand(sp.getUsedItemHand());
+        if (held.isEmpty() || !held.isEdible()) return false;
+        int n = held.hasTag() && held.getTag().contains(BITES_N) ? held.getTag().getInt(BITES_N) : bitesFor(sp, held, s);
+        int left = held.hasTag() && held.getTag().contains(BITES) ? held.getTag().getInt(BITES) : n;
+        if (n <= 1 || left <= 1) return false;
+        double kcal = dishKcal(sp, held, s);
+        if (kcal <= 0) return false;
+        ensureInit(sp, d);
+        ItemStack piece = held.getCount() > 1 ? held.split(1) : held;
+        eatPortion(sp, d, piece.copy(), s.portionStepKcal / kcal);
+        piece.getOrCreateTag().putInt(BITES_N, n);
+        piece.getTag().putInt(BITES, left - 1);
+        if (piece != held && !sp.getInventory().add(piece)) sp.drop(piece, false);
+        sp.level().playSound(null, sp.getX(), sp.getY(), sp.getZ(), SoundEvents.GENERIC_EAT, SoundSource.PLAYERS, 0.5f,
+                0.9f + sp.getRandom().nextFloat() * 0.2f);
+        return true;
+    }
+
+    /** Нелюбимое по виду еды (то, что знают и сервер, и клиент: одинаково замедляем еду). */
+    static boolean dislikedKind(Player p, ItemStack st) {
+        String dis = RpCoreAPI.taste(p).disliked();
+        if (!dis.startsWith("kind:")) return false;
+        int cat;
+        if (p.level().isClientSide) {
+            cat = faygolover.rpculinary.client.ClientNutrition.CATEGORIES.getOrDefault(ForgeRegistries.ITEMS.getKey(st.getItem()), -1);
+        } else {
+            cat = NutritionTable.category(((ServerPlayer) p).server, st.getItem());
+        }
+        return cat >= 0 && dis.equals("kind:" + NutritionState.CATEGORIES[cat]);
+    }
+
+    /** Съесть долю {@code fraction} предмета {@code used}: вода, еда, «приелось», вкусы, «Сыт и доволен». */
+    static void eatPortion(ServerPlayer sp, NutritionData d, ItemStack used, double fraction) {
+        Settings s = Settings.get();
+        double water = (thirstMode(sp, s) == 1 ? drinkWater(used, s) : 0) * fraction;
         Food food = itemFood(sp, used);
         if (food == null && water == 0) return;
         if (used.isEdible()) d.ateItemTick = sp.server.getTickCount();
@@ -374,18 +459,61 @@ public final class CulinaryService {
         // Гурман: хорошее радует сильнее (витамины), однообразное надоедает быстрее.
         if (gourmet && quality >= faygolover.rpculinary.core.Cooking.GOOD)
             food = new Food(food.kcal(), food.protein(), food.fat(), food.carbs(), food.vitamins() * 1.1, food.water());
+        food = food.scale(fraction);
         double monotony = quality >= 0 ? faygolover.rpculinary.core.Cooking.monotonyWeight(quality) : 1;
         if (gourmet) monotony *= quality >= faygolover.rpculinary.core.Cooking.GOOD ? 0.5 : s.gourmetMonotony;
         if (water != 0) food = food.plus(new Food(0, 0, 0, 0, 0, water));
         int cat = NutritionTable.category(sp.server, used.getItem());
+        int method = FoodMethods.of(sp.server, used);
+        ResourceLocation dishId = ForgeRegistries.ITEMS.getKey(used.getItem());
+        // «Приелось» копится калориями: шаг порции — единица (укус большого блюда — его доля).
+        double portions = food.kcal() > 0 && s.portionStepKcal > 0 ? food.kcal() / s.portionStepKcal * monotony : 0;
+        faygolover.rpcore.api.FoodTaste taste = RpCoreAPI.taste(sp);
+        boolean favourite = tasteMatches(taste.favourite(), cat, method);
+        boolean disliked = !favourite && tasteMatches(taste.disliked(), cat, method);
+        var meal = new faygolover.rpculinary.core.Boredom.Meal(cat, method, dishId != null ? dishId.toString() : "",
+                portions, favourite, disliked);
         boolean wasFull = s.hungerEnabled && !Metabolism.hasRoom(d.state, s, stomachMult(sp, d.state, s));
-        consume(sp, d, food, cat, used, monotony);
+        consume(sp, d, food, meal, used);
         BodyEffects.afterEating(sp, d, s, food, wasFull);
+        if (food.kcal() > 0) {
+            double strength = Math.min(1.5, portions);
+            if (favourite) MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpMoodEvent(sp,
+                    faygolover.rpcore.api.event.RpMoodEvent.Kind.FAVOURITE_FOOD, strength));
+            if (disliked) MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpMoodEvent(sp,
+                    faygolover.rpcore.api.event.RpMoodEvent.Kind.DISLIKED_FOOD, strength));
+            variety(sp, d.state, cat, s);
+        }
         double poison = s.rawMeatPoisonChance * BodyEffects.poisonFactor(sp, s);
-        if (rawMeat(sp, used, cat) && sp.getRandom().nextDouble() < poison) {
+        if (rawMeat(sp, used, cat) && sp.getRandom().nextDouble() < poison * Math.min(1, fraction * 2)) {
             sp.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0));
             sp.displayClientMessage(Component.translatable("rpculinary.msg.raw_meat").withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC), true);
         }
+    }
+
+    /** Вкус совпал: «kind:вид» или «method:способ». */
+    static boolean tasteMatches(String taste, int cat, int method) {
+        if (taste == null || taste.isEmpty()) return false;
+        if (cat >= 0 && taste.equals("kind:" + NutritionState.CATEGORIES[cat])) return true;
+        return method >= 0 && taste.equals("method:" + NutritionState.METHODS[method]);
+    }
+
+    /**
+     * «Сыт и доволен»: за RP-сутки съел не меньше {@link Settings#varietyKinds} разных видов и нет нехватки
+     * нутриентов — раз в сутки событие психике (стресс −), строка ощущения и чуть быстрее отдых до конца суток.
+     */
+    static void variety(ServerPlayer sp, NutritionState m, int cat, Settings s) {
+        long day = rpDay(sp);
+        if (m.varietyDay != day) {
+            m.varietyDay = day;
+            m.varietyMask = 0;
+            m.contentGiven = false;
+        }
+        if (cat >= 0) m.varietyMask |= 1 << cat;
+        if (m.contentGiven || Integer.bitCount(m.varietyMask) < s.varietyKinds || Nutrients.anyLow(m, s)) return;
+        m.contentGiven = true;
+        MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpMoodEvent(sp, faygolover.rpcore.api.event.RpMoodEvent.Kind.FED_CONTENT, 1));
+        sp.displayClientMessage(Component.translatable("rpculinary.msg.content").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC), true);
     }
 
     /** Сырое мясо и рыба: базовый продукт (не блюдо) вида «мясо» или «рыба»; тухлятину и паучий глаз ведёт ваниль. */
@@ -408,7 +536,8 @@ public final class CulinaryService {
         double w = DrinkRules.water(used);
         if (w > 0) return w;
         if (soup(used)) return s.soupWater;
-        if (c == null && used.getUseAnimation() == net.minecraft.world.item.UseAnim.DRINK) {
+        // Зелья — не напитки (вода в бутылке записана в базе отдельно).
+        if (c == null && used.getUseAnimation() == net.minecraft.world.item.UseAnim.DRINK && !(used.getItem() instanceof net.minecraft.world.item.PotionItem)) {
             if (UNKNOWN_DRINKS.add(used.getItem()))
                 faygolover.rpculinary.RpCulinary.LOGGER.warn("RP Culinary: неизвестный напиток {} — даёт {} % воды; допишите в rpcore/consumables",
                         ForgeRegistries.ITEMS.getKey(used.getItem()), s.unknownDrinkWater);
@@ -465,11 +594,26 @@ public final class CulinaryService {
 
     /** Учесть съеденное: в желудок и нутриенты, сообщения, событие для других модов. */
     public static void consume(ServerPlayer sp, NutritionData d, Food food, int cat, ItemStack stack, double monotonyWeight) {
+        consume(sp, d, food, new faygolover.rpculinary.core.Boredom.Meal(cat, -1, "", monotonyWeight, false, false), stack);
+    }
+
+    /** То же с блюдом: вид, способ, само блюдо, вес в порциях, любимое или нелюбимое. */
+    public static void consume(ServerPlayer sp, NutritionData d, Food food, faygolover.rpculinary.core.Boredom.Meal meal, ItemStack stack) {
         Settings s = Settings.get();
         NutritionState m = d.state;
-        boolean fed = Metabolism.eat(m, food, cat, s, monotonyWeight);
-        if (fed) sp.displayClientMessage(Component.translatable("rpculinary.monotony." + NutritionState.CATEGORIES[cat])
-                .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), true);
+        var axis = faygolover.rpculinary.core.Boredom.axis(m, meal, s);
+        boolean fed = Metabolism.eat(m, food, meal, s);
+        // Ощущения, без цифр: что приелось — блюдо, вид или способ; любимое и нелюбимое.
+        String key = null;
+        if (fed) key = switch (axis) {
+            case DISH -> "rpculinary.monotony.dish";
+            case CATEGORY -> meal.cat() >= 0 ? "rpculinary.monotony." + NutritionState.CATEGORIES[meal.cat()] : "rpculinary.monotony.dish";
+            case METHOD -> "rpculinary.monotony.method";
+            case NONE -> null;
+        };
+        else if (meal.favourite() && food.kcal() > 0) key = "rpculinary.taste.favourite";
+        else if (meal.disliked() && food.kcal() > 0) key = "rpculinary.taste.disliked";
+        if (key != null) sp.displayClientMessage(Component.translatable(key).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), true);
         boolean room = Metabolism.hasRoom(m, s, stomachMult(sp, m, s));
         if (!room && d.lastRoom && food.kcal() > 0) {
             sp.displayClientMessage(Component.translatable("rpculinary.msg.full").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), true);

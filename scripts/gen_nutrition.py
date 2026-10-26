@@ -121,8 +121,8 @@ NUTRITION = {
 FOOD_CATEGORY = {
     "grain_wheat": "grain", "grain_other": "grain", "corn": "grain", "potato": "vegetables", "potato_poison": "vegetables",
     "carrot": "vegetables", "beetroot": "vegetables", "pumpkin": "vegetables", "tomato": "vegetables", "peppers": "vegetables", "cabbage": "vegetables",
-    "onion": "vegetables", "mushroom": "vegetables", "kelp": "vegetables", "apple": "fruit", "melon": "fruit", "berries": "fruit",
-    "grapes": "fruit", "chorus": "fruit", "sugar": "sweet", "honey": "sweet", "cocoa": "sweet", "egg": "dairy", "milk": "dairy",
+    "onion": "vegetables", "mushroom": "mushrooms", "kelp": "vegetables", "apple": "fruit", "melon": "fruit", "berries": "fruit",
+    "grapes": "fruit", "chorus": "fruit", "sugar": "sweet", "honey": "sweet", "cocoa": "sweet", "egg": "eggs", "milk": "dairy",
     "butter": "dairy", "cheese": "dairy", "beef": "meat", "ham": "meat", "pork": "meat", "chicken": "meat", "mutton": "meat", "rabbit": "meat",
     "fish": "fish", "fish_fat": "fish", "rotten": "meat", "spider_eye": "meat", "butchery_meat": "meat", "butchery_small": "meat",
     "butchery_fish": "fish", "butchery_mince": "meat", "butchery_sausage": "meat", "butchery_organs": "meat", "butchery_liver": "meat",

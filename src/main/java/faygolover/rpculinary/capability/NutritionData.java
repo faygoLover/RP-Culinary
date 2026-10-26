@@ -76,6 +76,14 @@ public final class NutritionData {
         for (int i = 0; i < NutritionState.COUNT; i++) t.putDouble(NutritionState.NUTRIENTS[i], m.nutrients[i]);
         for (int i = 0; i < NutritionState.CATEGORIES.length; i++)
             if (m.monotony[i] > 0) t.putDouble("mono_" + NutritionState.CATEGORIES[i], m.monotony[i]);
+        for (int i = 0; i < NutritionState.METHODS.length; i++)
+            if (m.methodMono[i] > 0) t.putDouble("mono_m_" + NutritionState.METHODS[i], m.methodMono[i]);
+        CompoundTag dishes = new CompoundTag();
+        m.dishMono.forEach(dishes::putDouble);
+        t.put("mono_dishes", dishes);
+        t.putLong("variety_day", m.varietyDay);
+        t.putInt("variety_mask", m.varietyMask);
+        t.putBoolean("content_given", m.contentGiven);
         t.putDouble("recent_kcal", m.recentKcal);
         t.putDouble("fat_kg", m.fatKg);
         t.putDouble("lean_kg", m.leanKg);
@@ -118,6 +126,13 @@ public final class NutritionData {
         for (int i = 0; i < NutritionState.COUNT; i++)
             if (t.contains(NutritionState.NUTRIENTS[i])) m.nutrients[i] = t.getDouble(NutritionState.NUTRIENTS[i]);
         for (int i = 0; i < NutritionState.CATEGORIES.length; i++) m.monotony[i] = t.getDouble("mono_" + NutritionState.CATEGORIES[i]);
+        for (int i = 0; i < NutritionState.METHODS.length; i++) m.methodMono[i] = t.getDouble("mono_m_" + NutritionState.METHODS[i]);
+        m.dishMono.clear();
+        CompoundTag dishes = t.getCompound("mono_dishes");
+        for (String k : dishes.getAllKeys()) m.dishMono.put(k, dishes.getDouble(k));
+        m.varietyDay = t.contains("variety_day") ? t.getLong("variety_day") : -1;
+        m.varietyMask = t.getInt("variety_mask");
+        m.contentGiven = t.getBoolean("content_given");
         m.recentKcal = t.getDouble("recent_kcal");
         m.fatKg = t.getDouble("fat_kg");
         m.leanKg = t.getDouble("lean_kg");

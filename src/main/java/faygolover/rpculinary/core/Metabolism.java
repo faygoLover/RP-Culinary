@@ -95,10 +95,13 @@ public final class Metabolism {
 
     /** То же; {@code monotonyWeight} — насколько порция приедается (вкусное — меньше 1). */
     public static boolean eat(NutritionState m, Food f, int cat, Settings s, double monotonyWeight) {
-        boolean fed = Nutrients.fedUp(m, cat, s);
-        double k = 1;
-        if (fed) k = Math.max(s.monotonyUptakeMin, 1 - s.monotonyUptakeStep * (m.monotony[cat] - s.monotonyThreshold + 1));
-        Food g = f.scale(k);
+        return eat(m, f, new Boredom.Meal(cat, -1, "", monotonyWeight, false, false), s);
+    }
+
+    /** Съедено: вид, способ, блюдо и вес в порциях — {@link Boredom}. true — уже приелось. */
+    public static boolean eat(NutritionState m, Food f, Boredom.Meal x, Settings s) {
+        boolean fed = Boredom.fedUp(m, x, s);
+        Food g = f.scale(Boredom.uptake(m, x, s));
         if (s.hungerEnabled) m.stomach += Math.max(0, g.kcal());
         m.recentKcal += Math.max(0, g.kcal());
         if (s.nutrientsEnabled) {
@@ -109,10 +112,7 @@ public final class Metabolism {
         }
         // Пить можно и через силу — до maxWater (лишнее уходит быстрее и вредит).
         m.water = Math.max(0, Math.min(Math.max(100, s.maxWater), m.water + g.water()));
-        if (s.monotonyEnabled && cat >= 0 && cat < NutritionState.CATEGORIES.length) {
-            for (int i = 0; i < NutritionState.CATEGORIES.length; i++)
-                m.monotony[i] = i == cat ? m.monotony[i] + monotonyWeight : Math.max(0, m.monotony[i] - s.monotonyVarietyRelief);
-        }
+        Boredom.add(m, x, s);
         return fed;
     }
 
@@ -222,7 +222,7 @@ public final class Metabolism {
             for (int i = 0; i < NutritionState.COUNT; i++)
                 m.nutrients[i] = Math.max(0, m.nutrients[i] - decay[i] * nts * activity * dt / 3600.0);
         }
-        for (int i = 0; i < m.monotony.length; i++) m.monotony[i] = Math.max(0, m.monotony[i] - s.monotonyDecayPerHour * nts * dt / 3600.0);
+        Boredom.decay(m, s.monotonyDecayPerHour * nts * dt / 3600.0);
         Conditions.update(m, s, hydration < 0 ? -1 : Math.min(1, hydration), dt);
         if (m.overfillWindowSeconds > 0) {
             m.overfillWindowSeconds = Math.max(0, m.overfillWindowSeconds - dt);

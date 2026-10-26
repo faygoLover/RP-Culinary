@@ -40,6 +40,16 @@ public final class FoodTooltips {
         Food f = id != null ? ClientNutrition.FOODS.get(id) : null;
         if (f == null || f.kcal() <= 0 && f.water() <= 0) return;
         List<Component> t = e.getToolTip();
+        // Еда по частям: надкусанное — сколько осталось; большое целое — на сколько укусов (по шагу из таблицы).
+        var tag = e.getItemStack().getTag();
+        if (tag != null && tag.getInt(faygolover.rpculinary.server.CulinaryService.BITES_N) > 1) {
+            t.add(tr("bites_left", tag.getInt(faygolover.rpculinary.server.CulinaryService.BITES),
+                    tag.getInt(faygolover.rpculinary.server.CulinaryService.BITES_N)).withStyle(ChatFormatting.YELLOW));
+        } else {
+            double step = faygolover.rpculinary.core.Settings.get().portionStepKcal;
+            if (step > 0 && f.kcal() >= 2 * step && e.getItemStack().getUseAnimation() == net.minecraft.world.item.UseAnim.EAT)
+                t.add(tr("bites", (int) Math.floor(f.kcal() / step)).withStyle(ChatFormatting.GRAY));
+        }
         int q = faygolover.rpculinary.server.CookingService.quality(e.getItemStack());
         if (q >= 0 && q < faygolover.rpculinary.core.Cooking.QUALITY.length) {
             ChatFormatting c = switch (q) {

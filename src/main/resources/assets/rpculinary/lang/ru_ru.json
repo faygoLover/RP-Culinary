@@ -17,7 +17,7 @@
   "rpculinary.food_category.vegetables": "овощи",
   "rpculinary.food_category.fruit": "фрукты",
   "rpculinary.food_category.sweet": "сладкое",
-  "rpculinary.food_category.dairy": "молочное и яйца",
+  "rpculinary.food_category.dairy": "молочное",
   "rpculinary.monotony.meat": "Опять мясо... кусок в горло не лезет.",
   "rpculinary.monotony.fish": "Снова рыба. Уже воротит.",
   "rpculinary.monotony.grain": "Опять каша да хлеб. Надоело.",
@@ -120,5 +120,16 @@
   "rpculinary.sense.fat_nausea": "От жирного мутит.",
   "rpculinary.sense.drowsy": "После сладкого клонит в сон.",
   "rpculinary.sense.sick": "Что-то не то съел…",
-  "rpculinary.sense.teeth": "Зуб ноет."
+  "rpculinary.sense.teeth": "Зуб ноет.",
+  "rpculinary.food_category.mushrooms": "грибы",
+  "rpculinary.food_category.eggs": "яйца",
+  "rpculinary.monotony.mushrooms": "Опять грибы... уже не лезут.",
+  "rpculinary.monotony.eggs": "Снова яйца. Надоели.",
+  "rpculinary.monotony.dish": "Опять это...",
+  "rpculinary.monotony.method": "Всё одно и то же. Хочется чего-то другого.",
+  "rpculinary.taste.favourite": "Вот это было вкусно.",
+  "rpculinary.taste.disliked": "Фу... ну и гадость.",
+  "rpculinary.msg.content": "Сыт и доволен.",
+  "rpculinary.tooltip.bites_left": "Надкусано: осталось %s из %s",
+  "rpculinary.tooltip.bites": "Большая порция: на %s укусов"
 }
