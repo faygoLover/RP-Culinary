@@ -285,6 +285,8 @@ public final class CulinaryService {
     private static void modifier(ServerPlayer sp, Attribute attr, UUID id, String name, double amount) {
         AttributeInstance inst = sp.getAttribute(attr);
         if (inst == null) return;
+        // Шаг 1 %: плавно меняющиеся множители иначе шлют UpdateAttributes каждый тик (замер трафика 26.10).
+        amount = Math.round(amount * 100) / 100.0;
         AttributeModifier old = inst.getModifier(id);
         if (Math.abs(amount) < 1e-6) {
             if (old != null) inst.removeModifier(id);
