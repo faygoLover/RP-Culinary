@@ -54,10 +54,12 @@ public final class FoodTooltips {
         int q = faygolover.rpculinary.server.CookingService.quality(e.getItemStack());
         if (q >= 0 && q < faygolover.rpculinary.core.Cooking.QUALITY.length) {
             ChatFormatting c = switch (q) {
-                case 0 -> ChatFormatting.DARK_GRAY;
-                case 2 -> ChatFormatting.GREEN;
-                case 3 -> ChatFormatting.AQUA;
-                case 4 -> ChatFormatting.GOLD;
+                case faygolover.rpculinary.core.Cooking.BURNT, faygolover.rpculinary.core.Cooking.OVERCOOKED -> ChatFormatting.DARK_GRAY;
+                case faygolover.rpculinary.core.Cooking.CHARCOAL -> ChatFormatting.DARK_RED;
+                case faygolover.rpculinary.core.Cooking.UNDERCOOKED -> ChatFormatting.RED;
+                case faygolover.rpculinary.core.Cooking.GOOD -> ChatFormatting.GREEN;
+                case faygolover.rpculinary.core.Cooking.EXCELLENT -> ChatFormatting.AQUA;
+                case faygolover.rpculinary.core.Cooking.MASTERPIECE -> ChatFormatting.GOLD;
                 default -> ChatFormatting.WHITE;
             };
             t.add(tr("quality", Component.translatable("rpculinary.quality." + faygolover.rpculinary.core.Cooking.QUALITY[q])).withStyle(c));

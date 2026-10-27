@@ -43,6 +43,14 @@ public final class NutritionTable {
     private static final Map<Item, Source> SOURCE = new HashMap<>();
     /** Сложность блюда: сколько разных ингредиентов в рецепте (базовый продукт — 0). */
     private static final Map<Item, Integer> COMPLEXITY = new HashMap<>();
+    /** Сырое ли (кэш {@link #raw}). */
+    private static final Map<Item, Boolean> RAW = new HashMap<>();
+    /** Датапак: сырое сверх правил ({@code #rpculinary:raw}) и точно не сырое ({@code #rpculinary:not_raw}). */
+    static final net.minecraft.tags.TagKey<Item> RAW_TAG = net.minecraft.tags.ItemTags.create(new ResourceLocation("rpculinary", "raw"));
+    static final net.minecraft.tags.TagKey<Item> NOT_RAW_TAG = net.minecraft.tags.ItemTags.create(new ResourceLocation("rpculinary", "not_raw"));
+    /** Слова в id, по которым продукт уже готов (копчёный окорок, вяленое мясо). */
+    private static final String[] COOKED_WORDS = {"cooked", "smoked", "roast", "fried", "grilled", "baked", "dried", "jerky",
+            "salted", "cured", "boiled", "steamed", "stew", "soup", "pickled", "fermented", "burnt", "charred"};
     @Nullable
     private static Map<Item, List<Recipe<?>>> byResult;
     @Nullable
@@ -53,6 +61,7 @@ public final class NutritionTable {
         CATEGORY.clear();
         SOURCE.clear();
         COMPLEXITY.clear();
+        RAW.clear();
         byResult = null;
     }
 
@@ -167,6 +176,50 @@ public final class NutritionTable {
     public static synchronized int complexity(MinecraftServer server, Item item) {
         if (get(server, item) == null) return 0;
         return COMPLEXITY.getOrDefault(item, 0);
+    }
+
+    /**
+     * Сырое (решения Alex 27.10.2026): съеденное как есть может отравить, в блюда не помечается. Сырое — по датапаку
+     * ({@code raw} в правиле питания, теги {@code rpculinary:raw}/{@code not_raw}), по тегам {@code forge:raw_*}
+     * (кроме руды), по «raw» в id; правило без {@code raw} — мясо и рыба. Готовое по названию (копчёное…) — не сырое.
+     * Тухлятину и паучий глаз ведёт ваниль (и группа «Монстры»).
+     */
+    public static synchronized boolean raw(MinecraftServer server, Item item) {
+        Boolean r = RAW.get(item);
+        if (r == null) {
+            r = computeRaw(server, item);
+            RAW.put(item, r);
+        }
+        return r;
+    }
+
+    private static boolean computeRaw(MinecraftServer server, Item item) {
+        if (item == net.minecraft.world.item.Items.ROTTEN_FLESH || item == net.minecraft.world.item.Items.SPIDER_EYE) return false;
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
+        if (id == null) return false;
+        var holder = item.builtInRegistryHolder();
+        if (holder.is(NOT_RAW_TAG)) return false;
+        if (holder.is(RAW_TAG)) return true;
+        NutritionRules.Entry e = NutritionRules.entry(item);
+        if (e != null && e.raw() != null) return e.raw();
+        String path = id.getPath();
+        if (cookedName(path)) return false;
+        int cat = category(server, item);
+        boolean meaty = cat == NutritionState.category("meat") || cat == NutritionState.category("fish");
+        if (e != null) return meaty;
+        FoodProperties fp = item.getFoodProperties(new ItemStack(item), null);
+        if (fp == null) return false;
+        boolean named = path.startsWith("raw") || path.contains("_raw");
+        boolean tagged = holder.tags().anyMatch(t -> t.location().getNamespace().equals("forge")
+                && t.location().getPath().startsWith("raw_") && !t.location().getPath().startsWith("raw_materials"));
+        if (!named && !tagged) return false;
+        return meaty || fp.isMeat() || cat < 0;
+    }
+
+    /** Готовое по названию: «cooked», «smoked», «fried»… */
+    static boolean cookedName(String path) {
+        for (String w : COOKED_WORDS) if (path.contains(w)) return true;
+        return false;
     }
 
     /** Вид еды предмета (−1 — не считается). */

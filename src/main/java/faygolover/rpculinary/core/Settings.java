@@ -217,14 +217,30 @@ public final class Settings {
     public boolean cookingEnabled = true;
     @Cfg(section = "cooking", doc = "Разброс качества: чем больше, тем случайнее (в уровнях навыка).")
     public double qualitySpread = 1.5;
-    @Cfg(section = "cooking", doc = "Подгорает, если уровень минус половина сложности плюс случайность ниже этого.")
+    @Cfg(section = "cooking", doc = "Неудача (недожарено или сгорело), если уровень минус половина сложности плюс случайность ниже этого.")
     public double burntBelow = -1.5;
+    @Cfg(section = "cooking", doc = "Доля неудач, которые «недожарено» (остальные — сгорело), 0–1.")
+    public double undercookedShare = 0.5;
+    @Cfg(section = "cooking", doc = "Сгорело: провал глубже стольких уровней — уже «пережарено».")
+    public double overcookedDepth = 1.5;
+    @Cfg(section = "cooking", doc = "Сгорело: провал глубже стольких уровней — «уголь».")
+    public double charcoalDepth = 3;
     @Cfg(section = "cooking", doc = "После клика по плите, котлу, верстаку столько секунд новые блюда в инвентаре считаются приготовленными игроком.")
     public double cookContextSeconds = 5;
-    @Cfg(section = "cooking", doc = "Сырое мясо и рыба: шанс пищевого отравления (тошнота; с RP Medicine — рвота).")
+    @Cfg(section = "cooking", doc = "Сырое (мясо, рыба; теги forge:raw_*, «raw» в id, правила питания), съеденное сырым: шанс пищевого отравления (тошнота; с RP Medicine — рвота).")
     public double rawMeatPoisonChance = 0.3;
-    @Cfg(section = "cooking", doc = "Чистюля (черта rpcore:clean): шанс отравления во столько раз ниже.")
-    public double cleanPoisonFactor = 0.2;
+    @Cfg(section = "cooking", doc = "Шанс отравления блюдом «недожарено».")
+    public double poisonUndercooked = 0.15;
+    @Cfg(section = "cooking", doc = "Шанс отравления блюдом «подгорело».")
+    public double poisonBurnt = 0.04;
+    @Cfg(section = "cooking", doc = "Шанс отравления блюдом «пережарено».")
+    public double poisonOvercooked = 0.08;
+    @Cfg(section = "cooking", doc = "Шанс, что от «угля» вырвет (уголь ещё и естся втрое дольше).")
+    public double poisonCharcoal = 0.6;
+    @Cfg(section = "cooking", doc = "«Уголь» естся во столько раз дольше.")
+    public double charcoalEatSlow = 3;
+    @Cfg(section = "cooking", doc = "Чистюля (черта rpcore:clean): шанс отравления в столько раз — и когда ест сам, и у блюд, которые он приготовил.")
+    public double cleanPoisonFactor = 0.5;
     @Cfg(section = "cooking", doc = "Полевой повар (черта rpcore:field_cook): на костре и в коптильне — плюс столько уровней.")
     public double fieldCookBonus = 2;
     @Cfg(section = "cooking", doc = "Кухонный кошмар (черта rpcore:kitchen_nightmare): минус столько уровней при готовке.")

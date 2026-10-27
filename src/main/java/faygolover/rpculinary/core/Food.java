@@ -18,6 +18,11 @@ public record Food(double kcal, double protein, double fat, double carbs, double
         return scale(newKcal / kcal);
     }
 
+    /** Калории и БЖУ — в {@code k} раз, витамины — в {@code vit} раз, вода как была (стадия готовки). */
+    public Food scaleNutrition(double k, double vit) {
+        return new Food(kcal * k, protein * k, fat * k, carbs * k, vitamins * vit, water);
+    }
+
     public boolean isEmpty() {
         return kcal <= 0 && protein <= 0 && fat <= 0 && carbs <= 0 && vitamins <= 0 && water <= 0;
     }

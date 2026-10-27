@@ -7,5 +7,6 @@
   "fat": 80,
   "carbs": 0,
   "vitamins": 0,
-  "category": "meat"
+  "category": "meat",
+  "raw": false
 }

@@ -282,7 +282,31 @@ public final class CulinaryGameTests {
         finish(p, burnt);
         double kcal = NutritionTable.get(h.getLevel().getServer(), Items.COOKED_BEEF).kcal();
         h.assertTrue(Math.abs(m.stomach - before - kcal * 0.85) < 1e-6, "подгорело — 85 % калорий, было " + (m.stomach - before));
+        // Удачное блюдо не травит, даже если раньше считалось «сырым».
+        ItemStack good = new ItemStack(Items.COOKED_BEEF);
+        faygolover.rpculinary.server.CookingService.put(good, faygolover.rpculinary.core.Cooking.GOOD, false);
+        p.removeAllEffects();
+        for (int i = 0; i < 20; i++) CulinaryService.foodPoisoning(p, good, faygolover.rpculinary.core.Cooking.GOOD, 1, Settings.get());
+        h.assertTrue(!p.hasEffect(net.minecraft.world.effect.MobEffects.POISON), "хорошее блюдо не травит");
         remove(h, p);
+        h.succeed();
+    }
+
+    /** Сырое: сырое мясо и рыба — да, жареное, тухлятина, хлеб — нет; со сборкой — бекон и фарш FD да, копчёный окорок нет. */
+    @GameTest(template = T)
+    public static void rawDetection(GameTestHelper h) {
+        var server = h.getLevel().getServer();
+        h.assertTrue(NutritionTable.raw(server, Items.BEEF) && NutritionTable.raw(server, Items.CHICKEN) && NutritionTable.raw(server, Items.COD),
+                "сырые говядина, курица, треска");
+        h.assertTrue(!NutritionTable.raw(server, Items.COOKED_BEEF) && !NutritionTable.raw(server, Items.BREAD)
+                && !NutritionTable.raw(server, Items.ROTTEN_FLESH) && !NutritionTable.raw(server, Items.APPLE), "готовое и не мясо — не сырое");
+        if (net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight")) {
+            java.util.function.Function<String, net.minecraft.world.item.Item> fd = path ->
+                    net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("farmersdelight", path));
+            h.assertTrue(!NutritionTable.raw(server, fd.apply("smoked_ham")), "копчёный окорок — не сырой");
+            for (String path : java.util.List.of("ham", "bacon", "minced_beef", "chicken_cuts", "cod_slice"))
+                h.assertTrue(NutritionTable.raw(server, fd.apply(path)), "farmersdelight:" + path + " — сырое");
+        }
         h.succeed();
     }
 

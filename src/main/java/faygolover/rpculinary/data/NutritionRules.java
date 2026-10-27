@@ -25,12 +25,14 @@ import java.util.Map;
  * <pre>{"items": ["minecraft:beef", "#forge:raw_beef"], "kcal": 500, "protein": 52, "fat": 32, "carbs": 0, "vitamins": 2,
  *  "water": 0, "category": "meat"}</pre>
  * {@code kcal} можно не задавать — посчитается по БЖУ. {@code water} — сколько процентов воды даёт. Порция — один предмет.
+ * {@code raw} — сырое ли (съеденное как есть травит); не задано — сырое мясо и рыба, кроме готовых по названию
+ * (копчёное, жареное…).
  */
 public final class NutritionRules {
     private NutritionRules() {}
 
     /** {@code category} — вид еды для «приелось» (−1 — не считается: напитки, исключения). */
-    public record Entry(Matcher<Item> items, Food food, int priority, int category) {}
+    public record Entry(Matcher<Item> items, Food food, int priority, int category, @org.jetbrains.annotations.Nullable Boolean raw) {}
 
     private static volatile List<Entry> entries = List.of();
 
@@ -45,7 +47,8 @@ public final class NutritionRules {
                             GsonHelper.getAsDouble(o, "fat", 0), GsonHelper.getAsDouble(o, "carbs", 0),
                             GsonHelper.getAsDouble(o, "vitamins", 0), GsonHelper.getAsDouble(o, "water", 0)).withKcal();
                     int cat = GsonHelper.getAsBoolean(o, "exempt", false) ? -1 : NutritionState.category(GsonHelper.getAsString(o, "category", ""));
-                    out.add(new Entry(Matcher.parse(o.get("items"), Registries.ITEM), food, GsonHelper.getAsInt(o, "priority", 0), cat));
+                    Boolean raw = o.has("raw") ? GsonHelper.getAsBoolean(o, "raw") : null;
+                    out.add(new Entry(Matcher.parse(o.get("items"), Registries.ITEM), food, GsonHelper.getAsInt(o, "priority", 0), cat, raw));
                 } catch (Exception ex) {
                     RpCulinary.LOGGER.error("RP Culinary: питание {}: {}", f.getKey(), ex.getMessage());
                 }

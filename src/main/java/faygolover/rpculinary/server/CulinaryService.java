@@ -364,7 +364,10 @@ public final class CulinaryService {
             forced = m != null && (drink ? thirstMode((ServerPlayer) p, s) == 1 && m.water >= 100
                     : s.hungerEnabled && !Metabolism.hasRoom(m, s, stomachMult(p, m, s)));
         }
-        double factor = (fedUp ? s.monotonyEatSlow : 1) * (forced ? s.forcedEatSlow : 1) * (dislikedKind(p, e.getItem()) ? s.dislikedEatSlow : 1);
+        // «Уголь» почти несъедобен — жуётся долго (метка в NBT видна и клиенту).
+        boolean charcoal = CookingService.quality(e.getItem()) == faygolover.rpculinary.core.Cooking.CHARCOAL;
+        double factor = (fedUp ? s.monotonyEatSlow : 1) * (forced ? s.forcedEatSlow : 1) * (dislikedKind(p, e.getItem()) ? s.dislikedEatSlow : 1)
+                * (charcoal ? s.charcoalEatSlow : 1);
         if (factor > 1 && slowTick(p.tickCount, factor) && e.getDuration() < e.getItem().getUseDuration())
             e.setDuration(e.getDuration() + 1);
     }
@@ -490,11 +493,11 @@ public final class CulinaryService {
         boolean gourmet = RpCoreAPI.hasTrait(sp, RpIds.GOURMET);
         if (quality >= 0) food = faygolover.rpculinary.core.Cooking.apply(food, quality, s);
         // Гурман: хорошее радует сильнее (витамины), однообразное надоедает быстрее.
-        if (gourmet && quality >= faygolover.rpculinary.core.Cooking.GOOD)
+        if (gourmet && faygolover.rpculinary.core.Cooking.goodOrBetter(quality))
             food = new Food(food.kcal(), food.protein(), food.fat(), food.carbs(), food.vitamins() * 1.1, food.water());
         food = food.scale(fraction);
         double monotony = quality >= 0 ? faygolover.rpculinary.core.Cooking.monotonyWeight(quality) : 1;
-        if (gourmet) monotony *= quality >= faygolover.rpculinary.core.Cooking.GOOD ? 0.5 : s.gourmetMonotony;
+        if (gourmet) monotony *= faygolover.rpculinary.core.Cooking.goodOrBetter(quality) ? 0.5 : s.gourmetMonotony;
         if (water != 0) food = food.plus(new Food(0, 0, 0, 0, 0, water));
         int cat = NutritionTable.category(sp.server, used.getItem());
         int method = FoodMethods.of(sp.server, used);
@@ -517,11 +520,39 @@ public final class CulinaryService {
                     faygolover.rpcore.api.event.RpMoodEvent.Kind.DISLIKED_FOOD, strength));
             variety(sp, d.state, cat, s);
         }
-        double poison = s.rawMeatPoisonChance * BodyEffects.poisonFactor(sp, s);
-        if (rawMeat(sp, used, cat) && sp.getRandom().nextDouble() < poison * Math.min(1, fraction * 2)) {
-            sp.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0));
-            sp.displayClientMessage(Component.translatable("rpculinary.msg.raw_meat").withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC), true);
+        foodPoisoning(sp, used, quality, fraction, s);
+    }
+
+    /**
+     * Пищевое отравление (решения Alex 27.10.2026): сырое, съеденное сырым, и неудачные стадии блюда (недожарено,
+     * подгорело, пережарено, уголь). Удачное блюдо и непомеченная готовая еда не травят. Шанс — по стадии, на
+     * желудок едока и на чистоплотность (ест Чистюля или готовил Чистюля); укус — меньше.
+     */
+    public static void foodPoisoning(ServerPlayer sp, ItemStack used, int quality, double fraction, Settings s) {
+        String msg;
+        double chance;
+        if (quality >= 0) {
+            chance = faygolover.rpculinary.core.Cooking.poisonChance(quality, s);
+            msg = quality == faygolover.rpculinary.core.Cooking.UNDERCOOKED ? "undercooked_sick" : "burnt_sick";
+        } else if (NutritionTable.raw(sp.server, used.getItem())) {
+            chance = s.rawMeatPoisonChance;
+            msg = "raw_meat";
+        } else {
+            return;
         }
+        if (chance <= 0) return;
+        chance *= poisonFactor(sp, used, s);
+        if (sp.getRandom().nextDouble() >= chance * Math.min(1, fraction * 2)) return;
+        int ticks = quality == faygolover.rpculinary.core.Cooking.CHARCOAL ? 300 : 200;
+        sp.addEffect(new MobEffectInstance(MobEffects.POISON, ticks, 0));
+        sp.displayClientMessage(Component.translatable("rpculinary.msg." + msg).withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC), true);
+    }
+
+    /** Множитель шанса отравления: желудок едока и чистоплотность (своя или повара — один раз). */
+    static double poisonFactor(ServerPlayer sp, ItemStack used, Settings s) {
+        double k = BodyEffects.poisonFactor(sp, s);
+        if (RpCoreAPI.hasTrait(sp, RpIds.CLEAN) || CookingService.cleanCook(used)) k *= s.cleanPoisonFactor;
+        return k;
     }
 
     /** Вкус совпал: «kind:вид» или «method:способ». */
@@ -547,13 +578,6 @@ public final class CulinaryService {
         m.contentGiven = true;
         MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpMoodEvent(sp, faygolover.rpcore.api.event.RpMoodEvent.Kind.FED_CONTENT, 1));
         sp.displayClientMessage(Component.translatable("rpculinary.msg.content").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC), true);
-    }
-
-    /** Сырое мясо и рыба: базовый продукт (не блюдо) вида «мясо» или «рыба»; тухлятину и паучий глаз ведёт ваниль. */
-    static boolean rawMeat(ServerPlayer sp, ItemStack st, int cat) {
-        if (cat != NutritionState.category("meat") && cat != NutritionState.category("fish")) return false;
-        if (st.is(net.minecraft.world.item.Items.ROTTEN_FLESH) || st.is(net.minecraft.world.item.Items.SPIDER_EYE)) return false;
-        return NutritionTable.source(sp.server, st.getItem()) == NutritionTable.Source.RULE;
     }
 
     /** Предметы, о которых уже написано «неизвестный напиток» (раз на предмет за запуск). */

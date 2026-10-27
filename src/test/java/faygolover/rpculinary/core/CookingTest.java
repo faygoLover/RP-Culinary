@@ -11,14 +11,50 @@ class CookingTest {
         Settings s = new Settings();
         Random r = new Random(7);
         int hit = 0, n = 4000;
-        for (int i = 0; i < n; i++) if (Cooking.roll(level, complexity, r.nextGaussian(), s) == quality) hit++;
+        for (int i = 0; i < n; i++) if (Cooking.roll(level, complexity, r.nextGaussian(), r.nextDouble(), s) == quality) hit++;
+        return hit / (double) n;
+    }
+
+    private static double failShare(double level, int complexity) {
+        Settings s = new Settings();
+        Random r = new Random(11);
+        int hit = 0, n = 4000;
+        for (int i = 0; i < n; i++) if (!Cooking.success(Cooking.roll(level, complexity, r.nextGaussian(), r.nextDouble(), s))) hit++;
         return hit / (double) n;
     }
 
     @Test
-    void noviceBurnsSometimesMasterNever() {
-        assertTrue(share(0, 1, Cooking.BURNT) > 0.1, "новичок иногда сжигает даже яичницу");
-        assertEquals(0, share(10, 1, Cooking.BURNT), 1e-9, "мастер не сжигает");
+    void noviceFailsSometimesMasterNever() {
+        assertTrue(share(0, 1, Cooking.BURNT) > 0.03, "новичок иногда сжигает даже яичницу");
+        assertTrue(share(0, 1, Cooking.UNDERCOOKED) > 0.03, "и недожаривает");
+        assertEquals(0, failShare(10, 1), 1e-9, "мастер не портит");
+        assertTrue(failShare(5, 5) < 0.01, "высокий навык почти без неудач и на сложном");
+        assertTrue(failShare(0, 5) > failShare(0, 1), "сложное блюдо — чаще неудачи");
+        assertTrue(failShare(0, 1) > failShare(3, 1), "слабый навык — чаще неудачи");
+        assertTrue(failShare(-3, 1) > 0.5, "Кухонный кошмар у новичка — больше половины неудач");
+    }
+
+    @Test
+    void failureDepthGoesToCharcoal() {
+        Settings s = new Settings();
+        // Монетка 0.9 — сгорело (не недожарено); глубина провала решает стадию.
+        assertEquals(Cooking.BURNT, Cooking.roll(0, 1, -1.1, 0.9, s));
+        assertEquals(Cooking.OVERCOOKED, Cooking.roll(0, 1, -2.2, 0.9, s));
+        assertEquals(Cooking.CHARCOAL, Cooking.roll(0, 1, -4, 0.9, s));
+        assertEquals(Cooking.UNDERCOOKED, Cooking.roll(0, 1, -4, 0.1, s));
+        assertEquals(Cooking.GOOD, Cooking.roll(10, 6, 2, 0.5, Cooking.GOOD, s), "потолок — хорошее");
+    }
+
+    @Test
+    void poisonByStage() {
+        Settings s = new Settings();
+        for (int q : new int[]{Cooking.NORMAL, Cooking.GOOD, Cooking.EXCELLENT, Cooking.MASTERPIECE})
+            assertEquals(0, Cooking.poisonChance(q, s), 1e-9, "удачное блюдо не травит");
+        assertTrue(Cooking.poisonChance(Cooking.BURNT, s) < Cooking.poisonChance(Cooking.OVERCOOKED, s), "пережарено — чуть опаснее");
+        assertTrue(Cooking.poisonChance(Cooking.OVERCOOKED, s) < Cooking.poisonChance(Cooking.UNDERCOOKED, s), "недожарено — средний риск");
+        assertTrue(Cooking.poisonChance(Cooking.CHARCOAL, s) > 0.5, "уголь — почти наверняка");
+        Food f = new Food(400, 20, 10, 50, 10, 0);
+        assertTrue(Cooking.apply(f, Cooking.CHARCOAL, s).kcal() < Cooking.apply(f, Cooking.OVERCOOKED, s).kcal());
     }
 
     @Test
