@@ -521,6 +521,7 @@ public final class CulinaryService {
             variety(sp, d.state, cat, s);
         }
         foodPoisoning(sp, used, quality, fraction, s);
+        ExoticEffects.afterEating(sp, d, used, fraction, s);
     }
 
     /**
@@ -713,6 +714,8 @@ public final class CulinaryService {
         e.getOriginal().invalidateCaps();
         if (from == null || to == null) return;
         to.state.copyFrom(from.state);
+        to.humanMeals = from.humanMeals;
+        to.kuruSeconds = from.kuruSeconds;
         if (e.isWasDeath()) {
             Settings s = Settings.get();
             NutritionState m = to.state;

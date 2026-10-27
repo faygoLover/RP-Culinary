@@ -95,3 +95,14 @@
   Книга зовёт `rpperks.compat.CoreTraits.grantKnowledge` отражением. Без Perks знают все.
 - Без знания: −`exotic_cook_penalty` (3) уровня, не выше «хорошего», метка `x` → +`exotic_unknown_poison` (35 %) едоку.
 - «Каннибал» (`rpculinary:cannibal`) — негативный, 2 балла; знак — `positive_perks` в конфиге Perks. Механика — этап 3.
+
+### Этап 3 (27.10.2026) — Culinary 0.7.0: экзотика действует на едока
+`server/ExoticEffects` (после отравления в `eatPortion`), числа — `[exotic]` в конфиге; особые продукты — теги
+`rpculinary:effect/{mining_fatigue,disgust,darkness,random_potion,creeper}`. Соседи — отражением, без зависимости:
+- Psyche: `PsycheService.impulse` (стресс), `PsycheData.sanityHit` (рассудок).
+- Medicine: `Medical.state(...).sepsis` и `spoiledBloodSeconds` (как испорченная кровь: сепсис → жар). Без неё — яд.
+- Mekanism: `IRadiationManager.INSTANCE.radiate` (Зв). Без него — яд. LSO: эффект `hot_food`, вода — своя или LSO.
+- Конфеты (сонливость, зубы) — `candy_drowsy`, `candy_teeth_chance`: ЖДУТ УТОЧНЕНИЯ ALEX.
+- Человечина без «Каннибала»: рассудок, рвота; `kuru_after_meals` порций (−1 за сутки RP) → куру на `kuru_hours`
+  (замедление, дрожь, смешки). Куру живёт в Culinary (`NutritionData.kuruSeconds`, NBT `kuru`): в Medicine API нет.
+  Снимается `/rpculinary reset`.

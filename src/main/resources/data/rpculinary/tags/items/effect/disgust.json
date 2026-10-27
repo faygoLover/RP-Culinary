@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "alexsmobs:leafcutter_ant_pupa",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:mosquito_larva",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:maggot",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:banana_slug_slime",
+      "required": false
+    }
+  ]
+}

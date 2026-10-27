@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "butchery:raw_witch_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_witch_meat",
+      "required": false
+    }
+  ]
+}

@@ -41,6 +41,8 @@ public final class NutritionData {
     public final java.util.Map<String, Long> sensationTicks = new java.util.HashMap<>();
     /** Тик, до которого «сонливость после сладкого» (−10 % восстановления выносливости). */
     public long drowsyUntil = -1;
+    /** Человечина без «Каннибала»: сколько раз съедено недавно (убывает) и сколько ещё секунд куру. Сохраняется. */
+    public double humanMeals, kuruSeconds;
     /** Тик, когда в последний раз был «обморок от отёка мозга» (без мода тела). */
     public long edemaFaintTick = -1;
     /** Ел через силу — сообщение один раз за приём. */
@@ -114,12 +116,16 @@ public final class NutritionData {
             iv.putDouble("seconds", m.ivSeconds);
             t.put("iv", iv);
         }
+        if (humanMeals > 0) t.putDouble("human_meals", humanMeals);
+        if (kuruSeconds > 0) t.putDouble("kuru", kuruSeconds);
         return t;
     }
 
     public void load(CompoundTag t) {
         NutritionState m = state;
         m.initialized = t.getBoolean("init");
+        humanMeals = t.getDouble("human_meals");
+        kuruSeconds = t.getDouble("kuru");
         m.energy = t.getDouble("energy");
         m.stomach = t.getDouble("stomach");
         m.water = t.contains("water") ? t.getDouble("water") : 100;

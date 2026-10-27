@@ -245,6 +245,42 @@ public final class Settings {
     public double exoticCookPenalty = 3;
     @Cfg(section = "exotic", doc = "Экзотика без знания: блюдо ещё и травит с таким шансом — на любой стадии, даже «хорошее».")
     public double exoticUnknownPoison = 0.35;
+    @Cfg(section = "exotic", doc = "Действие экзотики на того, кто ест (от продукта, не от повара). false — выключить всё.")
+    public boolean exoticEffects = true;
+    @Cfg(section = "exotic", doc = "Конфетная полость: сонливость от сахара (ЖДЁТ УТОЧНЕНИЯ ALEX).")
+    public boolean candyDrowsy = true;
+    @Cfg(section = "exotic", doc = "Конфетная полость: шанс «зуб заныл» (как Плохие зубы) за порцию (ЖДЁТ УТОЧНЕНИЯ ALEX); 0 — выключено.")
+    public double candyTeethChance = 0.25;
+    @Cfg(section = "exotic", doc = "Древний страж (тег rpculinary:effect/mining_fatigue): усталость, секунд.")
+    public double fatigueSeconds = 60;
+    @Cfg(section = "exotic", doc = "Насекомые (тег rpculinary:effect/disgust): стресс отвращения (RP Psyche) за порцию.")
+    public double disgustStress = 3;
+    @Cfg(section = "exotic", doc = "Нижний мир: согрев (эффект LSO «горячая еда»), секунд.")
+    public double netherWarmSeconds = 120;
+    @Cfg(section = "exotic", doc = "Нижний мир: сильная жажда — минус столько процентов воды за порцию.")
+    public double netherThirst = 15;
+    @Cfg(section = "exotic", doc = "Край: шанс «икоты» (случайный короткий телепорт и тошнота) за порцию; ванильный хорус телепортирует сам.")
+    public double endHiccupChance = 0.5;
+    @Cfg(section = "exotic", doc = "Домашние звери: моральный стресс (RP Psyche) за порцию.")
+    public double petsStress = 6;
+    @Cfg(section = "exotic", doc = "Монстры: шанс отравиться за порцию (сверху к остальному).")
+    public double monstersPoison = 0.5;
+    @Cfg(section = "exotic", doc = "Заражённое: сепсис RP Medicine сразу, % (дальше жар); без Medicine — отравление.")
+    public double infectedSepsis = 15;
+    @Cfg(section = "exotic", doc = "Заражённое: сколько часов после еды сепсис ещё растёт (как испорченная кровь Medicine).")
+    public double infectedSepsisHours = 1;
+    @Cfg(section = "exotic", doc = "Радиоактивное: доза облучения Mekanism за порцию, Зв; без Mekanism — отравление.")
+    public double radioactiveDose = 0.3;
+    @Cfg(section = "exotic", doc = "Аномальное: удар по рассудку (RP Psyche) за порцию — отсюда галлюцинации.")
+    public double anomalousSanity = 6;
+    @Cfg(section = "exotic", doc = "Человечина без «Каннибала»: удар по рассудку (RP Psyche) за порцию.")
+    public double humanSanity = 15;
+    @Cfg(section = "exotic", doc = "Человечина без «Каннибала»: шанс рвоты за порцию.")
+    public double humanVomitChance = 0.7;
+    @Cfg(section = "exotic", doc = "Куру: после стольких порций человечины (счёт убывает за сутки RP на одну).")
+    public double kuruAfterMeals = 3;
+    @Cfg(section = "exotic", doc = "Куру: сколько часов игры длится (дрожь, смех, плохая координация).")
+    public double kuruHours = 12;
     @Cfg(section = "cooking", doc = "Полевой повар (черта rpcore:field_cook): на костре и в коптильне — плюс столько уровней.")
     public double fieldCookBonus = 2;
     @Cfg(section = "cooking", doc = "Кухонный кошмар (черта rpcore:kitchen_nightmare): минус столько уровней при готовке.")

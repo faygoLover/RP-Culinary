@@ -74,6 +74,11 @@ public final class CulinaryCommands {
                         NutritionState m = CulinaryService.state(sp);
                         if (m == null) continue;
                         m.init(Settings.get(), m.weightKg(), m.fatPercent());
+                        var nd = faygolover.rpculinary.capability.NutritionData.get(sp);
+                        if (nd != null) {
+                            nd.humanMeals = 0;
+                            nd.kuruSeconds = 0;
+                        }
                         changed(sp);
                     }
                     c.getSource().sendSuccess(() -> Component.translatable("rpculinary.cmd.reset", ps.size()), true);

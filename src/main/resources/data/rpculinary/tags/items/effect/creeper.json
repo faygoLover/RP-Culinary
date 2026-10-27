@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "butchery:raw_creeper_leg",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_creeper_leg",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_creeper_steak",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_creeper_steak",
+      "required": false
+    }
+  ]
+}
