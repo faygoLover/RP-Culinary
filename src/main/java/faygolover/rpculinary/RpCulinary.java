@@ -36,6 +36,13 @@ public class RpCulinary {
     public static final String MODID = "rpculinary";
     public static final Logger LOGGER = LogUtils.getLogger();
 
+    /** Книги «Записи исследований» — во вкладку ГМа «RP: разное» (RP Core), по одной на группу с книгой. */
+    private void creativeTab(net.minecraftforge.event.BuildCreativeModeTabContentsEvent e) {
+        if (e.getTabKey() != RpCoreAPI.MISC_TAB) return;
+        for (int g = 0; g < faygolover.rpculinary.server.Exotic.GROUPS.size(); g++)
+            if (faygolover.rpculinary.server.Exotic.learnable(g)) e.accept(faygolover.rpculinary.item.ResearchNotes.of(g));
+    }
+
     public RpCulinary() {
         var modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CulinaryConfig.SPEC);
@@ -43,6 +50,8 @@ public class RpCulinary {
         modBus.addListener(this::registerCaps);
         modBus.addListener(this::onConfig);
         modBus.addListener(this::onConfigReload);
+        faygolover.rpculinary.item.ResearchNotes.ITEMS.register(modBus);
+        modBus.addListener(this::creativeTab);
 
         var bus = MinecraftForge.EVENT_BUS;
         bus.addGenericListener(Entity.class, this::attachCaps);

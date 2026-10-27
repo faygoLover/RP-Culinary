@@ -86,3 +86,12 @@
   непомеченное готовое не травит. Уголь естся втрое дольше.
 - Чистюля (`rpcore:clean`, перк Perks 2.3.0, 3 балла): ×`clean_poison_factor` (0.5) и когда ест, и у его блюд (`c` в NBT).
 - Уровень готовки может быть ниже нуля (Кухонный кошмар у новичка).
+
+### Этап 2 (27.10.2026) — Culinary 0.6.0, Perks 2.4.0: группы экзотики
+- Группы — `server/Exotic` + теги `data/rpculinary/tags/items/exotic/<группа>.json` (id сверены по S5_review 27.10).
+  Блюдо наследует группу от ингредиента, если её имеют все варианты ингредиента (`NutritionTable.exoticMask`).
+- Знание — служебный перк Perks `exotic_<группа>` (черта `rpculinary:exotic/<группа>`), даёт книга
+  `rpculinary:research_notes` (NBT `group`, вкладка ГМа «RP: разное», `/rpculinary notes <группа> [игроки]`).
+  Книга зовёт `rpperks.compat.CoreTraits.grantKnowledge` отражением. Без Perks знают все.
+- Без знания: −`exotic_cook_penalty` (3) уровня, не выше «хорошего», метка `x` → +`exotic_unknown_poison` (35 %) едоку.
+- «Каннибал» (`rpculinary:cannibal`) — негативный, 2 балла; знак — `positive_perks` в конфиге Perks. Механика — этап 3.

@@ -1,0 +1,63 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "butchery:raw_creeper_leg",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_creeper_leg",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_creeper_steak",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_creeper_steak",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_witch_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_witch_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_warden_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_warden_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_cave_spider_leg",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_cave_spider_leg",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_spider_leg",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_spider_leg",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_silverfish_chunks",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_silverfish_chunks",
+      "required": false
+    },
+    "minecraft:spider_eye",
+    "minecraft:rotten_flesh"
+  ]
+}

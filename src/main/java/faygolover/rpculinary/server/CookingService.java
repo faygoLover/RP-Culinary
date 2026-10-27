@@ -42,8 +42,10 @@ import java.util.UUID;
 public final class CookingService {
     private CookingService() {}
 
-    /** NBT блюда: {@code rpculinary: {q: стадия, c: 1 — готовил Чистюля}}. */
-    public static final String TAG = "rpculinary", Q = "q", CLEAN = "c";
+    /** NBT блюда: {@code rpculinary: {q: стадия, c: 1 — готовил Чистюля, x: 1 — экзотика без знания}}. */
+    public static final String TAG = "rpculinary", Q = "q", CLEAN = "c", WILD = "x";
+    /** Признаки метки ({@link #put}). */
+    public static final int F_CLEAN = 1, F_WILD = 2;
     /** Моды готовки: их блоки и окна — «плита». */
     static final Set<String> COOKING_MODS = Set.of("farmersdelight", "kaleidoscope_cookery", "kaleidoscope_tavern", "brewery", "vinery",
             "candlelight", "farm_and_charm", "herbalbrews", "bakery", "meadow");
@@ -77,6 +79,12 @@ public final class CookingService {
     public static boolean cleanCook(ItemStack st) {
         CompoundTag t = st.getTag();
         return t != null && t.getCompound(TAG).getBoolean(CLEAN);
+    }
+
+    /** Готовили экзотику без знания группы: блюдо сверху ещё и травит. */
+    public static boolean wildCook(ItemStack st) {
+        CompoundTag t = st.getTag();
+        return t != null && t.getCompound(TAG).getBoolean(WILD);
     }
 
     static boolean stamped(ItemStack st) {
@@ -234,6 +242,9 @@ public final class CookingService {
         int level = level(sp);
         double cookLevel = cookingLevel(sp, NutritionData.get(sp));
         int complexity = NutritionTable.complexity(sp.server, item);
+        // Экзотика без знания группы: заметно хуже и не выше «хорошего».
+        boolean wild = Exotic.unknownMask(sp, NutritionTable.exoticMask(sp.server, item)) != 0;
+        if (wild) cookLevel -= s.exoticCookPenalty;
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
         if (id != null && OWN_QUALITY.contains(id.getNamespace())) {
             if (id.getNamespace().equals("kaleidoscope_cookery")) shiftKaleidoscope(sp, item, n, cookLevel, complexity, s);
@@ -241,12 +252,13 @@ public final class CookingService {
             return;
         }
         int[] byQuality = new int[Cooking.QUALITY.length];
-        for (int i = 0; i < n; i++) byQuality[Cooking.roll(cookLevel, complexity, RANDOM.nextGaussian(), RANDOM.nextDouble(), s)]++;
-        boolean clean = RpCoreAPI.hasTrait(sp, RpIds.CLEAN);
+        for (int i = 0; i < n; i++) byQuality[Cooking.roll(cookLevel, complexity, RANDOM.nextGaussian(), RANDOM.nextDouble(),
+                wild ? Cooking.GOOD : Cooking.MASTERPIECE, s)]++;
+        int flags = (RpCoreAPI.hasTrait(sp, RpIds.CLEAN) ? F_CLEAN : 0) | (wild ? F_WILD : 0);
         int done = 0;
         for (int q = 0; q < byQuality.length; q++) {
             if (byQuality[q] == 0) continue;
-            int marked = mark(sp, item, byQuality[q], q, clean);
+            int marked = mark(sp, item, byQuality[q], q, flags);
             done += marked;
             if (marked > 0 && q == Cooking.MASTERPIECE)
                 sp.displayClientMessage(Component.translatable("rpculinary.msg.masterpiece").withStyle(ChatFormatting.GOLD), true);
@@ -304,33 +316,34 @@ public final class CookingService {
      * Пометить качеством {@code n} непомеченных штук: целую стопку — на месте (в курсоре, в слоте), от большей
      * отделить нужное и положить в инвентарь. Возвращает, сколько помечено.
      */
-    private static int mark(ServerPlayer sp, Item item, int n, int quality, boolean clean) {
+    private static int mark(ServerPlayer sp, Item item, int n, int quality, int flags) {
         int left = n;
         ItemStack carried = sp.containerMenu.getCarried();
-        left -= markIn(sp, carried, item, left, quality, clean);
+        left -= markIn(sp, carried, item, left, quality, flags);
         Inventory inv = sp.getInventory();
-        for (int i = 0; i < inv.getContainerSize() && left > 0; i++) left -= markIn(sp, inv.getItem(i), item, left, quality, clean);
+        for (int i = 0; i < inv.getContainerSize() && left > 0; i++) left -= markIn(sp, inv.getItem(i), item, left, quality, flags);
         return n - left;
     }
 
-    private static int markIn(ServerPlayer sp, ItemStack st, Item item, int need, int quality, boolean clean) {
+    private static int markIn(ServerPlayer sp, ItemStack st, Item item, int need, int quality, int flags) {
         if (need <= 0 || !st.is(item) || stamped(st)) return 0;
         if (st.getCount() <= need) {
-            put(st, quality, clean);
+            put(st, quality, flags);
             return st.getCount();
         }
         st.shrink(need);
         ItemStack out = new ItemStack(item, need);
-        put(out, quality, clean);
+        put(out, quality, flags);
         if (!sp.getInventory().add(out)) sp.drop(out, false);
         return need;
     }
 
-    /** Поставить метку: стадия и (если повар — Чистюля) признак чистой готовки. */
-    public static void put(ItemStack st, int quality, boolean clean) {
+    /** Поставить метку: стадия и признаки ({@link #F_CLEAN} — готовил Чистюля, {@link #F_WILD} — экзотика без знания). */
+    public static void put(ItemStack st, int quality, int flags) {
         CompoundTag tag = new CompoundTag();
         tag.putInt(Q, quality);
-        if (clean) tag.putBoolean(CLEAN, true);
+        if ((flags & F_CLEAN) != 0) tag.putBoolean(CLEAN, true);
+        if ((flags & F_WILD) != 0) tag.putBoolean(WILD, true);
         st.getOrCreateTag().put(TAG, tag);
     }
 

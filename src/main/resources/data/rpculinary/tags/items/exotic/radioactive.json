@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "csfoundation:radioactive_flesh",
+      "required": false
+    },
+    {
+      "id": "csfoundation:radioactive_carrot",
+      "required": false
+    },
+    {
+      "id": "csfoundation:radioactive_potato",
+      "required": false
+    }
+  ]
+}

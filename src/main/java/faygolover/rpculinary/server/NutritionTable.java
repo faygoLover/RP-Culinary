@@ -43,6 +43,8 @@ public final class NutritionTable {
     private static final Map<Item, Source> SOURCE = new HashMap<>();
     /** Сложность блюда: сколько разных ингредиентов в рецепте (базовый продукт — 0). */
     private static final Map<Item, Integer> COMPLEXITY = new HashMap<>();
+    /** Группы экзотики (битовая маска {@link Exotic#GROUPS}): свои и унаследованные от ингредиентов. */
+    private static final Map<Item, Integer> EXOTIC = new HashMap<>();
     /** Сырое ли (кэш {@link #raw}). */
     private static final Map<Item, Boolean> RAW = new HashMap<>();
     /** Датапак: сырое сверх правил ({@code #rpculinary:raw}) и точно не сырое ({@code #rpculinary:not_raw}). */
@@ -62,6 +64,7 @@ public final class NutritionTable {
         SOURCE.clear();
         COMPLEXITY.clear();
         RAW.clear();
+        EXOTIC.clear();
         byResult = null;
     }
 
@@ -98,6 +101,7 @@ public final class NutritionTable {
             CACHE.put(item, entry.food());
             CATEGORY.put(item, entry.category());
             SOURCE.put(item, Source.RULE);
+            EXOTIC.put(item, Exotic.directMask(item));
             return entry.food();
         }
         if (depth >= MAX_DEPTH || !path.add(item)) return null;
@@ -106,6 +110,7 @@ public final class NutritionTable {
         int foundCat = -1;
         int foundKnown = 0;
         int foundDistinct = 0;
+        int foundExotic = 0;
         // Из всех рецептов блюда — тот, где известно больше всего ингредиентов (у Kaleidoscope есть «гибкие»
         // рецепты с минимумом ингредиентов рядом с полными); при равенстве — первый по id.
         for (Recipe<?> r : recipes) {
@@ -113,8 +118,10 @@ public final class NutritionTable {
             int known = 0;
             Set<Item> distinct = new HashSet<>();
             double[] byCat = new double[NutritionState.CATEGORIES.length];
+            int exotic = 0;
             for (Ingredient ing : r.getIngredients()) {
                 Item src = ingredientItem(ing, depth, path);
+                exotic |= ingredientExotic(ing);
                 if (src == null) continue;
                 Food part = CACHE.get(src);
                 if (part == null) continue;
@@ -129,6 +136,7 @@ public final class NutritionTable {
             found = sum.scale(1.0 / count);
             foundKnown = known;
             foundDistinct = distinct.size();
+            foundExotic = exotic;
             // Вид блюда — вид ингредиента с наибольшими калориями.
             double best = 0;
             foundCat = -1;
@@ -152,6 +160,7 @@ public final class NutritionTable {
             CATEGORY.put(item, foundCat);
             SOURCE.put(item, source);
             COMPLEXITY.put(item, source == Source.RECIPE ? Math.max(1, foundDistinct) : 0);
+            EXOTIC.put(item, Exotic.directMask(item) | (source == Source.RECIPE ? foundExotic : 0));
         }
         return found;
     }
@@ -163,6 +172,28 @@ public final class NutritionTable {
             if (resolve(st.getItem(), depth + 1, path) != null) return st.getItem();
         }
         return null;
+    }
+
+    /**
+     * Группы экзотики ингредиента: общие для всех его вариантов (тег, где есть и обычное мясо, блюдо экзотикой не
+     * делает). Вариант — его группы с наследованными, если уже посчитан, иначе только свои (порошок, крошка).
+     */
+    private static int ingredientExotic(Ingredient ing) {
+        ItemStack[] items = ing.getItems();
+        if (items.length == 0) return 0;
+        int mask = -1;
+        for (ItemStack st : items) {
+            Integer known = EXOTIC.get(st.getItem());
+            mask &= known != null ? known : Exotic.directMask(st.getItem());
+            if (mask == 0) return 0;
+        }
+        return mask;
+    }
+
+    /** Группы экзотики предмета (битовая маска {@link Exotic#GROUPS}): свои и от ингредиентов рецепта. */
+    public static synchronized int exoticMask(MinecraftServer server, Item item) {
+        if (get(server, item) == null) return Exotic.directMask(item);
+        return EXOTIC.getOrDefault(item, 0);
     }
 
     /** Откуда состав предмета или null (не еда). */

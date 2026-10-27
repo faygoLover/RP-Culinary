@@ -1,0 +1,83 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:chorus_fruit",
+    "minecraft:popped_chorus_fruit",
+    {
+      "id": "butchery:raw_shulker_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_shulker_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_enderman_steak",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_enderman_steak",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_dragon_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_dragon_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_endermite_chunks",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_endermite_chunks",
+      "required": false
+    },
+    {
+      "id": "butchery:enderman_heart",
+      "required": false
+    },
+    {
+      "id": "butchery:enderman_liver",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_enderman_liver",
+      "required": false
+    },
+    {
+      "id": "butchery:enderman_kidney",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_enderman_kidney",
+      "required": false
+    },
+    {
+      "id": "butchery:enderman_intestines",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_enderman_intestines",
+      "required": false
+    },
+    {
+      "id": "butchery:enderman_lungs",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_enderman_lungs",
+      "required": false
+    },
+    {
+      "id": "butchery:enderman_stomach",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_enderman_stomach",
+      "required": false
+    }
+  ]
+}

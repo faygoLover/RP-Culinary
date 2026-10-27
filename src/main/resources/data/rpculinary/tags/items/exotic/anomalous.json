@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "fl_zone_arts:pukh_flesh",
+      "required": false
+    },
+    {
+      "id": "clanginghowl:chunk_of_technoflesh",
+      "required": false
+    },
+    {
+      "id": "scpo:scp_1079_candy",
+      "required": false
+    },
+    {
+      "id": "scpo:scp_143_petal",
+      "required": false
+    },
+    {
+      "id": "scpo:zombie_candy",
+      "required": false
+    }
+  ]
+}

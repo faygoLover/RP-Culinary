@@ -61,6 +61,13 @@ public final class CulinaryCommands {
                         .executes(c -> audit(c.getSource(), ""))
                         .then(Commands.argument("namespace", StringArgumentType.word()).executes(c -> audit(c.getSource(),
                                 StringArgumentType.getString(c, "namespace")))))
+                .then(Commands.literal("notes").then(Commands.argument("group", StringArgumentType.word())
+                        .suggests((c, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(
+                                Exotic.GROUPS.stream().filter(g -> Exotic.learnable(Exotic.index(g))), b))
+                        .executes(c -> notes(c.getSource(), StringArgumentType.getString(c, "group"),
+                                java.util.List.of(c.getSource().getPlayerOrException())))
+                        .then(Commands.argument("targets", EntityArgument.players()).executes(c -> notes(c.getSource(),
+                                StringArgumentType.getString(c, "group"), EntityArgument.getPlayers(c, "targets"))))))
                 .then(Commands.literal("reset").then(Commands.argument("targets", EntityArgument.players()).executes(c -> {
                     Collection<ServerPlayer> ps = EntityArgument.getPlayers(c, "targets");
                     for (ServerPlayer sp : ps) {
@@ -72,6 +79,21 @@ public final class CulinaryCommands {
                     c.getSource().sendSuccess(() -> Component.translatable("rpculinary.cmd.reset", ps.size()), true);
                     return ps.size();
                 }))));
+    }
+
+    /** Выдать книгу «Записи исследований» группы. */
+    private static int notes(CommandSourceStack src, String group, Collection<ServerPlayer> targets) {
+        int g = Exotic.index(group);
+        if (!Exotic.learnable(g)) {
+            src.sendFailure(Component.translatable("rpculinary.cmd.notes_unknown", group));
+            return 0;
+        }
+        for (ServerPlayer sp : targets) {
+            var st = faygolover.rpculinary.item.ResearchNotes.of(g);
+            if (!sp.getInventory().add(st)) sp.drop(st, false);
+        }
+        src.sendSuccess(() -> Component.translatable("rpculinary.cmd.notes", faygolover.rpculinary.item.ResearchNotes.groupName(g), targets.size()), true);
+        return targets.size();
     }
 
     private static com.mojang.brigadier.builder.ArgumentBuilder<CommandSourceStack, ?> value(String name, double min, double max,
@@ -133,6 +155,7 @@ public final class CulinaryCommands {
         RpCoreAPI.registerCommand(m, "/rpculinary set <игроки> satiety|water|protein|fat|carbs|vitamins|weight|bodyfat <число>",
                 "rpculinary.help.set", 2, false);
         RpCoreAPI.registerCommand(m, "/rpculinary reset <игроки>", "rpculinary.help.reset", 2, false);
+        RpCoreAPI.registerCommand(m, "/rpculinary notes <группа> [игроки]", "rpculinary.help.notes", 2, false);
         RpCoreAPI.registerCommand(m, "/rpculinary audit [мод]", "rpculinary.help.audit", 2, true);
     }
 

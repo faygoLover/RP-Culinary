@@ -241,6 +241,10 @@ public final class Settings {
     public double charcoalEatSlow = 3;
     @Cfg(section = "cooking", doc = "Чистюля (черта rpcore:clean): шанс отравления в столько раз — и когда ест сам, и у блюд, которые он приготовил.")
     public double cleanPoisonFactor = 0.5;
+    @Cfg(section = "exotic", doc = "Экзотика без знания группы (книга «Записи исследований»): повар готовит на столько уровней хуже, и не выше «хорошего».")
+    public double exoticCookPenalty = 3;
+    @Cfg(section = "exotic", doc = "Экзотика без знания: блюдо ещё и травит с таким шансом — на любой стадии, даже «хорошее».")
+    public double exoticUnknownPoison = 0.35;
     @Cfg(section = "cooking", doc = "Полевой повар (черта rpcore:field_cook): на костре и в коптильне — плюс столько уровней.")
     public double fieldCookBonus = 2;
     @Cfg(section = "cooking", doc = "Кухонный кошмар (черта rpcore:kitchen_nightmare): минус столько уровней при готовке.")

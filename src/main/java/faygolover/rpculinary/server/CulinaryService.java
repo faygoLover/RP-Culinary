@@ -534,6 +534,11 @@ public final class CulinaryService {
         if (quality >= 0) {
             chance = faygolover.rpculinary.core.Cooking.poisonChance(quality, s);
             msg = quality == faygolover.rpculinary.core.Cooking.UNDERCOOKED ? "undercooked_sick" : "burnt_sick";
+            // Экзотику готовили без знания — сверху свой высокий шанс.
+            if (CookingService.wildCook(used)) {
+                if (faygolover.rpculinary.core.Cooking.success(quality)) msg = "exotic_sick";
+                chance = 1 - (1 - chance) * (1 - s.exoticUnknownPoison);
+            }
         } else if (NutritionTable.raw(sp.server, used.getItem())) {
             chance = s.rawMeatPoisonChance;
             msg = "raw_meat";

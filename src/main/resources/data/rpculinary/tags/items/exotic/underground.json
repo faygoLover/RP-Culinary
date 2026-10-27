@@ -1,0 +1,61 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "alexscaves:tripodfish",
+      "required": false
+    },
+    {
+      "id": "alexscaves:cooked_tripodfish",
+      "required": false
+    },
+    {
+      "id": "alexscaves:trilocaris_tail",
+      "required": false
+    },
+    {
+      "id": "alexscaves:cooked_trilocaris_tail",
+      "required": false
+    },
+    {
+      "id": "alexscaves:lanternfish",
+      "required": false
+    },
+    {
+      "id": "alexscaves:cooked_lanternfish",
+      "required": false
+    },
+    {
+      "id": "alexscaves:pewen_sap",
+      "required": false
+    },
+    {
+      "id": "alexscaves:primordial_soup",
+      "required": false
+    },
+    {
+      "id": "alexscaves:vesper_wing",
+      "required": false
+    },
+    {
+      "id": "alexscaves:vesper_stew",
+      "required": false
+    },
+    {
+      "id": "alexscaves:seething_stew",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_sea_sushi_roll",
+      "required": false
+    },
+    {
+      "id": "alexscaves:darkened_apple",
+      "required": false
+    },
+    {
+      "id": "alexscaves:stinky_fish",
+      "required": false
+    }
+  ]
+}

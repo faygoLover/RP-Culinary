@@ -284,10 +284,36 @@ public final class CulinaryGameTests {
         h.assertTrue(Math.abs(m.stomach - before - kcal * 0.85) < 1e-6, "подгорело — 85 % калорий, было " + (m.stomach - before));
         // Удачное блюдо не травит, даже если раньше считалось «сырым».
         ItemStack good = new ItemStack(Items.COOKED_BEEF);
-        faygolover.rpculinary.server.CookingService.put(good, faygolover.rpculinary.core.Cooking.GOOD, false);
+        faygolover.rpculinary.server.CookingService.put(good, faygolover.rpculinary.core.Cooking.GOOD, 0);
         p.removeAllEffects();
         for (int i = 0; i < 20; i++) CulinaryService.foodPoisoning(p, good, faygolover.rpculinary.core.Cooking.GOOD, 1, Settings.get());
         h.assertTrue(!p.hasEffect(net.minecraft.world.effect.MobEffects.POISON), "хорошее блюдо не травит");
+        remove(h, p);
+        h.succeed();
+    }
+
+    /** Группы экзотики: по тегу и от ингредиентов; знание — книгой (с RP Perks), без Perks знает всё. */
+    @GameTest(template = T)
+    public static void exoticGroups(GameTestHelper h) {
+        var server = h.getLevel().getServer();
+        int end = 1 << faygolover.rpculinary.server.Exotic.index("end");
+        int monsters = 1 << faygolover.rpculinary.server.Exotic.index("monsters");
+        h.assertTrue((NutritionTable.exoticMask(server, Items.CHORUS_FRUIT) & end) != 0, "хорус — Край");
+        h.assertTrue((NutritionTable.exoticMask(server, Items.ROTTEN_FLESH) & monsters) != 0, "гнилая плоть — монстры");
+        h.assertTrue(NutritionTable.exoticMask(server, Items.BREAD) == 0 && NutritionTable.exoticMask(server, Items.COOKED_BEEF) == 0,
+                "хлеб и стейк — не экзотика");
+        ServerPlayer p = player(h);
+        int g = faygolover.rpculinary.server.Exotic.index("end");
+        if (RpCoreAPI.isSkillManaged(RpIds.COOKING)) {
+            h.assertTrue(!faygolover.rpculinary.server.Exotic.knows(p, g), "с Perks без книги — не знает");
+            ItemStack book = faygolover.rpculinary.item.ResearchNotes.of(g);
+            p.setItemInHand(InteractionHand.MAIN_HAND, book);
+            book.use(h.getLevel(), p, InteractionHand.MAIN_HAND);
+            h.assertTrue(faygolover.rpculinary.server.Exotic.knows(p, g), "прочитал — знает");
+            h.assertTrue(p.getMainHandItem().isEmpty(), "книга одноразовая");
+        } else {
+            h.assertTrue(faygolover.rpculinary.server.Exotic.knows(p, g), "без Perks знает всё");
+        }
         remove(h, p);
         h.succeed();
     }

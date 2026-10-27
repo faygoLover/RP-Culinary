@@ -1,0 +1,53 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "butchery:rawhumanmeat",
+      "required": false
+    },
+    {
+      "id": "butchery:cookedhumanmeat",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_villager_steak",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_villager_steak",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_pillager_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_pillager_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_vindicator_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_vindicator_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_evoker_meat",
+      "required": false
+    },
+    {
+      "id": "butchery:cooked_evoker_meat",
+      "required": false
+    },
+    {
+      "id": "scpo:mystery_meat",
+      "required": false
+    },
+    {
+      "id": "scpo:pizza_fleshy",
+      "required": false
+    }
+  ]
+}
