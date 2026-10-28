@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "culinary-gallery",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-I", "-m", "http.server", "8791", "--bind", "127.0.0.1", "--directory", "site"],
+      "port": 8791
+    }
+  ]
+}

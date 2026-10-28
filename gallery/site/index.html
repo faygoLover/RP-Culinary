@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кулинария — разделка и формы</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="top">
+    <h1>Кулинария — разделка и формы</h1>
+    <span id="saved"></span>
+  </div>
+  <nav id="tabs">
+    <button data-tab="q">Вопросы <b id="n-q"></b></button>
+    <button data-tab="role">Мясо: роли <b id="n-role"></b></button>
+    <button data-tab="craft">Блюда на верстаке <b id="n-craft"></b></button>
+    <button data-tab="analog">Аналоги <b id="n-analog"></b></button>
+    <button data-tab="norecipe">Без рецепта <b id="n-norecipe"></b></button>
+    <button data-tab="done">Уже решено</button>
+    <button data-tab="out">Итог</button>
+  </nav>
+  <div id="filters">
+    <input id="q" type="search" placeholder="поиск: id или название">
+    <select id="mark">
+      <option value="">все</option>
+      <option value="none">без ответа</option>
+      <option value="ans">с ответом</option>
+      <option value="cm">с комментарием</option>
+    </select>
+    <span id="shown"></span>
+    <span class="bulk">показанные без ответа → <button id="bulk-rec">принять мои ★</button></span>
+  </div>
+</header>
+<p id="hint"></p>
+<main id="grid"></main>
+<section id="text" hidden></section>
+<script src="app.js"></script>
+</body>
+</html>

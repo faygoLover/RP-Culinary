@@ -1,0 +1,153 @@
+== same item, other station
+farmersdelight:chocolate_pie Шоколадный пирог ['create:filling']
+farmersdelight:pie_crust Заготовка для пирога ['create:mixing']
+minecraft:beetroot_soup Свекольный суп ['farmersdelight:cooking']
+minecraft:bread Хлеб ['minecraft:smelting', 'minecraft:smoking']
+minecraft:mushroom_stew Тушёные грибы ['farmersdelight:cooking']
+minecraft:rabbit_stew Тушёный кролик ['farmersdelight:cooking']
+refurbished_furniture:glow_berry_jam_toast Тост с вареньем из светящихся ягод ['refurbished_furniture:cutting_board_combining']
+refurbished_furniture:sweet_berry_jam_toast Тост с вареньем из сладких ягод ['refurbished_furniture:cutting_board_combining']
+== similar dish via station
+alexscaves:deep_sea_sushi_roll Глубоководный суши-ролл ~ [('farmersdelight:kelp_roll_slice', 'Ломтик ролла с ламинарией'), ('farmersdelight:cabbage_rolls', 'Голубцы')]
+alexscaves:primordial_soup Первичный бульон ~ [('farmersdelight:noodle_soup', 'Лапшичный суп'), ('candlelight:mushroom_soup', 'Грибной суп'), ('farmersdelight:onion_soup', 'Луковый суп'), ('farmersdelight:vegetable_soup', 'Овощной суп'), ('candlelight:tomato_soup', 'Томатный суп'), ('farmersdelight:pumpkin_soup', 'Тыквенный суп'), ('farm_and_charm:barley_soup', 'Ячменный суп'), ('farm_and_charm:simple_tomato_soup', 'Томатный суп')]
+alexscaves:seething_stew Бурлящая похлёбка ~ [('farmersdelight:beef_stew', 'Тушёная говядина'), ('farmersdelight:fish_stew', 'Тушёная рыба'), ('farmersdelight:baked_cod_stew', 'Запечённая тушёная треска'), ('minecraft:rabbit_stew', 'Тушёный кролик'), ('minecraft:mushroom_stew', 'Тушёные грибы')]
+alexsmobs:mosquito_repellent_stew Комаро отпугивающее рагу ~ [('farmersdelight:beef_stew', 'Тушёная говядина'), ('farmersdelight:fish_stew', 'Тушёная рыба'), ('farmersdelight:baked_cod_stew', 'Запечённая тушёная треска'), ('minecraft:rabbit_stew', 'Тушёный кролик'), ('minecraft:mushroom_stew', 'Тушёные грибы')]
+farmersdelight:apple_pie Яблочный пирог ~ [('farmersdelight:apple_pie_slice', 'Кусочек яблочного пирога'), ('farmersdelight:chocolate_pie', 'Шоколадный пирог'), ('farmersdelight:pie_crust', 'Заготовка для пирога')]
+farmersdelight:bacon_sandwich Сэндвич с беконом ~ [('refurbished_furniture:cheese_sandwich', 'Сэндвич с сыром')]
+farmersdelight:chicken_sandwich Сэндвич с курицей ~ [('refurbished_furniture:cheese_sandwich', 'Сэндвич с сыром')]
+farmersdelight:chocolate_pie Шоколадный пирог ~ [('farmersdelight:apple_pie_slice', 'Кусочек яблочного пирога'), ('farmersdelight:pie_crust', 'Заготовка для пирога')]
+farmersdelight:cod_roll Ролл с треской ~ [('farmersdelight:kelp_roll_slice', 'Ломтик ролла с ламинарией'), ('farmersdelight:cabbage_rolls', 'Голубцы')]
+farmersdelight:egg_sandwich Сэндвич с яйцом ~ [('refurbished_furniture:cheese_sandwich', 'Сэндвич с сыром')]
+farmersdelight:fruit_salad Фруктовый салат ~ [('candlelight:pasta_with_lettuce', 'Паста с салатом латук'), ('candlelight:tomato_mozzarella_salad', 'tomato_mozzarella_salad'), ('candlelight:beetroot_salad', 'Салат из свёклы'), ('brewery:potato_salad', 'Картофельный салат'), ('farm_and_charm:lettuce_seeds', 'Семена салата латук'), ('candlelight:fresh_garden_salad', 'fresh_garden_salad'), ('candlelight:roasted_lamb_with_lettuce', 'Запечённая баранина с салатом латук'), ('farm_and_charm:farmer_salad', 'Фермерский салат')]
+farmersdelight:kelp_roll Ролл с ламинарией ~ [('farmersdelight:kelp_roll_slice', 'Ломтик ролла с ламинарией'), ('farmersdelight:cabbage_rolls', 'Голубцы')]
+farmersdelight:mixed_salad Смешанный салат ~ [('candlelight:pasta_with_lettuce', 'Паста с салатом латук'), ('candlelight:tomato_mozzarella_salad', 'tomato_mozzarella_salad'), ('candlelight:beetroot_salad', 'Салат из свёклы'), ('brewery:potato_salad', 'Картофельный салат'), ('farm_and_charm:lettuce_seeds', 'Семена салата латук'), ('candlelight:fresh_garden_salad', 'fresh_garden_salad'), ('candlelight:roasted_lamb_with_lettuce', 'Запечённая баранина с салатом латук'), ('farm_and_charm:farmer_salad', 'Фермерский салат')]
+farmersdelight:nether_salad Незерский салат ~ [('candlelight:pasta_with_lettuce', 'Паста с салатом латук'), ('candlelight:tomato_mozzarella_salad', 'tomato_mozzarella_salad'), ('candlelight:beetroot_salad', 'Салат из свёклы'), ('brewery:potato_salad', 'Картофельный салат'), ('farm_and_charm:lettuce_seeds', 'Семена салата латук'), ('candlelight:fresh_garden_salad', 'fresh_garden_salad'), ('candlelight:roasted_lamb_with_lettuce', 'Запечённая баранина с салатом латук'), ('farm_and_charm:farmer_salad', 'Фермерский салат')]
+farmersdelight:pie_crust Заготовка для пирога ~ [('farmersdelight:apple_pie_slice', 'Кусочек яблочного пирога'), ('farmersdelight:chocolate_pie', 'Шоколадный пирог')]
+farmersdelight:salmon_roll Ролл с лососем ~ [('farmersdelight:kelp_roll_slice', 'Ломтик ролла с ламинарией'), ('farmersdelight:cabbage_rolls', 'Голубцы')]
+farmersdelight:steak_and_potatoes Стейк с картофелем ~ [('butchery:cooked_chuck_steak', 'Приготовленный чак стейк'), ('butchery:cooked_panda_steak', 'Приготовленный панда стейк'), ('butchery:cooked_llama_steak', 'Приготовленный ламный стейк'), ('butchery:cooked_enderman_steak', 'Приготовленный стейк эндермена'), ('butchery:cooked_rump_steak', 'Приготовленный огузок'), ('butchery:cooked_ribeye_steak', 'Приготовленный рибай стейк'), ('butchery:cooked_sniffer_steak', 'Приготовленный стейк обнюхивателя'), ('butchery:cooked_villager_steak', 'Приготовленный стейк жителя')]
+farmersdelight:sweet_berry_cheesecake Чизкейк со сладкими ягодами ~ [('farmersdelight:cake_slice', 'Кусочек торта'), ('refurbished_furniture:cheese_sandwich', 'Сэндвич с сыром'), ('farm_and_charm:oat_pancake', 'oat_pancake'), ('refurbished_furniture:cheese_toastie', 'Гренки с сыром'), ('farm_and_charm:grandmothers_strawberry_cake', 'grandmothers_strawberry_cake')]
+minecraft:beetroot_soup Свекольный суп ~ [('farmersdelight:noodle_soup', 'Лапшичный суп'), ('candlelight:mushroom_soup', 'Грибной суп'), ('farmersdelight:onion_soup', 'Луковый суп'), ('farmersdelight:vegetable_soup', 'Овощной суп'), ('candlelight:tomato_soup', 'Томатный суп'), ('farmersdelight:pumpkin_soup', 'Тыквенный суп'), ('farm_and_charm:barley_soup', 'Ячменный суп'), ('farm_and_charm:simple_tomato_soup', 'Томатный суп')]
+minecraft:bread Хлеб ~ [('brewery:gingerbread', 'Пряник'), ('refurbished_furniture:bread_slice', 'Ломтик хлеба'), ('farm_and_charm:farmers_bread', 'farmers_bread')]
+minecraft:cake Торт ~ [('farmersdelight:cake_slice', 'Кусочек торта'), ('farm_and_charm:oat_pancake', 'oat_pancake'), ('farm_and_charm:grandmothers_strawberry_cake', 'grandmothers_strawberry_cake')]
+minecraft:mushroom_stew Тушёные грибы ~ [('farmersdelight:beef_stew', 'Тушёная говядина'), ('farmersdelight:fish_stew', 'Тушёная рыба'), ('farmersdelight:baked_cod_stew', 'Запечённая тушёная треска'), ('minecraft:rabbit_stew', 'Тушёный кролик')]
+minecraft:pumpkin_pie Тыквенный пирог ~ [('farmersdelight:apple_pie_slice', 'Кусочек яблочного пирога'), ('farmersdelight:chocolate_pie', 'Шоколадный пирог'), ('farmersdelight:pie_crust', 'Заготовка для пирога')]
+minecraft:rabbit_stew Тушёный кролик ~ [('farmersdelight:beef_stew', 'Тушёная говядина'), ('farmersdelight:fish_stew', 'Тушёная рыба'), ('farmersdelight:baked_cod_stew', 'Запечённая тушёная треска'), ('minecraft:mushroom_stew', 'Тушёные грибы')]
+minecraft:sugar_cane Сахарный тростник ~ [('candlelight:mushroom_soup', 'Грибной суп'), ('candlelight:pasta_with_lettuce', 'Паста с салатом латук'), ('candlelight:beef_with_mushroom_in_wine_and_potatoes', 'Говядина с грибами и картофелем под белым вином'), ('candlelight:chicken_alfredo', 'Паста «Альфредо» с курицей'), ('candlelight:roastbeef_with_glazed_carrots', 'Тушёная говядина с морковью'), ('candlelight:beef_wellington', 'beef_wellington'), ('candlelight:tomato_soup', 'Томатный суп'), ('candlelight:omelet', 'Омлет')]
+refurbished_furniture:cheese Сыр ~ [('farmersdelight:cod_slice', 'Ломтик сырой трески'), ('refurbished_furniture:raw_vegetable_pizza', 'Сырая овощная пицца'), ('butchery:raw_beef_mince', 'Сырой говяжий фарш'), ('butchery:cooked_bee_back_meat', 'Сырое мясо спины пчелы'), ('butchery:raw_lamb_mince', 'Сырой ягненок фарш'), ('refurbished_furniture:cheese_sandwich', 'Сэндвич с сыром'), ('refurbished_furniture:raw_meatlovers_pizza', 'Сырая мясная пицца'), ('farmersdelight:bacon', 'Сырой бекон')]
+refurbished_furniture:glow_berry_jam_toast Тост с вареньем из светящихся ягод ~ [('refurbished_furniture:toast', 'Тост'), ('refurbished_furniture:sweet_berry_jam_toast', 'Тост с вареньем из сладких ягод'), ('refurbished_furniture:cheese_toastie', 'Гренки с сыром')]
+refurbished_furniture:sweet_berry_jam_toast Тост с вареньем из сладких ягод ~ [('refurbished_furniture:glow_berry_jam_toast', 'Тост с вареньем из светящихся ягод'), ('refurbished_furniture:toast', 'Тост'), ('refurbished_furniture:cheese_toastie', 'Гренки с сыром')]
+sa_combat:cheese_bread Сырный хлеб ~ [('farmersdelight:cod_slice', 'Ломтик сырой трески'), ('refurbished_furniture:raw_vegetable_pizza', 'Сырая овощная пицца'), ('butchery:raw_beef_mince', 'Сырой говяжий фарш'), ('butchery:cooked_bee_back_meat', 'Сырое мясо спины пчелы'), ('brewery:gingerbread', 'Пряник'), ('butchery:raw_lamb_mince', 'Сырой ягненок фарш'), ('refurbished_furniture:cheese_sandwich', 'Сэндвич с сыром'), ('refurbished_furniture:bread_slice', 'Ломтик хлеба')]
+sa_combat:cheese_burger Чизбургер ~ [('refurbished_furniture:cheese_sandwich', 'Сэндвич с сыром'), ('refurbished_furniture:cheese_toastie', 'Гренки с сыром')]
+supplementaries:candy Конфета ~ [('candlelight:mushroom_soup', 'Грибной суп'), ('candlelight:pasta_with_lettuce', 'Паста с салатом латук'), ('candlelight:beef_with_mushroom_in_wine_and_potatoes', 'Говядина с грибами и картофелем под белым вином'), ('candlelight:chicken_alfredo', 'Паста «Альфредо» с курицей'), ('candlelight:roastbeef_with_glazed_carrots', 'Тушёная говядина с морковью'), ('candlelight:beef_wellington', 'beef_wellington'), ('candlelight:tomato_soup', 'Томатный суп'), ('candlelight:omelet', 'Омлет')]
+supplementaries:pancake Блинчик ~ [('farmersdelight:cake_slice', 'Кусочек торта'), ('farm_and_charm:oat_pancake', 'oat_pancake'), ('farm_and_charm:grandmothers_strawberry_cake', 'grandmothers_strawberry_cake')]
+== uncraftable dishes
+alexscaves:purple_soda_bottle | Бутылочка фиолетовой газировки | nin 0
+alexsmobs:leafcutter_ant_pupa | Куколка муравья | nin 0
+alexsmobs:maggot | Личинка | nin 0
+alexsmobs:mimicream | Мимикрем | nin 0
+alexsmobs:rainbow_jelly | Радужное желе | nin 0
+alexsmobs:shrimp_fried_rice | Рис с креветками | nin 0
+anomaly_rephased:totem | Тотем | nin 0
+butchery:bat_wing | Крыло летучей мыши | nin 0
+butchery:bee_wings | Пчелиные крылья | nin 0
+butchery:pufferfish | Туша иглобрюха | nin 0
+cybernetic_system:pill_with_nanomachines | Пилюля с наномашинами | nin 0
+cybernetic_system:soda_absorption | Газировка | nin 0
+cybernetic_system:soda_haste | Газировка | nin 0
+cybernetic_system:soda_strenght | Газировка | nin 0
+farmersdelight:honey_glazed_ham | Тарелка ветчины в медовой глазури | nin 0
+farmersdelight:shepherds_pie | Тарелка пастушьего пирога | nin 0
+minecraft:ominous_bottle | Зловещая бутылочка | nin 0
+minecraft:sea_pickle | Морской огурец | nin 0
+minecraft:suspicious_stew | Загадочное рагу | nin 0
+sa_combat:beer | Пиво | nin 0
+sa_combat:big_burger | Большой бургер | nin 0
+sa_combat:biscuit | Печенье | nin 0
+sa_combat:burrito | Буррито | nin 0
+sa_combat:canned_corn | Консервированная кукуруза | nin 0
+sa_combat:canned_dog_food | Консервы для собак | nin 0
+sa_combat:canned_fruit_beverage | Консервированный фруктовый напиток | nin 0
+sa_combat:canned_spaghetti_bolognese | Консервированные спагетти болоньезе | nin 0
+sa_combat:cereal_fruit_loops | Коробка хлопьев Fruit Loops | nin 0
+sa_combat:chips | Чипсы | nin 0
+sa_combat:coffee | Кофе | nin 0
+sa_combat:donut | Пончик | nin 0
+sa_combat:hot_dog | Хот-дог | nin 0
+sa_combat:pizza | Кусок пиццы | nin 0
+sa_combat:taco | Тако | nin 0
+sa_combat:vodka | Водка | nin 0
+sa_combat:waffles | Вафли | nin 0
+sa_combat:wine | Вино | nin 0
+scpo:baja_dile_can | Банка мяса | nin 0
+scpo:candy_pink | Конфета привидения | nin 0
+scpo:candyblue | Сахарная вата | nin 0
+scpo:candygreen | Конфета-глаз | nin 0
+scpo:candyred | Мясная конфета | nin 0
+scpo:carmin_soda | Банка Carmin газировки | nin 0
+scpo:coffee_can | Банка кофе | nin 0
+scpo:coke_can | Банка кока-колы | nin 0
+scpo:cotton_soda_can | Банка сахарной ваты газировки | nin 0
+scpo:cupcake | Кекс | nin 0
+scpo:papercup_coffee | Чашка кофе | nin 0
+scpo:papercup_water | Чашка воды | nin 0
+scpo:pizza_bianca | Пицца Бьянка | nin 0
+scpo:pizza_biscuit | Пицца с печеньем | nin 0
+scpo:pizza_cheese | Сырная пицца | nin 0
+scpo:pizza_chicken | Бразильская пицца с курицей | nin 0
+scpo:pizza_colzone | Кальцоне | nin 0
+scpo:pizza_deepdish | Пицца глубокого блюда | nin 0
+scpo:pizza_fleshy | Мясная пицца | nin 0
+scpo:pizza_greenpepper | Пицца с зелёным перцем | nin 0
+scpo:pizza_hawaiian | Гавайская пицца | nin 0
+scpo:pizza_margherita | Пицца Маргарита | nin 0
+scpo:pizza_neopolitan | Пицца неаполитанская | nin 0
+scpo:pizza_olive_onion | Пицца оливки и лук | nin 0
+scpo:pizza_pepperoni | Пицца пепперони | nin 0
+scpo:pizza_square | Квадратная пицца | nin 0
+scpo:pizza_swedish | Шведская банановая пицца | nin 0
+scpo:pizza_taco | Такос пицца | nin 0
+scpo:redacted_soda_can |                     Банка | nin 0
+scpo:stitch_soda | Банка газировки Stitch | nin 0
+scpo:zombie_candy | Леденец зомби | nin 0
+superbwarfare:crust | Корочка | nin 0
+survival_instinct:adrenaline_injector | Инъектор адреналина | nin 0
+survival_instinct:adrenaline_syringe | Шприц с адреналином | nin 1
+survival_instinct:analgesic | Обезболивающее | nin 1
+survival_instinct:antibiotics | Антибиотики | nin 1
+survival_instinct:beer | Пиво | nin 0
+survival_instinct:blood_syringe | Шприц с кровью | nin 1
+survival_instinct:blue_soda | Синяя газировка | nin 0
+survival_instinct:bottle_of_water | Бутылка воды | nin 0
+survival_instinct:cheese_chips | Сырные чипсы | nin 0
+survival_instinct:energy_can | Банка энергетика | nin 0
+survival_instinct:gallon_of_water | Галлон воды | nin 0
+survival_instinct:gasoline_can | Канистра с бензином | nin 0
+survival_instinct:lemon_soda | Лимонная газировка | nin 0
+survival_instinct:medkit_bag | Сумка с медикаментами | nin 0
+survival_instinct:military_can | Военные консервы | nin 0
+survival_instinct:monster_can | Банка «Монстра» | nin 0
+survival_instinct:morphine_injector | Инъектор морфина | nin 0
+survival_instinct:morphine_syringe | Шприц с морфином | nin 1
+survival_instinct:red_soda | Красная газировка | nin 0
+survival_instinct:rice_cookie | Рисовое печенье | nin 0
+survival_instinct:tequila | Текила | nin 0
+survival_instinct:tomato_soup | Томатный суп | nin 0
+survival_instinct:whiskey | Виски | nin 0
+survival_instinct:wine | Вино | nin 0
+zombie_extreme:canned_food | Консервированная Еда | nin 0
+zombie_extreme:canned_soup | Консервированный Суп | nin 0
+zombie_extreme:canned_stew | Консервированныя Говядина | nin 0
+zombie_extreme:cat_food | Кошачий корм | nin 0
+zombie_extreme:dog_food | Собачья еда | nin 0
+zombie_extreme:experimental_pill | Экспериментальная таблетка | nin 0
+zombie_extreme:experimental_serum | Экспериментальная сыворотка | nin 0
+zombie_extreme:pill_against_radiation | Антирадон | nin 0
+zombie_extreme:pill_anti_hunger | Анти-Голод | nin 0
+zombie_extreme:pill_night_vision | Таблетка Ночного Видения | nin 0
+zombie_extreme:pill_psycho | Психостимулятор | nin 0
+zombie_extreme:soda | Сода | nin 0
+zombie_extreme:syringe_adrenaline | Шприц Адреналина | nin 0
+zombie_extreme:syringe_antidote | Антидот | nin 0
+zombie_extreme:syringe_drug | Наркотики | nin 0
+zombie_extreme:syringe_night_vision | Шприц Ночного Видения | nin 0
+zombie_extreme:syringe_stimulator | Шприц-стимулятор | nin 0

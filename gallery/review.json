@@ -1,0 +1,762 @@
+{
+ "items": {
+  "q:tint": {
+   "comment": "Да, всё так. Двай там, где свои есть - используем эти свои. Там где своих нет - просто подкрашиваем чужие",
+   "mark": "yes"
+  },
+  "q:skill": {
+   "mark": "edit",
+   "comment": "овца и тд - 3. корова и тд - 5й. Экзотические или большие монстры - распредели сам от 6 до 10. Дракон иои динозавр - точно на 10."
+  },
+  "q:mince": {
+   "comment": "farmersdelight:minced_beef - это сырая котлета из фарша. farmersdelight:beef_patty - это он же, но жареный. всё остальное - фарш. я бы подкрашивал их все, просто распределив по разному фаршу. например есть 3 разных мяса, чей цает похож - отлично, вот у нас есть 3 разных исходных вариантов фарша."
+  },
+  "q:bacon": {
+   "mark": "edit"
+  },
+  "q:patty": {
+   "mark": "ok"
+  },
+  "q:grinder": {
+   "mark": "both"
+  },
+  "q:exotic": {
+   "mark": "ok"
+  },
+  "q:stack": {
+   "mark": "ok"
+  },
+  "q:stack_veg": {
+   "mark": "all"
+  },
+  "q:nbt": {
+   "mark": "nbt"
+  },
+  "q:loss": {
+   "mark": "ok"
+  },
+  "q:xp": {
+   "mark": "yes"
+  },
+  "q:scraps": {
+   "mark": "ok"
+  },
+  "q:bones": {
+   "mark": "yes"
+  },
+  "q:cow": {
+   "mark": "ok"
+  },
+  "q:pig": {
+   "mark": "ok"
+  },
+  "q:sheep": {
+   "mark": "ok"
+  },
+  "q:chicken": {
+   "mark": "ok"
+  },
+  "q:rabbit": {
+   "mark": "ok"
+  },
+  "q:fish": {
+   "mark": "ok"
+  },
+  "q:ham": {
+   "mark": "bu"
+  },
+  "q:lamb_leg": {
+   "mark": "drop"
+  },
+  "q:chicken_parts": {
+   "mark": "ok"
+  },
+  "q:sausage": {
+   "mark": "ok",
+   "comment": "butchery:raw_sausages - фигня какая-то, наверно кусок спрайта для мясорубки"
+  },
+  "q:chops": {
+   "mark": "ok"
+  },
+  "q:cooked_big": {
+   "mark": "hide"
+  },
+  "role:minecraft:beef": {
+   "mark": "por"
+  },
+  "role:butchery:raw_ribeye_steak": {
+   "mark": "steak"
+  },
+  "role:butchery:raw_tbone_steak": {
+   "mark": "steak"
+  },
+  "role:butchery:raw_sirloin_steak": {
+   "mark": "steak"
+  },
+  "role:butchery:raw_chuck_steak": {
+   "mark": "big"
+  },
+  "role:butchery:raw_rump_steak": {
+   "mark": "big"
+  },
+  "role:farmersdelight:minced_beef": {
+   "mark": "por"
+  },
+  "role:farm_and_charm:minced_beef": {
+   "mark": "por"
+  },
+  "role:butchery:raw_beef_mince": {
+   "mark": "por"
+  },
+  "role:minecraft:porkchop": {
+   "mark": "por"
+  },
+  "role:butchery:raw_pork_loin": {
+   "mark": "steak"
+  },
+  "role:butchery:raw_pork_belly": {
+   "mark": "big"
+  },
+  "role:butchery:raw_pork_shoulder": {
+   "mark": "big"
+  },
+  "role:butchery:raw_pork_leg": {
+   "mark": "whole"
+  },
+  "role:farmersdelight:ham": {
+   "mark": "whole"
+  },
+  "role:farmersdelight:bacon": {
+   "mark": "small"
+  },
+  "role:farm_and_charm:bacon": {
+   "mark": "drop",
+   "comment": "можно пустить куда-то туда, где нам наоборот не хватало спрайта. например на ещё какие-то обрезки"
+  },
+  "role:butchery:raw_sausage": {
+   "mark": "whole"
+  },
+  "role:butchery:raw_blood_sausage": {
+   "mark": "whole"
+  },
+  "role:butchery:raw_blood_sausages": {
+   "comment": "такого предмета нет, вероятно это что-то дла спрайта"
+  },
+  "role:minecraft:mutton": {
+   "mark": "por"
+  },
+  "role:farm_and_charm:lamb_ham": {
+   "mark": "whole"
+  },
+  "role:butchery:raw_leg_of_lamb": {
+   "mark": "drop"
+  },
+  "role:butchery:raw_lamb_rib": {
+   "mark": "steak"
+  },
+  "role:butchery:raw_lamb_loin": {
+   "mark": "steak"
+  },
+  "role:butchery:raw_lamb_sirloin": {
+   "mark": "steak"
+  },
+  "role:butchery:raw_lamb_shoulder": {
+   "mark": "big"
+  },
+  "role:farmersdelight:mutton_chops": {
+   "mark": "por"
+  },
+  "role:butchery:raw_lamb_mince": {
+   "mark": "por"
+  },
+  "role:minecraft:chicken": {
+   "mark": "whole"
+  },
+  "role:butchery:raw_chicken_leg": {
+   "mark": "steak"
+  },
+  "role:butchery:raw_chicken_wing": {
+   "mark": "small"
+  },
+  "role:butchery:bird_foot": {
+   "mark": "small"
+  },
+  "role:farmersdelight:chicken_cuts": {
+   "mark": "por"
+  },
+  "role:farm_and_charm:chicken_parts": {
+   "mark": "small"
+  },
+  "role:minecraft:rabbit": {
+   "mark": "whole"
+  },
+  "role:minecraft:cod": {
+   "mark": "whole"
+  },
+  "role:butchery:raw_cod_fillet": {
+   "mark": "steak"
+  },
+  "role:farmersdelight:cod_slice": {
+   "mark": "small",
+   "comment": "мелкий кусочек, для суши например"
+  },
+  "role:minecraft:salmon": {
+   "mark": "whole"
+  },
+  "role:butchery:raw_salmon": {
+   "mark": "steak",
+   "comment": "филе"
+  },
+  "role:farmersdelight:salmon_slice": {
+   "mark": "small",
+   "comment": "мелкий кусочек, для суши например"
+  },
+  "role:butchery:liver": {
+   "mark": "big"
+  },
+  "role:butchery:heart": {
+   "mark": "big"
+  },
+  "role:butchery:kidney": {
+   "mark": "por"
+  },
+  "role:butchery:lungs": {
+   "mark": "big"
+  },
+  "role:butchery:stomach": {
+   "mark": "big"
+  },
+  "role:butchery:intestines": {
+   "mark": "small"
+  },
+  "role:butchery:brain": {
+   "mark": "big"
+  },
+  "role:butchery:animal_fat": {
+   "mark": "por"
+  },
+  "role:butchery:crackling": {
+   "mark": "small"
+  },
+  "role:butchery:meat_scraps": {
+   "mark": "por"
+  },
+  "role:butchery:raw_horse_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_donkey_steak": {
+   "mark": "big"
+  },
+  "role:butchery:raw_mule_steak": {
+   "mark": "big"
+  },
+  "role:butchery:raw_llama_steak": {
+   "mark": "big"
+  },
+  "role:butchery:raw_camel_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_wolf_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_fox_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_polar_bear_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_panda_steak": {
+   "mark": "big"
+  },
+  "role:butchery:raw_hoglin_chunk": {
+   "mark": "big"
+  },
+  "role:butchery:raw_dolphin_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_turtle_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_sniffer_steak": {
+   "mark": "big"
+  },
+  "role:alexsmobs:kangaroo_meat": {
+   "mark": "big"
+  },
+  "role:alexsmobs:moose_ribs": {
+   "mark": "big"
+  },
+  "role:alexscaves:dinosaur_chop": {
+   "mark": "big"
+  },
+  "role:butchery:raw_strider_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_ravager_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_guardian_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_warden_meat": {
+   "mark": "big"
+  },
+  "role:butchery:raw_enderman_steak": {
+   "mark": "big"
+  },
+  "role:butchery:raw_cat_meat": {
+   "mark": "por"
+  },
+  "role:butchery:raw_ocelot_meat": {
+   "mark": "por"
+  },
+  "role:butchery:raw_green_frog_leg": {
+   "mark": "small"
+  },
+  "role:butchery:raw_blue_axolotl_fillet": {
+   "mark": "small"
+  },
+  "role:butchery:raw_bat_meat": {
+   "mark": "small"
+  },
+  "role:butchery:raw_spider_leg": {
+   "mark": "small"
+  },
+  "role:butchery:raw_creeper_steak": {
+   "mark": "por"
+  },
+  "role:butchery:raw_silverfish_chunks": {
+   "mark": "small"
+  },
+  "role:candlelight:beef_tartare": {
+   "comment": "Это тартар, готовое блюдо, делается из фарша и там ещё чего-то"
+  },
+  "role:butchery:raw_ham": {
+   "mark": "whole"
+  },
+  "role:butchery:raw_sausages": {
+   "comment": "такого предмета нет, вероятно это что-то дла спрайта"
+  },
+  "craft:alexscaves:alex_meal": {
+   "mark": "keep"
+  },
+  "craft:alexscaves:biome_treat": {
+   "mark": "keep"
+  },
+  "craft:alexscaves:deep_sea_sushi_roll": {
+   "mark": "keep"
+  },
+  "craft:alexscaves:gummy_ring_blue": {
+   "mark": "keep"
+  },
+  "craft:alexscaves:gummy_ring_green": {
+   "mark": "keep"
+  },
+  "craft:alexscaves:gummy_ring_pink": {
+   "mark": "keep"
+  },
+  "craft:alexscaves:gummy_ring_yellow": {
+   "mark": "keep"
+  },
+  "craft:alexscaves:hot_chocolate_bottle": {
+   "mark": "keep"
+  },
+  "craft:alexscaves:primordial_soup": {
+   "mark": "move"
+  },
+  "craft:alexscaves:sack_of_sating": {
+   "mark": "keep"
+  },
+  "craft:alexscaves:seething_stew": {
+   "mark": "move"
+  },
+  "craft:alexsmobs:kangaroo_burger": {
+   "mark": "keep",
+   "comment": "плюс салат"
+  },
+  "craft:alexsmobs:mosquito_repellent_stew": {
+   "mark": "move"
+  },
+  "craft:farm_and_charm:farmers_breakfast": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:apple_pie": {
+   "mark": "move"
+  },
+  "craft:farmersdelight:bacon_and_eggs": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:bacon_sandwich": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:barbecue_stick": {
+   "mark": "move"
+  },
+  "craft:farmersdelight:chicken_sandwich": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:chocolate_pie": {
+   "mark": "move"
+  },
+  "craft:farmersdelight:cod_roll": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:egg_sandwich": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:fruit_salad": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:hamburger": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:honey_cookie": {
+   "mark": "move"
+  },
+  "craft:farmersdelight:kelp_roll": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:melon_popsicle": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:mixed_salad": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:nether_salad": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:pie_crust": {
+   "mark": "move"
+  },
+  "craft:farmersdelight:roasted_mutton_chops": {
+   "mark": "move"
+  },
+  "craft:farmersdelight:salmon_roll": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:steak_and_potatoes": {
+   "mark": "move"
+  },
+  "craft:farmersdelight:stuffed_potato": {
+   "mark": "keep"
+  },
+  "craft:farmersdelight:sweet_berry_cheesecake": {
+   "mark": "move"
+  },
+  "craft:farmersdelight:sweet_berry_cookie": {
+   "mark": "move"
+  },
+  "craft:minecraft:beetroot_soup": {
+   "mark": "move"
+  },
+  "craft:minecraft:bread": {
+   "mark": "move"
+  },
+  "craft:minecraft:cake": {
+   "mark": "move"
+  },
+  "craft:minecraft:cookie": {
+   "mark": "move"
+  },
+  "craft:minecraft:mushroom_stew": {
+   "mark": "move"
+  },
+  "craft:minecraft:pumpkin_pie": {
+   "mark": "move"
+  },
+  "craft:minecraft:rabbit_stew": {
+   "mark": "move"
+  },
+  "craft:minecraft:sugar_cane": {
+   "mark": "keep"
+  },
+  "craft:refurbished_furniture:cheese": {
+   "mark": "move"
+  },
+  "craft:refurbished_furniture:glow_berry_jam_toast": {
+   "mark": "keep"
+  },
+  "craft:refurbished_furniture:sweet_berry_jam_toast": {
+   "mark": "keep"
+  },
+  "craft:sa_combat:burger": {
+   "mark": "keep"
+  },
+  "craft:sa_combat:cheese_bread": {
+   "mark": "move"
+  },
+  "craft:sa_combat:cheese_burger": {
+   "mark": "keep"
+  },
+  "craft:supplementaries:candy": {
+   "mark": "keep"
+  },
+  "craft:supplementaries:pancake": {
+   "mark": "move"
+  },
+  "q:mince_any": {
+   "mark": "ok"
+  },
+  "q:mince_mix": {
+   "comment": "А как класть то разное мясо? НУ или как потом его доставать? Как бы ок, можно, но тогда надо дать мясорубке FaC инвентарь со слотами. А как тогда крутить её? Короче нужны от тебя варианты.",
+   "mark": "yes"
+  },
+  "q:fat": {
+   "mark": "ok"
+  },
+  "q:salt": {
+   "mark": "edit",
+   "comment": "csaugmentations:salt - это блок. blocksyouneed_luna:rock_salt - не блок, но и не соль - кристалл её. Давай blocksyouneed_luna:rock_salt нужно в ступке или ещё чеём потолочь, чтобы она стала солью? Есть у нас ступка? Если нет, то давай на разделочной доске, хаха. Галит - это как бы соль, но не та соль..."
+  },
+  "q:cook_weight": {
+   "mark": "ok"
+  },
+  "q:board_xp": {
+   "mark": "lower",
+   "comment": "на 1"
+  },
+  "q:carcass_weight": {
+   "mark": "real"
+  },
+  "a:soups": {
+   "mark": "station"
+  },
+  "a:bread": {
+   "mark": "station"
+  },
+  "a:jam_toast": {
+   "mark": "station"
+  },
+  "a:burgers": {
+   "mark": "station",
+   "comment": "енгуру-бургер — котлета из кенгуру + салат + булка как у прочих бургеров"
+  },
+  "a:sandwich": {
+   "mark": "station"
+  },
+  "a:bacon_eggs": {
+   "mark": "station",
+   "comment": "Давай один на жаровне, другой - на сковороде, да"
+  },
+  "a:onion_soup": {
+   "mark": "both"
+  },
+  "a:salads": {
+   "mark": "station"
+  },
+  "a:bakery": {
+   "mark": "station"
+  },
+  "a:cheese": {
+   "mark": "station",
+   "comment": "Давай так, да, только без лишних сложностей - стараемся использовать те инструменты и ирпдеметы, что уже есть. Чтобы не создавать какие-то специальные предметы, которые используются лишь в одном рецепте"
+  },
+  "a:juice": {
+   "mark": "station"
+  },
+  "a:cocoa": {
+   "mark": "station"
+  },
+  "a:canning": {
+   "mark": "station"
+  },
+  "a:feast": {
+   "mark": "station",
+   "comment": "Да, поправь это."
+  },
+  "nr:scpo:pizza_margherita": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_neopolitan": {
+   "mark": "edit",
+   "comment": "+ какая-то зелень"
+  },
+  "nr:scpo:pizza_cheese": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_bianca": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_pepperoni": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_hawaiian": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_chicken": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_taco": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_olive_onion": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_greenpepper": {
+   "mark": "edit",
+   "comment": "ЗАмени просто перец на что-то, пофиг)))"
+  },
+  "nr:scpo:pizza_swedish": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_deepdish": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_square": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_colzone": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_biscuit": {
+   "mark": "mine"
+  },
+  "nr:scpo:pizza_fleshy": {
+   "mark": "loot"
+  },
+  "nr:sa_combat:pizza": {
+   "mark": "loot"
+  },
+  "nr:sa_combat:hot_dog": {
+   "mark": "mine"
+  },
+  "nr:sa_combat:taco": {
+   "mark": "mine"
+  },
+  "nr:sa_combat:burrito": {
+   "mark": "mine"
+  },
+  "nr:sa_combat:donut": {
+   "mark": "mine"
+  },
+  "nr:sa_combat:waffles": {
+   "mark": "mine"
+  },
+  "nr:sa_combat:biscuit": {
+   "mark": "mine"
+  },
+  "nr:scpo:cupcake": {
+   "mark": "loot"
+  },
+  "nr:survival_instinct:rice_cookie": {
+   "mark": "mine"
+  },
+  "nr:sa_combat:chips": {
+   "mark": "mine"
+  },
+  "nr:survival_instinct:cheese_chips": {
+   "mark": "loot"
+  },
+  "nr:sa_combat:cereal_fruit_loops": {
+   "mark": "loot"
+  },
+  "nr:zombie_extreme:canned_stew": {
+   "mark": "mine"
+  },
+  "nr:zombie_extreme:canned_soup": {
+   "mark": "mine"
+  },
+  "nr:zombie_extreme:canned_food": {
+   "mark": "edit",
+   "comment": "Ну это типо Киббл из мира Киберпанк. Корм для людей, лол. Невкусно, не очень полезно, не очень питательно, но есть можно. Переименуй его в это ПЖ."
+  },
+  "nr:sa_combat:canned_corn": {
+   "mark": "mine"
+  },
+  "nr:sa_combat:canned_spaghetti_bolognese": {
+   "mark": "mine"
+  },
+  "nr:sa_combat:canned_fruit_beverage": {
+   "mark": "mine"
+  },
+  "nr:survival_instinct:military_can": {
+   "mark": "loot"
+  },
+  "nr:survival_instinct:mre": {
+   "mark": "loot"
+  },
+  "nr:sa_combat:canned_dog_food": {
+   "mark": "mine"
+  },
+  "nr:zombie_extreme:dog_food": {
+   "mark": "loot"
+  },
+  "nr:zombie_extreme:cat_food": {
+   "mark": "loot"
+  },
+  "nr:sa_combat:vodka": {
+   "mark": "mine",
+   "comment": "Давай только без спец блока - переиспользуем имеющиеся."
+  },
+  "nr:zombie_extreme:vodka": {
+   "mark": "loot"
+  },
+  "nr:survival_instinct:tequila": {
+   "mark": "loot"
+  },
+  "nr:sa_combat:beer": {
+   "mark": "loot"
+  },
+  "nr:survival_instinct:beer": {
+   "mark": "loot"
+  },
+  "nr:sa_combat:wine": {
+   "mark": "loot"
+  },
+  "nr:survival_instinct:wine": {
+   "mark": "loot"
+  },
+  "nr:survival_instinct:whiskey": {
+   "mark": "loot"
+  },
+  "nr:sa_combat:coffee": {
+   "mark": "loot"
+  },
+  "nr:scpo:papercup_coffee": {
+   "mark": "loot"
+  },
+  "nr:scpo:papercup_water": {
+   "mark": "loot"
+  },
+  "nr:scpo:coke_can": {
+   "mark": "loot"
+  },
+  "nr:survival_instinct:energy_can": {
+   "mark": "loot"
+  },
+  "nr:survival_instinct:bottle_of_water": {
+   "mark": "loot"
+  },
+  "nr:alexscaves:purple_soda_bottle": {
+   "mark": "loot"
+  },
+  "nr:scpo:candyblue": {
+   "mark": "loot"
+  },
+  "nr:scpo:candy_pink": {
+   "mark": "loot"
+  },
+  "nr:scpo:zombie_candy": {
+   "mark": "loot"
+  },
+  "nr:alexsmobs:rainbow_jelly": {
+   "mark": "loot"
+  },
+  "nr:alexsmobs:shrimp_fried_rice": {
+   "mark": "loot"
+  },
+  "nr:farmersdelight:shepherds_pie": {
+   "mark": "loot"
+  },
+  "nr:farmersdelight:honey_glazed_ham": {
+   "mark": "loot"
+  },
+  "nr:alexsmobs:maggot": {
+   "mark": "loot"
+  },
+  "nr:alexsmobs:leafcutter_ant_pupa": {
+   "mark": "loot"
+  }
+ },
+ "saved_at": "2026-10-28 22:17:17"
+}

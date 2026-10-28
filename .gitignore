@@ -8,3 +8,6 @@ out/
 libs/pack/
 # Скачанные моды готовки (Kaleidoscope…) — для разбора, не в git.
 docs/reference/jars/
+
+# Кэш сканирования сборки для галереи (большой, пересобирается gallery/tools)
+gallery/cache/

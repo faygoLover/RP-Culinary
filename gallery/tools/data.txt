@@ -1,0 +1,390 @@
+# section|product|origin|tier|form|ids     (tier only for meat/bird: A B C X)
+# proposals: +section|product|form|text
+meat|Говядина|ферма (корова)|A|сырое|minecraft:beef candlelight:beef_tartare
+meat|Говядина||A|отрубы/части|butchery:raw_chuck_steak butchery:raw_ribeye_steak butchery:raw_rump_steak butchery:raw_sirloin_steak butchery:raw_tbone_steak
+meat|Говядина||A|фарш|farmersdelight:minced_beef farm_and_charm:minced_beef butchery:raw_beef_mince
+meat|Говядина||A|котлета|farmersdelight:beef_patty farm_and_charm:beef_patty_with_vegetables
+meat|Говядина||A|сосиска|brewery:sausage
+meat|Говядина||A|жареное|minecraft:cooked_beef butchery:cooked_chuck_steak butchery:cooked_ribeye_steak butchery:cooked_rump_steak butchery:cooked_sirloin_steak butchery:cooked_tbone_steak butchery:cooked_beef_mince candlelight:fillet_steak
+meat|Свинина|ферма (свинья)|A|сырое|minecraft:porkchop
+meat|Свинина||A|отрубы/части|butchery:raw_pork_belly butchery:raw_pork_leg butchery:raw_pork_loin butchery:raw_pork_shoulder
+meat|Свинина||A|бекон/ветчина|farmersdelight:bacon farm_and_charm:bacon farmersdelight:ham butchery:raw_ham
+meat|Свинина||A|сосиска|butchery:raw_sausage butchery:raw_sausages butchery:raw_blood_sausage butchery:raw_blood_sausages
+meat|Свинина||A|копчёное|farmersdelight:smoked_ham
+meat|Свинина||A|жареное|minecraft:cooked_porkchop farmersdelight:cooked_bacon butchery:cooked_pork_belly butchery:cooked_pork_leg butchery:cooked_pork_loin butchery:cooked_pork_shoulder butchery:cooked_ham butchery:cooked_sausage butchery:cooked_sausages butchery:cooked_blood_sausage butchery:cooked_blood_sausages butchery:crackling
+meat|Баранина|ферма (овца)|A|сырое|minecraft:mutton
+meat|Баранина||A|отрубы/части|farmersdelight:mutton_chops butchery:raw_lamb_loin butchery:raw_lamb_rib butchery:raw_lamb_shoulder butchery:raw_lamb_sirloin butchery:raw_leg_of_lamb farm_and_charm:lamb_ham
+meat|Баранина||A|фарш|butchery:raw_lamb_mince
+meat|Баранина||A|жареное|minecraft:cooked_mutton farmersdelight:cooked_mutton_chops butchery:cooked_lamb_loin butchery:cooked_lamb_rib butchery:cooked_lamb_shoulder butchery:cooked_lamb_sirloin butchery:cooked_leg_of_lamb butchery:cooked_lamb_mince
+meat|Крольчатина|ферма/дикий (кролик)|A|сырое|minecraft:rabbit
+meat|Крольчатина||A|жареное|minecraft:cooked_rabbit
+meat|Козлятина|горы (коза): своего мяса нет, туша Butchery даёт бараньи отрубы|A|—|
+meat|Конина|равнины (лошадь), Butchery|A|сырое|butchery:raw_horse_meat
+meat|Конина||A|жареное|butchery:cooked_horse_meat
+meat|Ослятина|равнины (осёл), Butchery|B|сырое|butchery:raw_donkey_steak
+meat|Ослятина||B|жареное|butchery:cooked_donkey_steak
+meat|Мул|Butchery|B|сырое|butchery:raw_mule_steak
+meat|Мул||B|жареное|butchery:cooked_mule_steak
+meat|Лама|горы/саванна (лама), Butchery|B|сырое|butchery:raw_llama_steak
+meat|Лама||B|жареное|butchery:cooked_llama_steak
+meat|Верблюд|пустыня (верблюд), Butchery|B|сырое|butchery:raw_camel_meat
+meat|Верблюд||B|жареное|butchery:cooked_camel_meat
+meat|Кенгурятина|Alex's Mobs: кустарники/бесплодные земли|B|сырое|alexsmobs:kangaroo_meat
+meat|Кенгурятина||B|жареное|alexsmobs:cooked_kangaroo_meat
+meat|Лосятина|Alex's Mobs: тайга/снежные леса|B|отрубы/части|alexsmobs:moose_ribs
+meat|Лосятина||B|жареное|alexsmobs:cooked_moose_ribs
+meat|Волчатина|тайга (волк), Butchery|B|сырое|butchery:raw_wolf_meat
+meat|Волчатина||B|жареное|butchery:cooked_wolf_meat
+meat|Лисятина|тайга (лиса), Butchery|B|сырое|butchery:raw_fox_meat
+meat|Лисятина||B|жареное|butchery:cooked_fox_meat
+meat|Медвежатина (белый медведь)|снега (белый медведь), Butchery|B|сырое|butchery:raw_polar_bear_meat
+meat|Медвежатина (белый медведь)||B|жареное|butchery:cooked_polar_bear_meat
+meat|Панда|бамбуковые джунгли, Butchery|B|сырое|butchery:raw_panda_steak
+meat|Панда||B|жареное|butchery:cooked_panda_steak
+meat|Оцелот|джунгли, Butchery|C|сырое|butchery:raw_ocelot_meat
+meat|Оцелот||C|жареное|butchery:cooked_ocelot_meat
+meat|Кошатина|деревни (кошка), Butchery|C|сырое|butchery:raw_cat_meat
+meat|Кошатина||C|жареное|butchery:cooked_cat_meat
+meat|Черепаха|пляж (черепаха), Butchery|B|сырое|butchery:raw_turtle_meat
+meat|Черепаха||B|жареное|butchery:cooked_turtle_meat
+meat|Дельфин|тёплый океан, Butchery|C|сырое|butchery:raw_dolphin_meat
+meat|Дельфин||C|жареное|butchery:cooked_dolphin_meat
+meat|Нюхач|древний моб (из яйца), Butchery|C|сырое|butchery:raw_sniffer_steak
+meat|Нюхач||C|жареное|butchery:cooked_sniffer_steak
+meat|Летучая мышь|пещеры, Butchery|C|сырое|butchery:raw_bat_meat
+meat|Летучая мышь||C|жареное|butchery:cooked_bat_meat
+meat|Пчела (спинка)|пчёлы, Butchery|C|сырое|butchery:raw_bee_back_meat
+meat|Пчела (спинка)||C|жареное|butchery:cooked_bee_back_meat
+meat|Динозавр|Alex's Caves: Первобытные пещеры|B|отрубы/части|alexscaves:dinosaur_chop
+meat|Динозавр||B|жареное|alexscaves:cooked_dinosaur_chop
+meat|Хоглин|Незер: багровый лес, Butchery|B|отрубы/части|butchery:raw_hoglin_chunk
+meat|Хоглин||B|жареное|butchery:cooked_hoglin_chunk
+meat|Страйдер|Незер: лавовые озёра, Butchery|C|сырое|butchery:raw_strider_meat
+meat|Страйдер||C|жареное|butchery:cooked_strider_meat
+meat|Опустошитель|рейды, Butchery|C|сырое|butchery:raw_ravager_meat
+meat|Опустошитель||C|жареное|butchery:cooked_ravager_meat
+meat|Лягушка (лапки, 3 вида)|болота/мангры/снега, Butchery|B|отрубы/части|butchery:raw_green_frog_leg butchery:raw_gray_frog_leg butchery:raw_orange_frog_leg
+meat|Лягушка (лапки, 3 вида)||B|жареное|butchery:cooked_green_frog_leg butchery:cooked_gray_frog_leg butchery:cooked_orange_frog_leg
+meat|Аксолотль (филе, 5 цветов)|пышные пещеры, Butchery|C|отрубы/части|butchery:raw_blue_axolotl_fillet butchery:raw_brown_axolotl_fillet butchery:raw_cyan_axolotl_fillet butchery:raw_gold_axolotl_fillet butchery:raw_pink_axolotl_fillet
+meat|Аксолотль (филе, 5 цветов)||C|жареное|butchery:cooked_blue_axolotl_fillet butchery:cooked_brown_axolotl_fillet butchery:cooked_cyan_axolotl_fillet butchery:cooked_gold_axolotl_fillet butchery:cooked_pink_axolotl_fillet
+meat|Крипер|монстр, Butchery|C|отрубы/части|butchery:raw_creeper_leg butchery:raw_creeper_steak
+meat|Крипер||C|жареное|butchery:cooked_creeper_leg butchery:cooked_creeper_steak
+meat|Паук и пещерный паук (лапы)|монстр, Butchery|C|отрубы/части|butchery:raw_spider_leg butchery:raw_cave_spider_leg
+meat|Паук и пещерный паук (лапы)||C|жареное|butchery:cooked_spider_leg butchery:cooked_cave_spider_leg
+meat|Чешуйница|монстр, Butchery|C|отрубы/части|butchery:raw_silverfish_chunks
+meat|Чешуйница||C|жареное|butchery:cooked_silverfish_chunks
+meat|Эндермен|Край/ночь, Butchery|C|сырое|butchery:raw_enderman_steak
+meat|Эндермен||C|жареное|butchery:cooked_enderman_steak
+meat|Эндермит|Край, Butchery|C|отрубы/части|butchery:raw_endermite_chunks
+meat|Эндермит||C|жареное|butchery:cooked_endermite_chunks
+meat|Шалкер|Край: города, Butchery|C|сырое|butchery:raw_shulker_meat
+meat|Шалкер||C|жареное|butchery:cooked_shulker_meat
+meat|Дракон Края|Край: босс, Butchery|C|сырое|butchery:raw_dragon_meat
+meat|Дракон Края||C|жареное|butchery:cooked_dragon_meat
+meat|Страж|океан: монументы, Butchery|C|сырое|butchery:raw_guardian_meat
+meat|Страж||C|жареное|butchery:cooked_guardian_meat
+meat|Древний страж|океан: монументы, Butchery|C|сырое|butchery:raw_elder_guardian_meat
+meat|Древний страж||C|жареное|butchery:cooked_elder_guardian_meat
+meat|Хранитель (Warden)|Глубокая тьма, Butchery|C|сырое|butchery:raw_warden_meat
+meat|Хранитель (Warden)||C|жареное|butchery:cooked_warden_meat
+meat|Жители и иллагеры (5 видов)|деревни/рейды/особняки, Butchery|X|сырое|butchery:raw_villager_steak butchery:raw_pillager_meat butchery:raw_vindicator_meat butchery:raw_evoker_meat butchery:raw_witch_meat
+meat|Жители и иллагеры (5 видов)||X|жареное|butchery:cooked_villager_steak butchery:cooked_pillager_meat butchery:cooked_vindicator_meat butchery:cooked_evoker_meat butchery:cooked_witch_meat
+meat|Человечина|игроки/NPC, Butchery|X|сырое|butchery:rawhumanmeat
+meat|Человечина||X|жареное|butchery:cookedhumanmeat
+bird|Курица|ферма (курица)|A|сырое|minecraft:chicken
+bird|Курица||A|отрубы/части|farmersdelight:chicken_cuts farm_and_charm:chicken_parts butchery:raw_chicken_leg butchery:raw_chicken_wing
+bird|Курица||A|жареное|minecraft:cooked_chicken farmersdelight:cooked_chicken_cuts butchery:cooked_chicken_leg butchery:cooked_chicken_wing brewery:half_chicken farm_and_charm:roasted_chicken
+bird|Курица||A|бульон|farmersdelight:chicken_soup
+flesh|Гнилая плоть|зомби (ваниль)||сырое|minecraft:rotten_flesh
+flesh|Плоть (Butchery)|разделка мобов, Butchery||сырое|butchery:flesh butchery:meat_scraps
+flesh|Плоть (CS Foundation)|CS Foundation: выращивается (культиватор)||сырое|csfoundation:flesh csfoundation:radioactive_flesh
+flesh|Плоть (CS Foundation)|||жареное|csfoundation:cooked_flesh
+flesh|Плоть (CS Foundation)|||переработка|csaugmentations:nutriogloop
+flesh|Заражённая плоть|Zombie Extreme: заражённые||сырое|zombie_extreme:infected_flesh
+flesh|Мясистое основание жгучего пуха|fl_zone_arts: аномалии Зоны||сырое|fl_zone_arts:pukh_flesh
+flesh|«Мясо неизвестного происхождения»|SCP:O: комплекс||готовое|scpo:mystery_meat
+offal|Сердце|Butchery (все животные)||сырое|butchery:heart butchery:frog_heart butchery:enderman_heart
+offal|Сердце|||жареное|butchery:cooked_heart
+offal|Сердце|||испорченное|butchery:rotten_heart butchery:withered_heart
+offal|Печень|Butchery||сырое|butchery:liver butchery:enderman_liver
+offal|Печень|||жареное|butchery:cooked_liver butchery:cooked_enderman_liver
+offal|Печень|||испорченное|butchery:rotten_liver
+offal|Почки|Butchery||сырое|butchery:kidney butchery:enderman_kidney
+offal|Почки|||жареное|butchery:cooked_kidney butchery:cooked_enderman_kidney
+offal|Почки|||испорченное|butchery:rotten_kidney
+offal|Лёгкие|Butchery||сырое|butchery:lungs
+offal|Лёгкие|||жареное|butchery:cooked_lungs butchery:cooked_enderman_lungs
+offal|Желудок (рубец)|Butchery||сырое|butchery:stomach butchery:honey_stomach
+offal|Желудок (рубец)|||жареное|butchery:cooked_stomach butchery:cooked_enderman_stomach
+offal|Кишки|Butchery||сырое|butchery:intestines butchery:enderman_intestines
+offal|Кишки|||жареное|butchery:cooked_intestines butchery:cooked_enderman_intestines
+offal|Кишки|||испорченное|butchery:rotten_intestines
+offal|Мозг, глаз|Butchery||сырое|butchery:brain butchery:eye minecraft:spider_eye
+offal|Мозг, глаз|||маринованное|minecraft:fermented_spider_eye
+offal|Кровь|Butchery, Alex's Mobs||сырое|butchery:bottle_of_blood butchery:blood_bucket butchery:bottle_of_infected_blood alexsmobs:blood_sac
++offal|Печень|паштет / ливерная колбаса|паштет из любой печени; ливерная колбаса — в кишке
++offal|Желудок (рубец)|суп из требухи|рубец + овощи → суп (у FD нет)
++offal|Кровь|кровяная колбаса для других видов|сейчас только одна общая (Butchery, из свинины)
++offal|Сердце|тушёное/в составе фарша|субпродукты как добавка к фаршу (дешевле, больше белка)
+fish|Треска|океан (ваниль)|A|сырое|minecraft:cod
+fish|Треска||A|отрубы/части|farmersdelight:cod_slice butchery:raw_cod_fillet
+fish|Треска||A|жареное|minecraft:cooked_cod farmersdelight:cooked_cod_slice butchery:cooked_cod_fillet farm_and_charm:cooked_cod
+fish|Треска||A|консервы|sa_combat:canned_sardines survival_instinct:cod_can
+fish|Лосось|реки/холодный океан|A|сырое|minecraft:salmon butchery:raw_salmon
+fish|Лосось||A|отрубы/части|farmersdelight:salmon_slice
+fish|Лосось||A|жареное|minecraft:cooked_salmon farmersdelight:cooked_salmon_slice butchery:cooked_salmon farm_and_charm:cooked_salmon farmersdelight:grilled_salmon
+fish|Лосось||A|консервы|sa_combat:canned_tuna survival_instinct:tuna_can survival_instinct:sardine_can
+fish|Тропическая рыба|тёплый океан|B|сырое|minecraft:tropical_fish
+fish|Иглобрюх|тёплый океан (ядовитый)|B|сырое|minecraft:pufferfish butchery:raw_pufferfish
+fish|Иглобрюх||B|жареное|butchery:cooked_pufferfish
+fish|Сом|Alex's Mobs: реки/болота|B|сырое|alexsmobs:raw_catfish
+fish|Сом||B|жареное|alexsmobs:cooked_catfish
+fish|Рыба-капля|Alex's Mobs: глубокий океан|C|сырое|alexsmobs:blobfish
+fish|Летучая рыба|Alex's Mobs: тёплый океан|B|сырое|alexsmobs:flying_fish
+fish|Рыба-фонарь|Alex's Caves: Затонувшая бездна|B|сырое|alexscaves:lanternfish
+fish|Рыба-фонарь||B|жареное|alexscaves:cooked_lanternfish
+fish|Рыба-тренога|Alex's Caves: Затонувшая бездна|B|сырое|alexscaves:tripodfish
+fish|Рыба-тренога||B|жареное|alexscaves:cooked_tripodfish
+fish|Радиабр|Alex's Caves: Токсичные пещеры (радиоактивная)|C|сырое|alexscaves:radgill
+fish|Радиабр||C|жареное|alexscaves:cooked_radgill
+fish|Вонючая рыба|Alex's Caves (приманка)|X|сырое|alexscaves:stinky_fish
+fish|Легендарные рыбы (10 видов)|Stardew Fishing: мини-игра рыбалки|B|сырое|stardew_fishing:blazing_oarfish stardew_fishing:chromatic_arapaima stardew_fishing:crystalline_snakehead stardew_fishing:cyclops_mahimahi stardew_fishing:demon_gar stardew_fishing:golden_snook stardew_fishing:goliath_grouper stardew_fishing:sabretoothed_tigerfish stardew_fishing:storm_tarpon stardew_fishing:vampire_payara
+sea|Кальмар|океан, Butchery|B|сырое|butchery:tentacles
+sea|Кальмар||B|жареное|butchery:calamari
+sea|Омар|Alex's Mobs: пляжи/океан|B|отрубы/части|alexsmobs:lobster_tail
+sea|Омар||B|жареное|alexsmobs:cooked_lobster_tail
+sea|Мидия|Alex's Caves: Затонувшая бездна|B|сырое|alexscaves:mussel
+sea|Мидия||B|жареное|alexscaves:cooked_mussel
+sea|Трилокарис (хвост)|Alex's Caves: Первобытные пещеры|B|отрубы/части|alexscaves:trilocaris_tail
+sea|Трилокарис (хвост)||B|жареное|alexscaves:cooked_trilocaris_tail
+sea|Морская свинья (голотурия)|Alex's Caves: Затонувшая бездна|C|сырое|alexscaves:sea_pig
+sea|Креветка|Alex's Mobs (только в блюде «Рис с креветками»)|B|—|
+eggs|Куриное яйцо|ферма|A|сырое|minecraft:egg
+eggs|Куриное яйцо||A|жареное|farmersdelight:fried_egg
+eggs|Яйцо эму|Alex's Mobs: бесплодные земли/саванна||сырое|alexsmobs:emu_egg
+eggs|Яйцо эму|||варёное|alexsmobs:boiled_emu_egg
+eggs|Черепашье яйцо|пляж||сырое|minecraft:turtle_egg
+eggs|Яйца рептилий (Alex's Mobs)|AM: болота/мангры/реки (крокодил, кайман, утконос, черепаха)||сырое|alexsmobs:crocodile_egg alexsmobs:caiman_egg alexsmobs:platypus_egg alexsmobs:terrapin_egg
+eggs|Яйца динозавров (7 видов)|Alex's Caves: Первобытные пещеры||сырое|alexscaves:atlatitan_egg alexscaves:grottoceratops_egg alexscaves:relicheirus_egg alexscaves:subterranodon_egg alexscaves:tremorsaurus_egg alexscaves:tremorzilla_egg alexscaves:vallumraptor_egg
+eggs|Яйца щитня|Alex's Mobs: пустыня (лужи)||сырое|alexsmobs:triops_eggs
++eggs|Куриное яйцо|варёное|варёное вкрутую/всмятку (у эму есть, у курицы нет)
++eggs|Куриное яйцо|омлет / болтунья как полуфабрикат|сейчас «Омлет» Candlelight — блюдо с мукой и клубникой, не форма яйца
++eggs|Куриное яйцо|яичный порошок|сухой паёк, долгое хранение
++eggs|Яйца рептилий (Alex's Mobs)|варёное / жареное|сейчас только сырые, идут в общий тег яиц
++eggs|Яйца динозавров (7 видов)|варёное / жареное|сейчас только сырые, идут в общий тег яиц
+dairy|Молоко|ферма (корова, коза)||жидкость|minecraft:milk_bucket farmersdelight:milk_bottle survival_instinct:milk survival_instinct:gallon_of_milk sa_combat:milk_box sa_combat:milk_gallon
+dairy|Молоко|||консервы|sa_combat:canned_evaporated_milk soviet:misc/condensed_milk
+dairy|Сливочное масло|||масло|farm_and_charm:butter sa_combat:butter
+dairy|Сыр|||сыр|refurbished_furniture:cheese sa_combat:cheese candlelight:mozzarella
+dairy|Мороженое|Alex's Caves: Конфетные пещеры||десерт|alexscaves:chocolate_ice_cream_scoop alexscaves:chocolate_ice_cream
++dairy|Молоко|сливки|основа для соусов, масла, крема
++dairy|Молоко|сметана|советская кухня: к супам, блинам, пельменям
++dairy|Молоко|творог|сырники, вареники, запеканка
++dairy|Молоко|кефир / простокваша / ряженка|кисломолочные (напиток + тесто)
++dairy|Сыр|твёрдый / плавленый / брынза|сейчас три «сыра» без различий; плавленый сырок — советская классика
++dairy|Молоко|козье молоко|коза доится, но даёт обычное молоко
+grain|Пшеница|ферма||зерно|minecraft:wheat
+grain|Пшеница|||семена|minecraft:wheat_seeds
+grain|Пшеница|||сушёное|brewery:dried_wheat
+grain|Пшеница|||мука|refurbished_furniture:wheat_flour farm_and_charm:flour
+grain|Пшеница|||тесто|farmersdelight:wheat_dough farm_and_charm:dough refurbished_furniture:dough candlelight:dough
+grain|Пшеница|||макароны (сырые)|farmersdelight:raw_pasta farm_and_charm:raw_pasta
+grain|Пшеница|||основа для пирога|farmersdelight:pie_crust
+grain|Пшеница|||хлеб|minecraft:bread farm_and_charm:farmers_bread
+grain|Пшеница|||ломтик / тост|refurbished_furniture:bread_slice refurbished_furniture:toast candlelight:toast sa_combat:toast
+grain|Ячмень|Let's Do (F&C), дикий ячмень||зерно|farm_and_charm:barley
+grain|Ячмень|||семена|farm_and_charm:barley_seeds
+grain|Ячмень|||сноп|farm_and_charm:barley_ball
+grain|Ячмень|||сушёное|brewery:dried_barley
+grain|Овёс|Let's Do (F&C), дикий овёс||зерно|farm_and_charm:oat
+grain|Овёс|||семена|farm_and_charm:oat_seeds
+grain|Овёс|||сноп|farm_and_charm:oat_ball
+grain|Овёс|||сушёное|brewery:dried_oat
+grain|Кукуруза|Let's Do (F&C), дикая кукуруза||початок|farm_and_charm:corn
+grain|Кукуруза|||семена (зёрна)|farm_and_charm:kernels
+grain|Кукуруза|||сушёное|brewery:dried_corn
+grain|Кукуруза|||жареное|farm_and_charm:roasted_corn
+grain|Рис|FD, дикий рис (болота)||метёлка|farmersdelight:rice_panicle
+grain|Рис|||крупа|farmersdelight:rice
+grain|Рис|||варёный|farmersdelight:cooked_rice
++grain|Пшеница|сухари / панировка|для котлет, долгое хранение
++grain|Пшеница|манка / крупа|каши
++grain|Ячмень|перловка / ячневая крупа|советская каша; сейчас ячмень идёт только в суп и муку
++grain|Овёс|овсяные хлопья / геркулес|сейчас «Овсянка с клубникой» берёт целый овёс
++grain|Кукуруза|кукурузная мука / попкорн|
++grain|Рожь|рожь → ржаная мука → чёрный хлеб|новый продукт; чёрный хлеб — основа советского стола
++grain|Гречка|гречка → крупа → каша|новый продукт
++grain|Пшено|пшено → каша|новый продукт
+veg|Картофель|ферма||сырой|minecraft:potato
+veg|Картофель|||печёный|minecraft:baked_potato
+veg|Картофель|||пюре|brewery:mashed_potatoes
+veg|Картофель|||испорченный|minecraft:poisonous_potato csfoundation:radioactive_potato
+veg|Картофель|||консервы / чипсы|sa_combat:canned_potato survival_instinct:potato_chips zombie_extreme:chips
+veg|Морковь|ферма||сырая|minecraft:carrot
+veg|Морковь|||золотая|minecraft:golden_carrot
+veg|Морковь|||сок|legendarysurvivaloverhaul:carrot_juice legendarysurvivaloverhaul:golden_carrot_juice
+veg|Морковь|||испорченная|csfoundation:radioactive_carrot
+veg|Морковь|||консервы|sa_combat:canned_carrots
+veg|Свёкла|ферма||сырая|minecraft:beetroot
+veg|Свёкла|||семена|minecraft:beetroot_seeds
+veg|Свёкла|||сок|legendarysurvivaloverhaul:beetroot_juice
+veg|Свёкла|||суп (полуфабрикат)|minecraft:beetroot_soup
+veg|Капуста|FD, дикая капуста (пляжи)||кочан|farmersdelight:cabbage
+veg|Капуста|||лист|farmersdelight:cabbage_leaf
+veg|Капуста|||семена|farmersdelight:cabbage_seeds
+veg|Салат латук|F&C, дикий латук||лист|farm_and_charm:lettuce
+veg|Салат латук|||семена|farm_and_charm:lettuce_seeds
+veg|Томат|FD + F&C (дубль), дикие томаты||сырой|farmersdelight:tomato farm_and_charm:tomato
+veg|Томат|||семена|farmersdelight:tomato_seeds farm_and_charm:tomato_seeds
+veg|Томат|||гнилой|farmersdelight:rotten_tomato farm_and_charm:rotten_tomato
+veg|Томат|||соус|farmersdelight:tomato_sauce candlelight:tomato_sauce
+veg|Томат|||суп (полуфабрикат)|farm_and_charm:simple_tomato_soup candlelight:tomato_soup
+veg|Лук|FD + F&C (дубль), дикий лук||сырой|farmersdelight:onion farm_and_charm:onion
+veg|Тыква|ферма||целая|minecraft:pumpkin
+veg|Тыква|||ломтик|farmersdelight:pumpkin_slice
+veg|Тыква|||семена|minecraft:pumpkin_seeds
+veg|Тыква|||сок|legendarysurvivaloverhaul:pumpkin_juice
+veg|Кактус|пустыня||сырой|minecraft:cactus
+veg|Кактус|||сок|legendarysurvivaloverhaul:cactus_juice
+veg|Ламинария (водоросль)|океан||сырая|minecraft:kelp
+veg|Ламинария (водоросль)|||сушёная|minecraft:dried_kelp
+veg|Ламинария (водоросль)|||ролл (полуфабрикат)|farmersdelight:kelp_roll
+veg|Бобовые|только консервы (SA, Survival Instinct, Zombie Extreme)||консервы|sa_combat:canned_beans sa_combat:canned_peas survival_instinct:bean_can zombie_extreme:canned_beans
+veg|Овощи (смесь)|Candlelight||нарезка (полуфабрикат)|candlelight:harvest_plate
++veg|Картофель|варёный / жареный (фри) / нарезка|сейчас только печёный и пюре
++veg|Морковь|нарезка / варёная / тёртая|
++veg|Свёкла|варёная|винегрет, свекольник, борщ
++veg|Капуста|квашеная|советская классика; щи, закуска
++veg|Томат|сок / маринованные / сушёные|
++veg|Лук|нарезка / жареный (зажарка) / зелёный лук|основа зажарки для супов
++veg|Тыква|печёная / пюре|
++veg|Бобовые|горох и фасоль как растения → сушёные → варёные|сейчас есть только в банках
++veg|Огурец|огурец → солёный / маринованный|новый продукт; солёные огурцы, рассольник
++veg|Чеснок|чеснок|новый продукт; специя и овощ
++veg|Перец|сладкий/острый перец|новый продукт (есть только в пицце SCP:O)
+fruit|Яблоко|дубы / яблони (Vinery)||свежее|minecraft:apple zombie_extreme:green_apple
+fruit|Яблоко|||золотое / особое|minecraft:golden_apple minecraft:enchanted_golden_apple alexscaves:darkened_apple
+fruit|Яблоко|||пюре|vinery:apple_mash vinery:applesauce
+fruit|Яблоко|||сок|vinery:apple_juice legendarysurvivaloverhaul:apple_juice legendarysurvivaloverhaul:golden_apple_juice survival_instinct:apple_juice
+fruit|Яблоко|||сидр|farmersdelight:apple_cider vinery:apple_cider
+fruit|Яблоко|||в карамели|alexscaves:caramel_apple
+fruit|Яблоко|||гнилое|survival_instinct:rotten_apple zombie_extreme:rotten_apple
+fruit|Яблоко|||консервы|zombie_extreme:canned_apples
+fruit|Арбуз|джунгли||целый|minecraft:melon
+fruit|Арбуз|||ломтик|minecraft:melon_slice minecraft:glistering_melon_slice
+fruit|Арбуз|||семена|minecraft:melon_seeds
+fruit|Арбуз|||сок|farmersdelight:melon_juice legendarysurvivaloverhaul:melon_juice legendarysurvivaloverhaul:glistering_melon_juice
+fruit|Сладкие ягоды|тайга||свежие|minecraft:sweet_berries alexscaves:giant_sweetberry
+fruit|Сладкие ягоды|||варенье|refurbished_furniture:sweet_berry_jam
+fruit|Сладкие ягоды|||сок|legendarysurvivaloverhaul:sweet_berries_juice
+fruit|Светящиеся ягоды|пышные пещеры||свежие|minecraft:glow_berries
+fruit|Светящиеся ягоды|||варенье|refurbished_furniture:glow_berry_jam
+fruit|Светящиеся ягоды|||сок|legendarysurvivaloverhaul:glow_berries_juice
+fruit|Клубника|F&C, дикая клубника||свежая|farm_and_charm:strawberry
+fruit|Клубника|||семена|farm_and_charm:strawberry_seeds
+fruit|Вишня|Vinery: вишнёвые деревья||свежая|vinery:cherry
+fruit|Вишня|||гнилая|vinery:rotten_cherry
+fruit|Виноград (8 сортов)|Vinery: обычный, таёжный, саванновый, тропический × красный/белый||свежий|vinery:red_grape vinery:white_grape vinery:taiga_grapes_red vinery:taiga_grapes_white vinery:savanna_grapes_red vinery:savanna_grapes_white vinery:jungle_grapes_red vinery:jungle_grapes_white
+fruit|Виноград (8 сортов)|||муст (сок)|vinery:red_grapejuice vinery:white_grapejuice vinery:red_taiga_grapejuice vinery:white_taiga_grapejuice vinery:red_savanna_grapejuice vinery:white_savanna_grapejuice vinery:red_jungle_grapejuice vinery:white_jungle_grapejuice
+fruit|Плод хоруса|Край||свежий|minecraft:chorus_fruit
+fruit|Плод хоруса|||жареный|minecraft:popped_chorus_fruit
+fruit|Плод хоруса|||сок|legendarysurvivaloverhaul:chorus_fruit_juice
+fruit|Банан|Alex's Mobs: джунгли (листва)||свежий|alexsmobs:banana
+fruit|Апельсин|Survival Instinct (лут)||свежий|survival_instinct:orange
+fruit|Апельсин|||сок|survival_instinct:orange_juice
+fruit|Апельсин|||гнилой|survival_instinct:rotten_orange
+fruit|Древний фрукт|Quark: древние деревья||свежий|quark:ancient_fruit
+fruit|Фрукты (смесь)|только консервы||консервы|sa_combat:canned_fruit_cocktail sa_combat:canned_peaches sa_combat:canned_pineapple survival_instinct:fruit_can zombie_extreme:canned_fruit
++fruit|Яблоко|сушёное (сухофрукты) / печёное|компот из сухофруктов
++fruit|Клубника|варенье / сок|сейчас варенье только из сладких и светящихся ягод
++fruit|Вишня|варенье / сок / компот|сейчас вишня идёт только в вино и тыкву
++fruit|Сладкие ягоды|сушёные|
++fruit|Яблоко|компот (общий для фруктов)|напиток из любых фруктов/ягод — форма «компот» с цветом сырья
+mush|Коричневый гриб|ваниль (тёмные места)||сырой|minecraft:brown_mushroom
+mush|Красный гриб|ваниль (тёмные места)||сырой|minecraft:red_mushroom
+mush|Светогриб|Biomes O' Plenty: светогрибные пещеры||сырой|biomesoplenty:glowshroom
+mush|Поганка|Biomes O' Plenty: леса||сырой|biomesoplenty:toadstool
+mush|Багровый и искажённый грибы|Незер: багровый/искажённый лес||сырой|minecraft:crimson_fungus minecraft:warped_fungus
+mush|Незерский нарост|Незер: крепости||сырой|minecraft:nether_wart
+mush|Кислотный гриб|CS Foundation||сырой|csfoundation:acid_mushroom
+mush|Кислотный гриб|||измельчённый|csaugmentations:crushed_acid_mushroom
+mush|Циклогрибы|CS Augmentations||сырой|csaugmentations:cyclofungi
+mush|Трутовики (декор)|Blocks You Need (блоки, не еда)||блок|blocksyouneed_luna:small_brown_shelf_mushroom blocksyouneed_luna:large_brown_shelf_mushroom blocksyouneed_luna:small_red_shelf_mushroom blocksyouneed_luna:large_red_shelf_mushroom
+mush|Грибы (смесь)|||суп/рагу (полуфабрикат)|minecraft:mushroom_stew candlelight:mushroom_soup
++mush|Коричневый гриб|нарезка / жареные / сушёные / маринованные|сушёные и маринованные — долгое хранение, зима
++mush|Красный гриб|сушёный (ядовит сырым?)|как мухомор: сырым — отравление, приготовленным — безопасно
++mush|Грибы (смесь)|грибной бульон / соус|
+nuts|Кедровые орехи|Alex's Caves: Первобытные пещеры (пьюэн)||сырые|alexscaves:pine_nuts
+nuts|Арахис|только арахисовая паста (SA)||паста|sa_combat:peanut_butter
+nuts|Семена культур|разные моды||семена|minecraft:pumpkin_seeds minecraft:melon_seeds minecraft:wheat_seeds brewery:hops_seeds
+nuts|Какао-бобы|джунгли||бобы|minecraft:cocoa_beans
+nuts|Кофейные зёрна|HerbalBrews: дикий кофе||зёрна|herbalbrews:coffee_beans
++nuts|Семена культур|жареные семечки (тыквенные, подсолнечные)|семечки — советская уличная еда
++nuts|Орехи|грецкий / лесной орех / арахис|новый продукт; сейчас есть только кедровые и арахисовая паста
++nuts|Подсолнечник|подсолнечник → семечки → масло|новый продукт; даст растительное масло
+herbs|Соль|Butchery, Mekanism, CS, Refurbished, Blocks You Need||соль|butchery:salt mekanism:salt csaugmentations:salt csaugmentations:dust_salt refurbished_furniture:sea_salt blocksyouneed_luna:rock_salt
+herbs|Хмель|Brewery||шишки|brewery:hops
+herbs|Чай|HerbalBrews: чайный куст||лист|herbalbrews:green_tea_leaf herbalbrews:tea_blossom
+herbs|Чай|||сушёный лист|herbalbrews:dried_green_tea herbalbrews:dried_black_tea herbalbrews:dried_oolong_tea
+herbs|Травы для чая|HerbalBrews, F&C||лист/цветок|herbalbrews:hibiscus herbalbrews:lavender herbalbrews:rooibos_leaf herbalbrews:yerba_mate_leaf
+herbs|Мята|Alex's Caves: Конфетные пещеры||порошок|alexscaves:peppermint_powder
+herbs|Лакричный корень|Alex's Caves: Конфетные пещеры||корень|alexscaves:licoroot
+herbs|Лечебные травы (LSO)|Legendary Survival Overhaul||лист|legendarysurvivaloverhaul:healing_herbs legendarysurvivaloverhaul:ice_fern_leaf legendarysurvivaloverhaul:sun_fern_leaf
+herbs|Лечебные травы (SA, «как в RE»)|SA Essentials||трава|sa_combat:green_herb sa_combat:red_herb sa_combat:blue_herb sa_combat:yellow_herb
+herbs|Лечебные травы (SA, «как в RE»)|||измельчённая|sa_combat:crushed_green_herb sa_combat:crushed_red_herb sa_combat:crushed_blue_herb sa_combat:crushed_yellow_herb
++herbs|Перец (специя)|чёрный перец (горошек/молотый)|новый продукт
++herbs|Лавровый лист|лавровый лист|новый продукт; супы, тушение
++herbs|Укроп и петрушка|зелень (свежая/сушёная)|новый продукт; огородная зелень
++herbs|Горчица|горчица (семена → соус)|новый продукт
++herbs|Уксус|уксус (из вина/яблок)|маринады, соленья
+sweet|Сахар|сахарный тростник, Soviet||сахар|minecraft:sugar soviet:misc/sugar soviet:misc/sugar2 supplementaries:sugar_cube
+sweet|Сахар|||тростник|minecraft:sugar_cane
+sweet|Мёд|пасеки||мёд|minecraft:honey_bottle
+sweet|Мёд|||соты|minecraft:honeycomb
+sweet|Шоколад|Alex's Caves: Конфетные пещеры, SA, Survival Instinct||шоколад|alexscaves:block_of_chocolate sa_combat:chocolate_bar survival_instinct:chocolate_bar candlelight:chocolate_box
+sweet|Карамель и леденцы|Alex's Caves: Конфетные пещеры||карамель|alexscaves:caramel alexscaves:sugar_glass
+sweet|Карамель и леденцы|||леденцы|alexscaves:candy_cane alexscaves:small_peppermint alexscaves:large_peppermint supplementaries:candy sa_combat:candys
+sweet|Карамель и леденцы|||конфетный камень (16 цветов)|alexscaves:rock_candy_white alexscaves:rock_candy_light_gray alexscaves:rock_candy_gray alexscaves:rock_candy_black alexscaves:rock_candy_brown alexscaves:rock_candy_red alexscaves:rock_candy_orange alexscaves:rock_candy_yellow alexscaves:rock_candy_lime alexscaves:rock_candy_green alexscaves:rock_candy_cyan alexscaves:rock_candy_light_blue alexscaves:rock_candy_blue alexscaves:rock_candy_purple alexscaves:rock_candy_magenta alexscaves:rock_candy_pink
+sweet|Желе и мармелад|Alex's Caves: Конфетные пещеры||желе|alexscaves:gelatin_red alexscaves:gelatin_green alexscaves:gelatin_blue alexscaves:gelatin_pink alexscaves:gelatin_yellow
+sweet|Желе и мармелад|||мармелад/жвачка|alexscaves:gummy_ring_red alexscaves:jelly_bean alexscaves:gumball_pile
+sweet|Глазурь, корж, пряник|Alex's Caves: Конфетные пещеры||глазурь|alexscaves:block_of_frosting alexscaves:block_of_vanilla_frosting alexscaves:block_of_chocolate_frosting
+sweet|Глазурь, корж, пряник|||корж / крошка|alexscaves:cake_layer alexscaves:gingerbread_crumbs
+sweet|Зефир|Camping||сырой|camping:marshmallow
+sweet|Зефир|||жареный|camping:roasted_marshmallow camping:marshmallow_on_a_stick
+sweet|Варенье (общее)|SA Essentials||варенье|sa_combat:fruit_jam
++sweet|Сахар|сироп / патока|основа для напитков и выпечки
++sweet|Варенье (общее)|варенье с цветом сырья|одна форма «варенье» для любой ягоды/фрукта (как идея с мясом)
++sweet|Мёд|медовые соты → воск отдельно|
+fat|Животный жир|Butchery (разделка)||жир|butchery:animal_fat
+fat|Шкварки|Butchery||жареное|butchery:crackling
+fat|Рыбий жир|Alex's Mobs (сом/рыба)||жир|alexsmobs:fish_oil
+fat|Сливочное масло|см. «Молочное»||масло|farm_and_charm:butter sa_combat:butter
+fat|Арахисовая паста|SA Essentials||паста|sa_combat:peanut_butter
++fat|Растительное масло|подсолнечное масло|тег forge:cookingoil в сборке есть, но пустой
++fat|Сало|солёное / копчёное сало|из свиного жира; советская закуска
++fat|Смалец|топлёный жир|из животного жира, для жарки
++fat|Маргарин|маргарин|дешёвая замена масла
+sauce|Томатный соус|FD + Candlelight (дубль)||соус|farmersdelight:tomato_sauce candlelight:tomato_sauce
+sauce|Болоньезе|Candlelight||соус (полуфабрикат)|candlelight:bolognese
++sauce|Кетчуп|кетчуп|
++sauce|Майонез|майонез (яйцо + масло)|салаты «Оливье», «Шуба»
++sauce|Сметанный соус|сметанный / белый соус|
++sauce|Подлива|мясная / луковая подлива|к котлетам и пюре
++sauce|Горчица|горчица|
+drink|Вино (24 вида)|Vinery (бочка)||вино|vinery:red_wine vinery:apple_wine vinery:cherry_wine vinery:chorus_wine vinery:aegis_wine vinery:bolvar_wine vinery:chenet_wine vinery:clark_wine vinery:cristel_wine vinery:glowing_wine vinery:jellie_wine vinery:lilitu_wine vinery:magnetic_wine vinery:mellohi_wine vinery:noir_wine vinery:solaris_wine vinery:stal_wine vinery:strad_wine vinery:villagers_fright vinery:bottle_mojang_noir vinery:jo_special_mixture vinery:mead vinery:apple_cider vinery:kelp_cider
+drink|Пиво (6 видов)|Brewery||пиво|brewery:beer_wheat brewery:beer_barley brewery:beer_oat brewery:beer_hops brewery:beer_haley brewery:beer_nettle
+drink|Виски|Brewery||виски|brewery:whiskey_jojannik brewery:whiskey_lilitusinglemalt brewery:whiskey_maggoallan
+drink|Кофе|HerbalBrews||кофе|herbalbrews:coffee
+drink|Вода|Legendary Survival Overhaul||очищенная|legendarysurvivaloverhaul:purified_water_bottle
+drink|Водка / виски (для бинтов)|Zombie Extreme||крепкое|zombie_extreme:vodka zombie_extreme:whiskey
++drink|Квас|квас (хлеб + дрожжи + сахар)|советская классика
++drink|Компот / морс|из любых фруктов и ягод|
++drink|Бульон|мясной/рыбный/овощной бульон как основа|сейчас есть только «Костный бульон» FD (готовое блюдо)
+misc|Дрожжи|F&C||дрожжи|farm_and_charm:yeast
+misc|Пироги и торты (целые)|FD, ваниль||режется на куски|minecraft:cake farmersdelight:apple_pie
+misc|Пицца (сырая/готовая)|Refurbished Furniture||полуфабрикат|refurbished_furniture:raw_meatlovers_pizza refurbished_furniture:raw_vegetable_pizza refurbished_furniture:cooked_meatlovers_pizza refurbished_furniture:cooked_vegetable_pizza
+misc|Бутерброды|Refurbished Furniture||полуфабрикат|refurbished_furniture:cheese_sandwich
+misc|Тесто для пирожков и сырые пирожки|SA Essentials||полуфабрикат|sa_combat:pastel_dough sa_combat:coxinha_dough sa_combat:raw_meat_pastel sa_combat:raw_cheese_pastel sa_combat:raw_wind_pastel sa_combat:raw_coxinha
+misc|Соленья и маринады (паук)|ваниль||маринованное|minecraft:fermented_spider_eye
+misc|Сосулька|Immersive Weathering||лёд|immersive_weathering:icicle
+misc|Готовые блюда в тегах мяса (идут как мясо)|F&C, Brewery, Candlelight||блюдо в составе других|brewery:fried_chicken brewery:pork_knuckle candlelight:chicken_with_vegetables candlelight:pork_ribs farm_and_charm:potato_with_roast_meat farm_and_charm:sausage_with_oat_patty farm_and_charm:stuffed_chicken farm_and_charm:goulash farm_and_charm:bacon_with_eggs farm_and_charm:chicken_wrapped_in_bacon farm_and_charm:lamb_with_corn farm_and_charm:baked_lamb_ham
