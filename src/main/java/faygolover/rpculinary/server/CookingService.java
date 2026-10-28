@@ -53,6 +53,10 @@ public final class CookingService {
     static final Set<String> OWN_QUALITY = Set.of("kaleidoscope_cookery", "kaleidoscope_tavern");
     /** Ещё «плиты» — датапаком: блоки в теге {@code rpculinary:cooking_stations}. */
     static final TagKey<Block> STATIONS = BlockTags.create(new ResourceLocation(RpCulinary.MODID, "cooking_stations"));
+    /** «Плиты» с огнём (тег {@code rpculinary:heat_stations}): жарка, варка, запекание — бывает недожарено и подгорело. */
+    static final TagKey<Block> HEAT = BlockTags.create(new ResourceLocation(RpCulinary.MODID, "heat_stations"));
+    /** Полуфабрикаты (тег {@code rpculinary:no_quality}): фарш, тесто, нарезка, сырая пицца, сыр — без качества и опыта. */
+    static final TagKey<Item> NO_QUALITY = net.minecraft.tags.ItemTags.create(new ResourceLocation(RpCulinary.MODID, "no_quality"));
 
     /** Повторы: повар → блюдо → {сколько подряд, когда последнее (тик)}. Через 10 минут счёт обнуляется. */
     private static final Map<UUID, Map<Item, long[]>> REPEATS = new HashMap<>();
@@ -92,20 +96,26 @@ public final class CookingService {
         return t != null && t.contains(TAG);
     }
 
-    /** Блюдо (не продукт): съедобное, состав посчитан по рецепту, не сырое (нарезка, фарш), ещё без метки. */
-    static boolean dish(ServerPlayer sp, ItemStack st) {
+    /** Блюдо (не продукт): съедобное, состав посчитан по рецепту, не сырое и не полуфабрикат, ещё без метки. */
+    public static boolean dish(ServerPlayer sp, ItemStack st) {
         return !st.isEmpty() && st.isEdible() && !stamped(st)
                 && NutritionTable.source(sp.server, st.getItem()) == NutritionTable.Source.RECIPE
-                && !NutritionTable.raw(sp.server, st.getItem());
+                && !NutritionTable.raw(sp.server, st.getItem()) && !st.is(NO_QUALITY);
     }
 
     // ------------------------------------------------------------------ «у плиты»
 
     static boolean station(Block b) {
         if (b == Blocks.FURNACE || b == Blocks.SMOKER || b == Blocks.CAMPFIRE || b == Blocks.SOUL_CAMPFIRE || b == Blocks.CRAFTING_TABLE) return true;
-        if (b.defaultBlockState().is(STATIONS)) return true;
+        if (b.defaultBlockState().is(STATIONS) || b.defaultBlockState().is(HEAT)) return true;
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(b);
         return id != null && COOKING_MODS.contains(id.getNamespace());
+    }
+
+    /** Греет ли «плита»: печь, костёр, плиты и сковороды модов (тег), иначе — холодная сборка. */
+    public static boolean heat(Block b) {
+        return b instanceof net.minecraft.world.level.block.AbstractFurnaceBlock || b instanceof net.minecraft.world.level.block.CampfireBlock
+                || b.defaultBlockState().is(HEAT);
     }
 
     /** Костёр и коптильня — «в поле» (Полевой повар). */
@@ -141,6 +151,7 @@ public final class CookingService {
         if (d == null) return;
         open(sp, d);
         d.cookField = field(b);
+        d.cookHeat = heat(b);
     }
 
     public static void onContainerOpen(PlayerContainerEvent.Open e) {
@@ -161,6 +172,9 @@ public final class CookingService {
         open(sp, d);
         d.cookMenu = true;
         d.cookField = menu instanceof net.minecraft.world.inventory.SmokerMenu;
+        // Окно мода — от блока, по которому кликнули (клик раньше окна).
+        if (menu instanceof AbstractFurnaceMenu) d.cookHeat = true;
+        else if (menu instanceof CraftingMenu) d.cookHeat = false;
     }
 
     public static void onContainerClose(PlayerContainerEvent.Close e) {
@@ -173,19 +187,20 @@ public final class CookingService {
 
     /** Верстак (и в инвентаре) и печь сообщают сами: столько-то таких блюд пометить при следующей проверке. */
     public static void onCrafted(PlayerEvent.ItemCraftedEvent e) {
-        pending(e.getEntity(), e.getCrafting());
+        pending(e.getEntity(), e.getCrafting(), false);
     }
 
     public static void onSmelted(PlayerEvent.ItemSmeltedEvent e) {
-        pending(e.getEntity(), e.getSmelting());
+        pending(e.getEntity(), e.getSmelting(), true);
     }
 
-    private static void pending(Player p, ItemStack result) {
+    private static void pending(Player p, ItemStack result, boolean heat) {
         if (!(p instanceof ServerPlayer sp) || !Settings.get().cookingEnabled || result.isEmpty()) return;
         if (!dish(sp, result)) return;
         NutritionData d = NutritionData.get(sp);
         if (d == null) return;
         d.cookPending.merge(result.getItem(), result.getCount(), Integer::sum);
+        if (heat) d.cookPendingHeat.add(result.getItem());
         d.cookUntil = Math.max(d.cookUntil, sp.server.getTickCount() + (long) (Settings.get().cookContextSeconds * 20));
     }
 
@@ -200,20 +215,21 @@ public final class CookingService {
         // Точные (верстак, печь): пометить столько, сколько сделано.
         if (!d.cookPending.isEmpty()) {
             for (var en : d.cookPending.entrySet()) {
-                stamp(sp, en.getKey(), en.getValue());
+                stamp(sp, en.getKey(), en.getValue(), d.cookPendingHeat.contains(en.getKey()));
                 // У модов со своим качеством блюдо остаётся непомеченным — не засчитать его второй раз как «прибавилось».
                 ResourceLocation id = ForgeRegistries.ITEMS.getKey(en.getKey());
                 if (d.cookBaseline != null && id != null && OWN_QUALITY.contains(id.getNamespace()))
                     d.cookBaseline.merge(en.getKey(), en.getValue(), Integer::sum);
             }
             d.cookPending.clear();
+            d.cookPendingHeat.clear();
         }
         // «У плиты»: что прибавилось.
         if (d.cookBaseline != null) {
             Map<Item, Integer> cur = counts(sp);
             for (var en : cur.entrySet()) {
                 int before = d.cookBaseline.getOrDefault(en.getKey(), 0);
-                if (en.getValue() > before) stamp(sp, en.getKey(), en.getValue() - before);
+                if (en.getValue() > before) stamp(sp, en.getKey(), en.getValue() - before, d.cookHeat);
             }
             // Отсчёт — от того, что есть сейчас: убывшее (съел, переложил) потом не считается новым.
             d.cookBaseline = counts(sp);
@@ -235,7 +251,7 @@ public final class CookingService {
     }
 
     /** Пометить {@code n} блюд качеством (по навыку); повару — опыт. У модов со своим качеством — только опыт. */
-    static void stamp(ServerPlayer sp, Item item, int n) {
+    static void stamp(ServerPlayer sp, Item item, int n, boolean heat) {
         if (n <= 0) return;
         Settings s = Settings.get();
         // Опыт — от настоящего уровня навыка, качество — с поправками перков.
@@ -247,13 +263,17 @@ public final class CookingService {
         if (wild) cookLevel -= s.exoticCookPenalty;
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
         if (id != null && OWN_QUALITY.contains(id.getNamespace())) {
-            if (id.getNamespace().equals("kaleidoscope_cookery")) shiftKaleidoscope(sp, item, n, cookLevel, complexity, s);
+            if (id.getNamespace().equals("kaleidoscope_cookery")) shiftKaleidoscope(sp, item, n, cookLevel, complexity, heat, s);
             award(sp, item, level, complexity, n);
             return;
         }
         int[] byQuality = new int[Cooking.QUALITY.length];
-        for (int i = 0; i < n; i++) byQuality[Cooking.roll(cookLevel, complexity, RANDOM.nextGaussian(), RANDOM.nextDouble(),
-                wild ? Cooking.GOOD : Cooking.MASTERPIECE, s)]++;
+        for (int i = 0; i < n; i++) {
+            int q = Cooking.roll(cookLevel, complexity, RANDOM.nextGaussian(), RANDOM.nextDouble(), wild ? Cooking.GOOD : Cooking.MASTERPIECE, s);
+            // Собрано без огня (салат, сэндвич): не подгорает и не недожаривается — худшее «обычное».
+            if (!heat && !Cooking.success(q)) q = Cooking.NORMAL;
+            byQuality[q]++;
+        }
         int flags = (RpCoreAPI.hasTrait(sp, RpIds.CLEAN) ? F_CLEAN : 0) | (wild ? F_WILD : 0);
         int done = 0;
         for (int q = 0; q < byQuality.length; q++) {
@@ -275,12 +295,12 @@ public final class CookingService {
      * Kaleidoscope оценивает блюдо сам (ловкость при готовке); навык сдвигает его оценку на ступень: наш бросок
      * «отлично» и выше — на ступень лучше, неудача (недожарено, сгорело) — на ступень хуже.
      */
-    private static void shiftKaleidoscope(ServerPlayer sp, Item item, int n, double cookLevel, int complexity, Settings s) {
+    private static void shiftKaleidoscope(ServerPlayer sp, Item item, int n, double cookLevel, int complexity, boolean heat, Settings s) {
         int up = 0, down = 0;
         for (int i = 0; i < n; i++) {
             int q = Cooking.roll(cookLevel, complexity, RANDOM.nextGaussian(), RANDOM.nextDouble(), s);
             if (q == Cooking.EXCELLENT || q == Cooking.MASTERPIECE) up++;
-            else if (!Cooking.success(q)) down++;
+            else if (heat && !Cooking.success(q)) down++;
         }
         shiftKaleidoscope(sp, item, up, -1);
         shiftKaleidoscope(sp, item, down, +1);

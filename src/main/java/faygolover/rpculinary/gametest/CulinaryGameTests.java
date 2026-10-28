@@ -333,6 +333,23 @@ public final class CulinaryGameTests {
         h.succeed();
     }
 
+    /** Качество — только у финальных блюд: печь и костёр греют, верстак — нет; полуфабрикаты (тег no_quality) — не блюдо. */
+    @GameTest(template = T)
+    public static void finalDishesOnly(GameTestHelper h) {
+        h.assertTrue(faygolover.rpculinary.server.CookingService.heat(Blocks.FURNACE) && faygolover.rpculinary.server.CookingService.heat(Blocks.CAMPFIRE)
+                && !faygolover.rpculinary.server.CookingService.heat(Blocks.CRAFTING_TABLE), "печь и костёр греют, верстак — нет");
+        ServerPlayer p = player(h);
+        h.assertTrue(faygolover.rpculinary.server.CookingService.dish(p, new ItemStack(Items.BREAD)), "хлеб — блюдо");
+        if (net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight")) {
+            for (String path : java.util.List.of("wheat_dough", "minced_beef", "raw_pasta", "cabbage_leaf")) {
+                var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("farmersdelight", path));
+                h.assertTrue(!faygolover.rpculinary.server.CookingService.dish(p, new ItemStack(item)), "farmersdelight:" + path + " — полуфабрикат");
+            }
+        }
+        remove(h, p);
+        h.succeed();
+    }
+
     /** Сырое: сырое мясо и рыба — да, жареное, тухлятина, хлеб — нет; со сборкой — бекон и фарш FD да, копчёный окорок нет. */
     @GameTest(template = T)
     public static void rawDetection(GameTestHelper h) {

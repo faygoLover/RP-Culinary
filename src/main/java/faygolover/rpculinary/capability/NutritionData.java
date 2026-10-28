@@ -59,6 +59,10 @@ public final class NutritionData {
     public boolean cookMenu;
     /** Готовит «в поле»: костёр, коптильня (Полевой повар). */
     public boolean cookField;
+    /** Последняя «плита» греет (печь, плита, сковорода) — неудачи бывают; холодная сборка (верстак, доска) — нет. */
+    public boolean cookHeat;
+    /** Из {@link #cookPending}: что вынуто из печи (тепло), остальное — с верстака. */
+    public final java.util.Set<net.minecraft.world.item.Item> cookPendingHeat = new java.util.HashSet<>();
     @Nullable
     public java.util.Map<net.minecraft.world.item.Item, Integer> cookBaseline;
     public final java.util.Map<net.minecraft.world.item.Item, Integer> cookPending = new java.util.HashMap<>();

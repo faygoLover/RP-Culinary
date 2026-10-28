@@ -1,0 +1,121 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "farm_and_charm:minced_beef",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_beef_mince",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_lamb_mince",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:minced_beef",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wheat_dough",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:dough",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:dough",
+      "required": false
+    },
+    {
+      "id": "candlelight:dough",
+      "required": false
+    },
+    {
+      "id": "sa_combat:coxinha_dough",
+      "required": false
+    },
+    {
+      "id": "sa_combat:pastel_dough",
+      "required": false
+    },
+    {
+      "id": "sa_combat:raw_cheese_pastel",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:raw_pasta",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:raw_pasta",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:chicken_cuts",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:cod_slice",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:salmon_slice",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:bacon",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:mutton_chops",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:cabbage_leaf",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:pumpkin_slice",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:raw_meatlovers_pizza",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:raw_vegetable_pizza",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:cheese",
+      "required": false
+    },
+    {
+      "id": "candlelight:mozzarella",
+      "required": false
+    },
+    {
+      "id": "sa_combat:cheese",
+      "required": false
+    },
+    {
+      "id": "farm_and_charm:bacon",
+      "required": false
+    },
+    {
+      "id": "butchery:meat_scraps",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_sausage",
+      "required": false
+    },
+    {
+      "id": "butchery:raw_blood_sausage",
+      "required": false
+    }
+  ]
+}

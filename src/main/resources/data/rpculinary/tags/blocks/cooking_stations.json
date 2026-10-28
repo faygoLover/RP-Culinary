@@ -5,6 +5,46 @@
     "minecraft:smoker",
     "minecraft:campfire",
     "minecraft:soul_campfire",
-    "minecraft:crafting_table"
+    "minecraft:crafting_table",
+    {
+      "id": "refurbished_furniture:oak_cutting_board",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:spruce_cutting_board",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:birch_cutting_board",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:jungle_cutting_board",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:acacia_cutting_board",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:dark_oak_cutting_board",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:mangrove_cutting_board",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:cherry_cutting_board",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:crimson_cutting_board",
+      "required": false
+    },
+    {
+      "id": "refurbished_furniture:warped_cutting_board",
+      "required": false
+    }
   ]
 }
