@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "item": "minecraft:potato"
+  },
+  {
+   "item": "minecraft:potato"
+  },
+  {
+   "item": "butchery:animal_fat"
+  },
+  {
+   "tag": "forge:salt"
+  }
+ ],
+ "result": {
+  "item": "sa_combat:chips",
+  "count": 2
+ },
+ "requiresLearning": false
+}

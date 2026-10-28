@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 300,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "item": "minecraft:salmon"
+  },
+  {
+   "tag": "forge:salt"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "sa_combat:canned_tuna",
+  "count": 1
+ },
+ "container": {
+  "item": "sa_core:empty_can"
+ }
+}

@@ -1,0 +1,8 @@
+{
+ "replace": true,
+ "values": [
+  "butchery:raw_lamb_loin",
+  "butchery:raw_lamb_rib",
+  "butchery:raw_lamb_sirloin"
+ ]
+}

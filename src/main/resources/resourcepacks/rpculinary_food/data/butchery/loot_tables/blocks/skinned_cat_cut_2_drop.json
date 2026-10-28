@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:raw_cat_meat",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "random_sequence": "butchery:blocks/skinned_cat_cut_2_drop"
+}

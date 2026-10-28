@@ -1,0 +1,28 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "item": "farmersdelight:tomato_sauce"
+  },
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "tag": "forge:cheeses"
+  },
+  {
+   "tag": "forge:cheeses"
+  },
+  {
+   "tag": "rpculinary:mince"
+  }
+ ],
+ "result": {
+  "item": "scpo:pizza_deepdish",
+  "count": 1
+ },
+ "requiresLearning": false
+}

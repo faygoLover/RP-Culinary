@@ -1,0 +1,19 @@
+{
+ "type": "refurbished_furniture:cutting_board_combining",
+ "count": 1,
+ "ingredients": [
+  {
+   "item": "refurbished_furniture:bread_slice"
+  },
+  {
+   "item": "alexsmobs:cooked_kangaroo_meat"
+  },
+  {
+   "tag": "forge:salad_ingredients"
+  },
+  {
+   "item": "refurbished_furniture:bread_slice"
+  }
+ ],
+ "result": "alexsmobs:kangaroo_burger"
+}

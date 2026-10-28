@@ -1,0 +1,112 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:liver",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":1000,\"rpculinary:source\":\"polar_bear\"}"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:heart",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":400,\"rpculinary:source\":\"polar_bear\"}"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:lungs",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":700,\"rpculinary:source\":\"polar_bear\"}"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:stomach",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":2000,\"rpculinary:source\":\"polar_bear\"}"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:kidney",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 2
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:intestines",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 7
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "random_sequence": "butchery:blocks/polar_bear_carcass_cut_1_drop"
+}

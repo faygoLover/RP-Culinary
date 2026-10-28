@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "item": "farmersdelight:tomato_sauce"
+  },
+  {
+   "tag": "forge:cheeses"
+  },
+  {
+   "tag": "forge:cheeses"
+  }
+ ],
+ "result": {
+  "item": "scpo:pizza_cheese",
+  "count": 1
+ },
+ "requiresLearning": false
+}

@@ -1,0 +1,24 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 200,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "tag": "forge:milk"
+  },
+  {
+   "item": "alexscaves:block_of_chocolate"
+  },
+  {
+   "item": "minecraft:sugar"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "alexscaves:hot_chocolate_bottle",
+  "count": 3
+ },
+ "container": {
+  "item": "minecraft:glass_bottle"
+ }
+}

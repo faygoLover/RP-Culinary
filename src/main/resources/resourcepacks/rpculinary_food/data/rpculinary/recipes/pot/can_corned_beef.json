@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 300,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "tag": "forge:cooked_beef"
+  },
+  {
+   "tag": "forge:salt"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "sa_combat:canned_corned_beef",
+  "count": 1
+ },
+ "container": {
+  "item": "sa_core:empty_can"
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 200,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "item": "alexsmobs:stink_bottle"
+  },
+  {
+   "item": "alexsmobs:triops_eggs"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "alexsmobs:mosquito_repellent_stew",
+  "count": 1
+ },
+ "container": {
+  "item": "minecraft:bowl"
+ }
+}

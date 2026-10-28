@@ -1,0 +1,25 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "tag": "rpculinary:mince"
+  },
+  {
+   "tag": "forge:salad_ingredients"
+  },
+  {
+   "tag": "forge:crops/tomato"
+  },
+  {
+   "tag": "forge:cheeses"
+  }
+ ],
+ "result": {
+  "item": "sa_combat:taco",
+  "count": 2
+ },
+ "requiresLearning": false
+}

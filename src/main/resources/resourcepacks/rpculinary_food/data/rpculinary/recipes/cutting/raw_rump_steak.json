@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cutting",
+ "ingredients": [
+  {
+   "item": "butchery:raw_rump_steak"
+  }
+ ],
+ "tool": {
+  "tag": "forge:tools/knives"
+ },
+ "result": [
+  {
+   "item": "minecraft:beef",
+   "count": 20
+  },
+  {
+   "item": "butchery:meat_scraps",
+   "count": 2
+  }
+ ]
+}

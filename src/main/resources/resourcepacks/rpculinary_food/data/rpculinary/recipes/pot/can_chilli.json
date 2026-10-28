@@ -1,0 +1,24 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 300,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "tag": "forge:cooked_beef"
+  },
+  {
+   "item": "minecraft:beetroot"
+  },
+  {
+   "tag": "forge:crops/tomato"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "sa_combat:canned_chilli",
+  "count": 1
+ },
+ "container": {
+  "item": "sa_core:empty_can"
+ }
+}

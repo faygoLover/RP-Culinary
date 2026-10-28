@@ -1,0 +1,11 @@
+{
+ "type": "farm_and_charm:mincer",
+ "ingredient": {
+  "item": "farm_and_charm:chicken_parts"
+ },
+ "recipe_type": "MEAT",
+ "result": {
+  "item": "butchery:raw_lamb_mince",
+  "count": 1
+ }
+}

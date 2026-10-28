@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 300,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "item": "butchery:meat_scraps"
+  },
+  {
+   "item": "butchery:meat_scraps"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "sa_combat:canned_dog_food",
+  "count": 1
+ },
+ "container": {
+  "item": "sa_core:empty_can"
+ }
+}

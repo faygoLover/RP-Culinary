@@ -1,0 +1,22 @@
+{
+ "type": "farmersdelight:cutting",
+ "ingredients": [
+  {
+   "item": "butchery:raw_chicken_leg"
+  }
+ ],
+ "tool": {
+  "tag": "forge:tools/knives"
+ },
+ "result": [
+  {
+   "item": "farm_and_charm:chicken_parts",
+   "count": 2
+  },
+  {
+   "item": "minecraft:bone",
+   "count": 1,
+   "chance": 0.5
+  }
+ ]
+}

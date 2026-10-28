@@ -1,0 +1,70 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:meat_scraps",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 57
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:animal_fat",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 40
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "minecraft:bone",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 17
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:sculk_bone",
+     "weight": 100,
+     "functions": [
+      {
+       "function": "set_count",
+       "count": {
+        "min": 1,
+        "max": 8
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "random_sequence": "butchery:blocks/warden_cut_3_drop"
+}

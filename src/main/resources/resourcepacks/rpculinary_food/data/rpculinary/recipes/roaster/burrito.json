@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "tag": "rpculinary:mince"
+  },
+  {
+   "item": "farm_and_charm:corn"
+  },
+  {
+   "tag": "forge:cheeses"
+  }
+ ],
+ "result": {
+  "item": "sa_combat:burrito",
+  "count": 2
+ },
+ "requiresLearning": false
+}

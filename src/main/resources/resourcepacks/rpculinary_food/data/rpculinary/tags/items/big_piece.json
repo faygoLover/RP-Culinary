@@ -1,0 +1,16 @@
+{
+ "replace": false,
+ "values": [
+  "butchery:brain",
+  "butchery:heart",
+  "butchery:liver",
+  "butchery:lungs",
+  "butchery:raw_chuck_steak",
+  "butchery:raw_lamb_shoulder",
+  "butchery:raw_leg_of_lamb",
+  "butchery:raw_pork_belly",
+  "butchery:raw_pork_shoulder",
+  "butchery:raw_rump_steak",
+  "butchery:stomach"
+ ]
+}

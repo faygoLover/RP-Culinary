@@ -1,0 +1,18 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 300,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "item": "candlelight:pasta_with_bolognese"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "sa_combat:canned_spaghetti_bolognese",
+  "count": 1
+ },
+ "container": {
+  "item": "sa_core:empty_can"
+ }
+}

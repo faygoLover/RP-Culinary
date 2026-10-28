@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cutting",
+ "ingredients": [
+  {
+   "item": "farm_and_charm:lamb_ham"
+  }
+ ],
+ "tool": {
+  "tag": "forge:tools/knives"
+ },
+ "result": [
+  {
+   "item": "minecraft:mutton",
+   "count": 2
+  },
+  {
+   "item": "minecraft:bone",
+   "count": 1
+  }
+ ]
+}

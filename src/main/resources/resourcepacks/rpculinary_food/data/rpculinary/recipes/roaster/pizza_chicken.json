@@ -1,0 +1,25 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "item": "farmersdelight:tomato_sauce"
+  },
+  {
+   "tag": "forge:cheeses"
+  },
+  {
+   "item": "farmersdelight:cooked_chicken_cuts"
+  },
+  {
+   "item": "farm_and_charm:corn"
+  }
+ ],
+ "result": {
+  "item": "scpo:pizza_chicken",
+  "count": 1
+ },
+ "requiresLearning": false
+}

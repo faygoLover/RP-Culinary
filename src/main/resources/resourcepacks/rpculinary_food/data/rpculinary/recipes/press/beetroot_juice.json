@@ -1,0 +1,10 @@
+{
+ "type": "vinery:apple_mashing",
+ "input": {
+  "item": "minecraft:beetroot"
+ },
+ "output": {
+  "item": "legendarysurvivaloverhaul:beetroot_juice",
+  "count": 1
+ }
+}

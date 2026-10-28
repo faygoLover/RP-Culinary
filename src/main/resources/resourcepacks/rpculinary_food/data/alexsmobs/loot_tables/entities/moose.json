@@ -1,0 +1,25 @@
+{
+ "pools": [
+  {
+   "name": "moose",
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "item",
+     "name": "alexsmobs:moose_ribs",
+     "weight": 1,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 10
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":4750,\"rpculinary:source\":\"moose\"}"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,16 @@
+{
+ "type": "refurbished_furniture:cutting_board_combining",
+ "count": 1,
+ "ingredients": [
+  {
+   "item": "refurbished_furniture:bread_slice"
+  },
+  {
+   "tag": "forge:cooked_eggs"
+  },
+  {
+   "item": "refurbished_furniture:bread_slice"
+  }
+ ],
+ "result": "farmersdelight:egg_sandwich"
+}

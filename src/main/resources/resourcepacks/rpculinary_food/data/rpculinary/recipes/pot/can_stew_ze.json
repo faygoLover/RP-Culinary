@@ -1,0 +1,18 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 300,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "item": "farmersdelight:beef_stew"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "zombie_extreme:canned_stew",
+  "count": 1
+ },
+ "container": {
+  "item": "sa_core:empty_can"
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "item": "minecraft:sugar"
+  },
+  {
+   "item": "butchery:animal_fat"
+  }
+ ],
+ "result": {
+  "item": "sa_combat:donut",
+  "count": 4
+ },
+ "requiresLearning": false
+}

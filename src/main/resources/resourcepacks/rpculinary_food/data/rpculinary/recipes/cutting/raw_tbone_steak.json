@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cutting",
+ "ingredients": [
+  {
+   "item": "butchery:raw_tbone_steak"
+  }
+ ],
+ "tool": {
+  "tag": "forge:tools/knives"
+ },
+ "result": [
+  {
+   "item": "minecraft:beef",
+   "count": 1
+  },
+  {
+   "item": "minecraft:bone",
+   "count": 1
+  }
+ ]
+}

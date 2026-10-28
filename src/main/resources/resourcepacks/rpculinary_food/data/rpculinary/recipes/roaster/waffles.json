@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "tag": "forge:eggs"
+  },
+  {
+   "tag": "forge:milk"
+  },
+  {
+   "item": "minecraft:sugar"
+  }
+ ],
+ "result": {
+  "item": "sa_combat:waffles",
+  "count": 2
+ },
+ "requiresLearning": false
+}

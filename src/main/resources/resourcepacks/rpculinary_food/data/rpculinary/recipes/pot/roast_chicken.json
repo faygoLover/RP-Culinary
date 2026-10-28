@@ -1,0 +1,30 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 400,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "item": "minecraft:chicken"
+  },
+  {
+   "item": "minecraft:baked_potato"
+  },
+  {
+   "item": "minecraft:carrot"
+  },
+  {
+   "tag": "forge:crops/onion"
+  },
+  {
+   "item": "minecraft:bread"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "farmersdelight:roast_chicken_block",
+  "count": 1
+ },
+ "container": {
+  "item": "minecraft:bowl"
+ }
+}

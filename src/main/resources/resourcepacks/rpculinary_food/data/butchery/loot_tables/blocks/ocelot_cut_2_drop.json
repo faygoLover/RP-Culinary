@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:raw_ocelot_meat",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 4
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "random_sequence": "butchery:blocks/ocelot_cut_2_drop"
+}

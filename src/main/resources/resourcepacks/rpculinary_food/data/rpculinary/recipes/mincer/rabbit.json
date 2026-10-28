@@ -1,0 +1,11 @@
+{
+ "type": "farm_and_charm:mincer",
+ "ingredient": {
+  "item": "minecraft:rabbit"
+ },
+ "recipe_type": "MEAT",
+ "result": {
+  "item": "butchery:raw_lamb_mince",
+  "count": 1
+ }
+}

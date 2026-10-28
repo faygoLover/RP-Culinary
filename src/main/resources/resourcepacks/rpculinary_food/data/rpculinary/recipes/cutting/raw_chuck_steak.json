@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cutting",
+ "ingredients": [
+  {
+   "item": "butchery:raw_chuck_steak"
+  }
+ ],
+ "tool": {
+  "tag": "forge:tools/knives"
+ },
+ "result": [
+  {
+   "item": "minecraft:beef",
+   "count": 24
+  },
+  {
+   "item": "butchery:meat_scraps",
+   "count": 2
+  }
+ ]
+}

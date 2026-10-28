@@ -1,0 +1,25 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "item": "farmersdelight:tomato_sauce"
+  },
+  {
+   "tag": "forge:cheeses"
+  },
+  {
+   "item": "butchery:raw_ham"
+  },
+  {
+   "item": "sa_combat:canned_pineapple"
+  }
+ ],
+ "result": {
+  "item": "scpo:pizza_hawaiian",
+  "count": 1
+ },
+ "requiresLearning": false
+}

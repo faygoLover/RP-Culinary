@@ -1,0 +1,12 @@
+{
+ "type": "butchery:pestleandmortarrecipetype",
+ "ingredients": [
+  {
+   "item": "blocksyouneed_luna:rock_salt"
+  }
+ ],
+ "output": {
+  "item": "butchery:salt",
+  "count": 2
+ }
+}

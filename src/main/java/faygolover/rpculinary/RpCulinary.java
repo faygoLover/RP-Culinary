@@ -52,6 +52,7 @@ public class RpCulinary {
         modBus.addListener(this::onConfigReload);
         faygolover.rpculinary.item.ResearchNotes.ITEMS.register(modBus);
         modBus.addListener(this::creativeTab);
+        faygolover.rpculinary.pack.FoodPack.register(modBus);
 
         var bus = MinecraftForge.EVENT_BUS;
         bus.addGenericListener(Entity.class, this::attachCaps);

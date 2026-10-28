@@ -1,0 +1,18 @@
+{
+ "type": "farm_and_charm:crafting_bowl",
+ "ingredients": [
+  {
+   "tag": "forge:flour"
+  },
+  {
+   "tag": "forge:milk"
+  },
+  {
+   "tag": "forge:butter"
+  }
+ ],
+ "result": {
+  "item": "farmersdelight:pie_crust",
+  "count": 1
+ }
+}

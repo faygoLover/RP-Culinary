@@ -1,0 +1,25 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "item": "farmersdelight:tomato_sauce"
+  },
+  {
+   "tag": "forge:cheeses"
+  },
+  {
+   "item": "alexsmobs:banana"
+  },
+  {
+   "item": "farmersdelight:cooked_chicken_cuts"
+  }
+ ],
+ "result": {
+  "item": "scpo:pizza_swedish",
+  "count": 1
+ },
+ "requiresLearning": false
+}

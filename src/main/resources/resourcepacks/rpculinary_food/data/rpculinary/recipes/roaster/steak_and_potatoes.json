@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:cooked_beef"
+  },
+  {
+   "item": "minecraft:baked_potato"
+  },
+  {
+   "tag": "forge:crops/onion"
+  },
+  {
+   "item": "farmersdelight:cooked_rice"
+  }
+ ],
+ "result": {
+  "item": "farmersdelight:steak_and_potatoes",
+  "count": 1
+ },
+ "requiresLearning": false
+}

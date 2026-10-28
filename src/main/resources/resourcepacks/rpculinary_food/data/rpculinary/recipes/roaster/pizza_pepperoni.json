@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "item": "farmersdelight:tomato_sauce"
+  },
+  {
+   "tag": "forge:cheeses"
+  },
+  {
+   "item": "butchery:cooked_sausage"
+  }
+ ],
+ "result": {
+  "item": "scpo:pizza_pepperoni",
+  "count": 1
+ },
+ "requiresLearning": false
+}

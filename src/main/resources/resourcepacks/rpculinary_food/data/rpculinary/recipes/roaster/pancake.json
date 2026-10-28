@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "tag": "forge:eggs"
+  },
+  {
+   "tag": "forge:milk"
+  },
+  {
+   "item": "minecraft:sugar"
+  }
+ ],
+ "result": {
+  "item": "supplementaries:pancake",
+  "count": 4
+ },
+ "requiresLearning": false
+}

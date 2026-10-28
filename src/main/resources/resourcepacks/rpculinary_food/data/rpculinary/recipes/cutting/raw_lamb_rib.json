@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cutting",
+ "ingredients": [
+  {
+   "item": "butchery:raw_lamb_rib"
+  }
+ ],
+ "tool": {
+  "tag": "forge:tools/knives"
+ },
+ "result": [
+  {
+   "item": "farmersdelight:mutton_chops",
+   "count": 2
+  },
+  {
+   "item": "minecraft:bone",
+   "count": 1
+  }
+ ]
+}

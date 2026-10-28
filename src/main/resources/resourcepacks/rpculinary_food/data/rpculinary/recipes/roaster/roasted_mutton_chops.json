@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "item": "farmersdelight:mutton_chops"
+  },
+  {
+   "tag": "forge:crops/onion"
+  },
+  {
+   "tag": "forge:crops/tomato"
+  },
+  {
+   "item": "farmersdelight:cooked_rice"
+  }
+ ],
+ "result": {
+  "item": "farmersdelight:roasted_mutton_chops",
+  "count": 1
+ },
+ "requiresLearning": false
+}

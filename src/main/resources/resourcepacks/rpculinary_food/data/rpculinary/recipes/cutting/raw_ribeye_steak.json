@@ -1,0 +1,22 @@
+{
+ "type": "farmersdelight:cutting",
+ "ingredients": [
+  {
+   "item": "butchery:raw_ribeye_steak"
+  }
+ ],
+ "tool": {
+  "tag": "forge:tools/knives"
+ },
+ "result": [
+  {
+   "item": "minecraft:beef",
+   "count": 1
+  },
+  {
+   "item": "butchery:meat_scraps",
+   "count": 1,
+   "chance": 0.6
+  }
+ ]
+}

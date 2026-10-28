@@ -1,0 +1,10 @@
+{
+ "type": "vinery:apple_mashing",
+ "input": {
+  "item": "minecraft:chorus_fruit"
+ },
+ "output": {
+  "item": "legendarysurvivaloverhaul:chorus_fruit_juice",
+  "count": 1
+ }
+}

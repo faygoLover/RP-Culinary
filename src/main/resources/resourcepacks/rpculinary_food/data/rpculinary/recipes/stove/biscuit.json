@@ -1,0 +1,20 @@
+{
+ "type": "farm_and_charm:stove",
+ "ingredients": [
+  {
+   "tag": "forge:flour"
+  },
+  {
+   "tag": "forge:butter"
+  },
+  {
+   "tag": "forge:milk"
+  }
+ ],
+ "result": {
+  "item": "sa_combat:biscuit",
+  "count": 4
+ },
+ "experience": 0.5,
+ "requiresLearning": false
+}

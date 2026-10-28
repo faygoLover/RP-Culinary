@@ -1,0 +1,22 @@
+{
+ "type": "farmersdelight:cutting",
+ "ingredients": [
+  {
+   "item": "butchery:raw_pork_loin"
+  }
+ ],
+ "tool": {
+  "tag": "forge:tools/knives"
+ },
+ "result": [
+  {
+   "item": "minecraft:porkchop",
+   "count": 1
+  },
+  {
+   "item": "butchery:meat_scraps",
+   "count": 1,
+   "chance": 0.6
+  }
+ ]
+}

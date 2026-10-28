@@ -1,0 +1,8 @@
+{
+ "replace": true,
+ "values": [
+  "#forge:dusts/salt",
+  "butchery:salt",
+  "refurbished_furniture:sea_salt"
+ ]
+}

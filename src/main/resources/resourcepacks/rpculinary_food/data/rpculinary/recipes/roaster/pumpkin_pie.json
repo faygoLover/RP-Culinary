@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "item": "farmersdelight:pie_crust"
+  },
+  {
+   "item": "farmersdelight:pumpkin_slice"
+  },
+  {
+   "tag": "forge:eggs"
+  },
+  {
+   "item": "minecraft:sugar"
+  }
+ ],
+ "result": {
+  "item": "minecraft:pumpkin_pie",
+  "count": 1
+ },
+ "requiresLearning": false
+}

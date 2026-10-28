@@ -1,0 +1,11 @@
+{
+ "type": "farm_and_charm:mincer",
+ "ingredient": {
+  "item": "butchery:raw_wolf_meat"
+ },
+ "recipe_type": "MEAT",
+ "result": {
+  "item": "butchery:raw_beef_mince",
+  "count": 1
+ }
+}

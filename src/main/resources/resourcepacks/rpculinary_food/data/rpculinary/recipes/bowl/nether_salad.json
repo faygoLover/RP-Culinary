@@ -1,0 +1,18 @@
+{
+ "type": "farm_and_charm:crafting_bowl",
+ "ingredients": [
+  {
+   "item": "minecraft:crimson_fungus"
+  },
+  {
+   "item": "minecraft:warped_fungus"
+  },
+  {
+   "item": "minecraft:bowl"
+  }
+ ],
+ "result": {
+  "item": "farmersdelight:nether_salad",
+  "count": 1
+ }
+}

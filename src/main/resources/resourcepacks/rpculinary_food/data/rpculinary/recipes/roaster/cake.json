@@ -1,0 +1,25 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:flour"
+  },
+  {
+   "tag": "forge:eggs"
+  },
+  {
+   "item": "minecraft:sugar"
+  },
+  {
+   "tag": "forge:milk"
+  },
+  {
+   "tag": "forge:butter"
+  }
+ ],
+ "result": {
+  "item": "minecraft:cake",
+  "count": 1
+ },
+ "requiresLearning": false
+}

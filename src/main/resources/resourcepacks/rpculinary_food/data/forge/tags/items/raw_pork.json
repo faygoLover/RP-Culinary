@@ -1,0 +1,11 @@
+{
+ "replace": true,
+ "values": [
+  "butchery:raw_ham",
+  "butchery:raw_pork_leg",
+  "butchery:raw_pork_loin",
+  "farm_and_charm:bacon",
+  "farmersdelight:bacon",
+  "minecraft:porkchop"
+ ]
+}

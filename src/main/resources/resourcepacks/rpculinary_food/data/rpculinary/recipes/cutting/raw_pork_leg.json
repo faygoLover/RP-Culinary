@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cutting",
+ "ingredients": [
+  {
+   "item": "butchery:raw_pork_leg"
+  }
+ ],
+ "tool": {
+  "tag": "forge:tools/knives"
+ },
+ "result": [
+  {
+   "item": "minecraft:porkchop",
+   "count": 2
+  },
+  {
+   "item": "minecraft:bone",
+   "count": 1
+  }
+ ]
+}

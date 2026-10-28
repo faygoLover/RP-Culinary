@@ -1,0 +1,24 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 300,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "item": "minecraft:apple"
+  },
+  {
+   "item": "minecraft:glow_berries"
+  },
+  {
+   "item": "minecraft:melon_slice"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "survival_instinct:fruit_can",
+  "count": 1
+ },
+ "container": {
+  "item": "survival_instinct:empty_can"
+ }
+}

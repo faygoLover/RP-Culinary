@@ -1,0 +1,52 @@
+{
+ "pools": [
+  {
+   "name": "grottoceratops_meat",
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "item",
+     "name": "alexscaves:dinosaur_chop",
+     "weight": 1,
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 19
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":5000,\"rpculinary:source\":\"dinosaur\"}"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "grottoceratops_hide",
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "item",
+     "name": "alexscaves:tough_hide",
+     "weight": 1,
+     "functions": [
+      {
+       "function": "set_count",
+       "count": {
+        "min": 0,
+        "max": 2
+       }
+      },
+      {
+       "function": "looting_enchant",
+       "count": {
+        "min": 0,
+        "max": 1
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

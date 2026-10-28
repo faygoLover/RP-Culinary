@@ -1,0 +1,21 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 200,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "item": "alexscaves:cooked_trilocaris_tail"
+  },
+  {
+   "item": "alexscaves:tree_star"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "alexscaves:primordial_soup",
+  "count": 1
+ },
+ "container": {
+  "item": "minecraft:bowl"
+ }
+}

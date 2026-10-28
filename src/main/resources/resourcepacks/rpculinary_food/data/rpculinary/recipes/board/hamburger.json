@@ -1,0 +1,22 @@
+{
+ "type": "refurbished_furniture:cutting_board_combining",
+ "count": 1,
+ "ingredients": [
+  {
+   "item": "refurbished_furniture:bread_slice"
+  },
+  {
+   "item": "farmersdelight:beef_patty"
+  },
+  {
+   "tag": "forge:salad_ingredients"
+  },
+  {
+   "tag": "forge:crops/tomato"
+  },
+  {
+   "item": "refurbished_furniture:bread_slice"
+  }
+ ],
+ "result": "farmersdelight:hamburger"
+}

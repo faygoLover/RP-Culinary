@@ -1,0 +1,24 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 300,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "tag": "forge:cooked_beef"
+  },
+  {
+   "tag": "forge:cooked_pork"
+  },
+  {
+   "tag": "forge:salt"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "survival_instinct:meat_can",
+  "count": 1
+ },
+ "container": {
+  "item": "survival_instinct:empty_can"
+ }
+}

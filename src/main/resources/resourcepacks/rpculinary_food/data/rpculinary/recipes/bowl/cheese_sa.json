@@ -1,0 +1,21 @@
+{
+ "type": "farm_and_charm:crafting_bowl",
+ "ingredients": [
+  {
+   "item": "farmersdelight:milk_bottle"
+  },
+  {
+   "item": "farmersdelight:milk_bottle"
+  },
+  {
+   "tag": "forge:salt"
+  },
+  {
+   "item": "butchery:stomach"
+  }
+ ],
+ "result": {
+  "item": "sa_combat:cheese",
+  "count": 1
+ }
+}

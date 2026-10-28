@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:cooked_beef"
+  },
+  {
+   "tag": "forge:crops/onion"
+  },
+  {
+   "tag": "forge:crops/tomato"
+  },
+  {
+   "item": "minecraft:stick"
+  }
+ ],
+ "result": {
+  "item": "farmersdelight:barbecue_stick",
+  "count": 1
+ },
+ "requiresLearning": false
+}

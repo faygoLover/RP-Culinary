@@ -1,0 +1,21 @@
+{
+ "type": "farm_and_charm:crafting_bowl",
+ "ingredients": [
+  {
+   "item": "minecraft:apple"
+  },
+  {
+   "item": "minecraft:melon_slice"
+  },
+  {
+   "tag": "forge:berries"
+  },
+  {
+   "item": "minecraft:bowl"
+  }
+ ],
+ "result": {
+  "item": "farmersdelight:fruit_salad",
+  "count": 1
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "item": "farmersdelight:pie_crust"
+  },
+  {
+   "item": "minecraft:cocoa_beans"
+  },
+  {
+   "tag": "forge:milk"
+  },
+  {
+   "item": "minecraft:sugar"
+  }
+ ],
+ "result": {
+  "item": "farmersdelight:chocolate_pie",
+  "count": 1
+ },
+ "requiresLearning": false
+}

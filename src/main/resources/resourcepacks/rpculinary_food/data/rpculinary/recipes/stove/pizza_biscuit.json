@@ -1,0 +1,20 @@
+{
+ "type": "farm_and_charm:stove",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "item": "minecraft:sugar"
+  },
+  {
+   "tag": "forge:berries"
+  }
+ ],
+ "result": {
+  "item": "scpo:pizza_biscuit",
+  "count": 1
+ },
+ "experience": 0.5,
+ "requiresLearning": false
+}

@@ -1,0 +1,20 @@
+{
+ "type": "farm_and_charm:stove",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "tag": "forge:cheeses"
+  },
+  {
+   "item": "butchery:raw_ham"
+  }
+ ],
+ "result": {
+  "item": "scpo:pizza_colzone",
+  "count": 1
+ },
+ "experience": 0.5,
+ "requiresLearning": false
+}

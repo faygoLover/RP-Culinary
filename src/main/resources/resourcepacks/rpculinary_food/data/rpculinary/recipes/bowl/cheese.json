@@ -1,0 +1,18 @@
+{
+ "type": "farm_and_charm:crafting_bowl",
+ "ingredients": [
+  {
+   "item": "minecraft:milk_bucket"
+  },
+  {
+   "tag": "forge:salt"
+  },
+  {
+   "item": "butchery:stomach"
+  }
+ ],
+ "result": {
+  "item": "refurbished_furniture:cheese",
+  "count": 2
+ }
+}

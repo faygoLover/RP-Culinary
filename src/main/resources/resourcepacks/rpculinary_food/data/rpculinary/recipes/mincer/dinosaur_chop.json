@@ -1,0 +1,11 @@
+{
+ "type": "farm_and_charm:mincer",
+ "ingredient": {
+  "item": "alexscaves:dinosaur_chop"
+ },
+ "recipe_type": "MEAT",
+ "result": {
+  "item": "butchery:raw_beef_mince",
+  "count": 1
+ }
+}

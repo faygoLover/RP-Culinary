@@ -1,0 +1,10 @@
+{
+ "type": "vinery:apple_mashing",
+ "input": {
+  "item": "farmersdelight:pumpkin_slice"
+ },
+ "output": {
+  "item": "legendarysurvivaloverhaul:pumpkin_juice",
+  "count": 1
+ }
+}

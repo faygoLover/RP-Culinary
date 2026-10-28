@@ -1,0 +1,11 @@
+{
+ "replace": true,
+ "values": [
+  "#candlelight:raw_beef",
+  "butchery:raw_ribeye_steak",
+  "butchery:raw_sirloin_steak",
+  "butchery:raw_tbone_steak",
+  "farm_and_charm:minced_beef",
+  "minecraft:beef"
+ ]
+}

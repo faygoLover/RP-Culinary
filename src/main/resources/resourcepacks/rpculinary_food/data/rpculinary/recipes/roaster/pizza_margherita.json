@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "tag": "forge:dough"
+  },
+  {
+   "item": "farmersdelight:tomato_sauce"
+  },
+  {
+   "item": "candlelight:mozzarella"
+  },
+  {
+   "tag": "forge:salad_ingredients"
+  }
+ ],
+ "result": {
+  "item": "scpo:pizza_margherita",
+  "count": 1
+ },
+ "requiresLearning": false
+}

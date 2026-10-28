@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "item": "farmersdelight:pie_crust"
+  },
+  {
+   "item": "minecraft:sweet_berries"
+  },
+  {
+   "tag": "forge:cheeses"
+  },
+  {
+   "item": "minecraft:sugar"
+  }
+ ],
+ "result": {
+  "item": "farmersdelight:sweet_berry_cheesecake",
+  "count": 1
+ },
+ "requiresLearning": false
+}

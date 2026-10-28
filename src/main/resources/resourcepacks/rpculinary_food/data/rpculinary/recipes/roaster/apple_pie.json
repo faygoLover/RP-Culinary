@@ -1,0 +1,22 @@
+{
+ "type": "farm_and_charm:roaster",
+ "ingredients": [
+  {
+   "item": "farmersdelight:pie_crust"
+  },
+  {
+   "item": "minecraft:apple"
+  },
+  {
+   "item": "minecraft:apple"
+  },
+  {
+   "item": "minecraft:sugar"
+  }
+ ],
+ "result": {
+  "item": "farmersdelight:apple_pie",
+  "count": 1
+ },
+ "requiresLearning": false
+}

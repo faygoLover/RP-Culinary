@@ -1,0 +1,13 @@
+{
+ "type": "refurbished_furniture:cutting_board_combining",
+ "count": 1,
+ "ingredients": [
+  {
+   "item": "farmersdelight:fried_egg"
+  },
+  {
+   "item": "farmersdelight:cooked_bacon"
+  }
+ ],
+ "result": "farmersdelight:bacon_and_eggs"
+}
