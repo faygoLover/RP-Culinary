@@ -115,3 +115,11 @@
 - `mixin/PackRepositoryMixin`: `builtin/rpculinary_food` всегда последним (выше всех) — иначе сохранённый в мире порядок ставил
   позже добавленные моды выше пака.
 - Для теста с Butchery: `libs/pack/butchery-1.jar` (копия из инстанса, не в git), `-Pwith_pack=true`.
+
+## Группы экзотики и техники (29.10, ответы Alex)
+- Состав групп — `tools/groups_spec.py` (правится там), теги — `python -I tools/gen_groups.py` (нужен `gallery/cache/cands.json`).
+- `server/Exotic.java` — 16 групп, знания и их навык; `item/ResearchNotes.java` — журнал/записи (NBT `group`, тег `minecraft:bookshelf_books`).
+- `server/ExoticEffects.java` — действия на едока; отложенные паразиты и поганка — в `NutritionData` (`parasitesAt`, `liverPoisonAt`, время мира).
+- `server/Techniques.java` — «Винокур» (тег блоков `rpculinary:technique/vintner`) и «Заготовщик» (тег предметов `technique/preserver`).
+- Без RP Perks знания и техники — у всех (навык не ведёт никто).
+

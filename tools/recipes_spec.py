@@ -266,6 +266,15 @@ def generate(out, read_json, D):
                      ('butchery:raw_ocelot_meat', PINK), ('butchery:meat_scraps', PINK)]:
         mince(ing.split(':')[1], ing, res)
 
+    # Мухомор (ванильный красный гриб) — ядовитый (решение 29.10): где он нужен по рецепту, есть вариант из шампиньонов
+    for rid in ('farmersdelight:cooking/mushroom_stew', 'farmersdelight:cooking/mushroom_rice'):
+        ns, path = rid.split(':', 1)
+        orig = read_json(f'data/{ns}/recipes/{path}.json')
+        if orig:
+            obj = json.loads(json.dumps(orig).replace('"minecraft:red_mushroom"', '"minecraft:brown_mushroom"'))
+            obj.pop('conditions', None)
+            rec(f'cooking/{path.split("/")[-1]}_brown', obj)
+
     # -------------------------------------------------- 9. соль, водка
     rec('mortar/rock_salt', {'type': 'butchery:pestleandmortarrecipetype', 'ingredients': [{'item': 'blocksyouneed_luna:rock_salt'}],
                              'output': {'item': 'butchery:salt', 'count': 2}})
