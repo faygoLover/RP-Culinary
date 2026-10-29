@@ -1,6 +1,7 @@
 // Галерея «Кулинария — разделка и формы»: вопросы с вариантами, роли мясных предметов, блюда с верстака.
 // Ответы — в сторе хаба 'review' заплатками {patch: {id: {mark, comment} | null}}, правки разных людей не затирают друг друга.
-const KINDS = ['q', 'role', 'craft', 'analog', 'norecipe'];
+const KINDS = ['group', 'tech', 'q', 'role', 'craft', 'analog', 'norecipe'];
+const WIDE = ['q', 'analog', 'group', 'tech'];
 let cards = [], decided = [], review = { items: {} }, tab = 'q';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -9,6 +10,8 @@ const HINT = {
   role: 'Каждый сырой мясной предмет: какую роль он получает. Порция — 250 г, стак 16; мелкое — стак 32; стейк — жарить целиком или резать на порции; цельное — запекать или резать; большой кусок — только резать на доске; убрать — дубль, скрыть. Готовые (жареные) версии идут за ролью сырого.',
   analog: 'Блюда с верстака, у которых уже есть такой же или похожий рецепт на станции (кастрюля, печь, доска, миска, пресс). Решаем, что оставить.',
   norecipe: 'Готовые блюда, которые сейчас никак не делаются (только лут). Мои варианты рецептов — в тексте карточки; «только лут» — оставить как есть.',
+  group: 'Новые группы экзотики (29.10), собраны заново. В карточке: что это, эффект на того, кто ест, нужно ли знание; ниже две колонки — ингредиенты и еда, которая сама не ингредиент. «так» — группа годится; «поправить» + 💬 — что убрать, добавить, перенести. Внизу — вопросы по группам.',
+  tech: 'Отдельные техники (консервы, самогон, вино…) — только с перком. Без перка: «нельзя» — станция не работает; «брак» — выходит, но с настоящей опасностью; «без перка» — оставить всем. Ниже — какие перки и как работают сладости.',
   craft: 'Блюда, которые сейчас собираются на верстаке. «В готовку» — перенести в кастрюлю/печь/сковороду (куда — можно в комментарий). Отсеяны ингредиенты и не-еда.',
 };
 
@@ -17,8 +20,8 @@ async function load() {
   cards = d.cards; decided = d.decided;
   try { review = await (await fetch('api/review', { cache: 'no-store' })).json(); } catch (e) { review = { items: {} }; }
   review.items ??= {};
-  try { tab = localStorage.getItem('culinary_tab') || 'q'; } catch (e) { /* без хранилища */ }
-  for (const k of ['q', 'role', 'craft', 'analog', 'norecipe']) $('#n-' + k).textContent = cards.filter(c => c.kind === k).length;
+  try { tab = localStorage.getItem('culinary_tab') || 'group'; } catch (e) { /* без хранилища */ }
+  for (const k of KINDS) $('#n-' + k).textContent = cards.filter(c => c.kind === k).length;
   setTab(tab);
 }
 
@@ -82,7 +85,7 @@ function setTab(t) {
   $('#hint').hidden = !grid;
   if (t === 'done') return renderDone();
   if (t === 'out') return renderOut();
-  $('#grid').classList.toggle('wide', t === 'q' || t === 'analog');
+  $('#grid').classList.toggle('wide', WIDE.includes(t));
   render();
 }
 
@@ -94,7 +97,7 @@ function visible() {
     if (mk === 'none' && r.mark) return false;
     if (mk === 'ans' && !r.mark) return false;
     if (mk === 'cm' && !r.comment) return false;
-    if (q && !(c.title + ' ' + c.text.join(' ') + ' ' + c.items.map(i => i.id + ' ' + i.name).join(' ')).toLowerCase().includes(q)) return false;
+    if (q && !(c.title + ' ' + c.text.join(' ') + ' ' + c.items.concat(...(c.cols || []).map(x => x[1])).map(i => i.id + ' ' + i.name).join(' ')).toLowerCase().includes(q)) return false;
     return true;
   });
 }
@@ -122,13 +125,15 @@ function itemHtml(i) {
 
 function card(c) {
   const r = review.items[c.id] || {};
-  const one = !['q', 'analog'].includes(c.kind);
+  const one = !WIDE.includes(c.kind);
+  const cols = c.cols ? `<div class="cols">${c.cols.map(([h, its]) => `<div class="col"><div class="ch">${esc(h)} <span>${its.length}</span></div><div class="items">${its.map(itemHtml).join('') || '<div class="nin">—</div>'}</div></div>`).join('')}</div>` : '';
   const txt = c.text.map(l => l.startsWith('•') ? `<div class="li">${esc(l)}</div>` : `<div>${esc(l)}</div>`).join('');
   return `<div class="card ${one ? 'one' : ''} ${r.mark ? 'ans' : ''}" data-id="${esc(c.id)}">
     ${!one ? `<div class="ttl">${esc(c.title)}</div>` : ''}
     ${one ? `<div class="items">${c.items.map(itemHtml).join('')}</div>` : ''}
     <div class="txt">${txt}</div>
     ${one ? '' : `<div class="items">${c.items.map(itemHtml).join('')}</div>`}
+    ${cols}
     ${r.comment ? `<div class="cm">💬 ${esc(r.comment)}</div>` : ''}
     <div class="opts">${c.options.map(([k, lbl]) =>
       `<button class="${r.mark === k ? 'on' : ''} ${c.rec === k ? 'rec' : ''}" data-m="${esc(k)}">${c.rec === k ? '★ ' : ''}${esc(lbl)}</button>`).join('')}

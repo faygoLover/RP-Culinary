@@ -134,6 +134,50 @@ for grp, cid, title, text, ids, rec in C.ANALOG:
 for grp, i, text, rec in C2.NORECIPE:
     cards.append({'kind': 'norecipe', 'group': grp, 'id': 'nr:' + i, 'title': i, 'text': [text],
                   'items': [item(i)], 'options': C2.NORECIPE_OPTS, 'rec': rec})
+# ------------------------------------------------------------------ группы экзотики и техники (29.10)
+sys.path.insert(0, os.path.join(HERE, '..', 'tools'))
+import groups_spec as GS
+plain = lambda t: t.replace('**', '')
+def gitems(entries):
+    out = []
+    for e in entries:
+        ids = [e] if ':' in e else [i for i in rows if i.split(':', 1)[1] == e]
+        out += [i for i in ids if i in rows and i not in out]
+    return out
+for g in GS.GROUPS:
+    ids = gitems(g['items'])
+    ing, food = [i for i in ids if rows[i]['nin'] > 0], [i for i in ids if rows[i]['nin'] == 0]
+    cards.append({'kind': 'group', 'group': 'Группы экзотики', 'id': 'g:' + g['key'], 'title': g['title'],
+                  'text': [plain(g['why']), 'Эффект: ' + plain(g['effect']), 'Знание: ' + plain(g['knowledge'])], 'items': [],
+                  'cols': [['Ингредиенты', [item(i) for i in ing]], ['Еда (не ингредиент)', [item(i) for i in food]]],
+                  'options': [['ok', 'так'], ['edit', 'поправить']], 'rec': 'ok'})
+for g in GS.GROUPS:
+    for n, qq in enumerate(g.get('ask', [])):
+        cards.append({'kind': 'group', 'group': 'Вопросы по группам', 'id': f"gq:{g['key']}:{n}", 'title': g['title'], 'text': [qq],
+                      'items': [], 'options': [['yes', 'да'], ['no', 'нет'], ['edit', 'иначе']], 'rec': ''})
+cards.append({'kind': 'group', 'group': 'Вопросы по группам', 'id': 'gq:knowledge', 'title': 'Как получать знание группы',
+              'text': ['Как было у брата: книга «Записи исследований» (ПКМ — изучить, книга одноразовая, выдаёт ГМ). Без знания повар готовит на 3 уровня хуже, не выше «хорошего», и блюдо чаще травит.',
+                       'Оставить так? Или знание — перком в окне перков (например «Охотник», «Грибник»)?'],
+              'items': [], 'options': [['book', 'книга, как было'], ['perk', 'перки'], ['both', 'и то и другое'], ['edit', 'иначе']], 'rec': 'book'})
+for n, t in enumerate(GS.RECIPES):
+    rec = 'free' if t['perk'].startswith('без перка') else 'lock'
+    cards.append({'kind': 'tech', 'group': 'Техники по перку', 'id': 'tech:' + str(n), 'title': t['title'],
+                  'text': ['Перк: ' + plain(t['perk']), 'Что входит: ' + plain(t['what']), 'Без перка: ' + plain(t['without'])], 'items': [],
+                  'options': [['lock', 'нельзя'], ['brak', 'брак'], ['free', 'без перка'], ['edit', 'иначе']], 'rec': rec})
+cards.append({'kind': 'tech', 'group': 'Перки и сладости', 'id': 'tech:perks', 'title': 'Новые перки (умения)',
+              'text': ['«Винокур» — самогон, пиво, вино, сидр, медовуха.', '«Заготовщик» — консервы, копчение, засолка, вяление.',
+                       '«Сыровар» — сыр и масло (или отдать «Заготовщику»).', 'Колбасы и кондитерка — по уровню навыка «Кулинария», без перков.',
+                       'Цену в очках предложу после ответа; ориентир — как «Полевой повар» (3).'],
+              'items': [], 'options': [['ok', 'так'], ['two', 'сыр в «Заготовщик» (два перка)'], ['edit', 'иначе']], 'rec': 'ok'})
+cards.append({'kind': 'tech', 'group': 'Перки и сладости', 'id': 'tech:candy', 'title': 'Сладости: что сейчас и что предлагаю',
+              'text': ['Сейчас (сделал брат, работает): после конфеты 10 минут «сонливость» — выносливость восстанавливается на 10 % медленнее; '
+                       'и с шансом 25 % за порцию «зуб заныл» — короткая боль (с телом Medicine) или 0,5 сердца урона.',
+                       'Предлагаю реалистичнее:',
+                       '• сахар сразу даёт прилив: +выносливость на пару минут, потом спад — та же сонливость;',
+                       '• «зуб заныл» — только если за RP-сутки съедено много сладкого (например 5+ порций), а с перком «Плохие зубы» — с первой;',
+                       '• голод сладкое почти не утоляет (быстро проголодаешься снова).',
+                       'Выбери: оставить как есть, моё, или выключить совсем.'],
+              'items': [], 'options': [['now', 'как сейчас'], ['mine', 'как предлагаю'], ['off', 'выключить'], ['edit', 'иначе']], 'rec': 'mine'})
 json.dump({'decided': C.DECIDED, 'cards': cards}, open(os.path.join(SITE, 'data', 'cards.json'), 'w', encoding='utf-8'), ensure_ascii=False)
 miss = sorted({it['id'] for c in cards for it in c['items'] if not it['img']})
 unk = sorted({it['id'] for c in cards for it in c['items'] if it['id'] not in D['models'] and not it['id'].startswith('minecraft:')})
