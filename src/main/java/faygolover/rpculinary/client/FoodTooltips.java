@@ -101,6 +101,13 @@ public final class FoodTooltips {
         Component w = Component.literal(faygolover.rpculinary.core.Weights.format(g));
         e.getToolTip().add(src.isEmpty() ? tr("weight", w).withStyle(ChatFormatting.GRAY)
                 : tr("weight_source", Component.translatable("rpculinary.source." + src), w).withStyle(ChatFormatting.GRAY));
+        var tag = st.getTag();
+        if (tag != null && tag.contains("rpculinary:mix")) {  // смешанный фарш: состав
+            Component[] parts = java.util.Arrays.stream(tag.getString("rpculinary:mix").split(","))
+                    .map(x -> (Component) Component.translatable("rpculinary.source." + x)).toArray(Component[]::new);
+            Component list = parts.length == 2 ? Component.translatable("rpculinary.tip.and", parts[0], parts[1]) : parts[0];
+            e.getToolTip().add(tr("mix", list).withStyle(ChatFormatting.GRAY));
+        }
     }
 
     static void drinkLine(ItemTooltipEvent e) {

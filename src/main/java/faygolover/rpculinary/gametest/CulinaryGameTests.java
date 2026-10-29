@@ -503,6 +503,11 @@ public final class CulinaryGameTests {
         // 6 кг × 0.95 / 250 г = 22 порции; выше порога — шанс +1
         h.assertTrue(exact ? beef == 22 || beef == 23 : beef > 0 && beef <= 23, "лопатка 6 кг → порции говядины, было " + beef);
         h.assertTrue(dropped(h, pos, "butchery:meat_scraps") >= 1, "обрезь — обрезками");
+        if (net.minecraftforge.fml.ModList.get().isLoaded("farm_and_charm")) {
+            var mix = h.getLevel().getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("rpculinary", "bowl/mince_beef_pork"));
+            h.assertTrue(mix.isPresent() && mix.get().getResultItem(h.getLevel().registryAccess()).getTag() != null
+                    && mix.get().getResultItem(h.getLevel().registryAccess()).getTag().getString("rpculinary:mix").equals("beef,pork"), "смешанный фарш: рецепт и состав");
+        }
         h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         remove(h, p);
         h.succeed();

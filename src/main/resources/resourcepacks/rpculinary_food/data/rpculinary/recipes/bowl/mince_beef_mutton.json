@@ -1,0 +1,26 @@
+{
+ "type": "farm_and_charm:crafting_bowl",
+ "ingredients": [
+  {
+   "item": "farm_and_charm:minced_beef"
+  },
+  {
+   "item": "butchery:raw_beef_mince"
+  }
+ ],
+ "result": {
+  "item": "butchery:raw_beef_mince",
+  "count": 2,
+  "nbt": "{\"rpculinary:mix\":\"beef,mutton\"}"
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "butchery"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farm_and_charm"
+  }
+ ]
+}

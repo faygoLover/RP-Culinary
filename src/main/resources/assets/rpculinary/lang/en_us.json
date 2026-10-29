@@ -235,5 +235,10 @@
   "rpculinary.sense.nitrate": "A splitting headache, nausea rising.",
   "rpculinary.sense.sugar_rush": "The sugar perks you up.",
   "rpculinary.msg.need_vintner": "You do not know how: only a Vintner can distil, brew and make wine.",
-  "rpculinary.msg.need_preserver": "The preserve failed: only a Preserver can can and smoke food."
+  "rpculinary.msg.need_preserver": "The preserve failed: only a Preserver can can and smoke food.",
+  "rpculinary.tooltip.mix": "Mixed mince: %s",
+  "rpculinary.tip.and": "%s and %s",
+  "rpculinary.source.beef": "beef",
+  "rpculinary.source.mutton": "mutton",
+  "rpculinary.source.pork": "pork"
 }

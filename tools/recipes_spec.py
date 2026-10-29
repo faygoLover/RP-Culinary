@@ -265,6 +265,12 @@ def generate(out, read_json, D):
                      ('minecraft:rabbit', PINK), ('butchery:raw_fox_meat', PINK), ('butchery:raw_cat_meat', PINK),
                      ('butchery:raw_ocelot_meat', PINK), ('butchery:meat_scraps', PINK)]:
         mince(ing.split(':')[1], ing, res)
+    # Смешанный фарш (вариант А, решение 29.10): два фарша разного вида в миске F&C → 2 фарша, состав в NBT, цвет средний (красный)
+    MIX = {DARK: 'beef', RED: 'mutton', PINK: 'pork'}
+    for x, y in [(DARK, PINK), (DARK, RED), (RED, PINK)]:
+        tag = json.dumps({'rpculinary:mix': f'{MIX[x]},{MIX[y]}'}, separators=(',', ':'))
+        rec(f'bowl/mince_{MIX[x]}_{MIX[y]}', {'type': 'farm_and_charm:crafting_bowl', 'ingredients': [I(x), I(y)],
+                                              'result': {'item': RED, 'count': 2, 'nbt': tag}})
 
     # Мухомор (ванильный красный гриб) — ядовитый (решение 29.10): где он нужен по рецепту, есть вариант из шампиньонов
     for rid in ('farmersdelight:cooking/mushroom_stew', 'farmersdelight:cooking/mushroom_rice'):
