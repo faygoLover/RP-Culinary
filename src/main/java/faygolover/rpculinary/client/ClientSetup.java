@@ -29,6 +29,7 @@ public final class ClientSetup {
         modBus.addListener(ClientSetup::setup);
         modBus.addListener(ClientSetup::keys);
         modBus.addListener(PortionBars::register);
+        modBus.addListener(MeatColors::register);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onOverlay);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ClientSetup::onLogout);

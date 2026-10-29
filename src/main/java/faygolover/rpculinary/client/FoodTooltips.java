@@ -56,7 +56,8 @@ public final class FoodTooltips {
         drinkLine(e);
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(e.getItemStack().getItem());
         Food f = id != null ? ClientNutrition.FOODS.get(id) : null;
-        if (f != null) f = f.scale(faygolover.rpculinary.core.Weights.nutritionFactor(e.getItemStack()));
+        if (f != null) f = faygolover.rpculinary.core.MeatFood.adjust(e.getItemStack(),
+                f.scale(faygolover.rpculinary.core.Weights.nutritionFactor(e.getItemStack())), null);
         if (f == null || f.kcal() <= 0 && f.water() <= 0) return;
         List<Component> t = e.getToolTip();
         // Еда по частям: надкусанное — сколько осталось; большое целое — на сколько укусов (по шагу из таблицы).
@@ -123,11 +124,12 @@ public final class FoodTooltips {
     /** «Кенгуру» или «Корова, свинья» — из пометки происхождения; null — пометки нет. */
     static Component sources(net.minecraft.world.item.ItemStack st) {
         if (!faygolover.rpculinary.core.Source.marked(st)) return null;
-        var list = faygolover.rpculinary.core.Source.list(st);
+        var list = faygolover.rpculinary.core.Source.entries(st);
         net.minecraft.network.chat.MutableComponent out = Component.empty();
         for (int k = 0; k < list.size(); k++) {
             if (k > 0) out.append(", ");
-            out.append(Component.translatable("rpculinary.source." + list.get(k)));
+            out.append(Component.translatable("rpculinary.source." + list.get(k).getKey()));
+            if (list.size() > 1) out.append(" " + list.get(k).getValue());  // домашнее: доли
         }
         return out;
     }

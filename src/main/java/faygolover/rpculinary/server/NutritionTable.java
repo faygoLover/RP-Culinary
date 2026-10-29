@@ -44,6 +44,9 @@ public final class NutritionTable {
     /** Сложность блюда: сколько разных ингредиентов в рецепте (базовый продукт — 0). */
     private static final Map<Item, Integer> COMPLEXITY = new HashMap<>();
     /** Группы экзотики (битовая маска {@link Exotic#GROUPS}): свои и унаследованные от ингредиентов. */
+    /** Мясная часть блюда из рецепта (на штуку). */
+    private static final Map<Item, Food> MEAT = new java.util.HashMap<>();
+    private static final int MEAT_CAT = NutritionState.category("meat"), FISH_CAT = NutritionState.category("fish");
     private static final Map<Item, Integer> EXOTIC = new HashMap<>();
     /** Сырое ли (кэш {@link #raw}). */
     private static final Map<Item, Boolean> RAW = new HashMap<>();
@@ -60,6 +63,7 @@ public final class NutritionTable {
 
     public static synchronized void invalidate() {
         CACHE.clear();
+        MEAT.clear();
         CATEGORY.clear();
         SOURCE.clear();
         COMPLEXITY.clear();
@@ -114,8 +118,9 @@ public final class NutritionTable {
         int foundExotic = 0;
         // Из всех рецептов блюда — тот, где известно больше всего ингредиентов (у Kaleidoscope есть «гибкие»
         // рецепты с минимумом ингредиентов рядом с полными); при равенстве — первый по id.
+        Food foundMeat = Food.ZERO;
         for (Recipe<?> r : recipes) {
-            Food sum = Food.ZERO;
+            Food sum = Food.ZERO, meat = Food.ZERO;
             int known = 0;
             Set<Item> distinct = new HashSet<>();
             double[] byCat = new double[NutritionState.CATEGORIES.length];
@@ -127,6 +132,9 @@ public final class NutritionTable {
                 Food part = CACHE.get(src);
                 if (part == null) continue;
                 sum = sum.plus(part);
+                int cat = CATEGORY.getOrDefault(src, -1);
+                if (cat == MEAT_CAT || cat == FISH_CAT || faygolover.rpculinary.core.MeatFood.FORMS.containsKey(String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(src))))
+                    meat = meat.plus(MEAT.getOrDefault(src, part));  // мясная часть: само мясо или мясная часть полуфабриката
                 known++;
                 distinct.add(src);
                 int c = CATEGORY.getOrDefault(src, -1);
@@ -135,6 +143,7 @@ public final class NutritionTable {
             if (known <= foundKnown || sum.isEmpty()) continue;
             int count = Math.max(1, r.getResultItem(access).getCount());
             found = sum.scale(1.0 / count);
+            foundMeat = meat.scale(1.0 / count);
             foundKnown = known;
             foundDistinct = distinct.size();
             foundExotic = exotic;
@@ -159,12 +168,19 @@ public final class NutritionTable {
         if (found != null) {
             found = sweet(item, found);
             CACHE.put(item, found);
+            if (source == Source.RECIPE && foundMeat.protein() > 0) MEAT.put(item, foundMeat);
             CATEGORY.put(item, foundCat);
             SOURCE.put(item, source);
             COMPLEXITY.put(item, source == Source.RECIPE ? Math.max(1, foundDistinct) : 0);
             EXOTIC.put(item, Exotic.directMask(item) | (source == Source.RECIPE ? foundExotic : 0));
         }
         return found;
+    }
+
+    /** Мясная часть блюда (сумма мясных ингредиентов рецепта на штуку) — её пересчитывает состав мяса; null — мяса нет. */
+    public static synchronized Food meatPart(MinecraftServer server, Item item) {
+        if (get(server, item) == null) return null;
+        return MEAT.get(item);
     }
 
     /** Сладкое — для настроения, а не для сытости (решение Alex 29.10): калории и БЖУ в {@code sweets_kcal} раз. */

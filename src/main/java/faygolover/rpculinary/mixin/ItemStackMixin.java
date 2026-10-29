@@ -15,4 +15,16 @@ public abstract class ItemStackMixin {
         int ours = Weights.maxStack((ItemStack) (Object) this);
         if (ours > 0 && ours < cir.getReturnValueI()) cir.setReturnValue(ours);
     }
+
+    /** Домашнее (смесь видов) и ливерный фарш — своё название формы (решения Alex 29.10). */
+    @Inject(method = "getHoverName", at = @At("RETURN"), cancellable = true)
+    private void rpculinary$homeName(CallbackInfoReturnable<net.minecraft.network.chat.Component> cir) {
+        ItemStack st = (ItemStack) (Object) this;
+        if (st.hasCustomHoverName() || faygolover.rpculinary.core.MeatFood.form(st) == null) return;
+        String id = String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(st.getItem())).replace(':', '.');
+        if (st.getTag() != null && st.getTag().getBoolean(faygolover.rpculinary.core.MeatFood.OFFAL_FORM))
+            cir.setReturnValue(net.minecraft.network.chat.Component.translatable("rpculinary.name.offal." + id));
+        else if (faygolover.rpculinary.core.Source.home(st))
+            cir.setReturnValue(net.minecraft.network.chat.Component.translatable("rpculinary.name.home." + id));
+    }
 }
