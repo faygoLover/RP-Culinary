@@ -32,10 +32,10 @@ GROUPS = [
                 'raw_horse_meat', 'cooked_horse_meat', 'raw_donkey_steak', 'cooked_donkey_steak', 'raw_mule_steak', 'cooked_mule_steak']),
 
     dict(key='pet_food', title='Корм для животных',
-         why='Собачий и кошачий корм, куриный корм. Человек это есть может, но вряд ли захочет.',
+         why='Собачий и кошачий корм, куриный корм. Человек это есть может, но вряд ли захочет. «Киббл» сюда не входит: это корм для людей.',
          effect='Небольшой **стресс от унижения** (Psyche), меньше при голоде. Питательность обычная, сухой корм надоедает быстро.',
          knowledge='Знание не нужно.',
-         items=['dog_food', 'cat_food', 'sa_combat:canned_dog_food', 'farm_and_charm:chicken_feed', 'zombie_extreme:canned_food']),
+         items=['dog_food', 'cat_food', 'sa_combat:canned_dog_food', 'farm_and_charm:chicken_feed']),
 
     dict(key='seafood', title='Моллюски и ракообразные',
          why='Мидии, кальмары, омары, креветки, морские огурцы, щитни. Портятся быстрее рыбы.',
