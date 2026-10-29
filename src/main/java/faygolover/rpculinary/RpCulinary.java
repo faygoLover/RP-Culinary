@@ -87,6 +87,8 @@ public class RpCulinary {
         bus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGH, faygolover.rpculinary.server.Techniques::onRightClickBlock);
         bus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, faygolover.rpculinary.server.Processing::onMincer);
         bus.addListener(faygolover.rpculinary.server.Provenance::onPlayerTick);
+        bus.addListener(faygolover.rpculinary.server.Processing::onBowlClick);
+        bus.addListener(faygolover.rpculinary.server.Processing::onServerTick);
         bus.addListener(faygolover.rpculinary.server.ContainerFill::onStackedOnOther);
         bus.addListener(faygolover.rpculinary.server.ContainerFill::onRightClickBlock);
         bus.addListener(faygolover.rpculinary.server.ContainerFill::onPlace);

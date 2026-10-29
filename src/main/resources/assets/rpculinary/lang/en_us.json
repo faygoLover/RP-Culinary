@@ -294,5 +294,6 @@
   "rpculinary.name.home.butchery.cooked_blood_sausage": "Homemade cooked blood sausage",
   "rpculinary.name.offal.butchery.cooked_blood_sausage": "Liver cooked blood sausage",
   "rpculinary.name.home.brewery.sausage": "Homemade sausage",
-  "rpculinary.name.offal.brewery.sausage": "Liver sausage"
+  "rpculinary.name.offal.brewery.sausage": "Liver sausage",
+  "rpculinary.msg.mincer_more_scraps": "More scraps needed: two per portion of mince."
 }

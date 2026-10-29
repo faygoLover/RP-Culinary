@@ -139,7 +139,6 @@ public final class Processing {
         int threshold = Math.max(1, (lvl < 0 ? 1 : lvl) - 1);
         int skill = CookingService.level(sp);
         double loss = Butchering.loss(threshold, skill, s);
-        List<String> species = Source.list(stored);
         List<ItemStack> out = new ArrayList<>();
         boolean done;
         int cutGrams;
@@ -190,7 +189,7 @@ public final class Processing {
             } else {
                 kept += Weights.grams(st);
             }
-            if (!species.isEmpty() && !sid.equals("minecraft:bone") && !sid.equals("minecraft:bone_meal")) Source.add(st, species);
+            if (!sid.equals("minecraft:bone") && !sid.equals("minecraft:bone_meal")) Source.copy(stored, st);
             spawn(level, pos, st);
         }
         be.setChanged();
@@ -214,7 +213,25 @@ public final class Processing {
 
     // ------------------------------------------------------------------ мясорубка F&C
 
-    /** Мясорубка F&C с мясом: положить кусок, крутить, забрать остаток. Не мясо — как в F&C (мука и т. п.). */
+    /** Не мелются: кишки (на колбаски), желудок (сыр), кровь, глаза, копыта, лапки, жир. */
+    private static final Set<String> NOT_MINCE = Set.of("butchery:intestines", "butchery:stomach", "butchery:bottle_of_blood",
+            "butchery:blood_bucket", "butchery:eye", "butchery:hoof", "butchery:bird_foot", "butchery:animal_fat", "butchery:wishbone");
+    /** Субпродукты — в ливерный фарш. */
+    private static final Set<String> OFFAL = Set.of("butchery:liver", "butchery:heart", "butchery:kidney", "butchery:lungs", "butchery:brain");
+    private static final String SCRAPS_ID = "butchery:meat_scraps";
+    private static final int MAX_SCRAPS = 32;
+
+    /**
+     * Мясорубка F&C с мясом (решения Alex 29.10). Внутри — одна загрузка:
+     * <ul>
+     *   <li>крупный кусок (вес в NBT или не стакается) — один, досыпать нельзя;</li>
+     *   <li>мелкое одного вида (порции, стейки) — стопкой, досыпать можно только то же самое;</li>
+     *   <li>обрезки — стопкой, можно разных видов (это единственная смесь в мясорубке): 2 обрезка → 1 фарш, жирнее; разные виды —
+     *   домашний.</li>
+     * </ul>
+     * Оборот ручки (ПКМ пустой рукой) — одна порция фарша 250 г; при неудаче — обрезки. Субпродукты — ливерный фарш.
+     * Кусок на крупной кости не берёт. Shift+ПКМ пустой рукой — забрать загрузку. Не мясо — мясорубка как в F&C.
+     */
     public static void onMincer(PlayerInteractEvent.RightClickBlock e) {
         if (e.getHand() != InteractionHand.MAIN_HAND || !(e.getEntity() instanceof ServerPlayer sp) || !(e.getLevel() instanceof ServerLevel level)) return;
         BlockPos pos = e.getPos();
@@ -225,67 +242,167 @@ public final class Processing {
         CompoundTag pd = be.getPersistentData();
         CompoundTag cur = pd.getCompound(MINCER_KEY);
         ItemStack held = sp.getMainHandItem();
+        boolean heldMeat = !held.isEmpty() && mincable(held);
         if (cur.isEmpty()) {
-            if (held.isEmpty() || !meat(held)) return;
-            if (bigBone(held)) {
-                sp.displayClientMessage(Component.translatable("rpculinary.msg.mincer_bone").withStyle(ChatFormatting.GRAY), true);
+            if (!heldMeat) {
+                if (!held.isEmpty() && meat(held) && bigBone(held))
+                    sp.displayClientMessage(Component.translatable("rpculinary.msg.mincer_bone").withStyle(ChatFormatting.GRAY), true);
+                else return;  // не мясо — как в F&C
             } else {
-                ItemStack one = held.copyWithCount(1);
-                CompoundTag t = new CompoundTag();
-                t.put("piece", one.save(new CompoundTag()));
-                t.putInt("g", Math.max(1, Weights.grams(one)));
-                t.putBoolean("bone", SMALL_BONE.contains(id(one.getItem())));
-                pd.put(MINCER_KEY, t);
-                if (!sp.isCreative()) held.shrink(1);
-                sp.displayClientMessage(Component.translatable("rpculinary.msg.mincer_in", one.getHoverName(), Weights.format(t.getInt("g"))).withStyle(ChatFormatting.GRAY), true);
+                pd.put(MINCER_KEY, load(held, sp.isCreative()));
+                sp.displayClientMessage(Component.translatable("rpculinary.msg.mincer_in", held.getHoverName(), Weights.format(Math.max(0, gramsIn(pd.getCompound(MINCER_KEY))))).withStyle(ChatFormatting.GRAY), true);
+                if (!sp.isCreative()) held.setCount(held.getCount() - unitsTaken(pd.getCompound(MINCER_KEY), held));
             }
-        } else if (sp.isShiftKeyDown() && held.isEmpty()) {  // забрать остаток
-            ItemStack piece = ItemStack.of(cur.getCompound("piece"));
-            int g = cur.getInt("g");
-            if (g < Weights.grams(piece)) piece.getOrCreateTag().putInt(Weights.TAG_WEIGHT, g);
+        } else if (sp.isShiftKeyDown() && held.isEmpty()) {
+            for (ItemStack st : unload(cur)) if (!sp.getInventory().add(st)) sp.drop(st, false);
             pd.remove(MINCER_KEY);
-            if (!sp.getInventory().add(piece)) sp.drop(piece, false);
         } else if (!held.isEmpty()) {
-            sp.displayClientMessage(Component.translatable("rpculinary.msg.mincer_busy").withStyle(ChatFormatting.GRAY), true);
-        } else {  // оборот ручки — одна порция
-            ItemStack piece = ItemStack.of(cur.getCompound("piece"));
-            int g = cur.getInt("g");
-            List<String> species = Source.list(piece);
-            int skill = CookingService.level(sp);
-            ItemStack out;
-            if (g >= PORTION) {
-                boolean fail = sp.getRandom().nextDouble() < Butchering.mincerLoss(skill);
-                out = fail ? new ItemStack(item("butchery:meat_scraps")) : new ItemStack(minceFor(level, piece, species));
-                g -= PORTION;
-            } else {
-                out = new ItemStack(item("butchery:meat_scraps"));
-                g = 0;
-            }
-            if (!species.isEmpty()) Source.add(out, species);
-            spawnFront(level, pos, bs, out);
-            if (g <= 0) {
-                if (cur.getBoolean("bone")) spawnFront(level, pos, bs, new ItemStack(Items.BONE_MEAL));
-                pd.remove(MINCER_KEY);
-            } else {
-                cur.putInt("g", g);
-                pd.put(MINCER_KEY, cur);
-                sp.displayClientMessage(Component.translatable("rpculinary.msg.mincer_left", Weights.format(g)).withStyle(ChatFormatting.GRAY), true);
-            }
-            if (bs.getBlock().getStateDefinition().getProperty("crank") instanceof IntegerProperty crank)
-                level.setBlock(pos, bs.setValue(crank, Math.min(10, crank.getPossibleValues().stream().max(Integer::compare).orElse(10))), 3);
-            SoundEvent snd = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("farm_and_charm", "mincer_cranking"));
-            level.playSound(null, pos, snd != null ? snd : SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.8f, 1.5f);
-            practice(sp, 1, skill, PORTION / 1000.0 * 0.5);
+            if (!topUp(cur, held, sp.isCreative()))
+                sp.displayClientMessage(Component.translatable("rpculinary.msg.mincer_busy").withStyle(ChatFormatting.GRAY), true);
+            else pd.put(MINCER_KEY, cur);
+        } else {
+            crank(level, pos, bs, sp, pd, cur);
         }
         be.setChanged();
         e.setCanceled(true);
         e.setCancellationResult(InteractionResult.SUCCESS);
     }
 
-    /** Фарш по виду: тёмный, красный, розовый; вид неизвестен — по рецепту мясорубки F&C для этого куска. */
-    static Item minceFor(ServerLevel level, ItemStack piece, List<String> species) {
-        String sp = species.isEmpty() ? "" : species.get(0);
-        if (!sp.isEmpty()) return item(DARK.contains(sp) ? "farm_and_charm:minced_beef" : PINK.contains(sp) ? "butchery:raw_lamb_mince" : "butchery:raw_beef_mince");
+    static boolean mincable(ItemStack st) {
+        String id = id(st.getItem());
+        return !NOT_MINCE.contains(id) && (id.equals(SCRAPS_ID) || meat(st) && !bigBone(st));
+    }
+
+    /** Загрузка: {scraps: [обрезки по штуке]} или {piece: образец, n: штук, g: граммов осталось, piece_only, bone}. */
+    private static CompoundTag load(ItemStack held, boolean creative) {
+        CompoundTag t = new CompoundTag();
+        if (id(held.getItem()).equals(SCRAPS_ID)) {
+            net.minecraft.nbt.ListTag q = new net.minecraft.nbt.ListTag();
+            int n = Math.min(MAX_SCRAPS, held.getCount());
+            for (int i = 0; i < n; i++) q.add(held.copyWithCount(1).save(new CompoundTag()));
+            t.put("scraps", q);
+            t.putInt("taken", n);
+            return t;
+        }
+        boolean single = Weights.nbtGrams(held) > 0 || held.getMaxStackSize() == 1;
+        int n = single ? 1 : held.getCount();
+        t.put("piece", held.copyWithCount(1).save(new CompoundTag()));
+        t.putInt("g", Math.max(1, Weights.grams(held)) * n);
+        t.putBoolean("single", single);
+        t.putBoolean("bone", SMALL_BONE.contains(id(held.getItem())));
+        t.putInt("taken", n);
+        return t;
+    }
+
+    private static int unitsTaken(CompoundTag t, ItemStack held) {
+        return Math.min(held.getCount(), t.getInt("taken"));
+    }
+
+    private static int gramsIn(CompoundTag t) {
+        if (t.contains("scraps")) return t.getList("scraps", 10).size() * PORTION;
+        return t.getInt("g");
+    }
+
+    /** Досыпать: обрезки — любые (до 32); мелкое — только то же самое; крупный кусок — нельзя. */
+    private static boolean topUp(CompoundTag t, ItemStack held, boolean creative) {
+        if (t.contains("scraps")) {
+            if (!id(held.getItem()).equals(SCRAPS_ID)) return false;
+            net.minecraft.nbt.ListTag q = t.getList("scraps", 10);
+            int n = Math.min(held.getCount(), MAX_SCRAPS - q.size());
+            if (n <= 0) return false;
+            for (int i = 0; i < n; i++) q.add(held.copyWithCount(1).save(new CompoundTag()));
+            t.put("scraps", q);
+            if (!creative) held.shrink(n);
+            return true;
+        }
+        ItemStack piece = ItemStack.of(t.getCompound("piece"));
+        if (t.getBoolean("single") || !ItemStack.isSameItemSameTags(piece, held.copyWithCount(1))) return false;
+        t.putInt("g", t.getInt("g") + Math.max(1, Weights.grams(held)) * held.getCount());
+        if (!creative) held.setCount(0);
+        return true;
+    }
+
+    /** Забрать загрузку (Shift+ПКМ): обрезки — стопкой, мелкое — штуками, остаток крупного — куском с весом. */
+    private static List<ItemStack> unload(CompoundTag t) {
+        List<ItemStack> out = new ArrayList<>();
+        if (t.contains("scraps")) {
+            for (var tag : t.getList("scraps", 10)) out.add(ItemStack.of((CompoundTag) tag));
+            return out;
+        }
+        ItemStack piece = ItemStack.of(t.getCompound("piece"));
+        int unit = Math.max(1, Weights.grams(piece)), g = t.getInt("g");
+        if (t.getBoolean("single")) {
+            if (g < unit) piece.getOrCreateTag().putInt(Weights.TAG_WEIGHT, g);
+            out.add(piece);
+        } else {
+            int n = g / unit;
+            if (n > 0) out.add(piece.copyWithCount(n));
+        }
+        return out;
+    }
+
+    /** Оборот ручки: одна порция фарша (или обрезки). */
+    private static void crank(ServerLevel level, BlockPos pos, BlockState bs, ServerPlayer sp, CompoundTag pd, CompoundTag cur) {
+        int skill = CookingService.level(sp);
+        ItemStack out = ItemStack.EMPTY;
+        boolean done;
+        if (cur.contains("scraps")) {  // 2 обрезка → 1 фарш, жирнее; разные виды — домашний
+            net.minecraft.nbt.ListTag q = cur.getList("scraps", 10);
+            if (q.size() < 2) {
+                sp.displayClientMessage(Component.translatable("rpculinary.msg.mincer_more_scraps").withStyle(ChatFormatting.GRAY), true);
+                return;
+            }
+            ItemStack a = ItemStack.of(q.getCompound(0)), b = ItemStack.of(q.getCompound(1));
+            q.remove(0);
+            q.remove(0);
+            out = new ItemStack(minceFor(level, a, lookOf(a)));
+            Source.setParts(out, Source.mix(List.of(a, b)), lookOf(a));
+            out.getOrCreateTag().putBoolean(faygolover.rpculinary.core.MeatFood.FATTY, true);
+            cur.put("scraps", q);
+            done = q.size() < 2 && q.isEmpty();
+        } else {
+            ItemStack piece = ItemStack.of(cur.getCompound("piece"));
+            int g = cur.getInt("g");
+            boolean offal = OFFAL.contains(id(piece.getItem()));
+            if (g >= PORTION) {
+                boolean fail = level.getRandom().nextDouble() < Butchering.mincerLoss(skill);
+                out = fail ? new ItemStack(item(SCRAPS_ID)) : new ItemStack(offal ? item("butchery:raw_beef_mince") : minceFor(level, piece, lookOf(piece)));
+                if (offal && !fail) out.getOrCreateTag().putBoolean(faygolover.rpculinary.core.MeatFood.OFFAL_FORM, true);
+                g -= PORTION;
+            } else {
+                if (g >= PORTION / 2) out = new ItemStack(item(SCRAPS_ID));
+                g = 0;
+            }
+            if (!out.isEmpty()) Source.copy(piece, out);
+            cur.putInt("g", g);
+            done = g < PORTION / 2;
+            if (done && g > 0) cur.putInt("g", 0);
+            if (done && cur.getBoolean("bone")) spawnFront(level, pos, bs, new ItemStack(Items.BONE_MEAL));
+        }
+        if (!out.isEmpty()) spawnFront(level, pos, bs, out);
+        if (done) {
+            if (cur.contains("scraps") && !cur.getList("scraps", 10).isEmpty()) pd.put(MINCER_KEY, cur);  // один обрезок остался
+            else pd.remove(MINCER_KEY);
+        } else {
+            pd.put(MINCER_KEY, cur);
+            sp.displayClientMessage(Component.translatable("rpculinary.msg.mincer_left", Weights.format(gramsIn(cur))).withStyle(ChatFormatting.GRAY), true);
+        }
+        if (bs.getBlock().getStateDefinition().getProperty("crank") instanceof IntegerProperty crankProp)
+            level.setBlock(pos, bs.setValue(crankProp, Math.min(10, crankProp.getPossibleValues().stream().max(Integer::compare).orElse(10))), 3);
+        SoundEvent snd = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("farm_and_charm", "mincer_cranking"));
+        level.playSound(null, pos, snd != null ? snd : SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.8f, 1.5f);
+        practice(sp, 1, skill, PORTION / 1000.0 * 0.5);
+    }
+
+    static String lookOf(ItemStack st) {
+        String l = Source.look(st);
+        return l != null ? l : Source.implied(st);
+    }
+
+    /** Фарш по виду: тёмно-красный, розовый, остальное — красный; вид неизвестен — по рецепту мясорубки F&C. */
+    static Item minceFor(ServerLevel level, ItemStack piece, String species) {
+        if (species != null && !species.isEmpty())
+            return item(DARK.contains(species) ? "farm_and_charm:minced_beef" : PINK.contains(species) ? "butchery:raw_lamb_mince" : "butchery:raw_beef_mince");
         ItemStack probe = new ItemStack(piece.getItem());
         for (var r : level.getRecipeManager().getRecipes()) {
             if (!String.valueOf(r.getId()).startsWith("rpculinary:mincer/") || r.getIngredients().isEmpty() || !r.getIngredients().get(0).test(probe)) continue;
@@ -293,6 +410,56 @@ public final class Processing {
             if (!res.isEmpty()) return res.getItem();
         }
         return item("butchery:raw_beef_mince");
+    }
+
+    // ------------------------------------------------------------------ миска F&C: домашний фарш
+
+    static final ResourceLocation BOWL = new ResourceLocation("farm_and_charm", "crafting_bowl");
+    private static final TagKey<Item> MINCE = ItemTags.create(new ResourceLocation("rpculinary", "mince"));
+    /** Миски, где мешают фарш: место → {уровень, позиция, что лежало (фарши по штуке), до какого тика смотреть}. */
+    private static final Map<String, Object[]> BOWLS = new HashMap<>();
+
+    /** Клик по миске — запомнить, какие фарши в ней лежат (после перемешивания миска их уже съела). */
+    public static void onBowlClick(PlayerInteractEvent.RightClickBlock e) {
+        if (!(e.getLevel() instanceof ServerLevel level) || !BOWL.equals(ForgeRegistries.BLOCKS.getKey(level.getBlockState(e.getPos()).getBlock()))) return;
+        if (!(level.getBlockEntity(e.getPos()) instanceof net.minecraft.world.Container c) || c.getContainerSize() < 5) return;
+        List<ItemStack> minces = new ArrayList<>();
+        for (int i = 0; i < 4 && minces.size() < 2; i++) {  // рецепт берёт два фарша: по порядку слотов, из одного слота — и два
+            ItemStack st = c.getItem(i);
+            for (int k = 0; st.is(MINCE) && k < st.getCount() && minces.size() < 2; k++) minces.add(st.copyWithCount(1));
+        }
+        String k = level.dimension().location() + "|" + e.getPos().asLong();
+        if (minces.size() >= 2) BOWLS.put(k, new Object[]{level, e.getPos().immutable(), minces, level.getServer().getTickCount() + 20 * 60});
+    }
+
+    /** Раз в секунду: в выходе миски фарш без состава — домашний: предмет и облик первого фарша, доли — по смеси. */
+    public static void onServerTick(net.minecraftforge.event.TickEvent.ServerTickEvent e) {
+        if (e.phase != net.minecraftforge.event.TickEvent.Phase.END || BOWLS.isEmpty()) return;
+        var it = BOWLS.values().iterator();
+        while (it.hasNext()) {
+            Object[] w = it.next();
+            ServerLevel level = (ServerLevel) w[0];
+            if (level.getServer().getTickCount() % 10 != 0) return;
+            if (level.getServer().getTickCount() > (int) w[3]) {
+                it.remove();
+                continue;
+            }
+            if (!(level.getBlockEntity((BlockPos) w[1]) instanceof net.minecraft.world.Container c) || c.getContainerSize() < 5) {
+                it.remove();
+                continue;
+            }
+            ItemStack out = c.getItem(4);
+            if (out.isEmpty() || !out.is(MINCE) || Source.marked(out)) continue;
+            @SuppressWarnings("unchecked") List<ItemStack> minces = (List<ItemStack>) w[2];
+            ItemStack first = minces.get(0);
+            ItemStack res = new ItemStack(first.getItem(), out.getCount());
+            Source.setParts(res, Source.mix(minces), lookOf(first));
+            if (minces.stream().allMatch(m -> m.getTag() != null && m.getTag().getBoolean(faygolover.rpculinary.core.MeatFood.FATTY)))
+                res.getOrCreateTag().putBoolean(faygolover.rpculinary.core.MeatFood.FATTY, true);
+            c.setItem(4, res);
+            c.setChanged();
+            it.remove();
+        }
     }
 
     // ------------------------------------------------------------------ общее
