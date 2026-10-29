@@ -141,6 +141,15 @@ public final class CulinaryService {
     }
 
     /** 0 — жажды нет, 1 — своя, 2 — LSO. */
+    /** Снять с воды LSO накопленный по времени долг — целыми делениями. */
+    static void payLsoWater(ServerPlayer sp, NutritionState m) {
+        double point = Lso.percentPerPoint();
+        if (m.lsoWaterDebt < point) return;
+        double whole = Math.floor(m.lsoWaterDebt / point) * point;
+        m.lsoWaterDebt -= whole;
+        Lso.addWater(sp, -whole);
+    }
+
     public static int thirstMode(ServerPlayer sp, Settings s) {
         if (Lso.hydration(sp) >= 0) return 2;
         return s.thirstEnabled ? 1 : 0;
@@ -166,6 +175,8 @@ public final class CulinaryService {
         ensureInit(sp, d);
         Settings s = Settings.get();
         long tick = sp.server.getTickCount();
+        // С LSO воду тратим мы, по времени RP: его усталость жажды снимаем каждый тик, чтобы он сам не тратил.
+        if (s.lsoThirstByTime && s.thirstEnabled) Lso.clearExhaustion(sp);
         FoodData fd = sp.getFoodData();
         if (s.hungerEnabled) {
             int cur = fd.getFoodLevel();
@@ -201,8 +212,10 @@ public final class CulinaryService {
             return;
         }
         int thirst = thirstMode(sp, s);
+        s.liveDayHours = RpCoreAPI.dayLengthSeconds() / 3600.0;
         Metabolism.Input in = new Metabolism.Input();
         in.dt = 1;
+        in.lsoWater = thirst == 2 && s.lsoThirstByTime;
         // Калории за отдых: сколько выносливости восстановилось (RP Stamina); без неё — по бегу.
         if (d.exertionStamina > 0) in.exertionKcal = d.exertionStamina / 100.0 * s.kcalPer100Stamina;
         else if (RpCoreAPI.stamina() == null) in.exertionKcal = d.sprintTicks / 20.0 / 60.0 * s.sprintKcalPerMinute;
@@ -222,6 +235,7 @@ public final class CulinaryService {
         if (RpCoreAPI.timeRunning()) {
             int faint = Metabolism.tick(m, in, s);
             if (faint > 0) faint(sp, faint);
+            payLsoWater(sp, m);
         }
         double hydration = hydration(sp, m, s);
         BodyEffects.Mods mods = BodyEffects.step(sp, d, s, hydration);

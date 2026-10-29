@@ -27,6 +27,16 @@ public final class Lso {
         if (loaded()) LsoBridge.addWater(sp, percent);
     }
 
+    /** Снять накопленную усталость жажды LSO: воду тратим мы, по времени RP, а не LSO по своей усталости. */
+    public static void clearExhaustion(ServerPlayer sp) {
+        if (loaded()) LsoBridge.clearExhaustion(sp);
+    }
+
+    /** Сколько процентов полоски в одном делении воды LSO. */
+    public static double percentPerPoint() {
+        return loaded() ? LsoBridge.percentPerPoint() : 5;
+    }
+
     /** Холодно по LSO (температура ниже нормы). */
     public static boolean cold(ServerPlayer sp) {
         return loaded() && LsoBridge.cold(sp);

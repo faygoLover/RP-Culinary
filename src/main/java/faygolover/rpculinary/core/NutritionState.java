@@ -33,6 +33,8 @@ public final class NutritionState {
     public double stomach;
     /** Вода, % (0–100; выпитое через силу — до {@code maxWater}). */
     public double water = 100;
+    /** Сколько процентов воды LSO уже потрачено по времени, но ещё не снято (LSO хранит воду целыми делениями). Не сохраняется. */
+    public double lsoWaterDebt;
     public final double[] nutrients = {60, 60, 60, 60};
     /** Недавние порции по видам («приелось»). */
     public final double[] monotony = new double[CATEGORIES.length];

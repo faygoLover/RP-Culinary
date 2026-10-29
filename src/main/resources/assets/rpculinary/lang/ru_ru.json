@@ -295,5 +295,6 @@
   "rpculinary.name.offal.butchery.cooked_blood_sausage": "Кровяная колбаса",
   "rpculinary.name.home.brewery.sausage": "Домашняя колбаска",
   "rpculinary.name.offal.brewery.sausage": "Ливерная колбаска",
-  "rpculinary.msg.mincer_more_scraps": "Нужно ещё обрезков: на порцию фарша — два."
+  "rpculinary.msg.mincer_more_scraps": "Нужно ещё обрезков: на порцию фарша — два.",
+  "rpculinary.cmd.speed": "Скорость расхода еды и воды: ×%s (сутки — %s ч)"
 }

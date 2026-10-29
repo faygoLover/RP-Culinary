@@ -35,7 +35,7 @@ public final class Conditions {
             java.util.Arrays.fill(m.condRecover, 0);
             return;
         }
-        double day = Math.max(0.5, s.hoursPerRpDay) * 3600;
+        double day = s.rpDayHours() * 3600;
         double low = s.nutrientLow, high = s.nutrientHigh;
         double pr = m.nutrients[NutritionState.PROTEIN], fat = m.nutrients[NutritionState.FAT];
         double cb = m.nutrients[NutritionState.CARBS], vit = m.nutrients[NutritionState.VITAMINS];

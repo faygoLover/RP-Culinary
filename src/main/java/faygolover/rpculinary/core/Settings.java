@@ -33,8 +33,14 @@ public final class Settings {
     public boolean nutrientsEnabled = true;
     @Cfg(section = "general", doc = "Вес и жир меняются от калорий.")
     public boolean weightEnabled = true;
-    @Cfg(section = "general", doc = "Сколько часов игры (в сети) — одни сутки для тела.")
+    @Cfg(section = "general", doc = "Сутки для тела — сутки RP Time (день + ночь, через RP Core). false — своя длина ниже.")
+    public boolean followRpDay = true;
+    @Cfg(section = "general", doc = "Сколько часов игры (в сети) — одни сутки для тела, если follow_rp_day = false или RP Core не знает сутки.")
     public double hoursPerRpDay = 6;
+    @Cfg(section = "general", doc = "Скорость расхода еды и воды поверх суток: 1 — по суткам, 2 — вдвое быстрее, 0.5 — вдвое медленнее. Команда: /rpculinary speed <число>.")
+    public double consumptionSpeed = 1;
+    /** Сутки RP в часах от RP Core (сервер ставит каждый тик); 0 — неизвестно. Не настройка. */
+    public double liveDayHours = 0;
     @Cfg(section = "general", doc = "Ускорение изменения веса: 1 — как в жизни (1 кг жира ≈ 7700 ккал), 3 — втрое быстрее.")
     public double weightChangeSpeed = 3;
 
@@ -107,8 +113,10 @@ public final class Settings {
     public double regenMinWater = 0.3;
 
     // ------------------------------------------------------------------ вода
-    @Cfg(section = "water", doc = "Своя вода: минус столько процентов за час игры при обычной активности.")
+    @Cfg(section = "water", doc = "Своя вода: минус столько процентов за час игры при обычной активности (при «сутках» 6 часов; иначе пересчитывается).")
     public double waterLossPerHour = 15;
+    @Cfg(section = "water", doc = "С LSO: вода тратится по времени RP (пауза, сутки, скорость расхода), а не по усталости LSO.")
+    public boolean lsoThirstByTime = true;
     @Cfg(section = "water", doc = "Суп, похлёбка, рагу (по названию предмета) поят на столько процентов, если их нет в датапаке drinks.")
     public double soupWater = 10;
     @Cfg(section = "water", doc = "Пьётся (анимация питья), но нет ни в базе RP Core, ни в drinks: поит на столько процентов (и строка в лог).")
@@ -436,11 +444,17 @@ public final class Settings {
 
     /** Во сколько раз тело живёт быстрее реального времени. */
     public double bodyTimeScale() {
-        return 24.0 / Math.max(0.5, hoursPerRpDay);
+        return 24.0 / rpDayHours() * Math.max(0, consumptionSpeed);
+    }
+
+    /** Сутки для тела в реальных часах: от RP Time (через Core) или своя настройка. */
+    public double rpDayHours() {
+        double h = followRpDay && liveDayHours > 0 ? liveDayHours : hoursPerRpDay;
+        return Math.max(0.5, h);
     }
 
     /** Нутриенты настроены на «сутки» 6 часов: при других сутках трата пересчитывается. */
     public double nutrientTimeScale() {
-        return 6.0 / Math.max(0.5, hoursPerRpDay);
+        return 6.0 / rpDayHours() * Math.max(0, consumptionSpeed);
     }
 }

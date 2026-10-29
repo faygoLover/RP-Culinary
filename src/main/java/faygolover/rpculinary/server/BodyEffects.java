@@ -85,7 +85,7 @@ public final class BodyEffects {
         if (s.hungerEnabled && over >= 1) {
             vomit(sp, d, s);
             m.overfillLimitHits++;
-            if (m.overfillWindowSeconds <= 0) m.overfillWindowSeconds = Math.max(0.5, s.hoursPerRpDay) * 3600;
+            if (m.overfillWindowSeconds <= 0) m.overfillWindowSeconds = s.rpDayHours() * 3600;
             if (m.overfillLimitHits >= s.stomachInjuryAfter) {
                 m.overfillLimitHits = 0;
                 if (!condition(sp, d, RpIds.COND_STOMACH_INJURY, 1)) {

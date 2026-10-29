@@ -68,6 +68,19 @@ public final class CulinaryConfig {
         Settings.set(s);
     }
 
+    /** Поменять числовую настройку на ходу (команда): в файл и сразу в {@link Settings}. */
+    @SuppressWarnings("unchecked")
+    public static boolean setDouble(String field, double value) {
+        for (Bound bd : BOUND) {
+            if (!bd.field().getName().equals(field) || bd.field().getType() == boolean.class) continue;
+            ((ForgeConfigSpec.ConfigValue<Double>) bd.value()).set(value);
+            SPEC.save();
+            bake();
+            return true;
+        }
+        return false;
+    }
+
     static String snake(String camel) {
         StringBuilder sb = new StringBuilder();
         for (char ch : camel.toCharArray()) {

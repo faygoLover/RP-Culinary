@@ -29,6 +29,16 @@ final class LsoBridge {
         c.setDirty();
     }
 
+    static void clearExhaustion(ServerPlayer sp) {
+        if (!Config.Baked.thirstEnabled) return;
+        ThirstCapability c = sp.getCapability(ThirstProvider.THIRST_CAPABILITY).resolve().orElse(null);
+        if (c != null && c.getThirstExhaustion() != 0) c.setExhaustion(0);
+    }
+
+    static double percentPerPoint() {
+        return 100.0 / Math.max(1, ThirstCapability.MAX_HYDRATION);
+    }
+
     static boolean cold(ServerPlayer sp) {
         if (!Config.Baked.temperatureEnabled) return false;
         TemperatureCapability c = sp.getCapability(TemperatureProvider.TEMPERATURE_CAPABILITY).resolve().orElse(null);

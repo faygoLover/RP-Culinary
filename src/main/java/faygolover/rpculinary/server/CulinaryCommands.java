@@ -57,6 +57,10 @@ public final class CulinaryCommands {
                         .then(Commands.argument("player", EntityArgument.player())
                                 .executes(c -> status(c.getSource(), EntityArgument.getPlayer(c, "player")))))
                 .then(set)
+                .then(Commands.literal("speed")
+                        .executes(c -> speed(c.getSource(), -1))
+                        .then(Commands.argument("value", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg(0, 20))
+                                .executes(c -> speed(c.getSource(), com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "value")))))
                 .then(Commands.literal("audit").requires(src -> RpCoreAPI.debugCommands())
                         .executes(c -> audit(c.getSource(), ""))
                         .then(Commands.argument("namespace", StringArgumentType.word()).executes(c -> audit(c.getSource(),
@@ -174,9 +178,26 @@ public final class CulinaryCommands {
         base.sleeping = sleeping;
         base.ownWater = mode == 1;
         base.metabolism = CulinaryService.metabolism(sp, s);
-        if (mode == 2) Lso.addWater(sp, -s.waterLossPerHour * s.nutrientTimeScale() * hours);
+        s.liveDayHours = RpCoreAPI.dayLengthSeconds() / 3600.0;
+        // Прокрутка мягкая: еда и вода не ниже доли шкалы из RP Core (по умолчанию 1/5) и не ниже, чем были.
+        base.floor = RpCoreAPI.skipFloor();
+        if (mode == 2) {
+            double h = Lso.hydration(sp) * 100, floor = Math.min(base.floor * 100, h);
+            double target = Math.max(floor, h - s.waterLossPerHour * s.nutrientTimeScale() * hours);
+            if (target < h) Lso.addWater(sp, target - h);
+        }
         Metabolism.advance(m, hours, base, s);
         changed(sp);
+    }
+
+    /** Скорость расхода еды и воды поверх суток RP: показать или поставить (в конфиг). */
+    private static int speed(CommandSourceStack src, double value) {
+        if (value >= 0 && !faygolover.rpculinary.config.CulinaryConfig.setDouble("consumptionSpeed", value)) return 0;
+        Settings s = Settings.get();
+        double day = RpCoreAPI.dayLengthSeconds() / 3600.0;
+        src.sendSuccess(() -> Component.translatable("rpculinary.cmd.speed", String.format(java.util.Locale.ROOT, "%.2f", s.consumptionSpeed),
+                String.format(java.util.Locale.ROOT, "%.1f", s.followRpDay ? day : s.hoursPerRpDay)).withStyle(ChatFormatting.GOLD), value >= 0);
+        return 1;
     }
 
     private static int status(CommandSourceStack src, ServerPlayer sp) throws CommandSyntaxException {

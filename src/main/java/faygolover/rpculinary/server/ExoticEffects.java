@@ -50,7 +50,7 @@ public final class ExoticEffects {
 
     /** Тиков в RP-сутках. */
     static long rpDayTicks(Settings s) {
-        return (long) (Math.max(0.5, s.hoursPerRpDay) * 3600 * 20);
+        return (long) (s.rpDayHours() * 3600 * 20);
     }
 
     static long now(ServerPlayer sp) {

@@ -29,6 +29,10 @@ public final class Metabolism {
         public boolean ownWater = true;
         /** Вода из другого мода (LSO), 0–1; −1 — нет. От неё считаются обмороки от жажды. */
         public double externalHydration = -1;
+        /** Воду LSO тратим мы, по времени: долг копится в {@link NutritionState#lsoWaterDebt}. */
+        public boolean lsoWater;
+        /** Прокрутка: еда и своя вода не опускаются ниже этой доли шкалы (и ниже, чем были). 0 — без порога. */
+        public double floor;
         public Random random = new Random();
     }
 
@@ -212,6 +216,8 @@ public final class Metabolism {
             hydration = m.water / 100;
         } else if (in.externalHydration >= 0) {
             hydration = in.externalHydration;
+            if (in.lsoWater && s.thirstEnabled)
+                m.lsoWaterDebt += s.waterLossPerHour * nts * activity * Math.max(0, in.water) * dt / 3600.0;
         }
         if (hydration < 0) m.dehydratedSeconds = 0;
         else if (hydration <= 0) m.dehydratedSeconds += dt;
@@ -228,7 +234,7 @@ public final class Metabolism {
             m.overfillWindowSeconds = Math.max(0, m.overfillWindowSeconds - dt);
             if (m.overfillWindowSeconds <= 0) m.overfillLimitHits = 0;
         }
-        m.recentKcal = Math.max(0, m.recentKcal * (1 - Math.min(1, dt / (Math.max(0.5, s.hoursPerRpDay) * 3600))));
+        m.recentKcal = Math.max(0, m.recentKcal * (1 - Math.min(1, dt / (s.rpDayHours() * 3600))));
         m.poorAppetiteSeconds = Math.max(0, m.poorAppetiteSeconds - dt);
 
         return faint(m, in, s, dt);
@@ -268,8 +274,24 @@ public final class Metabolism {
     }
 
     /** Прокрутка времени (команда ГМа): шаги по минуте, без обмороков. */
+    /**
+     * Порог прокрутки: еда и своя вода не ниже доли {@code floor} шкалы — и не ниже, чем были до прокрутки, если уже
+     * были ниже. Голодать и сохнуть от прокрутки нельзя, только проголодаться.
+     */
+    static void floor(NutritionState m, double floor, double startSatiety, double startWater, boolean ownWater, Settings s) {
+        double minSat = Math.min(floor, startSatiety) * Math.max(1, s.reserveKcal);
+        if (m.energy + m.stomach < minSat) m.energy = Math.max(m.energy, minSat - m.stomach);
+        m.starvingSeconds = 0;
+        if (ownWater) {
+            double minWater = Math.min(floor * 100, startWater);
+            if (m.water < minWater) m.water = minWater;
+            m.dehydratedSeconds = 0;
+        }
+    }
+
     public static void advance(NutritionState m, double hours, Input base, Settings s) {
         double left = hours * 3600;
+        double startSatiety = satiety(m, s), startWater = m.water;
         while (left > 0) {
             Input in = new Input();
             in.dt = Math.min(60, left);
@@ -279,9 +301,11 @@ public final class Metabolism {
             in.water = base.water;
             in.ownWater = base.ownWater;
             in.externalHydration = base.externalHydration;
+            in.lsoWater = base.lsoWater;
             in.random = base.random;
             tick(m, in, s);
             left -= in.dt;
+            if (base.floor > 0) floor(m, base.floor, startSatiety, startWater, base.ownWater, s);
         }
         m.faintCountdown = -1;
     }
