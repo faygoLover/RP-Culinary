@@ -217,3 +217,9 @@ EFFECTS = {
     'nether': ['raw_hoglin_chunk', 'cooked_hoglin_chunk', 'raw_strider_meat', 'cooked_strider_meat', 'minecraft:nether_wart',
                'minecraft:crimson_fungus', 'minecraft:warped_fungus', 'farmersdelight:nether_salad'],
 }
+
+# Техники по умению (решения 29.10): станции «Винокура» (теги блоков) и заготовки «Заготовщика» (теги предметов)
+VINTNER_BLOCKS = ['brewery:wooden_brewingstation', 'brewery:copper_brewingstation', 'brewery:netherite_brewingstation', 'brewery:brew_kettle',
+                  'brewery:brew_oven', 'brewery:brew_whistle', 'brewery:brew_timer', 'brewery:barrel_main', 'brewery:barrel_main_head',
+                  'brewery:barrel_right', 'brewery:barrel_head_right', 'vinery:fermentation_barrel']
+PRESERVER_ITEMS = ['farmersdelight:smoked_ham']  # + все консервы (canned_*, *_can) — gen_groups.py

@@ -233,5 +233,7 @@
   "rpculinary.sense.liver_poison": "Страшная слабость, боль под рёбрами... те грибы.",
   "rpculinary.sense.end_ring": "Звенит в ушах, мир будто сдвинулся.",
   "rpculinary.sense.nitrate": "Голова раскалывается, к горлу подступает тошнота.",
-  "rpculinary.sense.sugar_rush": "Сладкое бодрит."
+  "rpculinary.sense.sugar_rush": "Сладкое бодрит.",
+  "rpculinary.msg.need_vintner": "Не умеете: гнать, варить и ставить вино может только «Винокур».",
+  "rpculinary.msg.need_preserver": "Заготовка не вышла: консервировать и коптить умеет только «Заготовщик»."
 }

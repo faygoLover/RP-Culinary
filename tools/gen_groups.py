@@ -32,4 +32,13 @@ for g in GS.GROUPS:
     n += len(v)
 for k, entries in GS.EFFECTS.items():
     write('effect/' + k, resolve(entries))
+# техники по умению
+shutil.rmtree(os.path.join(TAGS, 'technique'), ignore_errors=True)
+preserves = GS.PRESERVER_ITEMS + sorted(i for i in ids if ('canned_' in i or i.endswith('_can')) and 'gasoline' not in i)
+write('technique/preserver', preserves)
+bt = os.path.join(ROOT, 'src', 'main', 'resources', 'data', 'rpculinary', 'tags', 'blocks', 'technique')
+os.makedirs(bt, exist_ok=True)
+with open(os.path.join(bt, 'vintner.json'), 'w', encoding='utf-8', newline='\n') as f:
+    json.dump({'replace': False, 'values': [{'id': v, 'required': False} for v in GS.VINTNER_BLOCKS]}, f, indent=1)
+    f.write('\n')
 print('groups', len(GS.GROUPS), 'items', n, 'effects', len(GS.EFFECTS))

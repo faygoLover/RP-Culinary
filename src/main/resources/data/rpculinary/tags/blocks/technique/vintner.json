@@ -1,0 +1,53 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "brewery:wooden_brewingstation",
+   "required": false
+  },
+  {
+   "id": "brewery:copper_brewingstation",
+   "required": false
+  },
+  {
+   "id": "brewery:netherite_brewingstation",
+   "required": false
+  },
+  {
+   "id": "brewery:brew_kettle",
+   "required": false
+  },
+  {
+   "id": "brewery:brew_oven",
+   "required": false
+  },
+  {
+   "id": "brewery:brew_whistle",
+   "required": false
+  },
+  {
+   "id": "brewery:brew_timer",
+   "required": false
+  },
+  {
+   "id": "brewery:barrel_main",
+   "required": false
+  },
+  {
+   "id": "brewery:barrel_main_head",
+   "required": false
+  },
+  {
+   "id": "brewery:barrel_right",
+   "required": false
+  },
+  {
+   "id": "brewery:barrel_head_right",
+   "required": false
+  },
+  {
+   "id": "vinery:fermentation_barrel",
+   "required": false
+  }
+ ]
+}

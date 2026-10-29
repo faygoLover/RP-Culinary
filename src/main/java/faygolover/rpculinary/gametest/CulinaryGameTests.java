@@ -506,6 +506,33 @@ public final class CulinaryGameTests {
         h.succeed();
     }
 
+    /** Техники по умению (29.10): без «Винокура» станция пивоварни не открывается; заготовка без «Заготовщика» не выходит. */
+    @GameTest(template = T)
+    public static void techniques(GameTestHelper h) {
+        ServerPlayer p = player(h);
+        boolean managed = RpCoreAPI.isSkillManaged(RpIds.COOKING);
+        h.assertTrue(faygolover.rpculinary.server.Techniques.allowed(p, faygolover.rpculinary.server.Techniques.VINTNER) == !managed,
+                "без Perks можно всем, с Perks без умения — нельзя");
+        var ham = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("farmersdelight", "smoked_ham"));
+        if (ham != null && ham != Items.AIR) {
+            p.getInventory().add(new ItemStack(ham, 2));
+            boolean spoiled = faygolover.rpculinary.server.Techniques.spoilPreserves(p, ham, 2);
+            h.assertTrue(spoiled == managed, "копчёный окорок без «Заготовщика» не вышел");
+            h.assertTrue(p.getInventory().countItem(ham) == (managed ? 0 : 2), "испорченное убрано, у умеющего — осталось");
+        }
+        var station = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("brewery", "wooden_brewingstation"));
+        if (station != null && station != Blocks.AIR) {
+            BlockPos pos = h.absolutePos(new BlockPos(1, 2, 1));
+            h.getLevel().setBlock(pos, station.defaultBlockState(), 3);
+            var ev = new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos, new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false));
+            MinecraftForge.EVENT_BUS.post(ev);
+            h.assertTrue(ev.isCanceled() == managed, "станция пивоварни без умения не открывается");
+            h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        }
+        remove(h, p);
+        h.succeed();
+    }
+
     private static int dropped(GameTestHelper h, BlockPos pos, String id) {
         var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation(id));
         int n = 0;

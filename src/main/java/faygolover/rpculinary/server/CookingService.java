@@ -253,6 +253,7 @@ public final class CookingService {
     /** Пометить {@code n} блюд качеством (по навыку); повару — опыт. У модов со своим качеством — только опыт. */
     static void stamp(ServerPlayer sp, Item item, int n, boolean heat) {
         if (n <= 0) return;
+        if (Techniques.spoilPreserves(sp, item, n)) return;  // заготовка без умения «Заготовщик» не вышла
         Settings s = Settings.get();
         // Опыт — от настоящего уровня навыка, качество — с поправками перков.
         int level = level(sp);
