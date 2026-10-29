@@ -1,0 +1,61 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "alexsmobs:maggot",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:leafcutter_ant_pupa",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_bee_back_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_bee_back_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:bee_wings",
+   "required": false
+  },
+  {
+   "id": "butchery:honey_stomach",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_silverfish_chunks",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_silverfish_chunks",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_spider_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_spider_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_cave_spider_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_cave_spider_leg",
+   "required": false
+  },
+  {
+   "id": "minecraft:spider_eye",
+   "required": false
+  },
+  {
+   "id": "minecraft:fermented_spider_eye",
+   "required": false
+  }
+ ]
+}

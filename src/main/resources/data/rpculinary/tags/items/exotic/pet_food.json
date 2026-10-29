@@ -1,0 +1,33 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "farm_and_charm:dog_food",
+   "required": false
+  },
+  {
+   "id": "farmersdelight:dog_food",
+   "required": false
+  },
+  {
+   "id": "zombie_extreme:dog_food",
+   "required": false
+  },
+  {
+   "id": "farm_and_charm:cat_food",
+   "required": false
+  },
+  {
+   "id": "zombie_extreme:cat_food",
+   "required": false
+  },
+  {
+   "id": "sa_combat:canned_dog_food",
+   "required": false
+  },
+  {
+   "id": "farm_and_charm:chicken_feed",
+   "required": false
+  }
+ ]
+}

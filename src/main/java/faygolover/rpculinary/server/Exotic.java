@@ -11,23 +11,31 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 
 import java.util.List;
+import java.util.Map;
 
 /**
- * Группы экзотической кухни (решения Alex 27.10.2026). Состав группы — тег предметов {@code rpculinary:exotic/<группа>};
- * блюдо наследует группы от ингредиентов, как вид еды ({@link NutritionTable#exoticMask}).
+ * Группы экзотики (собраны заново 29.10.2026, ответы Alex в галерее; состав — {@code tools/groups_spec.py} →
+ * {@code tools/gen_groups.py} → теги {@code rpculinary:exotic/<группа>}). Блюдо наследует группы от ингредиентов, как вид
+ * еды ({@link NutritionTable#exoticMask}).
  * <p>
- * Знание группы — служебный перк RP Perks (черта {@code rpculinary:exotic/<группа>}), его даёт книга «Записи
- * исследований». Без знания блюдо выходит хуже (не выше «хорошего») и травит. У «Человеческого» книги нет: там
- * важен едок («Каннибал»), не повар.
+ * У части групп есть знание — служебный перк RP Perks (черта {@code rpculinary:exotic/<группа>}). Его даёт журнал (обычное
+ * повседневное знание: охотник, грибник…) или записи исследований (иные миры, монстры) — книга не тратится, стоит на
+ * полке, но для изучения нужен минимальный навык «Кулинарии» ({@link #minSkill}). Без знания блюдо выходит хуже и чаще
+ * травит; у некоторых групп это и опасно (иглобрюх, дикие грибы, субпродукты).
  */
 public final class Exotic {
     private Exotic() {}
 
-    public static final List<String> GROUPS = List.of("underground", "candy", "deep_sea", "far_lands", "nether", "end",
-            "pets", "monsters", "infected", "radioactive", "anomalous", "human");
-    public static final int HUMAN = GROUPS.indexOf("human");
-    /** Черта «Каннибал» (перк RP Perks). */
-    public static final ResourceLocation CANNIBAL = new ResourceLocation(RpCulinary.MODID, "cannibal");
+    public static final List<String> GROUPS = List.of("game", "pets", "pet_food", "seafood", "fugu", "deep_sea", "insects", "offal",
+            "mushrooms", "other_worlds", "monsters", "human", "spoiled", "radioactive", "anomalous", "sweets");
+    /** Группы со знанием → навык «Кулинарии», нужный, чтобы его изучить. */
+    private static final Map<String, Integer> SKILL = Map.of("game", 3, "seafood", 3, "fugu", 7, "deep_sea", 4, "insects", 2,
+            "offal", 3, "mushrooms", 4, "other_worlds", 6, "monsters", 7);
+    /** Знание — записи исследований, а не повседневный журнал. */
+    private static final java.util.Set<String> RESEARCH = java.util.Set.of("other_worlds", "monsters");
+    /** Черта «Каннибал» и «Аллергия на морепродукты» (перки RP Perks). */
+    public static final ResourceLocation CANNIBAL = new ResourceLocation(RpCulinary.MODID, "cannibal"),
+            SEAFOOD_ALLERGY = new ResourceLocation(RpCulinary.MODID, "seafood_allergy");
 
     @SuppressWarnings("unchecked")
     private static final TagKey<Item>[] TAGS = new TagKey[GROUPS.size()];
@@ -44,9 +52,23 @@ public final class Exotic {
         return GROUPS.indexOf(group);
     }
 
-    /** Есть ли у группы книга-знание (у «Человеческого» — нет). */
+    public static int bit(String group) {
+        return 1 << index(group);
+    }
+
+    /** Есть ли у группы знание (журнал или записи). */
     public static boolean learnable(int g) {
-        return g >= 0 && g < GROUPS.size() && g != HUMAN;
+        return g >= 0 && g < GROUPS.size() && SKILL.containsKey(GROUPS.get(g));
+    }
+
+    /** Навык «Кулинарии», нужный для изучения, или -1. */
+    public static int minSkill(int g) {
+        return learnable(g) ? SKILL.get(GROUPS.get(g)) : -1;
+    }
+
+    /** Записи исследований (иные миры, монстры), а не журнал. */
+    public static boolean research(int g) {
+        return g >= 0 && g < GROUPS.size() && RESEARCH.contains(GROUPS.get(g));
     }
 
     /** Группы, к которым предмет отнесён прямо (тегом), битовой маской. */
@@ -62,6 +84,10 @@ public final class Exotic {
         if (!learnable(g)) return true;
         if (!RpCoreAPI.isSkillManaged(RpIds.COOKING)) return true;
         return RpCoreAPI.hasTrait(p, KNOWLEDGE[g]);
+    }
+
+    public static boolean knows(Player p, String group) {
+        return knows(p, index(group));
     }
 
     /** Группы из маски, которых повар не знает. */

@@ -756,7 +756,110 @@
   },
   "nr:alexsmobs:leafcutter_ant_pupa": {
    "mark": "loot"
+  },
+  "g:game": {
+   "mark": "ok"
+  },
+  "g:pets": {
+   "mark": "ok"
+  },
+  "g:pet_food": {
+   "mark": "ok"
+  },
+  "g:seafood": {
+   "mark": "ok"
+  },
+  "g:fugu": {
+   "mark": "ok"
+  },
+  "g:deep_sea": {
+   "mark": "edit",
+   "comment": "вообще без эффекта, только знание для готовки."
+  },
+  "g:insects": {
+   "mark": "ok"
+  },
+  "g:offal": {
+   "mark": "ok"
+  },
+  "g:mushrooms": {
+   "mark": "ok"
+  },
+  "g:other_worlds": {
+   "mark": "ok"
+  },
+  "g:monsters": {
+   "mark": "ok"
+  },
+  "g:human": {
+   "mark": "ok"
+  },
+  "g:spoiled": {
+   "mark": "ok"
+  },
+  "g:radioactive": {
+   "mark": "ok"
+  },
+  "g:anomalous": {
+   "mark": "ok"
+  },
+  "g:sweets": {
+   "mark": "ok"
+  },
+  "gq:game:0": {
+   "mark": "yes"
+  },
+  "gq:game:1": {
+   "mark": "yes"
+  },
+  "gq:deep_sea:0": {
+   "mark": "yes"
+  },
+  "gq:mushrooms:0": {
+   "mark": "edit",
+   "comment": "нет, он - не съедобный. считать ядовитям гриьом (если нет аналога рецепта с нормальным грибом - доьавить)"
+  },
+  "gq:other_worlds:0": {
+   "mark": "yes"
+  },
+  "gq:anomalous:0": {
+   "mark": "yes"
+  },
+  "gq:knowledge": {
+   "mark": "book",
+   "comment": "Охотник, грибник и подобные обычные знания - не исследования, а обысный повседневный журнал. у меня есть книжные полки, в которые можно ставить книги - вот туда такие журналы и хочу положить. все эти записи - не одноразовые, но для своего изучения требуют минимальный определенный навык кулинарии. для каждой записи подбери его индивидуально на твоё усмотрение."
+  },
+  "tech:0": {
+   "mark": "lock"
+  },
+  "tech:1": {
+   "mark": "lock"
+  },
+  "tech:2": {
+   "mark": "lock"
+  },
+  "tech:3": {
+   "mark": "lock"
+  },
+  "tech:4": {
+   "mark": "lock",
+   "comment": "входит всё в тот же перк что и пиво и водка и тд"
+  },
+  "tech:5": {
+   "mark": "free"
+  },
+  "tech:6": {
+   "mark": "free"
+  },
+  "tech:7": {
+   "mark": "free"
+  },
+  "tech:perks": {
+   "mark": "ok"
+  },
+  "tech:candy": {
+   "mark": "mine"
   }
  },
- "saved_at": "2026-10-28 22:17:17"
+ "saved_at": "2026-10-29 09:16:03"
 }

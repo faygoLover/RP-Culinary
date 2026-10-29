@@ -1,0 +1,37 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "butchery:raw_hoglin_chunk",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_hoglin_chunk",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_strider_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_strider_meat",
+   "required": false
+  },
+  {
+   "id": "minecraft:nether_wart",
+   "required": false
+  },
+  {
+   "id": "minecraft:crimson_fungus",
+   "required": false
+  },
+  {
+   "id": "minecraft:warped_fungus",
+   "required": false
+  },
+  {
+   "id": "farmersdelight:nether_salad",
+   "required": false
+  }
+ ]
+}

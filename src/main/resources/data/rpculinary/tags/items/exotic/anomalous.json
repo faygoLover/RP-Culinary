@@ -1,25 +1,49 @@
 {
-  "replace": false,
-  "values": [
-    {
-      "id": "fl_zone_arts:pukh_flesh",
-      "required": false
-    },
-    {
-      "id": "clanginghowl:chunk_of_technoflesh",
-      "required": false
-    },
-    {
-      "id": "scpo:scp_1079_candy",
-      "required": false
-    },
-    {
-      "id": "scpo:scp_143_petal",
-      "required": false
-    },
-    {
-      "id": "scpo:zombie_candy",
-      "required": false
-    }
-  ]
+ "replace": false,
+ "values": [
+  {
+   "id": "scpo:candy_pink",
+   "required": false
+  },
+  {
+   "id": "scpo:candygreen",
+   "required": false
+  },
+  {
+   "id": "scpo:candyred",
+   "required": false
+  },
+  {
+   "id": "scpo:redacted_soda_can",
+   "required": false
+  },
+  {
+   "id": "quark:ancient_fruit",
+   "required": false
+  },
+  {
+   "id": "alexscaves:darkened_apple",
+   "required": false
+  },
+  {
+   "id": "alexscaves:biome_treat",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:mimicream",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:rainbow_jelly",
+   "required": false
+  },
+  {
+   "id": "csaugmentations:nutriogloop",
+   "required": false
+  },
+  {
+   "id": "alexscaves:sack_of_sating",
+   "required": false
+  }
+ ]
 }

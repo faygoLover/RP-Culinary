@@ -1,0 +1,233 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "alexscaves:rock_candy_black",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_blue",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_brown",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_cyan",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_gray",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_green",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_light_blue",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_light_gray",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_lime",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_magenta",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_orange",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_pink",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_purple",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_red",
+   "required": false
+  },
+  {
+   "id": "alexscaves:rock_candy_white",
+   "required": false
+  },
+  {
+   "id": "alexscaves:candy_cane",
+   "required": false
+  },
+  {
+   "id": "alexscaves:caramel",
+   "required": false
+  },
+  {
+   "id": "alexscaves:caramel_apple",
+   "required": false
+  },
+  {
+   "id": "alexscaves:gummy_ring_blue",
+   "required": false
+  },
+  {
+   "id": "alexscaves:gummy_ring_green",
+   "required": false
+  },
+  {
+   "id": "alexscaves:gummy_ring_pink",
+   "required": false
+  },
+  {
+   "id": "alexscaves:gummy_ring_red",
+   "required": false
+  },
+  {
+   "id": "alexscaves:gummy_ring_yellow",
+   "required": false
+  },
+  {
+   "id": "alexscaves:jelly_bean",
+   "required": false
+  },
+  {
+   "id": "alexscaves:gumball_pile",
+   "required": false
+  },
+  {
+   "id": "alexscaves:licoroot",
+   "required": false
+  },
+  {
+   "id": "alexscaves:large_peppermint",
+   "required": false
+  },
+  {
+   "id": "alexscaves:small_peppermint",
+   "required": false
+  },
+  {
+   "id": "alexscaves:peppermint_powder",
+   "required": false
+  },
+  {
+   "id": "alexscaves:sugar_glass",
+   "required": false
+  },
+  {
+   "id": "alexscaves:block_of_chocolate",
+   "required": false
+  },
+  {
+   "id": "alexscaves:block_of_frosting",
+   "required": false
+  },
+  {
+   "id": "alexscaves:block_of_chocolate_frosting",
+   "required": false
+  },
+  {
+   "id": "alexscaves:block_of_vanilla_frosting",
+   "required": false
+  },
+  {
+   "id": "alexscaves:chocolate_ice_cream",
+   "required": false
+  },
+  {
+   "id": "alexscaves:chocolate_ice_cream_scoop",
+   "required": false
+  },
+  {
+   "id": "alexscaves:purple_soda_bottle",
+   "required": false
+  },
+  {
+   "id": "alexscaves:hot_chocolate_bottle",
+   "required": false
+  },
+  {
+   "id": "supplementaries:candy",
+   "required": false
+  },
+  {
+   "id": "supplementaries:sugar_cube",
+   "required": false
+  },
+  {
+   "id": "sa_combat:candys",
+   "required": false
+  },
+  {
+   "id": "sa_combat:chocolate_bar",
+   "required": false
+  },
+  {
+   "id": "survival_instinct:chocolate_bar",
+   "required": false
+  },
+  {
+   "id": "candlelight:chocolate_box",
+   "required": false
+  },
+  {
+   "id": "sa_combat:donut",
+   "required": false
+  },
+  {
+   "id": "scpo:cupcake",
+   "required": false
+  },
+  {
+   "id": "scpo:candyblue",
+   "required": false
+  },
+  {
+   "id": "camping:marshmallow",
+   "required": false
+  },
+  {
+   "id": "camping:roasted_marshmallow",
+   "required": false
+  },
+  {
+   "id": "camping:marshmallow_on_a_stick",
+   "required": false
+  },
+  {
+   "id": "scpo:coke_can",
+   "required": false
+  },
+  {
+   "id": "scpo:cotton_soda_can",
+   "required": false
+  },
+  {
+   "id": "scpo:carmin_soda",
+   "required": false
+  },
+  {
+   "id": "scpo:stitch_soda",
+   "required": false
+  },
+  {
+   "id": "survival_instinct:blue_soda",
+   "required": false
+  },
+  {
+   "id": "survival_instinct:red_soda",
+   "required": false
+  },
+  {
+   "id": "survival_instinct:lemon_soda",
+   "required": false
+  }
+ ]
+}

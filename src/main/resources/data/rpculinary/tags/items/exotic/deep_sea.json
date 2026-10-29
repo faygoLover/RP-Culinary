@@ -1,101 +1,77 @@
 {
-  "replace": false,
-  "values": [
-    {
-      "id": "butchery:raw_guardian_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_guardian_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_elder_guardian_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_elder_guardian_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_dolphin_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_dolphin_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_turtle_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_turtle_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:calamari",
-      "required": false
-    },
-    {
-      "id": "alexsmobs:blobfish",
-      "required": false
-    },
-    {
-      "id": "alexsmobs:lobster_tail",
-      "required": false
-    },
-    {
-      "id": "alexsmobs:cooked_lobster_tail",
-      "required": false
-    },
-    {
-      "id": "quark:crab_leg",
-      "required": false
-    },
-    {
-      "id": "quark:cooked_crab_leg",
-      "required": false
-    },
-    {
-      "id": "stardew_fishing:blazing_oarfish",
-      "required": false
-    },
-    {
-      "id": "stardew_fishing:chromatic_arapaima",
-      "required": false
-    },
-    {
-      "id": "stardew_fishing:crystalline_snakehead",
-      "required": false
-    },
-    {
-      "id": "stardew_fishing:cyclops_mahimahi",
-      "required": false
-    },
-    {
-      "id": "stardew_fishing:demon_gar",
-      "required": false
-    },
-    {
-      "id": "stardew_fishing:golden_snook",
-      "required": false
-    },
-    {
-      "id": "stardew_fishing:goliath_grouper",
-      "required": false
-    },
-    {
-      "id": "stardew_fishing:sabretoothed_tigerfish",
-      "required": false
-    },
-    {
-      "id": "stardew_fishing:storm_tarpon",
-      "required": false
-    },
-    {
-      "id": "stardew_fishing:vampire_payara",
-      "required": false
-    }
-  ]
+ "replace": false,
+ "values": [
+  {
+   "id": "alexscaves:lanternfish",
+   "required": false
+  },
+  {
+   "id": "alexscaves:cooked_lanternfish",
+   "required": false
+  },
+  {
+   "id": "alexscaves:tripodfish",
+   "required": false
+  },
+  {
+   "id": "alexscaves:cooked_tripodfish",
+   "required": false
+  },
+  {
+   "id": "alexscaves:sea_pig",
+   "required": false
+  },
+  {
+   "id": "alexscaves:deep_sea_sushi_roll",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:blobfish",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:flying_fish",
+   "required": false
+  },
+  {
+   "id": "stardew_fishing:blazing_oarfish",
+   "required": false
+  },
+  {
+   "id": "stardew_fishing:chromatic_arapaima",
+   "required": false
+  },
+  {
+   "id": "stardew_fishing:crystalline_snakehead",
+   "required": false
+  },
+  {
+   "id": "stardew_fishing:cyclops_mahimahi",
+   "required": false
+  },
+  {
+   "id": "stardew_fishing:demon_gar",
+   "required": false
+  },
+  {
+   "id": "stardew_fishing:golden_snook",
+   "required": false
+  },
+  {
+   "id": "stardew_fishing:goliath_grouper",
+   "required": false
+  },
+  {
+   "id": "stardew_fishing:sabretoothed_tigerfish",
+   "required": false
+  },
+  {
+   "id": "stardew_fishing:storm_tarpon",
+   "required": false
+  },
+  {
+   "id": "stardew_fishing:vampire_payara",
+   "required": false
+  }
+ ]
 }

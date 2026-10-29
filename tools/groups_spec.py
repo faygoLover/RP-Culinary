@@ -20,16 +20,15 @@ GROUPS = [
                 'raw_pink_axolotl_fillet', 'cooked_pink_axolotl_fillet',
                 'emu_egg', 'boiled_emu_egg', 'caiman_egg', 'crocodile_egg', 'platypus_egg', 'terrapin_egg', 'minecraft:turtle_egg',
                 'dinosaur_chop', 'cooked_dinosaur_chop', 'atlatitan_egg', 'grottoceratops_egg', 'relicheirus_egg',
-                'subterranodon_egg', 'tremorsaurus_egg', 'vallumraptor_egg', 'primordial_soup'],
-         ask=['Конина, ослятина и мулятина сейчас лежат в «Домашних». Перенести их сюда, как обычное мясо для части народов?',
-              'Реликтовых животных Alex\'s Caves (динозавры, их яйца) оставить здесь или сделать отдельной группой?']),
+                'subterranodon_egg', 'tremorsaurus_egg', 'vallumraptor_egg', 'primordial_soup',
+                'raw_horse_meat', 'cooked_horse_meat', 'raw_donkey_steak', 'cooked_donkey_steak', 'raw_mule_steak', 'cooked_mule_steak'],
+         book=dict(kind='journal', skill=3), answers='конина, ослятина, мулятина — сюда; динозавры остаются здесь (29.10)'),
 
-    dict(key='pets', title='Домашние питомцы и рабочие животные',
-         why='Животные, которых держат рядом с собой: кошка, собака (волк), оцелот, лошадь, осёл, мул.',
+    dict(key='pets', title='Домашние питомцы',
+         why='Животные, которых держат рядом с собой: кошка, собака (волк), оцелот.',
          effect='**Моральный стресс** (Psyche), если игрок не голодает. При сильном голоде стресса нет: это выживание. Тело не страдает.',
          knowledge='Знание не нужно: готовится как обычное мясо.',
-         items=['raw_cat_meat', 'cooked_cat_meat', 'raw_wolf_meat', 'cooked_wolf_meat', 'raw_ocelot_meat', 'cooked_ocelot_meat',
-                'raw_horse_meat', 'cooked_horse_meat', 'raw_donkey_steak', 'cooked_donkey_steak', 'raw_mule_steak', 'cooked_mule_steak']),
+         items=['raw_cat_meat', 'cooked_cat_meat', 'raw_wolf_meat', 'cooked_wolf_meat', 'raw_ocelot_meat', 'cooked_ocelot_meat']),
 
     dict(key='pet_food', title='Корм для животных',
          why='Собачий и кошачий корм, куриный корм. Человек это есть может, но вряд ли захочет. «Киббл» сюда не входит: это корм для людей.',
@@ -41,7 +40,7 @@ GROUPS = [
          why='Мидии, кальмары, омары, креветки, морские огурцы, щитни. Портятся быстрее рыбы.',
          effect='Недоготовленное даёт **сильное пищевое отравление** (рвота, обезвоживание). '
                 'Можно добавить негативный перк «Аллергия на морепродукты»: у него сыпь и отёк даже от хорошо приготовленного.',
-         knowledge='Без знания чаще выходит «недожарено».',
+         knowledge='Без знания чаще выходит «недожарено».', book=dict(kind='journal', skill=3),
          items=['cooked_mussel', 'lobster_tail', 'cooked_lobster_tail', 'shrimp_fried_rice', 'calamari', 'tentacles',
                 'minecraft:sea_pickle', 'triops_eggs', 'trilocaris_tail', 'cooked_trilocaris_tail', 'squid_ink_pasta']),
 
@@ -49,26 +48,25 @@ GROUPS = [
          why='Иглобрюх (фугу): ваниль, Butchery и его туша. Яд тетродотоксин сидит в печени и коже.',
          effect='Без знания — **паралич**: сильное замедление, слабость, тяжело дышать (выносливость на нуле). '
                 'Через 2–5 минут проходит; если игрок без сознания и один, может умереть (Medicine). Со знанием рыба безопасна.',
-         knowledge='Знание обязательно: это единственная группа, где «знание» решает, жить или нет.',
+         knowledge='Знание обязательно: это единственная группа, где «знание» решает, жить или нет.', book=dict(kind='journal', skill=7),
          items=['minecraft:pufferfish', 'butchery:pufferfish', 'raw_pufferfish', 'cooked_pufferfish']),
 
     dict(key='deep_sea', title='Глубоководная и редкая рыба',
          why='Рыба из глубин и пещер Alex\'s Caves и Mobs, легендарная рыба Stardew Fishing.',
-         effect='Почти ничего: **жирная**, сытнее обычной. Раз в несколько порций — лёгкая тошнота от непривычной пищи. '
-                'Можно вообще без эффекта, только знание для готовки.',
-         knowledge='Без знания готовится хуже.',
+         effect='**Без эффекта** на едока (решение Alex 29.10).',
+         knowledge='Без знания готовится хуже.', book=dict(kind='journal', skill=4),
          items=['lanternfish', 'cooked_lanternfish', 'tripodfish', 'cooked_tripodfish', 'sea_pig', 'deep_sea_sushi_roll',
-                'blobfish', 'flying_fish', 'raw_catfish', 'cooked_catfish', 'stardew_fishing:blazing_oarfish',
+                'blobfish', 'flying_fish', 'stardew_fishing:blazing_oarfish',
                 'stardew_fishing:chromatic_arapaima', 'stardew_fishing:crystalline_snakehead', 'stardew_fishing:cyclops_mahimahi',
                 'stardew_fishing:demon_gar', 'stardew_fishing:golden_snook', 'stardew_fishing:goliath_grouper',
                 'stardew_fishing:sabretoothed_tigerfish', 'stardew_fishing:storm_tarpon', 'stardew_fishing:vampire_payara'],
-         ask=['Сом — обычная речная рыба. Убрать его из группы?']),
+         answers='сом — обычная рыба, убран (29.10)'),
 
     dict(key='insects', title='Насекомые и членистоногие',
          why='Личинки, куколки, пчёлы, чешуйницы, пауки, паучьи глаза.',
          effect='**Отвращение** (стресс, Psyche). С привычкой оно слабеет: после N порций за неделю его нет. '
                 'Белка много. Пещерный паук и паучий глаз сырыми травят ядом.',
-         knowledge='Знание не нужно для еды, но без него хуже готовится.',
+         knowledge='Знание не нужно для еды, но без него хуже готовится.', book=dict(kind='journal', skill=2),
          items=['maggot', 'leafcutter_ant_pupa', 'raw_bee_back_meat', 'cooked_bee_back_meat', 'bee_wings', 'honey_stomach',
                 'raw_silverfish_chunks', 'cooked_silverfish_chunks', 'raw_spider_leg', 'cooked_spider_leg',
                 'raw_cave_spider_leg', 'cooked_cave_spider_leg', 'minecraft:spider_eye', 'minecraft:fermented_spider_eye']),
@@ -78,7 +76,7 @@ GROUPS = [
              'но их надо уметь чистить.',
          effect='Кишки и желудок, не вычищенные без знания, дают **кишечную инфекцию** (понос, обезвоживание; Medicine). '
                 'Остальное без вреда. Сырая кровь — шанс отравления.',
-         knowledge='Без знания при разделке и готовке хуже выход (обрезки) и выше шанс инфекции.',
+         knowledge='Без знания при разделке и готовке хуже выход (обрезки) и выше шанс инфекции.', book=dict(kind='journal', skill=3),
          items=['brain', 'eye', 'heart', 'cooked_heart', 'kidney', 'cooked_kidney', 'liver', 'cooked_liver', 'lungs', 'cooked_lungs',
                 'intestines', 'cooked_intestines', 'stomach', 'cooked_stomach', 'bottle_of_blood', 'blood_bucket',
                 'raw_blood_sausage', 'cooked_blood_sausage', 'raw_blood_sausages', 'cooked_blood_sausages', 'crackling']),
@@ -89,17 +87,17 @@ GROUPS = [
          effect='Без знания каждая порция блюда с ними может **отравить**: мухомор — галлюцинации и тошнота, '
                 'поганка — отложенное тяжёлое отравление через RP-сутки (печень; Medicine). Трутовики почти несъедобны: '
                 'жёсткие, мало питания.',
-         knowledge='Знание («Грибник» или книга) снимает риск. Это и есть суть группы.',
+         knowledge='Знание («Грибник» или книга) снимает риск. Это и есть суть группы.', book=dict(kind='journal', skill=4),
          items=['minecraft:red_mushroom', 'toadstool', 'glowshroom', 'large_brown_shelf_mushroom', 'large_red_shelf_mushroom',
                 'small_brown_shelf_mushroom', 'small_red_shelf_mushroom', 'acid_mushroom', 'crushed_acid_mushroom', 'cyclofungi'],
-         ask=['Мухомор: ванильный красный гриб входит в 12 обычных рецептов (рагу и т. п.). Оставить его в группе или считать съедобным?']),
+         answers='мухомор — ядовитый; где он нужен по рецепту — добавить вариант с обычным грибом (29.10)'),
 
     dict(key='other_worlds', title='Нижний мир и Край',
          why='Еда и мясо из других измерений: хоглин, страйдер, нарост и грибы Нижнего мира, хорус, эндермены, шалкеры, '
              'эндермиты, дракон. Нужна, только если эти миры есть в РП.',
          effect='Нижний мир — **жар и сильная жажда** (согрев LSO, минус вода). Край — **дезориентация**: короткая тошнота '
                 'и звон в ушах, без телепорта.',
-         knowledge='Без знания готовится хуже.',
+         knowledge='Без знания готовится хуже.', book=dict(kind='research', skill=6),
          items=['raw_hoglin_chunk', 'cooked_hoglin_chunk', 'raw_strider_meat', 'cooked_strider_meat', 'minecraft:nether_wart',
                 'minecraft:crimson_fungus', 'minecraft:warped_fungus', 'farmersdelight:nether_salad',
                 'minecraft:chorus_fruit', 'minecraft:popped_chorus_fruit', 'chorus_fruit_juice', 'chorus_wine',
@@ -107,7 +105,7 @@ GROUPS = [
                 'enderman_kidney', 'cooked_enderman_kidney', 'enderman_liver', 'cooked_enderman_liver', 'cooked_enderman_lungs',
                 'cooked_enderman_stomach', 'raw_endermite_chunks', 'cooked_endermite_chunks', 'raw_shulker_meat', 'cooked_shulker_meat',
                 'raw_dragon_meat', 'cooked_dragon_meat'],
-         ask=['Есть ли на сервере Нижний мир и Край? Если нет, группа не нужна: оставим только то, что встречается в РП.']),
+         answers='миры есть, группа нужна (29.10)'),
 
     dict(key='monsters', title='Монстры и мутанты',
          why='Существа вне обычной фауны: крипер, страж и древний страж, смотритель, разоритель, загадочное мясо SCP, '
@@ -115,7 +113,7 @@ GROUPS = [
          effect='**Токсины**: отравление даже у хорошо приготовленного, шанс ниже со знанием. Плюс по виду: '
                 'крипер — головная боль и тошнота (нитраты, как от селитры), древний страж — усталость (замедление копания), '
                 'смотритель — кратковременная темнота в глазах.',
-         knowledge='Знание снижает шанс отравления, но не убирает его.',
+         knowledge='Знание снижает шанс отравления, но не убирает его.', book=dict(kind='research', skill=7),
          items=['raw_creeper_leg', 'cooked_creeper_leg', 'raw_creeper_steak', 'cooked_creeper_steak',
                 'raw_guardian_meat', 'cooked_guardian_meat', 'raw_elder_guardian_meat', 'cooked_elder_guardian_meat',
                 'raw_warden_meat', 'cooked_warden_meat', 'raw_ravager_meat', 'cooked_ravager_meat',
@@ -153,7 +151,7 @@ GROUPS = [
          knowledge='Знание не помогает: это аномалия, а не кулинария.',
          items=['scpo:candy_pink', 'scpo:candygreen', 'scpo:candyred', 'scpo:redacted_soda_can', 'quark:ancient_fruit', 'darkened_apple',
                 'biome_treat', 'mimicream', 'rainbow_jelly', 'nutriogloop', 'sack_of_sating'],
-         ask=['Газировки SCP (Stitch, Carmin, сахарная вата) — обычные, кроме засекреченной. Так?']),
+         answers='газировки SCP обычные, кроме засекреченной (29.10)'),
 
     dict(key='sweets', title='Сладости',
          why='Конфеты, леденцы, мармелад, жвачка, шоколад, карамель, глазурь, маршмеллоу, пончики, сладкая газировка.',
@@ -203,3 +201,19 @@ RECIPES = [
          what='Карамель, леденцы, глазурь, торты (Alex\'s Caves, FD, F&C).',
          without='Ниже порога — «подгорело» (карамель сгорает быстро).'),
 ]
+
+# Особые действия внутри групп (теги rpculinary:effect/<имя>, решения 29.10)
+EFFECTS = {
+    'venom': ['raw_cave_spider_leg', 'minecraft:spider_eye'],                        # сырое — яд
+    'hallucinogen': ['minecraft:red_mushroom', 'acid_mushroom', 'crushed_acid_mushroom', 'glowshroom'],  # мухомор и т. п.
+    'liver_poison': ['toadstool'],                                                   # поганка: отложенное тяжёлое отравление
+    'gut': ['intestines', 'cooked_intestines', 'stomach', 'cooked_stomach'],         # не вычищенное — кишечная инфекция
+    'blood': ['bottle_of_blood', 'blood_bucket'],                                    # сырая кровь — шанс отравления
+    'nitrate': ['raw_creeper_leg', 'cooked_creeper_leg', 'raw_creeper_steak', 'cooked_creeper_steak'],
+    'mining_fatigue': ['raw_elder_guardian_meat', 'cooked_elder_guardian_meat'],
+    'darkness': ['raw_warden_meat', 'cooked_warden_meat'],
+    'tough': ['large_brown_shelf_mushroom', 'large_red_shelf_mushroom', 'small_brown_shelf_mushroom', 'small_red_shelf_mushroom'],
+    'infected': ['zombie_extreme:infected_flesh', 'bottle_of_infected_blood'],
+    'nether': ['raw_hoglin_chunk', 'cooked_hoglin_chunk', 'raw_strider_meat', 'cooked_strider_meat', 'minecraft:nether_wart',
+               'minecraft:crimson_fungus', 'minecraft:warped_fungus', 'farmersdelight:nether_salad'],
+}

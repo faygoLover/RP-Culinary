@@ -1,0 +1,21 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "blocksyouneed_luna:large_brown_shelf_mushroom",
+   "required": false
+  },
+  {
+   "id": "blocksyouneed_luna:large_red_shelf_mushroom",
+   "required": false
+  },
+  {
+   "id": "blocksyouneed_luna:small_brown_shelf_mushroom",
+   "required": false
+  },
+  {
+   "id": "blocksyouneed_luna:small_red_shelf_mushroom",
+   "required": false
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "minecraft:red_mushroom",
+   "required": false
+  },
+  {
+   "id": "biomesoplenty:toadstool",
+   "required": false
+  },
+  {
+   "id": "biomesoplenty:glowshroom",
+   "required": false
+  },
+  {
+   "id": "blocksyouneed_luna:large_brown_shelf_mushroom",
+   "required": false
+  },
+  {
+   "id": "blocksyouneed_luna:large_red_shelf_mushroom",
+   "required": false
+  },
+  {
+   "id": "blocksyouneed_luna:small_brown_shelf_mushroom",
+   "required": false
+  },
+  {
+   "id": "blocksyouneed_luna:small_red_shelf_mushroom",
+   "required": false
+  },
+  {
+   "id": "csfoundation:acid_mushroom",
+   "required": false
+  },
+  {
+   "id": "csaugmentations:crushed_acid_mushroom",
+   "required": false
+  },
+  {
+   "id": "csaugmentations:cyclofungi",
+   "required": false
+  }
+ ]
+}

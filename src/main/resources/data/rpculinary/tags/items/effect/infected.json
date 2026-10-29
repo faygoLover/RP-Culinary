@@ -1,0 +1,13 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "zombie_extreme:infected_flesh",
+   "required": false
+  },
+  {
+   "id": "butchery:bottle_of_infected_blood",
+   "required": false
+  }
+ ]
+}

@@ -1,17 +1,29 @@
 {
-  "replace": false,
-  "values": [
-    {
-      "id": "csfoundation:radioactive_flesh",
-      "required": false
-    },
-    {
-      "id": "csfoundation:radioactive_carrot",
-      "required": false
-    },
-    {
-      "id": "csfoundation:radioactive_potato",
-      "required": false
-    }
-  ]
+ "replace": false,
+ "values": [
+  {
+   "id": "csfoundation:radioactive_carrot",
+   "required": false
+  },
+  {
+   "id": "csfoundation:radioactive_potato",
+   "required": false
+  },
+  {
+   "id": "csfoundation:radioactive_flesh",
+   "required": false
+  },
+  {
+   "id": "alexscaves:radgill",
+   "required": false
+  },
+  {
+   "id": "alexscaves:cooked_radgill",
+   "required": false
+  },
+  {
+   "id": "alexscaves:tremorzilla_egg",
+   "required": false
+  }
+ ]
 }

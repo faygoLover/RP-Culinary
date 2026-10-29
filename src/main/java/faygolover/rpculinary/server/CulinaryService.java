@@ -715,6 +715,10 @@ public final class CulinaryService {
         e.getOriginal().invalidateCaps();
         if (from == null || to == null) return;
         to.state.copyFrom(from.state);
+        to.parasitesAt = from.parasitesAt;
+        to.liverPoisonAt = from.liverPoisonAt;
+        to.insectMeals = from.insectMeals;
+        to.sweetPortions = from.sweetPortions;
         if (e.isWasDeath()) {
             Settings s = Settings.get();
             NutritionState m = to.state;

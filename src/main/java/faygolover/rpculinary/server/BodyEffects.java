@@ -180,7 +180,9 @@ public final class BodyEffects {
                 default -> { }
             }
         }
-        if (d.drowsyUntil > sp.server.getTickCount()) regen *= 0.9;
+        long nowTick = sp.server.getTickCount();
+        if (d.sugarUntil > nowTick) regen *= 1 + s.sugarRegenBoost;  // прилив после сладкого
+        else if (d.drowsyUntil > nowTick) regen *= 0.9;
 
         // ---- вес относительно нормы (по полу и возрасту из анкеты RP Core)
         if (s.weightEnabled) {

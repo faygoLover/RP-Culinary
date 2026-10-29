@@ -1,0 +1,253 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "alexsmobs:kangaroo_meat",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:cooked_kangaroo_meat",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:kangaroo_burger",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:moose_ribs",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:cooked_moose_ribs",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_camel_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_camel_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_llama_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_llama_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_polar_bear_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_polar_bear_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_panda_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_panda_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_sniffer_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_sniffer_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_turtle_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_turtle_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_dolphin_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_dolphin_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_bat_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_bat_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_fox_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_fox_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_gray_frog_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_gray_frog_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_green_frog_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_green_frog_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_orange_frog_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_orange_frog_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:frog_heart",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_blue_axolotl_fillet",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_blue_axolotl_fillet",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_brown_axolotl_fillet",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_brown_axolotl_fillet",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_cyan_axolotl_fillet",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_cyan_axolotl_fillet",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_gold_axolotl_fillet",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_gold_axolotl_fillet",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_pink_axolotl_fillet",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_pink_axolotl_fillet",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:emu_egg",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:boiled_emu_egg",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:caiman_egg",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:crocodile_egg",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:platypus_egg",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:terrapin_egg",
+   "required": false
+  },
+  {
+   "id": "minecraft:turtle_egg",
+   "required": false
+  },
+  {
+   "id": "alexscaves:dinosaur_chop",
+   "required": false
+  },
+  {
+   "id": "alexscaves:cooked_dinosaur_chop",
+   "required": false
+  },
+  {
+   "id": "alexscaves:atlatitan_egg",
+   "required": false
+  },
+  {
+   "id": "alexscaves:grottoceratops_egg",
+   "required": false
+  },
+  {
+   "id": "alexscaves:relicheirus_egg",
+   "required": false
+  },
+  {
+   "id": "alexscaves:subterranodon_egg",
+   "required": false
+  },
+  {
+   "id": "alexscaves:tremorsaurus_egg",
+   "required": false
+  },
+  {
+   "id": "alexscaves:vallumraptor_egg",
+   "required": false
+  },
+  {
+   "id": "alexscaves:primordial_soup",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_horse_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_horse_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_donkey_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_donkey_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_mule_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_mule_steak",
+   "required": false
+  }
+ ]
+}

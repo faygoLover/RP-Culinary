@@ -1,0 +1,13 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "butchery:raw_cave_spider_leg",
+   "required": false
+  },
+  {
+   "id": "minecraft:spider_eye",
+   "required": false
+  }
+ ]
+}

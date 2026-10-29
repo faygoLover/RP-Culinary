@@ -1,0 +1,21 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "minecraft:pufferfish",
+   "required": false
+  },
+  {
+   "id": "butchery:pufferfish",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_pufferfish",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_pufferfish",
+   "required": false
+  }
+ ]
+}

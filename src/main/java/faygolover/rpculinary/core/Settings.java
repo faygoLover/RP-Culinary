@@ -241,28 +241,56 @@ public final class Settings {
     public double charcoalEatSlow = 3;
     @Cfg(section = "cooking", doc = "Чистюля (черта rpcore:clean): шанс отравления в столько раз — и когда ест сам, и у блюд, которые он приготовил.")
     public double cleanPoisonFactor = 0.5;
-    @Cfg(section = "exotic", doc = "Экзотика без знания группы (книга «Записи исследований»): повар готовит на столько уровней хуже, и не выше «хорошего».")
+    @Cfg(section = "exotic", doc = "Экзотика без знания группы (журнал или записи исследований): повар готовит на столько уровней хуже, и не выше «хорошего».")
     public double exoticCookPenalty = 3;
     @Cfg(section = "exotic", doc = "Экзотика без знания: блюдо ещё и травит с таким шансом — на любой стадии, даже «хорошее».")
     public double exoticUnknownPoison = 0.35;
-    @Cfg(section = "exotic", doc = "Действие экзотики на того, кто ест (от продукта, не от повара). false — выключить всё.")
+    @Cfg(section = "exotic", doc = "Действие групп на того, кто ест (от продукта и того, как приготовили). false — выключить всё.")
     public boolean exoticEffects = true;
-    @Cfg(section = "exotic", doc = "Конфетная полость: сонливость от сахара (ЖДЁТ УТОЧНЕНИЯ ALEX).")
-    public boolean candyDrowsy = true;
-    @Cfg(section = "exotic", doc = "Конфетная полость: шанс «зуб заныл» (как Плохие зубы) за порцию (ЖДЁТ УТОЧНЕНИЯ ALEX); 0 — выключено.")
-    public double candyTeethChance = 0.25;
-    @Cfg(section = "exotic", doc = "Древний страж (тег rpculinary:effect/mining_fatigue): усталость, секунд.")
-    public double fatigueSeconds = 60;
-    @Cfg(section = "exotic", doc = "Насекомые (тег rpculinary:effect/disgust): стресс отвращения (RP Psyche) за порцию.")
+    @Cfg(section = "exotic", doc = "Дичь сырая или недожаренная: паразиты проявляются примерно через столько RP-суток (±30 %).")
+    public double parasiteDelayRpDays = 1.5;
+    @Cfg(section = "exotic", doc = "Паразиты: лёгкая инфекция RP Medicine, % сепсиса (без Medicine — слабость).")
+    public double parasiteSepsis = 10;
+    @Cfg(section = "exotic", doc = "Домашние питомцы: моральный стресс (RP Psyche) за порцию, если не голодает.")
+    public double petsStress = 6;
+    @Cfg(section = "exotic", doc = "Корм для животных: стресс от унижения за порцию (при голоде — втрое меньше).")
+    public double petFoodStress = 2;
+    @Cfg(section = "exotic", doc = "Моллюски и ракообразные сырые или недожаренные: шанс сильного отравления за порцию.")
+    public double seafoodPoison = 0.6;
+    @Cfg(section = "exotic", doc = "Иглобрюх без знания: паралич (замедление, слабость), секунд.")
+    public double fuguSeconds = 180;
+    @Cfg(section = "exotic", doc = "Насекомые: после стольких порций за RP-неделю отвращения больше нет.")
+    public double insectHabitPortions = 7;
+    @Cfg(section = "exotic", doc = "Насекомые: стресс отвращения (RP Psyche) за порцию, пока не привык.")
     public double disgustStress = 3;
+    @Cfg(section = "exotic", doc = "Кишки и желудок, не вычищенные (повар или едок без знания, или сырое): шанс кишечной инфекции.")
+    public double gutInfection = 0.5;
+    @Cfg(section = "exotic", doc = "Кишечная инфекция: % сепсиса RP Medicine.")
+    public double gutSepsis = 8;
+    @Cfg(section = "exotic", doc = "Сырая кровь: шанс отравления за порцию.")
+    public double bloodPoison = 0.3;
+    @Cfg(section = "exotic", doc = "Ядовитые грибы (мухомор и т. п.): удар по рассудку (RP Psyche) за порцию.")
+    public double mushroomSanity = 8;
+    @Cfg(section = "exotic", doc = "Блюдо с дикими грибами от повара без знания: шанс, что грибы спутаны и блюдо ядовито.")
+    public double mushroomWildPoison = 0.35;
+    @Cfg(section = "exotic", doc = "Поганка: тяжёлое отравление через столько RP-суток.")
+    public double liverPoisonDelayRpDays = 1;
+    @Cfg(section = "exotic", doc = "Поганка: % сепсиса RP Medicine (без Medicine — сильный голод и слабость).")
+    public double liverPoisonSepsis = 25;
     @Cfg(section = "exotic", doc = "Нижний мир: согрев (эффект LSO «горячая еда»), секунд.")
     public double netherWarmSeconds = 120;
     @Cfg(section = "exotic", doc = "Нижний мир: сильная жажда — минус столько процентов воды за порцию.")
     public double netherThirst = 15;
-    @Cfg(section = "exotic", doc = "Домашние звери: моральный стресс (RP Psyche) за порцию.")
-    public double petsStress = 6;
-    @Cfg(section = "exotic", doc = "Монстры: шанс отравиться за порцию (сверху к остальному).")
+    @Cfg(section = "exotic", doc = "Край: дезориентация (тошнота, звон в ушах), секунд.")
+    public double endConfusionSeconds = 6;
+    @Cfg(section = "exotic", doc = "Монстры и мутанты: шанс отравиться токсинами за порцию.")
     public double monstersPoison = 0.5;
+    @Cfg(section = "exotic", doc = "Монстры: со знанием (повар или едок) шанс отравления во столько раз.")
+    public double monstersKnownFactor = 0.4;
+    @Cfg(section = "exotic", doc = "Древний страж (тег rpculinary:effect/mining_fatigue): усталость, секунд.")
+    public double fatigueSeconds = 60;
+    @Cfg(section = "exotic", doc = "Испорченное: шанс пищевого отравления за порцию (Железный желудок снижает).")
+    public double spoiledPoison = 0.6;
     @Cfg(section = "exotic", doc = "Заражённое: сепсис RP Medicine сразу, % (дальше жар); без Medicine — отравление.")
     public double infectedSepsis = 15;
     @Cfg(section = "exotic", doc = "Заражённое: сколько часов после еды сепсис ещё растёт (как испорченная кровь Medicine).")
@@ -275,6 +303,16 @@ public final class Settings {
     public double humanSanity = 15;
     @Cfg(section = "exotic", doc = "Человечина без «Каннибала»: шанс рвоты за порцию.")
     public double humanVomitChance = 0.7;
+    @Cfg(section = "exotic", doc = "Сладости: прилив сил, потом сонливость. false — выключить.")
+    public boolean candyDrowsy = true;
+    @Cfg(section = "exotic", doc = "Сладости: прилив — выносливость восстанавливается быстрее столько секунд, потом 10 минут сонливости.")
+    public double sugarSeconds = 120;
+    @Cfg(section = "exotic", doc = "Сладости: на столько быстрее восстановление выносливости во время прилива (0.2 = +20 %).")
+    public double sugarRegenBoost = 0.2;
+    @Cfg(section = "exotic", doc = "Сладости: «зуб заныл» возможен после стольких порций за RP-сутки (с «Плохими зубами» — сразу).")
+    public double sweetsTeethAfter = 5;
+    @Cfg(section = "exotic", doc = "Сладости: шанс «зуб заныл» за порцию, когда он возможен; 0 — выключено.")
+    public double candyTeethChance = 0.25;
     @Cfg(section = "cooking", doc = "Полевой повар (черта rpcore:field_cook): на костре и в коптильне — плюс столько уровней.")
     public double fieldCookBonus = 2;
     @Cfg(section = "cooking", doc = "Кухонный кошмар (черта rpcore:kitchen_nightmare): минус столько уровней при готовке.")

@@ -23,13 +23,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * «Записи исследований: &lt;группа&gt;» — одноразовая книга от ГМа (решения Alex 27.10.2026): ПКМ — изучить группу
- * экзотической кухни (служебный перк RP Perks). Группа — в NBT {@code group}.
+ * Журнал (охотника, грибника…) или записи исследований по группе экзотики — от ГМа (решения Alex 29.10.2026): ПКМ —
+ * изучить группу (служебный перк RP Perks). Книга не тратится и ставится на книжную полку (тег {@code minecraft:bookshelf_books});
+ * для изучения нужен навык «Кулинарии» не ниже {@link Exotic#minSkill}. Группа — в NBT {@code group}.
  */
 public class ResearchNotes extends Item {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, RpCulinary.MODID);
     public static final RegistryObject<Item> NOTES = ITEMS.register("research_notes", () -> new ResearchNotes(
-            new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final String GROUP = "group";
 
     public ResearchNotes(Properties p) {
@@ -54,12 +55,16 @@ public class ResearchNotes extends Item {
     @Override
     public Component getName(ItemStack st) {
         int g = group(st);
-        return g < 0 ? super.getName(st) : Component.translatable("item.rpculinary.research_notes.named", groupName(g));
+        return g < 0 ? super.getName(st) : Component.translatable("item.rpculinary.research_notes." + Exotic.GROUPS.get(g));
     }
 
     @Override
     public void appendHoverText(ItemStack st, @Nullable Level level, List<Component> tip, TooltipFlag flag) {
-        tip.add(Component.translatable("item.rpculinary.research_notes.desc").withStyle(ChatFormatting.GRAY));
+        int g = group(st);
+        tip.add(Component.translatable(Exotic.research(g) ? "item.rpculinary.research_notes.desc_research" : "item.rpculinary.research_notes.desc")
+                .withStyle(ChatFormatting.GRAY));
+        if (Exotic.learnable(g))
+            tip.add(Component.translatable("item.rpculinary.research_notes.skill", Exotic.minSkill(g)).withStyle(ChatFormatting.DARK_GRAY));
     }
 
     @Override
@@ -68,9 +73,12 @@ public class ResearchNotes extends Item {
         if (!(player instanceof ServerPlayer sp)) return InteractionResultHolder.success(st);
         int g = group(st);
         if (!Exotic.learnable(g)) return InteractionResultHolder.fail(st);
+        if (!Exotic.knows(sp, g) && faygolover.rpculinary.server.CookingService.level(sp) < Exotic.minSkill(g)) {
+            sp.displayClientMessage(Component.translatable("rpculinary.msg.notes_too_hard", Exotic.minSkill(g)).withStyle(ChatFormatting.GRAY), true);
+            return InteractionResultHolder.fail(st);
+        }
         int r = Exotic.learn(sp, g);
         if (r == 1) {
-            if (!sp.getAbilities().instabuild) st.shrink(1);
             sp.level().playSound(null, sp.getX(), sp.getY(), sp.getZ(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 1f, 1f);
             sp.displayClientMessage(Component.translatable("rpculinary.msg.notes_learned", groupName(g)).withStyle(ChatFormatting.AQUA), true);
             return InteractionResultHolder.consume(st);

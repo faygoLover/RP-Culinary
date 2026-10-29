@@ -1,77 +1,29 @@
 {
-  "replace": false,
-  "values": [
-    {
-      "id": "butchery:raw_cat_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_cat_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_wolf_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_wolf_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_horse_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_horse_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_donkey_steak",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_donkey_steak",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_mule_steak",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_mule_steak",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_llama_steak",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_llama_steak",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_fox_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_fox_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_ocelot_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_ocelot_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_panda_steak",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_panda_steak",
-      "required": false
-    }
-  ]
+ "replace": false,
+ "values": [
+  {
+   "id": "butchery:raw_cat_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_cat_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_wolf_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_wolf_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_ocelot_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_ocelot_meat",
+   "required": false
+  }
+ ]
 }

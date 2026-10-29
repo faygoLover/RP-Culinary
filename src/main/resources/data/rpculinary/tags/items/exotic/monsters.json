@@ -1,63 +1,77 @@
 {
-  "replace": false,
-  "values": [
-    {
-      "id": "butchery:raw_creeper_leg",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_creeper_leg",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_creeper_steak",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_creeper_steak",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_witch_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_witch_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_warden_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_warden_meat",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_cave_spider_leg",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_cave_spider_leg",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_spider_leg",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_spider_leg",
-      "required": false
-    },
-    {
-      "id": "butchery:raw_silverfish_chunks",
-      "required": false
-    },
-    {
-      "id": "butchery:cooked_silverfish_chunks",
-      "required": false
-    },
-    "minecraft:spider_eye",
-    "minecraft:rotten_flesh"
-  ]
+ "replace": false,
+ "values": [
+  {
+   "id": "butchery:raw_creeper_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_creeper_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_creeper_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_creeper_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_guardian_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_guardian_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_elder_guardian_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_elder_guardian_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_warden_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_warden_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_ravager_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_ravager_meat",
+   "required": false
+  },
+  {
+   "id": "scpo:mystery_meat",
+   "required": false
+  },
+  {
+   "id": "alexsmobs:blood_sac",
+   "required": false
+  },
+  {
+   "id": "fl_zone_arts:pukh_flesh",
+   "required": false
+  },
+  {
+   "id": "butchery:flesh",
+   "required": false
+  },
+  {
+   "id": "csfoundation:flesh",
+   "required": false
+  },
+  {
+   "id": "csfoundation:cooked_flesh",
+   "required": false
+  }
+ ]
 }

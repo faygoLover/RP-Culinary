@@ -1,0 +1,89 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "butchery:brain",
+   "required": false
+  },
+  {
+   "id": "butchery:eye",
+   "required": false
+  },
+  {
+   "id": "butchery:heart",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_heart",
+   "required": false
+  },
+  {
+   "id": "butchery:kidney",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_kidney",
+   "required": false
+  },
+  {
+   "id": "butchery:liver",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_liver",
+   "required": false
+  },
+  {
+   "id": "butchery:lungs",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_lungs",
+   "required": false
+  },
+  {
+   "id": "butchery:intestines",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_intestines",
+   "required": false
+  },
+  {
+   "id": "butchery:stomach",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_stomach",
+   "required": false
+  },
+  {
+   "id": "butchery:bottle_of_blood",
+   "required": false
+  },
+  {
+   "id": "butchery:blood_bucket",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_blood_sausage",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_blood_sausage",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_blood_sausages",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_blood_sausages",
+   "required": false
+  },
+  {
+   "id": "butchery:crackling",
+   "required": false
+  }
+ ]
+}

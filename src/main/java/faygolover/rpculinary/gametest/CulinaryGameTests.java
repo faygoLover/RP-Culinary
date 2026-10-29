@@ -294,28 +294,40 @@ public final class CulinaryGameTests {
         h.succeed();
     }
 
-    /** Группы экзотики: по тегу и от ингредиентов; знание — книгой (с RP Perks), без Perks знает всё. */
+    /** Группы экзотики (29.10): по тегу; знание — журналом с полки, не тратится, нужен навык; отложенные паразиты; сладкое. */
     @GameTest(template = T)
     public static void exoticGroups(GameTestHelper h) {
         var server = h.getLevel().getServer();
-        int end = 1 << faygolover.rpculinary.server.Exotic.index("end");
-        int monsters = 1 << faygolover.rpculinary.server.Exotic.index("monsters");
-        h.assertTrue((NutritionTable.exoticMask(server, Items.CHORUS_FRUIT) & end) != 0, "хорус — Край");
-        h.assertTrue((NutritionTable.exoticMask(server, Items.ROTTEN_FLESH) & monsters) != 0, "гнилая плоть — монстры");
-        h.assertTrue(NutritionTable.exoticMask(server, Items.BREAD) == 0 && NutritionTable.exoticMask(server, Items.COOKED_BEEF) == 0,
-                "хлеб и стейк — не экзотика");
+        h.assertTrue((NutritionTable.exoticMask(server, Items.CHORUS_FRUIT) & faygolover.rpculinary.server.Exotic.bit("other_worlds")) != 0, "хорус — иные миры");
+        h.assertTrue((NutritionTable.exoticMask(server, Items.ROTTEN_FLESH) & faygolover.rpculinary.server.Exotic.bit("spoiled")) != 0, "гнилая плоть — испорченное");
+        h.assertTrue((NutritionTable.exoticMask(server, Items.RED_MUSHROOM) & faygolover.rpculinary.server.Exotic.bit("mushrooms")) != 0, "мухомор — дикие грибы");
+        h.assertTrue(NutritionTable.exoticMask(server, Items.BREAD) == 0 && NutritionTable.exoticMask(server, Items.COOKED_BEEF) == 0
+                && NutritionTable.exoticMask(server, Items.BROWN_MUSHROOM) == 0, "хлеб, стейк, шампиньон — не экзотика");
+        h.assertTrue(new ItemStack(faygolover.rpculinary.item.ResearchNotes.NOTES.get()).is(net.minecraft.tags.ItemTags.BOOKSHELF_BOOKS), "журнал ставится на полку");
         ServerPlayer p = player(h);
-        int g = faygolover.rpculinary.server.Exotic.index("end");
+        int g = faygolover.rpculinary.server.Exotic.index("other_worlds");
         if (RpCoreAPI.isSkillManaged(RpIds.COOKING)) {
-            h.assertTrue(!faygolover.rpculinary.server.Exotic.knows(p, g), "с Perks без книги — не знает");
+            h.assertTrue(!faygolover.rpculinary.server.Exotic.knows(p, g), "с Perks без записей — не знает");
             ItemStack book = faygolover.rpculinary.item.ResearchNotes.of(g);
             p.setItemInHand(InteractionHand.MAIN_HAND, book);
             book.use(h.getLevel(), p, InteractionHand.MAIN_HAND);
-            h.assertTrue(faygolover.rpculinary.server.Exotic.knows(p, g), "прочитал — знает");
-            h.assertTrue(p.getMainHandItem().isEmpty(), "книга одноразовая");
+            boolean able = faygolover.rpculinary.server.CookingService.level(p) >= faygolover.rpculinary.server.Exotic.minSkill(g);
+            h.assertTrue(faygolover.rpculinary.server.Exotic.knows(p, g) == able, "изучил только при нужном навыке");
+            h.assertTrue(!p.getMainHandItem().isEmpty(), "записи не тратятся");
         } else {
             h.assertTrue(faygolover.rpculinary.server.Exotic.knows(p, g), "без Perks знает всё");
         }
+        NutritionData d = NutritionData.get(p);
+        d.parasitesAt = server.overworld().getGameTime() - 1;
+        p.tickCount = 3;
+        tick(p, 1);
+        h.assertTrue(d.parasitesAt == 0 && p.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "паразиты проявились");
+        NutritionData copy = new NutritionData();
+        d.insectMeals = 2;
+        copy.load(d.save());
+        h.assertTrue(copy.insectMeals == 2, "привычка к насекомым сохраняется");
+        for (int i = 0; i < 6; i++) faygolover.rpculinary.server.ExoticEffects.sweets(p, d, 1, Settings.get());
+        h.assertTrue(d.sweetPortions >= 5 && d.sugarUntil > server.getTickCount(), "сладкое: прилив и счёт порций");
         remove(h, p);
         h.succeed();
     }

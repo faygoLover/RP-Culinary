@@ -41,6 +41,12 @@ public final class NutritionData {
     public final java.util.Map<String, Long> sensationTicks = new java.util.HashMap<>();
     /** Тик, до которого «сонливость после сладкого» (−10 % восстановления выносливости). */
     public long drowsyUntil = -1;
+    /** Тик, до которого прилив сил после сладкого (быстрее восстановление выносливости). */
+    public long sugarUntil = -1;
+    /** Время мира, когда проявятся паразиты (дичь сырая) и отравление поганкой; 0 — нет. Сохраняется. */
+    public long parasitesAt, liverPoisonAt;
+    /** Привычка к насекомым (порций за RP-неделю) и сладкое за RP-сутки — убывают. Сохраняется. */
+    public double insectMeals, sweetPortions;
     /** Тик, когда в последний раз был «обморок от отёка мозга» (без мода тела). */
     public long edemaFaintTick = -1;
     /** Ел через силу — сообщение один раз за приём. */
@@ -118,10 +124,18 @@ public final class NutritionData {
             iv.putDouble("seconds", m.ivSeconds);
             t.put("iv", iv);
         }
+        if (parasitesAt > 0) t.putLong("parasites_at", parasitesAt);
+        if (liverPoisonAt > 0) t.putLong("liver_poison_at", liverPoisonAt);
+        if (insectMeals > 0) t.putDouble("insect_meals", insectMeals);
+        if (sweetPortions > 0) t.putDouble("sweet_portions", sweetPortions);
         return t;
     }
 
     public void load(CompoundTag t) {
+        parasitesAt = t.getLong("parasites_at");
+        liverPoisonAt = t.getLong("liver_poison_at");
+        insectMeals = t.getDouble("insect_meals");
+        sweetPortions = t.getDouble("sweet_portions");
         NutritionState m = state;
         m.initialized = t.getBoolean("init");
         m.energy = t.getDouble("energy");

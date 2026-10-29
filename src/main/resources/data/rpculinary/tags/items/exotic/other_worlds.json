@@ -1,0 +1,121 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "butchery:raw_hoglin_chunk",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_hoglin_chunk",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_strider_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_strider_meat",
+   "required": false
+  },
+  {
+   "id": "minecraft:nether_wart",
+   "required": false
+  },
+  {
+   "id": "minecraft:crimson_fungus",
+   "required": false
+  },
+  {
+   "id": "minecraft:warped_fungus",
+   "required": false
+  },
+  {
+   "id": "farmersdelight:nether_salad",
+   "required": false
+  },
+  {
+   "id": "minecraft:chorus_fruit",
+   "required": false
+  },
+  {
+   "id": "minecraft:popped_chorus_fruit",
+   "required": false
+  },
+  {
+   "id": "legendarysurvivaloverhaul:chorus_fruit_juice",
+   "required": false
+  },
+  {
+   "id": "vinery:chorus_wine",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_enderman_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_enderman_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:enderman_heart",
+   "required": false
+  },
+  {
+   "id": "butchery:enderman_intestines",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_enderman_intestines",
+   "required": false
+  },
+  {
+   "id": "butchery:enderman_kidney",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_enderman_kidney",
+   "required": false
+  },
+  {
+   "id": "butchery:enderman_liver",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_enderman_liver",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_enderman_lungs",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_enderman_stomach",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_endermite_chunks",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_endermite_chunks",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_shulker_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_shulker_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_dragon_meat",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_dragon_meat",
+   "required": false
+  }
+ ]
+}

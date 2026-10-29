@@ -1,0 +1,73 @@
+{
+ "replace": false,
+ "values": [
+  {
+   "id": "minecraft:rotten_flesh",
+   "required": false
+  },
+  {
+   "id": "zombie_extreme:infected_flesh",
+   "required": false
+  },
+  {
+   "id": "butchery:bottle_of_infected_blood",
+   "required": false
+  },
+  {
+   "id": "butchery:rotten_heart",
+   "required": false
+  },
+  {
+   "id": "butchery:rotten_intestines",
+   "required": false
+  },
+  {
+   "id": "butchery:rotten_kidney",
+   "required": false
+  },
+  {
+   "id": "butchery:rotten_liver",
+   "required": false
+  },
+  {
+   "id": "butchery:withered_heart",
+   "required": false
+  },
+  {
+   "id": "survival_instinct:rotten_apple",
+   "required": false
+  },
+  {
+   "id": "zombie_extreme:rotten_apple",
+   "required": false
+  },
+  {
+   "id": "survival_instinct:rotten_orange",
+   "required": false
+  },
+  {
+   "id": "farm_and_charm:rotten_tomato",
+   "required": false
+  },
+  {
+   "id": "farmersdelight:rotten_tomato",
+   "required": false
+  },
+  {
+   "id": "vinery:rotten_cherry",
+   "required": false
+  },
+  {
+   "id": "minecraft:poisonous_potato",
+   "required": false
+  },
+  {
+   "id": "alexscaves:stinky_fish",
+   "required": false
+  },
+  {
+   "id": "scpo:zombie_candy",
+   "required": false
+  }
+ ]
+}
