@@ -1,0 +1,105 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:liver",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":1250,\"rpculinary:source\":\"cow\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:heart",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":500,\"rpculinary:source\":\"cow\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:lungs",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":875,\"rpculinary:source\":\"cow\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:kidney",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 2
+      },
+      {
+       "function": "rpculinary:skill_yield"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:hoof",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 2
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "random_sequence": "butchery:blocks/cow_cut_1_drop"
+}

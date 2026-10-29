@@ -69,6 +69,7 @@
   "rpculinary.screen.build_overweight": "полноватое",
   "rpculinary.screen.build_obese": "полное",
   "rpculinary.screen.lab_hint": "Точно — только анализом крови в лаборатории.",
+  "rpculinary.msg.butcher_loss": "Неумелый разрез: часть мяса ушла в обрезки.",
   "rpculinary.cmd.reset": "Питание сброшено у %s игроков (вес и жир сохранены).",
   "rpculinary.cmd.set": "%s = %s у %s игроков.",
   "rpculinary.cmd.status_title": "Питание: %s",

@@ -105,3 +105,13 @@
 - Конфеты (сонливость, зубы) — `candy_drowsy`, `candy_teeth_chance`: ЖДУТ УТОЧНЕНИЯ ALEX.
 - Человечина без «Каннибала»: рассудок, рвота. Куру и «икота» Края (телепорт) убраны 29.10 по решению Alex: серьёзное РП.
   Снимается `/rpculinary reset`.
+
+## Разделка туш (блок 3 переделки, 29.10)
+- `server/Butchering.java` + `server/SkillYield.java`, данные `assets/rpculinary/carcasses.json` (из `tools/gen_food_pack.py`; стадии туш —
+  `tools/butchery_stages.json` из `tools/scan_butchery_stages.py` по декомпиляции `_mcref/mods/butchery-5.1`).
+- Перед Butchery (HIGHEST): на стадии с доп. разрезами — своя таблица, клик отменяется, счётчик в данных блок-сущности туши; «родной»
+  разрез — Butchery. На время разреза открыт контекст: `rpculinary:skill_yield` в таблицах знает режущего; после клика (LOWEST) —
+  обрезки и опыт. Настройки — раздел `[butchery]`.
+- `mixin/PackRepositoryMixin`: `builtin/rpculinary_food` всегда последним (выше всех) — иначе сохранённый в мире порядок ставил
+  позже добавленные моды выше пака.
+- Для теста с Butchery: `libs/pack/butchery-1.jar` (копия из инстанса, не в git), `-Pwith_pack=true`.

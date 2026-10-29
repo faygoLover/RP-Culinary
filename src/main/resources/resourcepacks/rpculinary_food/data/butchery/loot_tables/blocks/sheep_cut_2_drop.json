@@ -11,6 +11,9 @@
       {
        "function": "minecraft:set_count",
        "count": 1
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -26,6 +29,9 @@
       {
        "function": "minecraft:set_count",
        "count": 1
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -41,6 +47,9 @@
       {
        "function": "minecraft:set_count",
        "count": 1
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }

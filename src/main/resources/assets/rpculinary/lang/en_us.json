@@ -69,6 +69,7 @@
   "rpculinary.screen.build_overweight": "chubby",
   "rpculinary.screen.build_obese": "heavy",
   "rpculinary.screen.lab_hint": "Exact values — only by a lab blood test.",
+  "rpculinary.msg.butcher_loss": "Clumsy cut: some meat went to scraps.",
   "rpculinary.cmd.reset": "Nutrition reset for %s players (weight and fat kept).",
   "rpculinary.cmd.set": "%s = %s for %s players.",
   "rpculinary.cmd.status_title": "Nutrition: %s",

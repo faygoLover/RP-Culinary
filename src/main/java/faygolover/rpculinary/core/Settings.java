@@ -280,6 +280,24 @@ public final class Settings {
     @Cfg(section = "cooking", doc = "Кухонный кошмар (черта rpcore:kitchen_nightmare): минус столько уровней при готовке.")
     public double kitchenNightmarePenalty = 3;
 
+    // ------------------------------------------------------------------ разделка туш (блок 3 переделки, решения 28–29.10.2026)
+    @Cfg(section = "butchery", doc = "Разделка туш Butchery по навыку «Кулинария»: потери в обрезки, опыт, доп. разрезы. false — как в Butchery.")
+    public boolean butcherSkill = true;
+    @Cfg(section = "butchery", doc = "Навык на 2+ уровня ниже порога туши: такая доля мяса и органов уходит в потери.")
+    public double butcherLossFar = 0.6;
+    @Cfg(section = "butchery", doc = "Навык на 1 уровень ниже порога: доля потерь.")
+    public double butcherLossNear = 0.3;
+    @Cfg(section = "butchery", doc = "Навык ровно на пороге: доля потерь (выше порога — без потерь).")
+    public double butcherLossAt = 0.1;
+    @Cfg(section = "butchery", doc = "Потерянное мясо: такая доля его веса возвращается обрезками (по 250 г), остальное — в отход.")
+    public double butcherLostToScraps = 0.5;
+    @Cfg(section = "butchery", doc = "Опыт «Кулинарии» за разрез: множитель (0 — без опыта).")
+    public double butcherXp = 1;
+    @Cfg(section = "butchery", doc = "Туши в инвентаре: замедление растёт с весом и достигает максимума при стольких кг (корова ~125 кг).")
+    public double carcassSlowKg = 160;
+    @Cfg(section = "butchery", doc = "Туши в инвентаре: максимальное замедление, доля скорости (0 — без замедления).")
+    public double carcassSlowMax = 0.8;
+
     // ------------------------------------------------------------------ вес плавно (решение 14.10.2026)
     @Cfg(section = "weight", doc = "Сытость выше этой доли — часть съеденного сразу уходит в жир (толстеет).")
     public double fatGainAbove = 0.8;

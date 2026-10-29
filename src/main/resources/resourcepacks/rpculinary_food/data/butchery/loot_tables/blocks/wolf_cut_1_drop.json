@@ -15,6 +15,9 @@
       {
        "function": "minecraft:set_nbt",
        "tag": "{\"rpculinary:weight\":100,\"rpculinary:source\":\"wolf\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -34,6 +37,9 @@
       {
        "function": "minecraft:set_nbt",
        "tag": "{\"rpculinary:weight\":60,\"rpculinary:source\":\"wolf\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -59,6 +65,9 @@
       {
        "function": "minecraft:set_nbt",
        "tag": "{\"rpculinary:weight\":70,\"rpculinary:source\":\"wolf\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -78,6 +87,9 @@
       {
        "function": "minecraft:set_nbt",
        "tag": "{\"rpculinary:weight\":200,\"rpculinary:source\":\"wolf\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -93,6 +105,9 @@
       {
        "function": "minecraft:set_count",
        "count": 1
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -114,6 +129,9 @@
       {
        "function": "minecraft:set_count",
        "count": 1
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }

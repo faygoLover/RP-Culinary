@@ -15,6 +15,9 @@ written = []
 if os.path.isdir(DATA):
     shutil.rmtree(DATA)  # пак целиком из генератора — старое не остаётся
 
+def read_pack(rel):
+    return json.load(open(os.path.join(DATA, *rel.split('/')), encoding='utf-8'))
+
 def out(rel, obj):
     # Записи тегов — необязательные: нет мода/предмета — тег не ломается целиком
     if '/tags/' in rel and isinstance(obj.get('values'), list):
@@ -84,8 +87,29 @@ def entry(item, n=1, weight=None, source=None, chance=None):
         pool['conditions'] = [{'condition': 'minecraft:random_chance', 'chance': round(chance, 3)}]
     return pool
 
+# Потери по навыку (блок 3): функция rpculinary:skill_yield на мясе и органах. Не теряются кости, жир, шкура, копыта, обрезки.
+NO_LOSS = {'minecraft:bone', 'butchery:animal_fat', 'butchery:hoof', 'butchery:meat_scraps', 'butchery:bird_foot', 'butchery:wishbone',
+           'minecraft:brown_mushroom', 'minecraft:red_mushroom', 'minecraft:bone_meal'}
+WEIGHTS = json.load(open(os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'rpculinary', 'weights.json'), encoding='utf-8'))['items']
+def with_yield(pools):
+    for p in pools:
+        for e in p.get('entries', []):
+            n = e.get('name')
+            if e.get('type') == 'minecraft:item' and n not in NO_LOSS and n in WEIGHTS and                     not any(f.get('function') == 'rpculinary:skill_yield' for f in e.get('functions', [])):
+                e.setdefault('functions', []).append({'function': 'rpculinary:skill_yield'})
+    return pools
+
+# Доп. разрезы между «родными» стадиями туши (решение 28.10 §5.6): таблица разреза → список своих таблиц, которые
+# выпадают ДО неё (каждая — отдельный клик колуном; «родной» разрез — последним и двигает стадию).
+EXTRA = {}
+def extra(native, name, pools):
+    EXTRA.setdefault(native, []).append(f'rpculinary:carcass/{name}')
+    out(f'rpculinary/loot_tables/carcass/{name}.json', {'type': 'minecraft:block', 'pools': with_yield(pools),
+                                                        'random_sequence': f'rpculinary:carcass/{name}'})
+
 FD_COMPAT = {'pig_cut_1_drop', 'pig_cut_3_drop', 'goat_cut_1_drop', 'goat_cut_3_drop'}
 def table(name, pools):
+    pools = with_yield(pools)
     if name in FD_COMPAT:  # вариант Butchery при «Farmer's Delight» в конфиге — то же самое
         out(f'butchery/loot_tables/blocks/{name}_fd_compat.json', {'type': 'minecraft:block', 'pools': pools,
                                                                     'random_sequence': f'butchery:blocks/{name}_fd_compat'})
@@ -124,24 +148,45 @@ def hooves(n):
     return [entry('butchery:hoof', n)]
 
 # Подробные планы (галерея «Разделка по тушам»)
-def cow(name, extra=()):
-    table(f'{name}_cut_1_drop', organs('cow', 500) + hooves(2))
-    table(f'{name}_cut_2_drop', [entry('butchery:raw_chuck_steak', 1, weight=6000, source='cow') for _ in range(2)]
-          + [entry('butchery:raw_ribeye_steak', 4), entry('butchery:raw_sirloin_steak', 4)] + list(extra))
-    table(f'{name}_cut_3_drop', [entry('butchery:raw_rump_steak', 1, weight=5000, source='cow') for _ in range(2)]
-          + [entry('butchery:raw_tbone_steak', 4)] + scraps(8) + fat(5) + bones(8) + hooves(2))
+def split(pools, items):
+    """Пулы с этими предметами — отдельно (первый список), остальные — второй."""
+    a = [p for p in pools if any(e.get('name') in items for e in p['entries'])]
+    return a, [p for p in pools if p not in a]
+
+def cow(name, more=()):
+    # брюшина → грудь (родной 1) | передняя четверть → середина (родной 2) | задняя часть → голяшки, обрезки (родной 3)
+    belly, chest = split(organs('cow', 500), {'butchery:stomach', 'butchery:intestines'})
+    extra(f'{name}_cut_1', f'{name}_belly', belly)
+    table(f'{name}_cut_1_drop', chest + hooves(2))
+    extra(f'{name}_cut_2', f'{name}_forequarter', [entry('butchery:raw_chuck_steak', 1, weight=6000, source='cow') for _ in range(2)])
+    table(f'{name}_cut_2_drop', [entry('butchery:raw_ribeye_steak', 4), entry('butchery:raw_sirloin_steak', 4)] + list(more))
+    extra(f'{name}_cut_3', f'{name}_hindquarter', [entry('butchery:raw_rump_steak', 1, weight=5000, source='cow') for _ in range(2)]
+          + [entry('butchery:raw_tbone_steak', 4)])
+    table(f'{name}_cut_3_drop', scraps(8) + fat(5) + bones(8) + hooves(2))
 cow('cow')
 cow('brownmooshroom', [entry('minecraft:brown_mushroom', 2)])
 cow('redmooshroom', [entry('minecraft:red_mushroom', 2)])
 
-def pig(name):
-    table(f'{name}_cut_1_drop', organs('pig', 110) + [entry('butchery:raw_pork_shoulder', 1, weight=1200, source='pig') for _ in range(2)]
+def pig(name, hanging=None):
+    # органы (родной 1) | лопатка, рулька → корейка, грудинка, шпик (родной 2) | окорок → шпик/жир, обрезки, кости (родной 3)
+    cut2 = [entry('butchery:raw_pork_loin', 4), entry('butchery:raw_pork_belly', 1, weight=2000, source='pig'), entry('farm_and_charm:bacon', 8)]
+    cut3 = fat(2.5) + scraps(1.5) + bones(4) + hooves(4)
+    table(f'{name}_cut_1_drop', organs('pig', 110))
+    extra(f'{name}_cut_2', f'{name}_shoulders', [entry('butchery:raw_pork_shoulder', 1, weight=1200, source='pig') for _ in range(2)]
           + [entry('butchery:raw_pork_leg', 4)])
-    table(f'{name}_cut_2_drop', [entry('butchery:raw_pork_loin', 4), entry('butchery:raw_pork_belly', 1, weight=2000, source='pig'),
-                                 entry('farm_and_charm:bacon', 8)])
-    table(f'{name}_cut_3_drop', [entry('butchery:raw_ham', 2)] + fat(2.5) + scraps(1.5) + bones(4) + hooves(4))
-for n in ('pig', 'piglin', 'piglin_brute'):
-    pig(n)
+    table(f'{name}_cut_2_drop', cut2)
+    extra(f'{name}_cut_3', f'{name}_hams', [entry('butchery:raw_ham', 2)])
+    table(f'{name}_cut_3_drop', cut3)
+    if hanging:  # у подвешенных пиглинов свои таблицы 2 и 3 — те же разрезы
+        h2, h3 = hanging
+        table(f'{h2}_drop', json.loads(json.dumps(cut2)))
+        table(f'{h3}_drop', json.loads(json.dumps(cut3)))
+        EXTRA[h2], EXTRA[h3] = EXTRA[f'{name}_cut_2'], EXTRA[f'{name}_cut_3']
+pig('pig')
+pig('piglin', ('piglin_hanging_cut_2', 'piglin_hanging_cut_3'))
+pig('piglin_brute', ('hanging_piglin_brute_cut_2', 'hanging_piglin_brute_cut_3'))
+# Butchery: подвешенная корова берёт «cow_cut_1_drop» без пространства имён (= minecraft:) — их же ошибка; кладём копию
+out('minecraft/loot_tables/cow_cut_1_drop.json', read_pack('butchery/loot_tables/blocks/cow_cut_1_drop.json'))
 
 def sheep(name, src):
     table(f'{name}_cut_1_drop', organs(src, 50) + [entry('butchery:raw_lamb_shoulder', 1, weight=500, source=src) for _ in range(2)] + hooves(2))
@@ -225,6 +270,44 @@ big_drop('data/alexsmobs/loot_tables/entities/kangaroo.json', 'alexsmobs:kangaro
 big_drop('data/alexsmobs/loot_tables/entities/moose.json', 'alexsmobs:moose_ribs', 'moose', 500)
 for ent, live in (('grottoceratops', 1000), ('relicheirus', 1500), ('tremorsaurus', 3000), ('atlatitan', 20000)):
     big_drop(f'data/alexscaves/loot_tables/entities/{ent}.json', 'alexscaves:dinosaur_chop', 'dinosaur', live)
+
+# ------------------------------------------------------------------ туши для кода (блок 3): уровень, вес, доп. разрезы
+# Уровни разделки 1–10 — решения Alex 29.10 (§6). Живой вес, кг; в переноске и в XP — × K (мелочь до 5 кг — без K).
+SPECIES = [  # (ключ в id блока, вид, уровень, живой вес) — первый подходящий
+    ('elder_guardian', 'elder_guardian', 8, 200), ('ender_dragon', 'ender_dragon', 10, 5000), ('cave_spider', 'cave_spider', 6, 20),
+    ('polar_bear', 'polar_bear', 5, 400), ('zombie_horse', 'horse', 5, 450), ('skeleton_horse', 'skeleton_horse', 3, 30),
+    ('zombie_villager', 'villager', 7, 70), ('zombified_piglin', 'piglin', 7, 80), ('piglin_brute', 'piglin', 7, 100),
+    ('wither_skeleton', 'skeleton', 3, 15), ('glow_squid', 'squid', 3, 20), ('mooshroom', 'cow', 5, 500), ('snowfox', 'fox', 3, 6),
+    ('snow_fox', 'fox', 3, 6), ('playercorpse', 'human', 7, 70), ('sniffer', 'sniffer', 8, 800), ('warden', 'warden', 9, 1000),
+    ('wither', 'wither', 10, 300), ('chicken', 'chicken', 1, 2), ('rabbit', 'rabbit', 1, 2), ('cod', 'fish', 1, 2), ('salmon', 'fish', 1, 3),
+    ('pufferfish', 'fish', 1, 1), ('squid', 'squid', 3, 20), ('sheep', 'sheep', 3, 50), ('goat', 'goat', 3, 50), ('pig', 'pig', 3, 110),
+    ('fox', 'fox', 3, 6), ('cat', 'cat', 3, 4), ('ocelot', 'ocelot', 3, 12), ('frog', 'frog', 3, 1), ('bat', 'bat', 3, 1),
+    ('axolotl', 'axolotl', 3, 1), ('cow', 'cow', 5, 500), ('horse', 'horse', 5, 450), ('donkey', 'donkey', 5, 200), ('mule', 'mule', 5, 350),
+    ('llama', 'llama', 5, 130), ('camel', 'camel', 5, 500), ('wolf', 'wolf', 5, 40), ('panda', 'panda', 5, 100), ('turtle', 'turtle', 5, 150),
+    ('dolphin', 'dolphin', 5, 150), ('hoglin', 'hoglin', 5, 150), ('zoglin', 'hoglin', 5, 150), ('creeper', 'creeper', 6, 60),
+    ('spider', 'spider', 6, 40), ('silverfish', 'silverfish', 6, 1), ('endermite', 'endermite', 6, 1), ('bee', 'bee', 6, 1),
+    ('strider', 'strider', 6, 100), ('phantom', 'phantom', 6, 20), ('slime', 'slime', 6, 20), ('magma', 'slime', 6, 20),
+    ('enderman', 'enderman', 7, 80), ('shulker', 'shulker', 7, 30), ('guardian', 'guardian', 7, 50), ('villager', 'villager', 7, 70),
+    ('pillager', 'pillager', 7, 70), ('vindicator', 'vindicator', 7, 70), ('evoker', 'evoker', 7, 70), ('witch', 'witch', 7, 70),
+    ('piglin', 'piglin', 7, 80), ('drowned', 'zombie', 7, 70), ('husk', 'zombie', 7, 70), ('zombie', 'zombie', 7, 70),
+    ('stray', 'skeleton', 3, 15), ('skeleton', 'skeleton', 3, 15),
+]
+BS = json.load(open(os.path.join(HERE, 'butchery_stages.json'), encoding='utf-8'))
+carc = {}
+for b in sorted(set(BS['blocks']) | set(BS['stages'])):
+    sp = next((x for x in SPECIES if x[0] in b), None)
+    if sp is None:
+        continue
+    kg = sp[3] if sp[3] <= 5 else sp[3] * K
+    ex = {st: EXTRA[v['table']] for st, v in BS['stages'].get(b, {}).items() if v['table'] in EXTRA and EXTRA[v['table']]}
+    carc['butchery:' + b] = {'species': sp[1], 'level': sp[2], 'kg': round(kg, 2), **({'extra': ex} if ex else {})}
+with open(os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'rpculinary', 'carcasses.json'), 'w', encoding='utf-8', newline='\n') as f:
+    json.dump({'_': 'tools/gen_food_pack.py — не править руками', 'blocks': carc}, f, ensure_ascii=False, indent=1, sort_keys=True)
+    f.write('\n')
+# Свой вес туш вместо замедления Butchery (эффект по тегам) — теги пустые
+for t in ('weighted_carcass_l', 'weighted_carcass_ll'):
+    out(f'butchery/tags/items/{t}.json', {'replace': True, 'values': []})
+print('carcasses', len(carc), 'with extra cuts', sum(1 for v in carc.values() if 'extra' in v))
 
 # ------------------------------------------------------------------ рецепты
 sys.path.insert(0, HERE)

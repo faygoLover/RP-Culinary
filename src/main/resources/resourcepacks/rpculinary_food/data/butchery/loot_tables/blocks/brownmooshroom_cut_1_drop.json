@@ -15,6 +15,9 @@
       {
        "function": "minecraft:set_nbt",
        "tag": "{\"rpculinary:weight\":1250,\"rpculinary:source\":\"cow\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -34,6 +37,9 @@
       {
        "function": "minecraft:set_nbt",
        "tag": "{\"rpculinary:weight\":500,\"rpculinary:source\":\"cow\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -53,25 +59,9 @@
       {
        "function": "minecraft:set_nbt",
        "tag": "{\"rpculinary:weight\":875,\"rpculinary:source\":\"cow\"}"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "rolls": 1,
-   "entries": [
-    {
-     "type": "minecraft:item",
-     "name": "butchery:stomach",
-     "functions": [
-      {
-       "function": "minecraft:set_count",
-       "count": 1
       },
       {
-       "function": "minecraft:set_nbt",
-       "tag": "{\"rpculinary:weight\":2500,\"rpculinary:source\":\"cow\"}"
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -87,21 +77,9 @@
       {
        "function": "minecraft:set_count",
        "count": 2
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "rolls": 1,
-   "entries": [
-    {
-     "type": "minecraft:item",
-     "name": "butchery:intestines",
-     "functions": [
+      },
       {
-       "function": "minecraft:set_count",
-       "count": 8
+       "function": "rpculinary:skill_yield"
       }
      ]
     }

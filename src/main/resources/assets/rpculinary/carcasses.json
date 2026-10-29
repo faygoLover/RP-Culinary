@@ -1,0 +1,817 @@
+{
+ "_": "tools/gen_food_pack.py — не править руками",
+ "blocks": {
+  "butchery:all_black_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:bat_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "bat"
+  },
+  "butchery:bee_carcass": {
+   "kg": 1,
+   "level": 6,
+   "species": "bee"
+  },
+  "butchery:black_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:blue_axolotl_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "axolotl"
+  },
+  "butchery:brown_axolotl_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "axolotl"
+  },
+  "butchery:brown_llama_carcass": {
+   "kg": 32.5,
+   "level": 5,
+   "species": "llama"
+  },
+  "butchery:brown_mooshroom_carcass": {
+   "kg": 125.0,
+   "level": 5,
+   "species": "cow"
+  },
+  "butchery:calico_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:camel_carcass": {
+   "kg": 125.0,
+   "level": 5,
+   "species": "camel"
+  },
+  "butchery:cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:cave_spider_carcass": {
+   "kg": 5.0,
+   "level": 6,
+   "species": "cave_spider"
+  },
+  "butchery:chicken_carcass": {
+   "kg": 2,
+   "level": 1,
+   "species": "chicken"
+  },
+  "butchery:cod_carcass": {
+   "kg": 2,
+   "level": 1,
+   "species": "fish"
+  },
+  "butchery:cow_carcass": {
+   "kg": 125.0,
+   "level": 5,
+   "species": "cow"
+  },
+  "butchery:creamy_llama_carcass": {
+   "kg": 32.5,
+   "level": 5,
+   "species": "llama"
+  },
+  "butchery:creeper_carcass": {
+   "kg": 15.0,
+   "level": 6,
+   "species": "creeper"
+  },
+  "butchery:cyan_axolotl_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "axolotl"
+  },
+  "butchery:dolphin_carcass": {
+   "kg": 37.5,
+   "level": 5,
+   "species": "dolphin"
+  },
+  "butchery:donkey_carcass": {
+   "kg": 50.0,
+   "level": 5,
+   "species": "donkey"
+  },
+  "butchery:drained_bat_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "bat"
+  },
+  "butchery:drained_black_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:drained_brown_mooshroom_carcass": {
+   "extra": {
+    "3": [
+     "rpculinary:carcass/brownmooshroom_belly"
+    ],
+    "4": [
+     "rpculinary:carcass/brownmooshroom_forequarter"
+    ],
+    "5": [
+     "rpculinary:carcass/brownmooshroom_hindquarter"
+    ],
+    "7": [
+     "rpculinary:carcass/brownmooshroom_belly"
+    ],
+    "8": [
+     "rpculinary:carcass/brownmooshroom_forequarter"
+    ],
+    "9": [
+     "rpculinary:carcass/brownmooshroom_hindquarter"
+    ]
+   },
+   "kg": 125.0,
+   "level": 5,
+   "species": "cow"
+  },
+  "butchery:drained_camel_carcass": {
+   "kg": 125.0,
+   "level": 5,
+   "species": "camel"
+  },
+  "butchery:drained_chicken_carcass": {
+   "kg": 2,
+   "level": 1,
+   "species": "chicken"
+  },
+  "butchery:drained_cow_carcass": {
+   "extra": {
+    "3": [
+     "rpculinary:carcass/cow_belly"
+    ],
+    "4": [
+     "rpculinary:carcass/cow_forequarter"
+    ],
+    "5": [
+     "rpculinary:carcass/cow_hindquarter"
+    ],
+    "7": [
+     "rpculinary:carcass/cow_belly"
+    ],
+    "8": [
+     "rpculinary:carcass/cow_forequarter"
+    ],
+    "9": [
+     "rpculinary:carcass/cow_hindquarter"
+    ]
+   },
+   "kg": 125.0,
+   "level": 5,
+   "species": "cow"
+  },
+  "butchery:drained_creeper_carcass": {
+   "kg": 15.0,
+   "level": 6,
+   "species": "creeper"
+  },
+  "butchery:drained_dolphin_carcass": {
+   "kg": 37.5,
+   "level": 5,
+   "species": "dolphin"
+  },
+  "butchery:drained_donkey_carcass": {
+   "kg": 50.0,
+   "level": 5,
+   "species": "donkey"
+  },
+  "butchery:drained_drowned_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "zombie"
+  },
+  "butchery:drained_enderman_carcass": {
+   "kg": 20.0,
+   "level": 7,
+   "species": "enderman"
+  },
+  "butchery:drained_evoker_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "evoker"
+  },
+  "butchery:drained_fox_carcass": {
+   "kg": 1.5,
+   "level": 3,
+   "species": "fox"
+  },
+  "butchery:drained_goat_carcass": {
+   "kg": 12.5,
+   "level": 3,
+   "species": "goat"
+  },
+  "butchery:drained_gray_frog_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "frog"
+  },
+  "butchery:drained_gray_horse_carcass": {
+   "kg": 112.5,
+   "level": 5,
+   "species": "horse"
+  },
+  "butchery:drained_guardian_carcass": {
+   "kg": 12.5,
+   "level": 7,
+   "species": "guardian"
+  },
+  "butchery:drained_hoglin_carcass": {
+   "kg": 37.5,
+   "level": 5,
+   "species": "hoglin"
+  },
+  "butchery:drained_husk_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "zombie"
+  },
+  "butchery:drained_mule_carcass": {
+   "kg": 87.5,
+   "level": 5,
+   "species": "mule"
+  },
+  "butchery:drained_ocelot_carcass": {
+   "kg": 3.0,
+   "level": 3,
+   "species": "ocelot"
+  },
+  "butchery:drained_panda_carcass": {
+   "kg": 25.0,
+   "level": 5,
+   "species": "panda"
+  },
+  "butchery:drained_phantom_carcass": {
+   "kg": 5.0,
+   "level": 6,
+   "species": "phantom"
+  },
+  "butchery:drained_pig_carcass": {
+   "extra": {
+    "4": [
+     "rpculinary:carcass/pig_shoulders"
+    ],
+    "5": [
+     "rpculinary:carcass/pig_hams"
+    ],
+    "8": [
+     "rpculinary:carcass/pig_shoulders"
+    ],
+    "9": [
+     "rpculinary:carcass/pig_hams"
+    ]
+   },
+   "kg": 27.5,
+   "level": 3,
+   "species": "pig"
+  },
+  "butchery:drained_piglin_brute_corpse": {
+   "extra": {
+    "4": [
+     "rpculinary:carcass/piglin_brute_shoulders"
+    ],
+    "5": [
+     "rpculinary:carcass/piglin_brute_hams"
+    ],
+    "8": [
+     "rpculinary:carcass/piglin_brute_shoulders"
+    ],
+    "9": [
+     "rpculinary:carcass/piglin_brute_hams"
+    ]
+   },
+   "kg": 25.0,
+   "level": 7,
+   "species": "piglin"
+  },
+  "butchery:drained_piglin_corpse": {
+   "extra": {
+    "3": [
+     "rpculinary:carcass/piglin_shoulders"
+    ],
+    "4": [
+     "rpculinary:carcass/piglin_hams"
+    ],
+    "6": [
+     "rpculinary:carcass/piglin_shoulders"
+    ],
+    "7": [
+     "rpculinary:carcass/piglin_hams"
+    ]
+   },
+   "kg": 27.5,
+   "level": 3,
+   "species": "pig"
+  },
+  "butchery:drained_pillager_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "pillager"
+  },
+  "butchery:drained_polar_bear_carcass": {
+   "kg": 100.0,
+   "level": 5,
+   "species": "polar_bear"
+  },
+  "butchery:drained_rabbit_carcass": {
+   "kg": 2,
+   "level": 1,
+   "species": "rabbit"
+  },
+  "butchery:drained_red_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:drained_red_mooshroom_carcass": {
+   "extra": {
+    "3": [
+     "rpculinary:carcass/redmooshroom_belly"
+    ],
+    "4": [
+     "rpculinary:carcass/redmooshroom_forequarter"
+    ],
+    "5": [
+     "rpculinary:carcass/redmooshroom_hindquarter"
+    ],
+    "7": [
+     "rpculinary:carcass/redmooshroom_belly"
+    ],
+    "8": [
+     "rpculinary:carcass/redmooshroom_forequarter"
+    ],
+    "9": [
+     "rpculinary:carcass/redmooshroom_hindquarter"
+    ]
+   },
+   "kg": 125.0,
+   "level": 5,
+   "species": "cow"
+  },
+  "butchery:drained_regular_black_horse_carcass": {
+   "kg": 112.5,
+   "level": 5,
+   "species": "horse"
+  },
+  "butchery:drained_regular_brown_horse_carcass": {
+   "kg": 112.5,
+   "level": 5,
+   "species": "horse"
+  },
+  "butchery:drained_regular_chestnut_horse_carcass": {
+   "kg": 112.5,
+   "level": 5,
+   "species": "horse"
+  },
+  "butchery:drained_regular_creamy_horse_carcass": {
+   "kg": 112.5,
+   "level": 5,
+   "species": "horse"
+  },
+  "butchery:drained_regular_dark_brown_horse_carcass": {
+   "kg": 112.5,
+   "level": 5,
+   "species": "horse"
+  },
+  "butchery:drained_sheep_carcass": {
+   "kg": 12.5,
+   "level": 3,
+   "species": "sheep"
+  },
+  "butchery:drained_snowfox_carcass": {
+   "kg": 1.5,
+   "level": 3,
+   "species": "fox"
+  },
+  "butchery:drained_strider_carcass": {
+   "kg": 25.0,
+   "level": 6,
+   "species": "strider"
+  },
+  "butchery:drained_tabby_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:drained_turtle_carcass": {
+   "kg": 37.5,
+   "level": 5,
+   "species": "turtle"
+  },
+  "butchery:drained_villager": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "villager"
+  },
+  "butchery:drained_vindicator_corpse": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:drained_white_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:drained_white_horse_carcass": {
+   "kg": 112.5,
+   "level": 5,
+   "species": "horse"
+  },
+  "butchery:drained_witch_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "witch"
+  },
+  "butchery:drained_wolf_carcass": {
+   "kg": 10.0,
+   "level": 5,
+   "species": "wolf"
+  },
+  "butchery:drained_zoglin_carcass": {
+   "kg": 37.5,
+   "level": 5,
+   "species": "hoglin"
+  },
+  "butchery:drained_zombie_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "zombie"
+  },
+  "butchery:drained_zombie_horse_carcass": {
+   "kg": 112.5,
+   "level": 5,
+   "species": "horse"
+  },
+  "butchery:drained_zombie_villager": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "villager"
+  },
+  "butchery:drained_zombified_piglin_corpse": {
+   "kg": 20.0,
+   "level": 7,
+   "species": "piglin"
+  },
+  "butchery:drainedplayercorpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "human"
+  },
+  "butchery:drowned_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "zombie"
+  },
+  "butchery:elder_guardian_carcass": {
+   "kg": 50.0,
+   "level": 8,
+   "species": "elder_guardian"
+  },
+  "butchery:ender_dragon_carcass": {
+   "kg": 1250.0,
+   "level": 10,
+   "species": "ender_dragon"
+  },
+  "butchery:enderman_carcass": {
+   "kg": 20.0,
+   "level": 7,
+   "species": "enderman"
+  },
+  "butchery:endermite_carcass": {
+   "kg": 1,
+   "level": 6,
+   "species": "endermite"
+  },
+  "butchery:evoker_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "evoker"
+  },
+  "butchery:fox_carcass": {
+   "kg": 1.5,
+   "level": 3,
+   "species": "fox"
+  },
+  "butchery:glow_squid_carcass": {
+   "kg": 5.0,
+   "level": 3,
+   "species": "squid"
+  },
+  "butchery:goat_carcass": {
+   "kg": 12.5,
+   "level": 3,
+   "species": "goat"
+  },
+  "butchery:gold_axolotl_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "axolotl"
+  },
+  "butchery:gray_frog_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "frog"
+  },
+  "butchery:gray_llama_carcass": {
+   "kg": 32.5,
+   "level": 5,
+   "species": "llama"
+  },
+  "butchery:green_frog_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "frog"
+  },
+  "butchery:guardian_carcass": {
+   "kg": 12.5,
+   "level": 7,
+   "species": "guardian"
+  },
+  "butchery:hanging_enderman_carcass": {
+   "kg": 20.0,
+   "level": 7,
+   "species": "enderman"
+  },
+  "butchery:hoglin_carcass": {
+   "kg": 37.5,
+   "level": 5,
+   "species": "hoglin"
+  },
+  "butchery:husk_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "zombie"
+  },
+  "butchery:jellie_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:magma_cube_carcass": {
+   "kg": 5.0,
+   "level": 6,
+   "species": "slime"
+  },
+  "butchery:medium_magma_cube_carcass": {
+   "kg": 5.0,
+   "level": 6,
+   "species": "slime"
+  },
+  "butchery:medium_slime_carcass": {
+   "kg": 5.0,
+   "level": 6,
+   "species": "slime"
+  },
+  "butchery:mule_carcass": {
+   "kg": 87.5,
+   "level": 5,
+   "species": "mule"
+  },
+  "butchery:ocelot_carcass": {
+   "kg": 3.0,
+   "level": 3,
+   "species": "ocelot"
+  },
+  "butchery:orange_frog_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "frog"
+  },
+  "butchery:panda_carcass": {
+   "kg": 25.0,
+   "level": 5,
+   "species": "panda"
+  },
+  "butchery:persian_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:phantom_carcass": {
+   "kg": 5.0,
+   "level": 6,
+   "species": "phantom"
+  },
+  "butchery:pig_carcass": {
+   "kg": 27.5,
+   "level": 3,
+   "species": "pig"
+  },
+  "butchery:piglin_brute_corpse": {
+   "kg": 25.0,
+   "level": 7,
+   "species": "piglin"
+  },
+  "butchery:piglin_corpse": {
+   "kg": 27.5,
+   "level": 3,
+   "species": "pig"
+  },
+  "butchery:pillager_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "pillager"
+  },
+  "butchery:pink_axolotl_carcass": {
+   "kg": 1,
+   "level": 3,
+   "species": "axolotl"
+  },
+  "butchery:playercorpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "human"
+  },
+  "butchery:polar_bear_carcass": {
+   "kg": 100.0,
+   "level": 5,
+   "species": "polar_bear"
+  },
+  "butchery:pufferfish": {
+   "kg": 1,
+   "level": 1,
+   "species": "fish"
+  },
+  "butchery:rabbit_carcass": {
+   "kg": 2,
+   "level": 1,
+   "species": "rabbit"
+  },
+  "butchery:ragdoll_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:red_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:red_mooshroom_carcass": {
+   "kg": 125.0,
+   "level": 5,
+   "species": "cow"
+  },
+  "butchery:salmon_carcass": {
+   "kg": 3,
+   "level": 1,
+   "species": "fish"
+  },
+  "butchery:sheep_carcass": {
+   "kg": 12.5,
+   "level": 3,
+   "species": "sheep"
+  },
+  "butchery:shulker_carcass": {
+   "kg": 7.5,
+   "level": 7,
+   "species": "shulker"
+  },
+  "butchery:siamese_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:silverfish_carcass": {
+   "kg": 1,
+   "level": 6,
+   "species": "silverfish"
+  },
+  "butchery:skeleton_corpse": {
+   "kg": 3.75,
+   "level": 3,
+   "species": "skeleton"
+  },
+  "butchery:skeleton_horse_carcass": {
+   "kg": 7.5,
+   "level": 3,
+   "species": "skeleton_horse"
+  },
+  "butchery:small_slime_carcass": {
+   "kg": 5.0,
+   "level": 6,
+   "species": "slime"
+  },
+  "butchery:sniffer_carcass_block": {
+   "kg": 200.0,
+   "level": 8,
+   "species": "sniffer"
+  },
+  "butchery:snow_fox_carcass": {
+   "kg": 1.5,
+   "level": 3,
+   "species": "fox"
+  },
+  "butchery:spider_carcass": {
+   "kg": 10.0,
+   "level": 6,
+   "species": "spider"
+  },
+  "butchery:squid_carcass": {
+   "kg": 5.0,
+   "level": 3,
+   "species": "squid"
+  },
+  "butchery:stray_corpse": {
+   "kg": 3.75,
+   "level": 3,
+   "species": "skeleton"
+  },
+  "butchery:strider_carcass": {
+   "kg": 25.0,
+   "level": 6,
+   "species": "strider"
+  },
+  "butchery:tabby_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:turtle_carcass": {
+   "kg": 37.5,
+   "level": 5,
+   "species": "turtle"
+  },
+  "butchery:villager_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "villager"
+  },
+  "butchery:vindicator_corpse": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:warden_carcass": {
+   "kg": 250.0,
+   "level": 9,
+   "species": "warden"
+  },
+  "butchery:white_cat_carcass": {
+   "kg": 4,
+   "level": 3,
+   "species": "cat"
+  },
+  "butchery:white_llama_carcass": {
+   "kg": 32.5,
+   "level": 5,
+   "species": "llama"
+  },
+  "butchery:witch_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "witch"
+  },
+  "butchery:wither_carcass": {
+   "kg": 75.0,
+   "level": 10,
+   "species": "wither"
+  },
+  "butchery:wither_skeleton_corpse": {
+   "kg": 3.75,
+   "level": 3,
+   "species": "skeleton"
+  },
+  "butchery:wolf_carcass": {
+   "kg": 10.0,
+   "level": 5,
+   "species": "wolf"
+  },
+  "butchery:zoglin_carcass": {
+   "kg": 37.5,
+   "level": 5,
+   "species": "hoglin"
+  },
+  "butchery:zombie_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "zombie"
+  },
+  "butchery:zombie_horse_carcass": {
+   "kg": 112.5,
+   "level": 5,
+   "species": "horse"
+  },
+  "butchery:zombie_villager_corpse": {
+   "kg": 17.5,
+   "level": 7,
+   "species": "villager"
+  },
+  "butchery:zombified_piglin_corpse": {
+   "kg": 20.0,
+   "level": 7,
+   "species": "piglin"
+  }
+ }
+}

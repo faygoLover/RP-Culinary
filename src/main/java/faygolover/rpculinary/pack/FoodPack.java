@@ -15,7 +15,7 @@ import java.nio.file.Path;
 /**
  * Встроенный датапак «поверх всех модов» ({@code resourcepacks/rpculinary_food}, собирается {@code tools/gen_food_pack.py}):
  * разделка туш Butchery, теги, дроп мобов, рецепты. Данные самого мода не гарантированно перекрывают чужие (порядок
- * загрузки модов), а пак с позицией TOP — всегда, как датапак мира. Включён всегда.
+ * загрузки модов), а пак выше всех — всегда (позицию держит {@link faygolover.rpculinary.mixin.PackRepositoryMixin}). Включён всегда.
  */
 public final class FoodPack {
     private FoodPack() {}

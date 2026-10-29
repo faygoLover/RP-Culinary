@@ -1,0 +1,68 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:raw_rump_steak",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":5000,\"rpculinary:source\":\"cow\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:raw_rump_steak",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":5000,\"rpculinary:source\":\"cow\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:raw_tbone_steak",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 4
+      },
+      {
+       "function": "rpculinary:skill_yield"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "random_sequence": "rpculinary:carcass/brownmooshroom_hindquarter"
+}

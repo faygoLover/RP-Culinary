@@ -414,6 +414,63 @@ public final class CulinaryGameTests {
         remove(h, p);
     }
 
+    /** Разделка (блок 3): потери и опыт по порогу, замедление от веса туш; с Butchery — доп. разрез коровы перед «родным». */
+    @GameTest(template = T)
+    public static void butchery(GameTestHelper h) {
+        Settings s = Settings.get();
+        h.assertTrue(faygolover.rpculinary.server.Butchering.loss(5, 2, s) == s.butcherLossFar
+                && faygolover.rpculinary.server.Butchering.loss(5, 4, s) == s.butcherLossNear
+                && faygolover.rpculinary.server.Butchering.loss(5, 5, s) == s.butcherLossAt
+                && faygolover.rpculinary.server.Butchering.loss(5, 6, s) == 0, "потери по порогу");
+        h.assertTrue(faygolover.rpculinary.server.Butchering.xp(5, 10, 12) == 0 && faygolover.rpculinary.server.Butchering.xp(5, 5, 12) > 0
+                && faygolover.rpculinary.server.Butchering.xp(10, 5, 12) > faygolover.rpculinary.server.Butchering.xp(1, 1, 12), "опыт за разрез");
+        double cow = faygolover.rpculinary.server.Butchering.slow(125, s), chicken = faygolover.rpculinary.server.Butchering.slow(2, s);
+        h.assertTrue(cow > 0.5 && cow <= s.carcassSlowMax && chicken <= 0.02 && faygolover.rpculinary.server.Butchering.slow(0, s) == 0,
+                "замедление: корова " + cow + ", курица " + chicken);
+        if (!net.minecraftforge.fml.ModList.get().isLoaded("butchery")) {
+            h.succeed();
+            return;
+        }
+        var server = h.getLevel().getServer();
+        for (String t : new String[]{"butchery:blocks/cow_cut_2_drop", "rpculinary:carcass/cow_forequarter", "minecraft:cow_cut_1_drop"})
+            h.assertTrue(server.getLootData().getLootTable(new net.minecraft.resources.ResourceLocation(t))
+                    != net.minecraft.world.level.storage.loot.LootTable.EMPTY, "таблица " + t + " загружена");
+        var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("butchery", "drained_cow_carcass"));
+        BlockPos rel = new BlockPos(1, 2, 1), pos = h.absolutePos(rel);
+        var prop = (net.minecraft.world.level.block.state.properties.IntegerProperty) block.getStateDefinition().getProperty("blockstate");
+        h.getLevel().setBlock(pos, block.defaultBlockState().setValue(prop, 8), 3);
+        var be = h.getLevel().getBlockEntity(pos);
+        h.assertTrue(be != null, "у туши есть блок-сущность");
+        be.getPersistentData().putBoolean("isDrained", true);
+        ServerPlayer p = player(h);
+        p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
+                new net.minecraft.resources.ResourceLocation("butchery", "iron_cleaver"))));
+        var hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
+        // Без Perks навык — 10 (порог коровы 5): без потерь, всё ровно. С Perks у тестового игрока 0: часть — в обрезки.
+        boolean exact = faygolover.rpculinary.server.Butchering.loss(5, faygolover.rpculinary.server.CookingService.level(p), s) == 0;
+        MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos, hit));
+        h.assertTrue(h.getLevel().getBlockState(pos).getValue(prop) == 8, "доп. разрез стадию не двигает");
+        int chuck = dropped(h, pos, "butchery:raw_chuck_steak");
+        h.assertTrue(exact ? chuck == 2 : chuck <= 2, "доп. разрез: передняя четверть — лопатка ×2, было " + chuck);
+        MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos, hit));
+        h.assertTrue(h.getLevel().getBlockState(pos).getValue(prop) == 9, "родной разрез двигает стадию");
+        int ribeye = dropped(h, pos, "butchery:raw_ribeye_steak"), sirloin = dropped(h, pos, "butchery:raw_sirloin_steak");
+        h.assertTrue(exact ? ribeye == 4 && sirloin == 4 : ribeye <= 4 && sirloin <= 4, "родной разрез 2: рибай и вырезка ×4");
+        boolean lost = chuck < 2 || ribeye < 4 || sirloin < 4;
+        h.assertTrue(lost == (dropped(h, pos, "butchery:meat_scraps") > 0), "потерянное — обрезками");
+        h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        remove(h, p);
+        h.succeed();
+    }
+
+    private static int dropped(GameTestHelper h, BlockPos pos, String id) {
+        var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation(id));
+        int n = 0;
+        for (var ie : h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(2)))
+            if (ie.getItem().is(item)) n += ie.getItem().getCount();
+        return n;
+    }
+
     private static void dish(GameTestHelper h, String ns, String path) {
         if (!net.minecraftforge.fml.ModList.get().isLoaded(ns)) return;
         var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation(ns, path));

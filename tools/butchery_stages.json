@@ -1,0 +1,3708 @@
+{
+ "blocks": [
+  "all_black_cat_carcass",
+  "bat_carcass",
+  "bee_carcass",
+  "black_cat_carcass",
+  "blue_axolotl_carcass",
+  "brown_axolotl_carcass",
+  "brown_llama_carcass",
+  "brown_mooshroom_carcass",
+  "calico_cat_carcass",
+  "camel_carcass",
+  "cat_carcass",
+  "cave_spider_carcass",
+  "chicken_carcass",
+  "cod_carcass",
+  "cow_carcass",
+  "creamy_llama_carcass",
+  "creeper_carcass",
+  "cyan_axolotl_carcass",
+  "dolphin_carcass",
+  "donkey_carcass",
+  "drained_bat_carcass",
+  "drained_black_cat_carcass",
+  "drained_camel_carcass",
+  "drained_chicken_carcass",
+  "drained_cow_carcass",
+  "drained_creeper_carcass",
+  "drained_dolphin_carcass",
+  "drained_donkey_carcass",
+  "drained_drowned_corpse",
+  "drained_enderman_carcass",
+  "drained_evoker_corpse",
+  "drained_fox_carcass",
+  "drained_goat_carcass",
+  "drained_gray_frog_carcass",
+  "drained_guardian_carcass",
+  "drained_hoglin_carcass",
+  "drained_husk_corpse",
+  "drained_mule_carcass",
+  "drained_ocelot_carcass",
+  "drained_panda_carcass",
+  "drained_phantom_carcass",
+  "drained_pig_carcass",
+  "drained_piglin_corpse",
+  "drained_pillager_corpse",
+  "drained_rabbit_carcass",
+  "drained_red_cat_carcass",
+  "drained_sheep_carcass",
+  "drained_snowfox_carcass",
+  "drained_strider_carcass",
+  "drained_tabby_cat_carcass",
+  "drained_turtle_carcass",
+  "drained_villager",
+  "drained_white_cat_carcass",
+  "drained_witch_corpse",
+  "drained_wolf_carcass",
+  "drained_zoglin_carcass",
+  "drained_zombie_corpse",
+  "drained_zombie_villager",
+  "drainedplayercorpse",
+  "drowned_corpse",
+  "elder_guardian_carcass",
+  "ender_dragon_carcass",
+  "enderman_carcass",
+  "endermite_carcass",
+  "evoker_corpse",
+  "fox_carcass",
+  "glow_squid_carcass",
+  "goat_carcass",
+  "gold_axolotl_carcass",
+  "gray_frog_carcass",
+  "gray_llama_carcass",
+  "green_frog_carcass",
+  "guardian_carcass",
+  "hanging_enderman_carcass",
+  "hoglin_carcass",
+  "husk_corpse",
+  "jellie_cat_carcass",
+  "magma_cube_carcass",
+  "medium_magma_cube_carcass",
+  "medium_slime_carcass",
+  "mule_carcass",
+  "ocelot_carcass",
+  "orange_frog_carcass",
+  "panda_carcass",
+  "persian_cat_carcass",
+  "phantom_carcass",
+  "pig_carcass",
+  "piglin_brute_corpse",
+  "piglin_corpse",
+  "pillager_corpse",
+  "pink_axolotl_carcass",
+  "playercorpse",
+  "polar_bear_carcass",
+  "pufferfish",
+  "rabbit_carcass",
+  "ragdoll_cat_carcass",
+  "red_cat_carcass",
+  "red_mooshroom_carcass",
+  "salmon_carcass",
+  "sheep_carcass",
+  "shulker_carcass",
+  "siamese_cat_carcass",
+  "silverfish_carcass",
+  "skeleton_corpse",
+  "skeleton_horse_carcass",
+  "small_slime_carcass",
+  "sniffer_carcass_block",
+  "snow_fox_carcass",
+  "spider_carcass",
+  "squid_carcass",
+  "stray_corpse",
+  "strider_carcass",
+  "tabby_cat_carcass",
+  "turtle_carcass",
+  "villager_corpse",
+  "vindicator_corpse",
+  "warden_carcass",
+  "white_cat_carcass",
+  "white_llama_carcass",
+  "witch_corpse",
+  "wither_carcass",
+  "wither_skeleton_corpse",
+  "wolf_carcass",
+  "zoglin_carcass",
+  "zombie_corpse",
+  "zombie_horse_carcass",
+  "zombie_villager_corpse",
+  "zombified_piglin_corpse"
+ ],
+ "stages": {
+  "bee_carcass": {
+   "0": {
+    "next": 1,
+    "proc": "BeecutupProcedure",
+    "table": "bee_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "BeecutupProcedure",
+    "table": "bee_wing",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "BeecutupProcedure",
+    "table": "bee_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "BeecutupProcedure",
+    "table": "bee_cut_2",
+    "tool": "?"
+   }
+  },
+  "cat_carcass": {
+   "1": {
+    "next": 2,
+    "proc": "HangingskincatcarcasscutupProcedure",
+    "table": "skinned_cat_cut_1",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingskincatcarcasscutupProcedure",
+    "table": "skinned_cat_cut_2",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "HangingskincatcarcasscutupProcedure",
+    "table": "skinned_cat_cut_3",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "SkincatcarcasscutupProcedure",
+    "table": "skinned_cat_cut_1",
+    "tool": "cleaver"
+   },
+   "5": {
+    "next": 6,
+    "proc": "SkincatcarcasscutupProcedure",
+    "table": "skinned_cat_cut_2",
+    "tool": "?"
+   },
+   "6": {
+    "next": "air",
+    "proc": "SkincatcarcasscutupProcedure",
+    "table": "skinned_cat_cut_3",
+    "tool": "?"
+   }
+  },
+  "cave_spider_carcass": {
+   "0": {
+    "next": 4,
+    "proc": "CavespidercutupProcedure",
+    "table": "cave_spider_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingcavespidercutupProcedure",
+    "table": "cave_spider_cut_1",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingcavespidercutupProcedure",
+    "table": "cave_spider_cut_2",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "HangingcavespidercutupProcedure",
+    "table": "cave_spider_cut_3",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "CavespidercutupProcedure",
+    "table": "cave_spider_cut_1",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "CavespidercutupProcedure",
+    "table": "cave_spider_cut_2",
+    "tool": "?"
+   },
+   "6": {
+    "next": "air",
+    "proc": "CavespidercutupProcedure",
+    "table": "cave_spider_cut_3",
+    "tool": "?"
+   },
+   "7": {
+    "next": 1,
+    "proc": "HangingcavespidercutupProcedure",
+    "table": "cave_spider_head",
+    "tool": "cleaver"
+   }
+  },
+  "drained_bat_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "BatCutupProcedure",
+    "table": "bat_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingbatcutupProcedure",
+    "table": "bat_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingbatcutupProcedure",
+    "table": "bat_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingbatcutupProcedure",
+    "table": "bat_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingbatcutupProcedure",
+    "table": "bat_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingbatcutupProcedure",
+    "table": "bat_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "BatCutupProcedure",
+    "table": "bat_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "BatCutupProcedure",
+    "table": "bat_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "BatCutupProcedure",
+    "table": "bat_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "BatCutupProcedure",
+    "table": "bat_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_brown_mooshroom_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "BrownmooshroomcarcasscutupProcedure",
+    "table": "brownmooshroom_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingBrownmooshroomcarcasscutupProcedure",
+    "table": "brownmooshroom_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingBrownmooshroomcarcasscutupProcedure",
+    "table": "brownmooshroom_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingBrownmooshroomcarcasscutupProcedure",
+    "table": "brownmooshroom_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingBrownmooshroomcarcasscutupProcedure",
+    "table": "brownmooshroom_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingBrownmooshroomcarcasscutupProcedure",
+    "table": "brownmooshroom_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "BrownmooshroomcarcasscutupProcedure",
+    "table": "brownmooshroom_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "BrownmooshroomcarcasscutupProcedure",
+    "table": "brownmooshroom_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "BrownmooshroomcarcasscutupProcedure",
+    "table": "brownmooshroom_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "BrownmooshroomcarcasscutupProcedure",
+    "table": "brownmooshroom_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_camel_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "CamelcutupProcedure",
+    "table": "camel_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingcamelcarcasscutupProcedure",
+    "table": "camel_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingcamelcarcasscutupProcedure",
+    "table": "camel_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingcamelcarcasscutupProcedure",
+    "table": "camel_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingcamelcarcasscutupProcedure",
+    "table": "camel_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingcamelcarcasscutupProcedure",
+    "table": "camel_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "CamelcutupProcedure",
+    "table": "camel_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "CamelcutupProcedure",
+    "table": "camel_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "CamelcutupProcedure",
+    "table": "camel_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "CamelcutupProcedure",
+    "table": "camel_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_chicken_carcass": {
+   "0": {
+    "next": 5,
+    "proc": "ChickencutupProcedure",
+    "table": "chicken_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingchickencutupProcedure",
+    "table": "chicken_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingchickencutupProcedure",
+    "table": null,
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingchickencutupProcedure",
+    "table": "chicken_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingchickencutupProcedure",
+    "table": "chicken_cut_1",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "ChickencutupProcedure",
+    "table": null,
+    "tool": "skinning_knives"
+   },
+   "6": {
+    "next": 7,
+    "proc": "ChickencutupProcedure",
+    "table": "chicken_cut_1",
+    "tool": "?"
+   },
+   "7": {
+    "next": 8,
+    "proc": "ChickencutupProcedure",
+    "table": "chicken_cut_2",
+    "tool": "?"
+   },
+   "8": {
+    "next": "air",
+    "proc": "ChickencutupProcedure",
+    "table": "chicken_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_cow_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "CowcutupProcedure",
+    "table": "cow_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingcowcutupProcedure",
+    "table": "cow_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingcowcutupProcedure",
+    "table": "cow_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingcowcutupProcedure",
+    "table": "cow_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingcowcutupProcedure",
+    "table": "cow_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingcowcutupProcedure",
+    "table": "cow_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "CowcutupProcedure",
+    "table": "cow_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "CowcutupProcedure",
+    "table": "cow_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "CowcutupProcedure",
+    "table": "cow_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "CowcutupProcedure",
+    "table": "cow_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_creeper_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "CreepercarcasscutupProcedure",
+    "table": "creeper_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingcreepercarcasscutupProcedure",
+    "table": "creeper_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingcreepercarcasscutupProcedure",
+    "table": "creeper_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingcreepercarcasscutupProcedure",
+    "table": "creeper_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingcreepercarcasscutupProcedure",
+    "table": "creeper_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingcreepercarcasscutupProcedure",
+    "table": "creeper_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "CreepercarcasscutupProcedure",
+    "table": "creeper_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "CreepercarcasscutupProcedure",
+    "table": "creeper_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "CreepercarcasscutupProcedure",
+    "table": "creeper_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "CreepercarcasscutupProcedure",
+    "table": "creeper_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_dolphin_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "DolphincutupProcedure",
+    "table": "dolphin_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingdolphincutupProcedure",
+    "table": "dolphin_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingdolphincutupProcedure",
+    "table": "dolphin_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingdolphincutupProcedure",
+    "table": "dolphin_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingdolphincutupProcedure",
+    "table": "dolphin_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingdolphincutupProcedure",
+    "table": "dolphin_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "DolphincutupProcedure",
+    "table": "dolphin_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "DolphincutupProcedure",
+    "table": "dolphin_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "DolphincutupProcedure",
+    "table": "dolphin_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "DolphincutupProcedure",
+    "table": "dolphin_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_donkey_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "DonkeycarcasscutupProcedure",
+    "table": "donkey_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingDonkeycarcasscutupProcedure",
+    "table": "donkey_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingDonkeycarcasscutupProcedure",
+    "table": "donkey_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingDonkeycarcasscutupProcedure",
+    "table": "donkey_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingDonkeycarcasscutupProcedure",
+    "table": "donkey_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingDonkeycarcasscutupProcedure",
+    "table": "donkey_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "DonkeycarcasscutupProcedure",
+    "table": "donkey_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "DonkeycarcasscutupProcedure",
+    "table": "donkey_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "DonkeycarcasscutupProcedure",
+    "table": "donkey_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "DonkeycarcasscutupProcedure",
+    "table": "donkey_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_drowned_corpse": {
+   "0": {
+    "next": 5,
+    "proc": "DrownedcarcasscutupProcedure",
+    "table": "drowned_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingdrownedcutupProcedure",
+    "table": "drowned_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingdrownedcutupProcedure",
+    "table": "drowned_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingdrownedcutupProcedure",
+    "table": "drowned_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingdrownedcutupProcedure",
+    "table": "drowned_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "DrownedcarcasscutupProcedure",
+    "table": "drowned_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "DrownedcarcasscutupProcedure",
+    "table": "drowned_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "DrownedcarcasscutupProcedure",
+    "table": "drowned_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_evoker_corpse": {
+   "0": {
+    "next": 6,
+    "proc": "EvokercutupProcedure",
+    "table": "evoker_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingevokercutupProcedure",
+    "table": "evoker_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingevokercutupProcedure",
+    "table": "evoker_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingevokercutupProcedure",
+    "table": "evoker_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingevokercutupProcedure",
+    "table": "evoker_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingevokercutupProcedure",
+    "table": "evoker_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "EvokercutupProcedure",
+    "table": "evoker_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "EvokercutupProcedure",
+    "table": "evoker_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "EvokercutupProcedure",
+    "table": "evoker_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "EvokercutupProcedure",
+    "table": "evoker_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_fox_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "FoxcutupProcedure",
+    "table": "fox_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingfoxcutupProcedure",
+    "table": "fox_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingfoxcutupProcedure",
+    "table": "fox_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingfoxcutupProcedure",
+    "table": "fox_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingfoxcutupProcedure",
+    "table": "fox_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingfoxcutupProcedure",
+    "table": "fox_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "FoxcutupProcedure",
+    "table": "fox_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "FoxcutupProcedure",
+    "table": "fox_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "FoxcutupProcedure",
+    "table": "fox_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "FoxcutupProcedure",
+    "table": "fox_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_goat_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "GoatCutupProcedure",
+    "table": "goat_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HanginggoatcutupProcedure",
+    "table": "goat_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HanginggoatcutupProcedure",
+    "table": "goat_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HanginggoatcutupProcedure",
+    "table": "goat_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HanginggoatcutupProcedure",
+    "table": "goat_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HanginggoatcutupProcedure",
+    "table": "goat_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "GoatCutupProcedure",
+    "table": "goat_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "GoatCutupProcedure",
+    "table": "goat_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "GoatCutupProcedure",
+    "table": "goat_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "GoatCutupProcedure",
+    "table": "goat_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_gray_horse_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "RegulargrayhorsecarcasscutupProcedure",
+    "table": "gray_horse_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingregulargrayhorsecarcasscutupProcedure",
+    "table": "gray_horse_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingregulargrayhorsecarcasscutupProcedure",
+    "table": "gray_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingregulargrayhorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingregulargrayhorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingregulargrayhorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "RegulargrayhorsecarcasscutupProcedure",
+    "table": "gray_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "RegulargrayhorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "RegulargrayhorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "RegulargrayhorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_guardian_carcass": {
+   "0": {
+    "next": 5,
+    "proc": "GuardiancutupProcedure",
+    "table": "guardian_spike",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingguardiancutupProcedure",
+    "table": "guardian_spike",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingguardiancutupProcedure",
+    "table": "guardian_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingguardiancutupProcedure",
+    "table": "guardian_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingguardiancutupProcedure",
+    "table": "guardian_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "GuardiancutupProcedure",
+    "table": "guardian_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "GuardiancutupProcedure",
+    "table": "guardian_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "GuardiancutupProcedure",
+    "table": "guardian_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_hoglin_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "HoglincutupProcedure",
+    "table": "hoglin_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HanginghoglincutupProcedure",
+    "table": "hoglin_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HanginghoglincutupProcedure",
+    "table": "hoglin_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HanginghoglincutupProcedure",
+    "table": "hoglin_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HanginghoglincutupProcedure",
+    "table": "hoglin_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HanginghoglincutupProcedure",
+    "table": "hoglin_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "HoglincutupProcedure",
+    "table": "hoglin_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "HoglincutupProcedure",
+    "table": "hoglin_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "HoglincutupProcedure",
+    "table": "hoglin_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "HoglincutupProcedure",
+    "table": "hoglin_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_husk_corpse": {
+   "0": {
+    "next": 5,
+    "proc": "HuskcarcasscutupProcedure",
+    "table": "husk_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HanginghuskcutupProcedure",
+    "table": "husk_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HanginghuskcutupProcedure",
+    "table": "husk_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HanginghuskcutupProcedure",
+    "table": "husk_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HanginghuskcutupProcedure",
+    "table": "husk_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "HuskcarcasscutupProcedure",
+    "table": "husk_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "HuskcarcasscutupProcedure",
+    "table": "husk_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "HuskcarcasscutupProcedure",
+    "table": "husk_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_mule_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "MulecarcasscutupProcedure",
+    "table": "mule_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingMulecarcasscutupProcedure",
+    "table": "mule_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingMulecarcasscutupProcedure",
+    "table": "mule_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingMulecarcasscutupProcedure",
+    "table": "mule_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingMulecarcasscutupProcedure",
+    "table": "mule_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingMulecarcasscutupProcedure",
+    "table": "mule_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "MulecarcasscutupProcedure",
+    "table": "mule_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "MulecarcasscutupProcedure",
+    "table": "mule_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "MulecarcasscutupProcedure",
+    "table": "mule_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "MulecarcasscutupProcedure",
+    "table": "mule_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_ocelot_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "OcelotcutupProcedure",
+    "table": "ocelot_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingocelotcutupProcedure",
+    "table": "ocelot_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingocelotcutupProcedure",
+    "table": "ocelot_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingocelotcutupProcedure",
+    "table": "ocelot_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingocelotcutupProcedure",
+    "table": "ocelot_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingocelotcutupProcedure",
+    "table": "ocelot_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "OcelotcutupProcedure",
+    "table": "ocelot_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "OcelotcutupProcedure",
+    "table": "ocelot_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "OcelotcutupProcedure",
+    "table": "ocelot_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "OcelotcutupProcedure",
+    "table": "ocelot_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_panda_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "PandacarcasscutupProcedure",
+    "table": "panda_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingPandacarcasscutupProcedure",
+    "table": "panda_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingPandacarcasscutupProcedure",
+    "table": "panda_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingPandacarcasscutupProcedure",
+    "table": "panda_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingPandacarcasscutupProcedure",
+    "table": "panda_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingPandacarcasscutupProcedure",
+    "table": "panda_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "PandacarcasscutupProcedure",
+    "table": "panda_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "PandacarcasscutupProcedure",
+    "table": "panda_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "PandacarcasscutupProcedure",
+    "table": "panda_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "PandacarcasscutupProcedure",
+    "table": "panda_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_phantom_carcass": {
+   "0": {
+    "next": 8,
+    "proc": "PhantomcutupProcedure",
+    "table": "phantom_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingphantomcutupProcedure",
+    "table": "phantom_head",
+    "tool": "cleaver"
+   },
+   "10": {
+    "next": 11,
+    "proc": "PhantomcutupProcedure",
+    "table": "phantom_cut_3",
+    "tool": "?"
+   },
+   "11": {
+    "next": 12,
+    "proc": "PhantomcutupProcedure",
+    "table": "phantom_cut_4",
+    "tool": "?"
+   },
+   "12": {
+    "next": 13,
+    "proc": "PhantomcutupProcedure",
+    "table": "phantom_cut_4",
+    "tool": "?"
+   },
+   "13": {
+    "next": "air",
+    "proc": "PhantomcutupProcedure",
+    "table": "phantom_cut_6",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingphantomcutupProcedure",
+    "table": "phantom_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingphantomcutupProcedure",
+    "table": "phantom_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingphantomcutupProcedure",
+    "table": "phantom_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "HangingphantomcutupProcedure",
+    "table": "phantom_cut_4",
+    "tool": "?"
+   },
+   "6": {
+    "next": "air",
+    "proc": "HangingphantomcutupProcedure",
+    "table": "phantom_cut_5",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "PhantomcutupProcedure",
+    "table": "phantom_cut_1",
+    "tool": "?"
+   },
+   "9": {
+    "next": 10,
+    "proc": "PhantomcutupProcedure",
+    "table": "phantom_cut_2",
+    "tool": "?"
+   }
+  },
+  "drained_pig_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "PigcutupProcedure",
+    "table": "pig_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingpigcutupProcedure",
+    "table": "pig_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingpigcutupProcedure",
+    "table": "pig_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingpigcutupProcedure",
+    "table": "pig_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingpigcutupProcedure",
+    "table": "pig_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingpigcutupProcedure",
+    "table": "pig_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "PigcutupProcedure",
+    "table": "pig_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "PigcutupProcedure",
+    "table": "pig_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "PigcutupProcedure",
+    "table": "pig_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "PigcutupProcedure",
+    "table": "pig_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_piglin_brute_corpse": {
+   "0": {
+    "next": 6,
+    "proc": "PiglinbrutecutupProcedure",
+    "table": "piglin_brute_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingpiglinbrutecutupProcedure",
+    "table": "piglin_brute_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingpiglinbrutecutupProcedure",
+    "table": "piglin_brute_armor",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingpiglinbrutecutupProcedure",
+    "table": "piglin_brute_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingpiglinbrutecutupProcedure",
+    "table": "hanging_piglin_brute_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingpiglinbrutecutupProcedure",
+    "table": "hanging_piglin_brute_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "PiglinbrutecutupProcedure",
+    "table": "piglin_brute_armor",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "PiglinbrutecutupProcedure",
+    "table": "piglin_brute_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "PiglinbrutecutupProcedure",
+    "table": "piglin_brute_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "PiglinbrutecutupProcedure",
+    "table": "piglin_brute_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_piglin_corpse": {
+   "0": {
+    "next": 5,
+    "proc": "PiglincorpsecutupProcedure",
+    "table": "piglin_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingPiglincutupProcedure",
+    "table": "piglin_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingPiglincutupProcedure",
+    "table": "piglin_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingPiglincutupProcedure",
+    "table": "piglin_hanging_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingPiglincutupProcedure",
+    "table": "piglin_hanging_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "PiglincorpsecutupProcedure",
+    "table": "piglin_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "PiglincorpsecutupProcedure",
+    "table": "piglin_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "PiglincorpsecutupProcedure",
+    "table": "piglin_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_pillager_corpse": {
+   "0": {
+    "next": 6,
+    "proc": "PillagercorpsecutupProcedure",
+    "table": "pillager_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingPillagercorpsecutupProcedure",
+    "table": "pillager_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingPillagercorpsecutupProcedure",
+    "table": "pillager_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingPillagercorpsecutupProcedure",
+    "table": "pillager_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingPillagercorpsecutupProcedure",
+    "table": "pillager_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingPillagercorpsecutupProcedure",
+    "table": null,
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "PillagercorpsecutupProcedure",
+    "table": "pillager_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "PillagercorpsecutupProcedure",
+    "table": "pillager_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "PillagercorpsecutupProcedure",
+    "table": "pillager_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "PillagercorpsecutupProcedure",
+    "table": "pillager_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_polar_bear_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "PolarbearcutupProcedure",
+    "table": "polar_bear_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingPolarbearcutupProcedure",
+    "table": "polar_bear_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingPolarbearcutupProcedure",
+    "table": "polar_bear_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingPolarbearcutupProcedure",
+    "table": "polar_bear_carcass_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingPolarbearcutupProcedure",
+    "table": "polar_bear_carcass_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingPolarbearcutupProcedure",
+    "table": "polar_bear_carcass_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "PolarbearcutupProcedure",
+    "table": "polar_bear_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "PolarbearcutupProcedure",
+    "table": "polar_bear_carcass_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "PolarbearcutupProcedure",
+    "table": "polar_bear_carcass_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "PolarbearcutupProcedure",
+    "table": "polar_bear_carcass_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_rabbit_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "RabbitcutupProcedure",
+    "table": "rabbit_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingrabbitcutupProcedure",
+    "table": "rabbit_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingrabbitcutupProcedure",
+    "table": "rabbit_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingrabbitcutupProcedure",
+    "table": "rabbit_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingrabbitcutupProcedure",
+    "table": "rabbit_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingrabbitcutupProcedure",
+    "table": "rabbit_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "RabbitcutupProcedure",
+    "table": "rabbit_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "RabbitcutupProcedure",
+    "table": "rabbit_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "RabbitcutupProcedure",
+    "table": "rabbit_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "RabbitcutupProcedure",
+    "table": "rabbit_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_red_mooshroom_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "RedmooshroomcarcasscutupProcedure",
+    "table": "redmooshroom_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingRedmooshroomcarcasscutupProcedure",
+    "table": "redmooshroom_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingRedmooshroomcarcasscutupProcedure",
+    "table": "redmooshroom_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingRedmooshroomcarcasscutupProcedure",
+    "table": "redmooshroom_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingRedmooshroomcarcasscutupProcedure",
+    "table": "redmooshroom_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingRedmooshroomcarcasscutupProcedure",
+    "table": "redmooshroom_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "RedmooshroomcarcasscutupProcedure",
+    "table": "redmooshroom_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "RedmooshroomcarcasscutupProcedure",
+    "table": "redmooshroom_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "RedmooshroomcarcasscutupProcedure",
+    "table": "redmooshroom_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "RedmooshroomcarcasscutupProcedure",
+    "table": "redmooshroom_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_regular_black_horse_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "RegularblackhorsecarcasscutupProcedure",
+    "table": "black_horse_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingregularblackhorsecarcasscutupProcedure",
+    "table": "black_horse_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingregularblackhorsecarcasscutupProcedure",
+    "table": "black_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingregularblackhorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingregularblackhorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingregularblackhorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "RegularblackhorsecarcasscutupProcedure",
+    "table": "black_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "RegularblackhorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "RegularblackhorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "RegularblackhorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_regular_brown_horse_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "RegularbrownhorsecarcasscutupProcedure",
+    "table": "brown_horse_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingregularbrownhorsecarcasscutupProcedure",
+    "table": "brown_horse_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingregularbrownhorsecarcasscutupProcedure",
+    "table": "brown_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingregularbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingregularbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingregularbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "RegularbrownhorsecarcasscutupProcedure",
+    "table": "brown_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "RegularbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "RegularbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "RegularbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_regular_chestnut_horse_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "RegularchestnuthorsecarcasscutupProcedure",
+    "table": "chestnut_horse_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingregularchestnuthorsecarcasscutupProcedure",
+    "table": "chestnut_horse_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingregularchestnuthorsecarcasscutupProcedure",
+    "table": "chestnut_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingregularchestnuthorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingregularchestnuthorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingregularchestnuthorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "RegularchestnuthorsecarcasscutupProcedure",
+    "table": "chestnut_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "RegularchestnuthorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "RegularchestnuthorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "RegularchestnuthorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_regular_creamy_horse_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "RegularcreamyhorsecarcasscutupProcedure",
+    "table": "creamy_horse_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingregularcreamyhorsecarcasscutupProcedure",
+    "table": "creamy_horse_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingregularcreamyhorsecarcasscutupProcedure",
+    "table": "creamy_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingregularcreamyhorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingregularcreamyhorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingregularcreamyhorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "RegularcreamyhorsecarcasscutupProcedure",
+    "table": "creamy_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "RegularcreamyhorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "RegularcreamyhorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "RegularcreamyhorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_regular_dark_brown_horse_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "RegulardarkbrownhorsecarcasscutupProcedure",
+    "table": "dark_brown_horse_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingregulardarkbrownhorsecarcasscutupProcedure",
+    "table": "dark_brown_horse_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingregulardarkbrownhorsecarcasscutupProcedure",
+    "table": "dark_brown_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingregulardarkbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingregulardarkbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingregulardarkbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "RegulardarkbrownhorsecarcasscutupProcedure",
+    "table": "dark_brown_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "RegulardarkbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "RegulardarkbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "RegulardarkbrownhorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_sheep_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "SheepcutupProcedure",
+    "table": "sheep_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingsheepcutupProcedure",
+    "table": "sheep_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingsheepcutupProcedure",
+    "table": "sheep_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingsheepcutupProcedure",
+    "table": "sheep_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingsheepcutupProcedure",
+    "table": "sheep_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingsheepcutupProcedure",
+    "table": "sheep_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "SheepcutupProcedure",
+    "table": "sheep_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "SheepcutupProcedure",
+    "table": "sheep_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "SheepcutupProcedure",
+    "table": "sheep_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "SheepcutupProcedure",
+    "table": "sheep_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_snowfox_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "SnowfoxcutupProcedure",
+    "table": "snow_fox_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingSnowfoxcutupProcedure",
+    "table": "snow_fox_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingSnowfoxcutupProcedure",
+    "table": "snow_fox_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingSnowfoxcutupProcedure",
+    "table": "fox_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingSnowfoxcutupProcedure",
+    "table": "fox_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingSnowfoxcutupProcedure",
+    "table": "fox_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "SnowfoxcutupProcedure",
+    "table": "snow_fox_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "SnowfoxcutupProcedure",
+    "table": "fox_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "SnowfoxcutupProcedure",
+    "table": "fox_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "SnowfoxcutupProcedure",
+    "table": "fox_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_strider_carcass": {
+   "0": {
+    "next": 4,
+    "proc": "StridercutupProcedure",
+    "table": "strider_cut_1",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingstridercutupProcedure",
+    "table": "strider_cut_2",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingstridercutupProcedure",
+    "table": "strider_cut_2",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "HangingstridercutupProcedure",
+    "table": "strider_cut_3",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "StridercutupProcedure",
+    "table": "strider_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "StridercutupProcedure",
+    "table": "strider_cut_2",
+    "tool": "?"
+   },
+   "6": {
+    "next": "air",
+    "proc": "StridercutupProcedure",
+    "table": "strider_cut_3",
+    "tool": "?"
+   },
+   "7": {
+    "next": 1,
+    "proc": "HangingstridercutupProcedure",
+    "table": "strider_cut_1",
+    "tool": "cleaver"
+   }
+  },
+  "drained_turtle_carcass": {
+   "0": {
+    "next": 9,
+    "proc": "TurtlecutupProcedure",
+    "table": "turtle_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingturtlecutupProcedure",
+    "table": "turtle_leg",
+    "tool": "?"
+   },
+   "10": {
+    "next": 11,
+    "proc": "TurtlecutupProcedure",
+    "table": "turtle_cut_1",
+    "tool": "?"
+   },
+   "11": {
+    "next": 12,
+    "proc": "TurtlecutupProcedure",
+    "table": "turtle_cut_2",
+    "tool": "?"
+   },
+   "12": {
+    "next": 13,
+    "proc": "TurtlecutupProcedure",
+    "table": "turtle_cut_3",
+    "tool": "?"
+   },
+   "13": {
+    "next": 14,
+    "proc": "TurtlecutupProcedure",
+    "table": "turtle_cut_4",
+    "tool": "?"
+   },
+   "14": {
+    "next": 15,
+    "proc": "TurtlecutupProcedure",
+    "table": "turtle_cut_5",
+    "tool": "?"
+   },
+   "15": {
+    "next": 16,
+    "proc": "TurtlecutupProcedure",
+    "table": "turtle_cut_6",
+    "tool": "?"
+   },
+   "16": {
+    "next": "air",
+    "proc": "TurtlecutupProcedure",
+    "table": "turtle_cut_7",
+    "tool": "?"
+   },
+   "17": {
+    "next": 1,
+    "proc": "HangingturtlecutupProcedure",
+    "table": "turtle_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingturtlecutupProcedure",
+    "table": "turtle_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingturtlecutupProcedure",
+    "table": "turtle_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingturtlecutupProcedure",
+    "table": "turtle_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "HangingturtlecutupProcedure",
+    "table": "turtle_cut_4",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "HangingturtlecutupProcedure",
+    "table": "turtle_cut_5",
+    "tool": "?"
+   },
+   "7": {
+    "next": 8,
+    "proc": "HangingturtlecutupProcedure",
+    "table": "turtle_cut_6",
+    "tool": "?"
+   },
+   "8": {
+    "next": "air",
+    "proc": "HangingturtlecutupProcedure",
+    "table": "turtle_cut_7",
+    "tool": "?"
+   },
+   "9": {
+    "next": 10,
+    "proc": "TurtlecutupProcedure",
+    "table": "turtle_leg",
+    "tool": "?"
+   }
+  },
+  "drained_villager": {
+   "0": {
+    "next": 5,
+    "proc": "VillagercutupProcedure",
+    "table": "villager_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingvillagercutupProcedure",
+    "table": "villager_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingvillagercutupProcedure",
+    "table": "villager_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingvillagercutupProcedure",
+    "table": "villager_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingvillagercutupProcedure",
+    "table": "villager_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "VillagercutupProcedure",
+    "table": "villager_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "VillagercutupProcedure",
+    "table": "villager_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "VillagercutupProcedure",
+    "table": "villager_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_vindicator_corpse": {
+   "0": {
+    "next": 6,
+    "proc": "VindicatorcorpsecutupProcedure",
+    "table": "vindicator_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingvindicatorcorpsecutupProcedure",
+    "table": "vindicator_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingvindicatorcorpsecutupProcedure",
+    "table": "vindicator_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingvindicatorcorpsecutupProcedure",
+    "table": "vindicator_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingvindicatorcorpsecutupProcedure",
+    "table": "vindicator_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingvindicatorcorpsecutupProcedure",
+    "table": "vindicator_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "VindicatorcorpsecutupProcedure",
+    "table": "vindicator_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "VindicatorcorpsecutupProcedure",
+    "table": "vindicator_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "VindicatorcorpsecutupProcedure",
+    "table": "vindicator_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "VindicatorcorpsecutupProcedure",
+    "table": "vindicator_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_white_horse_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "RegularwhitehorsecarcasscutupProcedure",
+    "table": "white_horse_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingregularwhitehorsecarcasscutupProcedure",
+    "table": "white_horse_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingregularwhitehorsecarcasscutupProcedure",
+    "table": "white_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingregularwhitehorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingregularwhitehorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingregularwhitehorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "RegularwhitehorsecarcasscutupProcedure",
+    "table": "white_horse_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "RegularwhitehorsecarcasscutupProcedure",
+    "table": "horse_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "RegularwhitehorsecarcasscutupProcedure",
+    "table": "horse_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "RegularwhitehorsecarcasscutupProcedure",
+    "table": "horse_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_witch_corpse": {
+   "0": {
+    "next": 6,
+    "proc": "WitchCutUpProcedure",
+    "table": "witch_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingwitchcutupProcedure",
+    "table": "witch_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingwitchcutupProcedure",
+    "table": "witch_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingwitchcutupProcedure",
+    "table": "witch_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingwitchcutupProcedure",
+    "table": "witch_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingwitchcutupProcedure",
+    "table": "witch_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "WitchCutUpProcedure",
+    "table": "witch_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "WitchCutUpProcedure",
+    "table": "witch_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "WitchCutUpProcedure",
+    "table": "witch_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "WitchCutUpProcedure",
+    "table": "witch_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_wolf_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "WolfcutupProcedure",
+    "table": "wolf_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingwolfcutupProcedure",
+    "table": "wolf_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingwolfcutupProcedure",
+    "table": "wolf_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingwolfcutupProcedure",
+    "table": "wolf_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingwolfcutupProcedure",
+    "table": "wolf_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingwolfcutupProcedure",
+    "table": "wolf_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "WolfcutupProcedure",
+    "table": "wolf_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "WolfcutupProcedure",
+    "table": "wolf_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "WolfcutupProcedure",
+    "table": "wolf_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "WolfcutupProcedure",
+    "table": "wolf_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_zoglin_carcass": {
+   "0": {
+    "next": 6,
+    "proc": "ZoglincutupProcedure",
+    "table": "zoglin_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingzoglincutupProcedure",
+    "table": "zoglin_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingzoglincutupProcedure",
+    "table": "zoglin_skin",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingzoglincutupProcedure",
+    "table": "zoglin_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingzoglincutupProcedure",
+    "table": "zoglin_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingzoglincutupProcedure",
+    "table": "zoglin_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "ZoglincutupProcedure",
+    "table": "zoglin_skin",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "ZoglincutupProcedure",
+    "table": "zoglin_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "ZoglincutupProcedure",
+    "table": "zoglin_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "ZoglincutupProcedure",
+    "table": "zoglin_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_zombie_corpse": {
+   "0": {
+    "next": 5,
+    "proc": "ZombiecarcasscutupProcedure",
+    "table": "zombie_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingzombiecutupProcedure",
+    "table": "zombie_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingzombiecutupProcedure",
+    "table": "zombie_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingzombiecutupProcedure",
+    "table": "zombie_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingzombiecutupProcedure",
+    "table": "zombie_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "ZombiecarcasscutupProcedure",
+    "table": "zombie_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "ZombiecarcasscutupProcedure",
+    "table": "zombie_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "ZombiecarcasscutupProcedure",
+    "table": "zombie_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_zombie_horse_carcass": {
+   "0": {
+    "next": 5,
+    "proc": "ZombiehorsecarcasscutupProcedure",
+    "table": "zombie_horse_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingZombiehorsecarcasscutupProcedure",
+    "table": "zombie_horse_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingZombiehorsecarcasscutupProcedure",
+    "table": "zombie_horse_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingZombiehorsecarcasscutupProcedure",
+    "table": "zombie_horse_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingZombiehorsecarcasscutupProcedure",
+    "table": "zombie_horse_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "ZombiehorsecarcasscutupProcedure",
+    "table": "zombie_horse_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "ZombiehorsecarcasscutupProcedure",
+    "table": "zombie_horse_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "ZombiehorsecarcasscutupProcedure",
+    "table": "zombie_horse_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_zombie_villager": {
+   "0": {
+    "next": 5,
+    "proc": "ZombieVillagercutupProcedure",
+    "table": "zombie_villager_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingZombievillagercutupProcedure",
+    "table": "zombie_villager_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingZombievillagercutupProcedure",
+    "table": "zombie_villager_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingZombievillagercutupProcedure",
+    "table": "zombie_villager_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingZombievillagercutupProcedure",
+    "table": "zombie_villager_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "ZombieVillagercutupProcedure",
+    "table": "zombie_villager_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "ZombieVillagercutupProcedure",
+    "table": "zombie_villager_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "ZombieVillagercutupProcedure",
+    "table": "zombie_villager_cut_3",
+    "tool": "?"
+   }
+  },
+  "drained_zombified_piglin_corpse": {
+   "0": {
+    "next": 5,
+    "proc": "ZombiePiglincorpsecutupProcedure",
+    "table": "zombie_piglin_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingZombiePiglincutupProcedure",
+    "table": "zombie_piglin_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingZombiePiglincutupProcedure",
+    "table": "zombie_piglin_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingZombiePiglincutupProcedure",
+    "table": "zombie_piglin_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingZombiePiglincutupProcedure",
+    "table": "zombie_piglin_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "ZombiePiglincorpsecutupProcedure",
+    "table": "zombie_piglin_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "ZombiePiglincorpsecutupProcedure",
+    "table": "zombie_piglin_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "ZombiePiglincorpsecutupProcedure",
+    "table": "zombie_piglin_cut_3",
+    "tool": "?"
+   }
+  },
+  "drainedplayercorpse": {
+   "0": {
+    "next": 11,
+    "proc": "PlayercutupProcedure",
+    "table": "player_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_head",
+    "tool": "cleaver"
+   },
+   "10": {
+    "next": 20,
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_intestine",
+    "tool": "?"
+   },
+   "11": {
+    "next": 12,
+    "proc": "PlayercutupProcedure",
+    "table": "player_arm",
+    "tool": "?"
+   },
+   "12": {
+    "next": 13,
+    "proc": "PlayercutupProcedure",
+    "table": "player_arm",
+    "tool": "?"
+   },
+   "13": {
+    "next": 14,
+    "proc": "PlayercutupProcedure",
+    "table": "player_chest_skin",
+    "tool": "?"
+   },
+   "14": {
+    "next": 15,
+    "proc": "PlayercutupProcedure",
+    "table": "player_heart",
+    "tool": "?"
+   },
+   "15": {
+    "next": 16,
+    "proc": "PlayercutupProcedure",
+    "table": "player_stomach",
+    "tool": "?"
+   },
+   "16": {
+    "next": 17,
+    "proc": "PlayercutupProcedure",
+    "table": "player_liver",
+    "tool": "?"
+   },
+   "17": {
+    "next": 19,
+    "proc": "PlayercutupProcedure",
+    "table": "player_intestine",
+    "tool": "?"
+   },
+   "18": {
+    "next": "air",
+    "proc": "PlayercutupProcedure",
+    "table": "player_leg",
+    "tool": "?"
+   },
+   "19": {
+    "next": 18,
+    "proc": "PlayercutupProcedure",
+    "table": "player_body",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_arm",
+    "tool": "?"
+   },
+   "20": {
+    "next": "air",
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_body",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_arm",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_leg",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_leg",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_chest_skin",
+    "tool": "?"
+   },
+   "7": {
+    "next": 8,
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_heart",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_stomach",
+    "tool": "?"
+   },
+   "9": {
+    "next": 10,
+    "proc": "HangingplayercutupProcedure",
+    "table": "player_liver",
+    "tool": "?"
+   }
+  },
+  "endermite_carcass": {
+   "0": {
+    "next": 1,
+    "proc": "EndermitecutupProcedure",
+    "table": "endermite_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "EndermitecutupProcedure",
+    "table": "endermite_cut_1",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "EndermitecutupProcedure",
+    "table": "endermite_cut_2",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "EndermitecutupProcedure",
+    "table": "endermite_cut_3",
+    "tool": "?"
+   }
+  },
+  "glow_squid_carcass": {
+   "0": {
+    "next": 4,
+    "proc": "GlowsquidcutupProcedure",
+    "table": "glowsquid_cut_1",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingglowsquidcutupProcedure",
+    "table": "glowsquid_cut_1",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingglowsquidcutupProcedure",
+    "table": "glowsquid_cut_2",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "HangingglowsquidcutupProcedure",
+    "table": "glowsquid_head",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "GlowsquidcutupProcedure",
+    "table": "glowsquid_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "GlowsquidcutupProcedure",
+    "table": "glowsquid_head",
+    "tool": "?"
+   }
+  },
+  "iron_golem": {
+   "0": {
+    "next": 1,
+    "proc": "IronGolemCutUpProcedure",
+    "table": "iron_golem_head",
+    "tool": "hacksaw"
+   },
+   "1": {
+    "next": 2,
+    "proc": "IronGolemCutUpProcedure",
+    "table": "iron_golem_arm",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "IronGolemCutUpProcedure",
+    "table": "iron_golem_body",
+    "tool": "?"
+   },
+   "3": {
+    "next": null,
+    "proc": "IronGolemCutUpProcedure",
+    "table": "iron_golem_legs",
+    "tool": "?"
+   }
+  },
+  "magma_cube_carcass": {
+   "0": {
+    "next": 1,
+    "proc": "MagmacutupProcedure",
+    "table": "magma_cut_1",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "MagmacutupProcedure",
+    "table": "magma_cut_2",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "MagmacutupProcedure",
+    "table": "magma_cut_3",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "MagmacutupProcedure",
+    "table": "magma_cut_4",
+    "tool": "?"
+   }
+  },
+  "pufferfish": {
+   "0": {
+    "next": 1,
+    "proc": "PufferfishcutupProcedure",
+    "table": "pufferfish_cut_1",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": "air",
+    "proc": "PufferfishcutupProcedure",
+    "table": "pufferfish_cut_2",
+    "tool": "?"
+   },
+   "2": {
+    "next": 1,
+    "proc": "PufferfishcutuphangingProcedure",
+    "table": "pufferfish_cut_1",
+    "tool": "cleaver"
+   },
+   "3": {
+    "next": "air",
+    "proc": "PufferfishcutuphangingProcedure",
+    "table": "pufferfish_cut_2",
+    "tool": "?"
+   }
+  },
+  "repaired_irongolem": {
+   "0": {
+    "next": 1,
+    "proc": "RepairedIronGolemCutUpProcedure",
+    "table": "repaired_iron_golem_head",
+    "tool": "hacksaw"
+   },
+   "1": {
+    "next": 2,
+    "proc": "RepairedIronGolemCutUpProcedure",
+    "table": "repaired_iron_golem_arm",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "RepairedIronGolemCutUpProcedure",
+    "table": "repaired_iron_golem_body",
+    "tool": "?"
+   },
+   "3": {
+    "next": null,
+    "proc": "RepairedIronGolemCutUpProcedure",
+    "table": "repaired_iron_golem_legs",
+    "tool": "?"
+   }
+  },
+  "shulker_carcass": {
+   "0": {
+    "next": 1,
+    "proc": "ShulkercutupProcedure",
+    "table": "shulker_cut_1",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "ShulkercutupProcedure",
+    "table": "shulker_cut_2",
+    "tool": "?"
+   },
+   "2": {
+    "next": "air",
+    "proc": "ShulkercutupProcedure",
+    "table": "shulker_cut_3",
+    "tool": "?"
+   }
+  },
+  "silverfish_carcass": {
+   "0": {
+    "next": 1,
+    "proc": "SilverfishcutupProcedure",
+    "table": "silverfish_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "SilverfishcutupProcedure",
+    "table": "silverfish_cut_1",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "SilverfishcutupProcedure",
+    "table": "silverfish_cut_2",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "SilverfishcutupProcedure",
+    "table": "silverfish_cut_3",
+    "tool": "?"
+   }
+  },
+  "skeleton_corpse": {
+   "0": {
+    "next": 5,
+    "proc": "SkeletoncutupProcedure",
+    "table": "skeleton_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingskeletoncutupProcedure",
+    "table": "skeleton_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingskeletoncutupProcedure",
+    "table": "skeleton_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingskeletoncutupProcedure",
+    "table": "skeleton_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingskeletoncutupProcedure",
+    "table": "skeleton_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "SkeletoncutupProcedure",
+    "table": "skeleton_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "SkeletoncutupProcedure",
+    "table": "skeleton_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "SkeletoncutupProcedure",
+    "table": "skeleton_cut_3",
+    "tool": "?"
+   }
+  },
+  "skeleton_horse_carcass": {
+   "0": {
+    "next": 5,
+    "proc": "SkeletonhorsecarcasscutupProcedure",
+    "table": "skeleton_horse_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingskeletonhorsecutupProcedure",
+    "table": "skeleton_horse_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingskeletonhorsecutupProcedure",
+    "table": "skeleton_horse_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingskeletonhorsecutupProcedure",
+    "table": "skeleton_horse_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingskeletonhorsecutupProcedure",
+    "table": "skeleton_horse_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "SkeletonhorsecarcasscutupProcedure",
+    "table": "skeleton_horse_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "SkeletonhorsecarcasscutupProcedure",
+    "table": "skeleton_horse_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "SkeletonhorsecarcasscutupProcedure",
+    "table": "skeleton_horse_cut_3",
+    "tool": "?"
+   }
+  },
+  "small_slime_carcass": {
+   "0": {
+    "next": 1,
+    "proc": "SlimecutupProcedure",
+    "table": "slime_cut_1",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "SlimecutupProcedure",
+    "table": "slime_cut_2",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "SlimecutupProcedure",
+    "table": "slime_cut_3",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "SlimecutupProcedure",
+    "table": "slime_cut_4",
+    "tool": "?"
+   }
+  },
+  "spider_carcass": {
+   "0": {
+    "next": 4,
+    "proc": "SpidercutupProcedure",
+    "table": "spider_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingspidercutupProcedure",
+    "table": "spider_cut_1",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingspidercutupProcedure",
+    "table": "spider_cut_2",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "HangingspidercutupProcedure",
+    "table": "spider_cut_3",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "SpidercutupProcedure",
+    "table": "spider_cut_1",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "SpidercutupProcedure",
+    "table": "spider_cut_2",
+    "tool": "?"
+   },
+   "6": {
+    "next": "air",
+    "proc": "SpidercutupProcedure",
+    "table": "spider_cut_3",
+    "tool": "?"
+   },
+   "7": {
+    "next": 1,
+    "proc": "HangingspidercutupProcedure",
+    "table": "spider_head",
+    "tool": "cleaver"
+   }
+  },
+  "squid_carcass": {
+   "0": {
+    "next": 4,
+    "proc": "SquidcutupProcedure",
+    "table": "squid_cut_1",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingsquidcutupProcedure",
+    "table": "squid_cut_1",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingsquidcutupProcedure",
+    "table": "squid_cut_2",
+    "tool": "?"
+   },
+   "3": {
+    "next": "air",
+    "proc": "HangingsquidcutupProcedure",
+    "table": "squid_head",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "SquidcutupProcedure",
+    "table": "squid_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "SquidcutupProcedure",
+    "table": "squid_head",
+    "tool": "?"
+   }
+  },
+  "stray_corpse": {
+   "0": {
+    "next": 6,
+    "proc": "StraycorpsecutupProcedure",
+    "table": "stray_head",
+    "tool": "?"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingstraycorpsecutupProcedure",
+    "table": "stray_head",
+    "tool": "?"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingstraycorpsecutupProcedure",
+    "table": "stray_armor",
+    "tool": "skinning_knives"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingstraycorpsecutupProcedure",
+    "table": "stray_cut_1",
+    "tool": "?"
+   },
+   "4": {
+    "next": 5,
+    "proc": "HangingstraycorpsecutupProcedure",
+    "table": "stray_cut_2",
+    "tool": "?"
+   },
+   "5": {
+    "next": "air",
+    "proc": "HangingstraycorpsecutupProcedure",
+    "table": "stray_cut_3",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "StraycorpsecutupProcedure",
+    "table": "stray_armor",
+    "tool": "skinning_knives"
+   },
+   "7": {
+    "next": 8,
+    "proc": "StraycorpsecutupProcedure",
+    "table": "stray_cut_1",
+    "tool": "?"
+   },
+   "8": {
+    "next": 9,
+    "proc": "StraycorpsecutupProcedure",
+    "table": "stray_cut_2",
+    "tool": "?"
+   },
+   "9": {
+    "next": "air",
+    "proc": "StraycorpsecutupProcedure",
+    "table": "stray_cut_3",
+    "tool": "?"
+   }
+  },
+  "wither_skeleton_corpse": {
+   "0": {
+    "next": 5,
+    "proc": "WitherSkeletoncutupProcedure",
+    "table": "wither_skeleton_head",
+    "tool": "cleaver"
+   },
+   "1": {
+    "next": 2,
+    "proc": "HangingWitherskeletoncutupProcedure",
+    "table": "wither_skeleton_head",
+    "tool": "cleaver"
+   },
+   "2": {
+    "next": 3,
+    "proc": "HangingWitherskeletoncutupProcedure",
+    "table": "wither_skeleton_cut_1",
+    "tool": "?"
+   },
+   "3": {
+    "next": 4,
+    "proc": "HangingWitherskeletoncutupProcedure",
+    "table": "wither_skeleton_cut_2",
+    "tool": "?"
+   },
+   "4": {
+    "next": "air",
+    "proc": "HangingWitherskeletoncutupProcedure",
+    "table": "wither_skeleton_cut_3",
+    "tool": "?"
+   },
+   "5": {
+    "next": 6,
+    "proc": "WitherSkeletoncutupProcedure",
+    "table": "wither_skeleton_cut_1",
+    "tool": "?"
+   },
+   "6": {
+    "next": 7,
+    "proc": "WitherSkeletoncutupProcedure",
+    "table": "wither_skeleton_cut_2",
+    "tool": "?"
+   },
+   "7": {
+    "next": "air",
+    "proc": "WitherSkeletoncutupProcedure",
+    "table": "wither_skeleton_cut_3",
+    "tool": "?"
+   }
+  }
+ }
+}

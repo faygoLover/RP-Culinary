@@ -11,6 +11,9 @@
       {
        "function": "minecraft:set_count",
        "count": 4
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }
@@ -30,6 +33,9 @@
       {
        "function": "minecraft:set_nbt",
        "tag": "{\"rpculinary:weight\":2000,\"rpculinary:source\":\"pig\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
       }
      ]
     }

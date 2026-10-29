@@ -1,0 +1,24 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:raw_ham",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 2
+      },
+      {
+       "function": "rpculinary:skill_yield"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "random_sequence": "rpculinary:carcass/pig_hams"
+}

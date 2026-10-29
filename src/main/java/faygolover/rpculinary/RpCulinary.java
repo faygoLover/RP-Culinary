@@ -53,6 +53,7 @@ public class RpCulinary {
         faygolover.rpculinary.item.ResearchNotes.ITEMS.register(modBus);
         modBus.addListener(this::creativeTab);
         faygolover.rpculinary.pack.FoodPack.register(modBus);
+        faygolover.rpculinary.server.SkillYield.TYPES.register(modBus);
 
         var bus = MinecraftForge.EVENT_BUS;
         bus.addGenericListener(Entity.class, this::attachCaps);
@@ -79,6 +80,9 @@ public class RpCulinary {
         bus.addListener(faygolover.rpculinary.server.CookingService::forget);
         bus.addListener(faygolover.rpculinary.server.CookingService::onServerStopped);
         bus.addListener(CulinaryCommands::onTimeSkip);
+        bus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, faygolover.rpculinary.server.Butchering::onRightClick);
+        bus.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, true, faygolover.rpculinary.server.Butchering::afterRightClick);
+        bus.addListener(faygolover.rpculinary.server.Butchering::onPlayerTick);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> faygolover.rpculinary.client.ClientSetup.init(modBus));
     }
 

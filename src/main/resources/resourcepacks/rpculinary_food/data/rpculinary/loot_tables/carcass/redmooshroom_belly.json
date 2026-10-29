@@ -1,0 +1,46 @@
+{
+ "type": "minecraft:block",
+ "pools": [
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:stomach",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 1
+      },
+      {
+       "function": "minecraft:set_nbt",
+       "tag": "{\"rpculinary:weight\":2500,\"rpculinary:source\":\"cow\"}"
+      },
+      {
+       "function": "rpculinary:skill_yield"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rolls": 1,
+   "entries": [
+    {
+     "type": "minecraft:item",
+     "name": "butchery:intestines",
+     "functions": [
+      {
+       "function": "minecraft:set_count",
+       "count": 8
+      },
+      {
+       "function": "rpculinary:skill_yield"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "random_sequence": "rpculinary:carcass/redmooshroom_belly"
+}
