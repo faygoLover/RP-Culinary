@@ -44,6 +44,16 @@ public final class NutritionTable {
     /** Сложность блюда: сколько разных ингредиентов в рецепте (базовый продукт — 0). */
     private static final Map<Item, Integer> COMPLEXITY = new HashMap<>();
     /** Группы экзотики (битовая маска {@link Exotic#GROUPS}): свои и унаследованные от ингредиентов. */
+    /** Мясные части блюд для клиента: ключ {@code rpculinary_meat:<ns>/<path>}. */
+    public static synchronized Map<net.minecraft.resources.ResourceLocation, Food> meatSnapshot() {
+        Map<net.minecraft.resources.ResourceLocation, Food> out = new HashMap<>();
+        for (var e : MEAT.entrySet()) {
+            var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(e.getKey());
+            if (id != null) out.put(new net.minecraft.resources.ResourceLocation("rpculinary_meat", id.getNamespace() + "/" + id.getPath()), e.getValue());
+        }
+        return out;
+    }
+
     /** Входит ли продукт в какой-нибудь рецепт этого блюда (для состава мяса — {@link Provenance}). */
     public static synchronized boolean usesIngredient(MinecraftServer server, Item result, ItemStack ingredient) {
         get(server, result);

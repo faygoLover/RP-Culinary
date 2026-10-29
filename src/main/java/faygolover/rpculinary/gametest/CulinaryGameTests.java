@@ -324,6 +324,14 @@ public final class CulinaryGameTests {
         p.tickCount = 3;
         tick(p, 1);
         h.assertTrue(d.parasitesAt == 0 && p.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "паразиты проявились");
+        // домашний фарш: (свинина+говядина)+(свинина+курица) = 2 свинина + говядина + курица; кратные доли сокращаются
+        ItemStack m1 = new ItemStack(Items.PORKCHOP), m2 = new ItemStack(Items.PORKCHOP), m3 = new ItemStack(Items.BEEF);
+        faygolover.rpculinary.core.Source.setParts(m1, java.util.Map.of("pig", 1, "cow", 1), "pig");
+        faygolover.rpculinary.core.Source.setParts(m2, java.util.Map.of("pig", 1, "chicken", 1), "pig");
+        var mix = faygolover.rpculinary.core.Source.mix(java.util.List.of(m1, m2));
+        h.assertTrue(mix.get("pig") == 2 && mix.get("cow") == 1 && mix.get("chicken") == 1, "смесь фаршей: " + mix);
+        faygolover.rpculinary.core.Source.setParts(m3, java.util.Map.of("cow", 2, "pig", 2), "cow");
+        h.assertTrue(faygolover.rpculinary.core.Source.parts(m3).get("cow") == 1 && faygolover.rpculinary.core.Source.home(m3), "2+2 → 1+1, домашний");
         NutritionData copy = new NutritionData();
         d.insectMeals = 2;
         copy.load(d.save());
@@ -508,7 +516,7 @@ public final class CulinaryGameTests {
         for (var ie : h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(2)))
             h.assertTrue(faygolover.rpculinary.core.Source.list(ie.getItem()).contains("cow"), "часть помнит вид: корова");
         if (net.minecraftforge.fml.ModList.get().isLoaded("farm_and_charm")) {
-            var mix = h.getLevel().getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("rpculinary", "bowl/mince_beef_pork"));
+            var mix = h.getLevel().getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("rpculinary", "bowl/home_mince"));
             h.assertTrue(mix.isPresent(), "смешанный фарш: рецепт есть (состав — из происхождения)");
         }
         h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);

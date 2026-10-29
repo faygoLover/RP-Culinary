@@ -128,3 +128,7 @@
 - `core/Containers.java` — NBT `rpculinary:fill` {id, n}, вместимость по весу; `server/ContainerFill.java` — инвентарь (ItemStackedOnOtherEvent),
   поставленная тара (SavedData `rpculinary_containers`, ключ «измерение|позиция»), выпадение с содержимым.
 
+## Состав мяса, КБЖУ по виду, подкраска (29.10, ночь) — см. docs/03_audit_and_plan_2026-10-29.md §5
+- `core/Source` (состав долями), `core/MeatFood` (виды, формы, блюдо), `client/MeatColors`, `server/Processing` (доска, мясорубка v2, миска),
+  `server/Provenance` (станции по рецепту), `mixin/ButcheryGrinderMixin` (колбаски), миксин `getHoverName` в `ItemStackMixin`.
+

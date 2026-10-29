@@ -757,7 +757,9 @@ public final class CulinaryService {
 
     static void sendFoodTable(ServerPlayer sp) {
         MinecraftServer server = sp.server;
-        Net.send(sp, new FoodTablePacket(NutritionTable.snapshot(server), NutritionTable.categories(server), drinkTable()));
+        var foods = new java.util.HashMap<>(NutritionTable.snapshot(server));
+        foods.putAll(NutritionTable.meatSnapshot());  // мясные части блюд — для подсказки по составу (ключи rpculinary_meat:<ns>/<path>)
+        Net.send(sp, new FoodTablePacket(foods, NutritionTable.categories(server), drinkTable()));
     }
 
     /** Глотки и вода (всего, %) по общей базе RP Core — для подсказок и шкалы на клиенте. */

@@ -56,8 +56,11 @@ public final class FoodTooltips {
         drinkLine(e);
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(e.getItemStack().getItem());
         Food f = id != null ? ClientNutrition.FOODS.get(id) : null;
-        if (f != null) f = faygolover.rpculinary.core.MeatFood.adjust(e.getItemStack(),
-                f.scale(faygolover.rpculinary.core.Weights.nutritionFactor(e.getItemStack())), null);
+        if (f != null) {
+            var iid = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(e.getItemStack().getItem());
+            Food meatPart = iid == null ? null : ClientNutrition.FOODS.get(new ResourceLocation("rpculinary_meat", iid.getNamespace() + "/" + iid.getPath()));
+            f = faygolover.rpculinary.core.MeatFood.adjust(e.getItemStack(), f.scale(faygolover.rpculinary.core.Weights.nutritionFactor(e.getItemStack())), meatPart);
+        }
         if (f == null || f.kcal() <= 0 && f.water() <= 0) return;
         List<Component> t = e.getToolTip();
         // Еда по частям: надкусанное — сколько осталось; большое целое — на сколько укусов (по шагу из таблицы).
