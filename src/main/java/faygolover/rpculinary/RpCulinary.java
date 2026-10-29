@@ -86,6 +86,7 @@ public class RpCulinary {
         bus.addListener(faygolover.rpculinary.server.ExoticEffects::onPlayerTick);
         bus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGH, faygolover.rpculinary.server.Techniques::onRightClickBlock);
         bus.addListener(faygolover.rpculinary.server.Butchering::onItemJoin);
+        bus.addListener(faygolover.rpculinary.server.Butchering::onMincerClick);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> faygolover.rpculinary.client.ClientSetup.init(modBus));
     }
 

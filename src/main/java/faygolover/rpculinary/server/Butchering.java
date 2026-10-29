@@ -289,6 +289,7 @@ public final class Butchering {
 
     /** Результат обычной нарезки FD во время {@link Cut} доски: часть мяса — в потери. */
     public static void onItemJoin(net.minecraftforge.event.entity.EntityJoinLevelEvent e) {
+        if (!e.getLevel().isClientSide() && e.getEntity() instanceof ItemEntity mince && !CRANKS.isEmpty() && onMince(e, mince)) return;
         Cut cut = CURRENT.get();
         if (cut == null || !cut.board || e.getLevel().isClientSide() || !(e.getEntity() instanceof ItemEntity ie)) return;
         if (ie.distanceToSqr(Vec3.atCenterOf(cut.pos)) > 4) return;
@@ -313,6 +314,54 @@ public final class Butchering {
             n -= st.getCount();
             spawn(level, pos, st);
         }
+    }
+
+    // ------------------------------------------------------------------ мясорубка F&C (блок 5): потери в обрезки
+
+    private static final ResourceLocation MINCER = new ResourceLocation("farm_and_charm", "mincer");
+    private static final TagKey<Item> MINCE = tag("rpculinary:mince");
+    /** Кто последним крутил мясорубку: место → (игрок, тик). Фарш она выдаёт сама, в своём тике. */
+    private static final Map<String, Object[]> CRANKS = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static String key(net.minecraft.world.level.Level level, BlockPos pos) {
+        return level.dimension().location() + "|" + pos.asLong();
+    }
+
+    /** Клик по мясорубке — запомнить, кто крутит. */
+    public static void onMincerClick(PlayerInteractEvent.RightClickBlock e) {
+        if (!(e.getEntity() instanceof ServerPlayer sp) || !MINCER.equals(ForgeRegistries.BLOCKS.getKey(e.getLevel().getBlockState(e.getPos()).getBlock())))
+            return;
+        CRANKS.put(key(e.getLevel(), e.getPos()), new Object[]{sp.getUUID(), sp.server.getTickCount(), e.getPos().immutable()});
+        if (CRANKS.size() > 256) CRANKS.values().removeIf(v -> sp.server.getTickCount() - (int) v[1] > 20 * 120);
+    }
+
+    /** Доля фарша, что уходит в обрезки: 15 % у новичка, −1 % за уровень, не меньше 5 % (решение 29.10 §7). */
+    public static double mincerLoss(int skill) {
+        return Math.max(0.05, 0.15 - 0.01 * skill);
+    }
+
+    /** Фарш из мясорубки: часть — обрезками, по навыку того, кто крутил (в последние 60 с). */
+    private static boolean onMince(net.minecraftforge.event.entity.EntityJoinLevelEvent e, ItemEntity ie) {
+        ItemStack st = ie.getItem();
+        if (!st.is(MINCE) || !(e.getLevel() instanceof ServerLevel level)) return false;
+        for (Object[] v : CRANKS.values()) {
+            BlockPos pos = (BlockPos) v[2];
+            if (ie.distanceToSqr(Vec3.atCenterOf(pos)) > 2.5 || !CRANKS.containsKey(key(level, pos))) continue;
+            if (level.getServer().getTickCount() - (int) v[1] > 20 * 60) continue;
+            ServerPlayer sp = level.getServer().getPlayerList().getPlayer((UUID) v[0]);
+            if (sp == null) return false;
+            int skill = CookingService.level(sp), lost = 0;
+            for (int i = 0; i < st.getCount(); i++) if (level.getRandom().nextDouble() < mincerLoss(skill)) lost++;
+            if (lost > 0) {
+                spawnScraps(level, pos, lost);
+                if (lost >= st.getCount()) e.setCanceled(true);
+                else ie.setItem(st.copyWithCount(st.getCount() - lost));
+            }
+            double xp = xp(1, skill, st.getCount() * 0.25) * 0.5 * Settings.get().butcherXp;
+            if (xp > 0) RpCoreAPI.practice(sp, RpIds.COOKING, xp);
+            return true;
+        }
+        return false;
     }
 
     private static int stage(BlockState bs) {

@@ -439,6 +439,8 @@ public final class CulinaryGameTests {
         double cow = faygolover.rpculinary.server.Butchering.slow(125, s), chicken = faygolover.rpculinary.server.Butchering.slow(2, s);
         h.assertTrue(cow > 0.5 && cow <= s.carcassSlowMax && chicken <= 0.02 && faygolover.rpculinary.server.Butchering.slow(0, s) == 0,
                 "замедление: корова " + cow + ", курица " + chicken);
+        h.assertTrue(faygolover.rpculinary.server.Butchering.mincerLoss(0) == 0.15 && faygolover.rpculinary.server.Butchering.mincerLoss(10) == 0.05,
+                "мясорубка: 15 % у новичка, 5 % у мастера");
         if (!net.minecraftforge.fml.ModList.get().isLoaded("butchery")) {
             h.succeed();
             return;
