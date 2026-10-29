@@ -20,5 +20,15 @@
  },
  "container": {
   "item": "survival_instinct:empty_can"
- }
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "survival_instinct"
+  }
+ ]
 }

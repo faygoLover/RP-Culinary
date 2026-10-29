@@ -17,5 +17,15 @@
  "result": {
   "item": "farmersdelight:fruit_salad",
   "count": 1
- }
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farm_and_charm"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  }
+ ]
 }

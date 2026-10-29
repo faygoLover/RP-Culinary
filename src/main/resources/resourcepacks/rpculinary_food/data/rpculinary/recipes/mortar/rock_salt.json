@@ -8,5 +8,15 @@
  "output": {
   "item": "butchery:salt",
   "count": 2
- }
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "blocksyouneed_luna"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "butchery"
+  }
+ ]
 }

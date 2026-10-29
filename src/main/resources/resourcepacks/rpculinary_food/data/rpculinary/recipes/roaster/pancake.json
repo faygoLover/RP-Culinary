@@ -14,9 +14,22 @@
    "item": "minecraft:sugar"
   }
  ],
+ "container": {
+  "item": "minecraft:bowl"
+ },
  "result": {
   "item": "supplementaries:pancake",
   "count": 4
  },
- "requiresLearning": false
+ "requiresLearning": false,
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farm_and_charm"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "supplementaries"
+  }
+ ]
 }

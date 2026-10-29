@@ -15,5 +15,15 @@
    "item": "refurbished_furniture:bread_slice"
   }
  ],
- "result": "alexsmobs:kangaroo_burger"
+ "result": "alexsmobs:kangaroo_burger",
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "alexsmobs"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "refurbished_furniture"
+  }
+ ]
 }

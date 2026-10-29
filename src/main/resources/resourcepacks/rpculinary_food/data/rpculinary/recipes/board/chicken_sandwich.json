@@ -18,5 +18,11 @@
    "item": "refurbished_furniture:bread_slice"
   }
  ],
- "result": "farmersdelight:chicken_sandwich"
+ "result": "farmersdelight:chicken_sandwich",
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "refurbished_furniture"
+  }
+ ]
 }

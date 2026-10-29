@@ -1,16 +1,34 @@
 {
  "type": "minecraft:crafting_shapeless",
- "conditions": [
-  {
-   "type": "forge:false"
-  }
- ],
+ "category": "misc",
+ "group": "rabbit_stew",
  "ingredients": [
   {
-   "item": "minecraft:barrier"
+   "item": "minecraft:baked_potato"
+  },
+  {
+   "item": "minecraft:cooked_rabbit"
+  },
+  {
+   "item": "minecraft:bowl"
+  },
+  {
+   "item": "minecraft:carrot"
+  },
+  {
+   "item": "minecraft:brown_mushroom"
   }
  ],
  "result": {
-  "item": "minecraft:barrier"
- }
+  "item": "minecraft:rabbit_stew"
+ },
+ "conditions": [
+  {
+   "type": "forge:not",
+   "value": {
+    "type": "forge:mod_loaded",
+    "modid": "farmersdelight"
+   }
+  }
+ ]
 }

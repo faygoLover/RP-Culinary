@@ -17,19 +17,44 @@ def generate(out, read_json, D):
         for o in r['out']:
             by_out.setdefault(o, []).append(r)
 
-    def disable(rid):
-        ns, path = rid.split(':', 1)
-        out(f'{ns}/recipes/{path}.json', {'type': 'minecraft:crafting_shapeless', 'conditions': OFF,
-                                          'ingredients': [{'item': 'minecraft:barrier'}], 'result': {'item': 'minecraft:barrier'}})
+    STATION_MOD = {'refurbished_furniture:sweet_berry_jam_toast': 'refurbished_furniture'}
 
-    def off_craft(item, types=CRAFT):
+    def disable(rid, station='farmersdelight'):
+        ns, path = rid.split(':', 1)
+        # Свой рецепт мода убираем всегда; ванильный — только если стоит мод со станцией-заменой (иначе без еды останемся)
+        cond = OFF if ns != 'minecraft' else [{'type': 'forge:not', 'value': {'type': 'forge:mod_loaded', 'modid': station}}]
+        orig = read_json(f'data/{ns}/recipes/{path}.json') if ns == 'minecraft' else None
+        if not isinstance(orig, dict):
+            orig = {'type': 'minecraft:crafting_shapeless', 'ingredients': [{'item': 'minecraft:barrier'}], 'result': {'item': 'minecraft:barrier'}}
+        orig = dict(orig)
+        orig['conditions'] = list(orig.get('conditions', [])) + cond
+        out(f'{ns}/recipes/{path}.json', orig)
+
+    def off_craft(item, types=CRAFT, station=None):
+        # где заменяет станция: выпечка и пироги — F&C, супы/хлеб — FD
+        if station is None:
+            station = 'farm_and_charm' if item in ('minecraft:cake', 'minecraft:cookie', 'minecraft:pumpkin_pie') else 'farmersdelight'
         n = 0
         for r in by_out.get(item, []):
             if r['type'] in types:
-                disable(r['id']); n += 1
+                disable(r['id'], station); n += 1
         return n
 
+    def mods_of(o, acc):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                if k in ('item', 'type') and isinstance(v, str) and ':' in v:
+                    acc.add(v.split(':')[0])
+                mods_of(v, acc)
+        elif isinstance(o, list):
+            for v in o:
+                mods_of(v, acc)
+        return acc
+
     def rec(rid, obj):
+        # нет нужного мода (тип станции или предмет) — рецепт молча не грузится
+        need = sorted(mods_of(obj, set()) - {'minecraft', 'forge'})
+        obj = dict(obj, conditions=[{'type': 'forge:mod_loaded', 'modid': m} for m in need])
         out(f'rpculinary/recipes/{rid}.json', obj)
 
     # -------------------------------------------------- 1. верстак → станции (аналог уже есть: просто убрать верстак)
@@ -73,7 +98,7 @@ def generate(out, read_json, D):
     bowl('cheese_sa', ['farmersdelight:milk_bottle', 'farmersdelight:milk_bottle', '#forge:salt', 'butchery:stomach'], 'sa_combat:cheese')
 
     def roast(rid, ings, result, count=1):
-        rec(f'roaster/{rid}', {'type': 'farm_and_charm:roaster', 'ingredients': [I(x) for x in ings],
+        rec(f'roaster/{rid}', {'type': 'farm_and_charm:roaster', 'ingredients': [I(x) for x in ings], 'container': {'item': 'minecraft:bowl'},
                                'result': {'item': result, 'count': count}, 'requiresLearning': False})
     # -------------------------------------------------- 4. выпечка — плита F&C (stove)
     def stove(rid, ings, result, count=1):

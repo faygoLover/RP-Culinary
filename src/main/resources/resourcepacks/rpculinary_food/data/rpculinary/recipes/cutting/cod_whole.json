@@ -17,5 +17,15 @@
    "item": "minecraft:bone_meal",
    "count": 1
   }
+ ],
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "butchery"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  }
  ]
 }

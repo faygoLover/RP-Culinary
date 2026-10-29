@@ -1,0 +1,901 @@
+{
+ "_": "генерируется tools/gen_weights.py; [граммы, стак]",
+ "items": {
+  "alexscaves:dinosaur_chop": [
+   250,
+   16
+  ],
+  "alexscaves:pine_nuts": [
+   50,
+   64
+  ],
+  "alexsmobs:banana": [
+   150,
+   32
+  ],
+  "alexsmobs:kangaroo_meat": [
+   250,
+   16
+  ],
+  "alexsmobs:moose_ribs": [
+   250,
+   16
+  ],
+  "biomesoplenty:glowshroom": [
+   150,
+   32
+  ],
+  "biomesoplenty:toadstool": [
+   150,
+   32
+  ],
+  "brewery:hops": [
+   50,
+   64
+  ],
+  "butchery:animal_fat": [
+   250,
+   16
+  ],
+  "butchery:bird_foot": [
+   100,
+   32
+  ],
+  "butchery:brain": [
+   250,
+   16
+  ],
+  "butchery:cooked_bat_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_beef_mince": [
+   175,
+   16
+  ],
+  "butchery:cooked_blood_sausage": [
+   700,
+   4
+  ],
+  "butchery:cooked_blue_axolotl_fillet": [
+   175,
+   16
+  ],
+  "butchery:cooked_camel_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_cat_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_chicken_leg": [
+   175,
+   8
+  ],
+  "butchery:cooked_chicken_wing": [
+   70,
+   32
+  ],
+  "butchery:cooked_cod_fillet": [
+   420,
+   8
+  ],
+  "butchery:cooked_creeper_steak": [
+   175,
+   16
+  ],
+  "butchery:cooked_dolphin_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_donkey_steak": [
+   175,
+   16
+  ],
+  "butchery:cooked_enderman_steak": [
+   175,
+   16
+  ],
+  "butchery:cooked_fox_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_green_frog_leg": [
+   175,
+   16
+  ],
+  "butchery:cooked_guardian_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_ham": [
+   1400,
+   4
+  ],
+  "butchery:cooked_hoglin_chunk": [
+   175,
+   16
+  ],
+  "butchery:cooked_horse_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_lamb_loin": [
+   280,
+   8
+  ],
+  "butchery:cooked_lamb_mince": [
+   175,
+   16
+  ],
+  "butchery:cooked_lamb_rib": [
+   280,
+   8
+  ],
+  "butchery:cooked_lamb_sirloin": [
+   280,
+   8
+  ],
+  "butchery:cooked_llama_steak": [
+   175,
+   16
+  ],
+  "butchery:cooked_mule_steak": [
+   175,
+   16
+  ],
+  "butchery:cooked_ocelot_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_panda_steak": [
+   175,
+   16
+  ],
+  "butchery:cooked_polar_bear_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_pork_leg": [
+   350,
+   4
+  ],
+  "butchery:cooked_pork_loin": [
+   280,
+   8
+  ],
+  "butchery:cooked_ravager_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_ribeye_steak": [
+   280,
+   8
+  ],
+  "butchery:cooked_salmon": [
+   420,
+   8
+  ],
+  "butchery:cooked_sausage": [
+   700,
+   4
+  ],
+  "butchery:cooked_silverfish_chunks": [
+   175,
+   16
+  ],
+  "butchery:cooked_sirloin_steak": [
+   280,
+   8
+  ],
+  "butchery:cooked_sniffer_steak": [
+   175,
+   16
+  ],
+  "butchery:cooked_spider_leg": [
+   175,
+   16
+  ],
+  "butchery:cooked_strider_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_tbone_steak": [
+   280,
+   8
+  ],
+  "butchery:cooked_turtle_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_warden_meat": [
+   175,
+   16
+  ],
+  "butchery:cooked_wolf_meat": [
+   175,
+   16
+  ],
+  "butchery:crackling": [
+   100,
+   32
+  ],
+  "butchery:heart": [
+   250,
+   16
+  ],
+  "butchery:intestines": [
+   100,
+   32
+  ],
+  "butchery:kidney": [
+   250,
+   16
+  ],
+  "butchery:liver": [
+   250,
+   16
+  ],
+  "butchery:lungs": [
+   250,
+   16
+  ],
+  "butchery:meat_scraps": [
+   250,
+   16
+  ],
+  "butchery:raw_bat_meat": [
+   100,
+   32
+  ],
+  "butchery:raw_beef_mince": [
+   250,
+   16
+  ],
+  "butchery:raw_blood_sausage": [
+   1000,
+   4
+  ],
+  "butchery:raw_blue_axolotl_fillet": [
+   100,
+   32
+  ],
+  "butchery:raw_camel_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_cat_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_chicken_leg": [
+   250,
+   8
+  ],
+  "butchery:raw_chicken_wing": [
+   100,
+   32
+  ],
+  "butchery:raw_chuck_steak": [
+   250,
+   16
+  ],
+  "butchery:raw_cod_fillet": [
+   600,
+   8
+  ],
+  "butchery:raw_creeper_steak": [
+   250,
+   16
+  ],
+  "butchery:raw_dolphin_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_donkey_steak": [
+   250,
+   16
+  ],
+  "butchery:raw_enderman_steak": [
+   250,
+   16
+  ],
+  "butchery:raw_fox_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_green_frog_leg": [
+   100,
+   32
+  ],
+  "butchery:raw_guardian_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_ham": [
+   2000,
+   4
+  ],
+  "butchery:raw_hoglin_chunk": [
+   250,
+   16
+  ],
+  "butchery:raw_horse_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_lamb_loin": [
+   400,
+   8
+  ],
+  "butchery:raw_lamb_mince": [
+   250,
+   16
+  ],
+  "butchery:raw_lamb_rib": [
+   400,
+   8
+  ],
+  "butchery:raw_lamb_shoulder": [
+   250,
+   16
+  ],
+  "butchery:raw_lamb_sirloin": [
+   400,
+   8
+  ],
+  "butchery:raw_llama_steak": [
+   250,
+   16
+  ],
+  "butchery:raw_mule_steak": [
+   250,
+   16
+  ],
+  "butchery:raw_ocelot_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_panda_steak": [
+   250,
+   16
+  ],
+  "butchery:raw_polar_bear_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_pork_belly": [
+   250,
+   16
+  ],
+  "butchery:raw_pork_leg": [
+   500,
+   4
+  ],
+  "butchery:raw_pork_loin": [
+   400,
+   8
+  ],
+  "butchery:raw_pork_shoulder": [
+   250,
+   16
+  ],
+  "butchery:raw_ravager_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_ribeye_steak": [
+   400,
+   8
+  ],
+  "butchery:raw_rump_steak": [
+   250,
+   16
+  ],
+  "butchery:raw_salmon": [
+   600,
+   8
+  ],
+  "butchery:raw_sausage": [
+   1000,
+   4
+  ],
+  "butchery:raw_silverfish_chunks": [
+   100,
+   32
+  ],
+  "butchery:raw_sirloin_steak": [
+   400,
+   8
+  ],
+  "butchery:raw_sniffer_steak": [
+   250,
+   16
+  ],
+  "butchery:raw_spider_leg": [
+   100,
+   32
+  ],
+  "butchery:raw_strider_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_tbone_steak": [
+   400,
+   8
+  ],
+  "butchery:raw_turtle_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_warden_meat": [
+   250,
+   16
+  ],
+  "butchery:raw_wolf_meat": [
+   250,
+   16
+  ],
+  "butchery:salt": [
+   100,
+   32
+  ],
+  "butchery:stomach": [
+   250,
+   16
+  ],
+  "farm_and_charm:barley": [
+   100,
+   32
+  ],
+  "farm_and_charm:beetroot_bag": [
+   0,
+   1
+  ],
+  "farm_and_charm:butter": [
+   100,
+   32
+  ],
+  "farm_and_charm:carrot_bag": [
+   0,
+   1
+  ],
+  "farm_and_charm:chicken_parts": [
+   100,
+   32
+  ],
+  "farm_and_charm:corn": [
+   150,
+   32
+  ],
+  "farm_and_charm:corn_bag": [
+   0,
+   1
+  ],
+  "farm_and_charm:flour": [
+   1000,
+   8
+  ],
+  "farm_and_charm:flour_bag": [
+   0,
+   1
+  ],
+  "farm_and_charm:lamb_ham": [
+   700,
+   4
+  ],
+  "farm_and_charm:lettuce": [
+   1000,
+   8
+  ],
+  "farm_and_charm:lettuce_bag": [
+   0,
+   1
+  ],
+  "farm_and_charm:minced_beef": [
+   250,
+   16
+  ],
+  "farm_and_charm:oat": [
+   100,
+   32
+  ],
+  "farm_and_charm:oat_bag": [
+   0,
+   1
+  ],
+  "farm_and_charm:onion": [
+   150,
+   32
+  ],
+  "farm_and_charm:onion_bag": [
+   0,
+   1
+  ],
+  "farm_and_charm:potato_bag": [
+   0,
+   1
+  ],
+  "farm_and_charm:strawberry": [
+   50,
+   64
+  ],
+  "farm_and_charm:strawberry_bag": [
+   0,
+   1
+  ],
+  "farm_and_charm:tomato": [
+   150,
+   32
+  ],
+  "farm_and_charm:tomato_bag": [
+   0,
+   1
+  ],
+  "farm_and_charm:yeast": [
+   100,
+   32
+  ],
+  "farmersdelight:bacon": [
+   100,
+   32
+  ],
+  "farmersdelight:beef_patty": [
+   175,
+   16
+  ],
+  "farmersdelight:beetroot_crate": [
+   0,
+   1
+  ],
+  "farmersdelight:cabbage": [
+   1000,
+   8
+  ],
+  "farmersdelight:cabbage_crate": [
+   0,
+   1
+  ],
+  "farmersdelight:cabbage_leaf": [
+   100,
+   32
+  ],
+  "farmersdelight:carrot_crate": [
+   0,
+   1
+  ],
+  "farmersdelight:chicken_cuts": [
+   250,
+   16
+  ],
+  "farmersdelight:cod_slice": [
+   100,
+   32
+  ],
+  "farmersdelight:cooked_bacon": [
+   70,
+   32
+  ],
+  "farmersdelight:cooked_chicken_cuts": [
+   175,
+   16
+  ],
+  "farmersdelight:cooked_cod_slice": [
+   70,
+   32
+  ],
+  "farmersdelight:cooked_mutton_chops": [
+   175,
+   16
+  ],
+  "farmersdelight:cooked_salmon_slice": [
+   70,
+   32
+  ],
+  "farmersdelight:ham": [
+   1000,
+   4
+  ],
+  "farmersdelight:milk_bottle": [
+   500,
+   16
+  ],
+  "farmersdelight:minced_beef": [
+   250,
+   16
+  ],
+  "farmersdelight:mutton_chops": [
+   250,
+   16
+  ],
+  "farmersdelight:onion": [
+   150,
+   32
+  ],
+  "farmersdelight:onion_crate": [
+   0,
+   1
+  ],
+  "farmersdelight:potato_crate": [
+   0,
+   1
+  ],
+  "farmersdelight:pumpkin_slice": [
+   150,
+   32
+  ],
+  "farmersdelight:rice": [
+   100,
+   32
+  ],
+  "farmersdelight:rice_bag": [
+   0,
+   1
+  ],
+  "farmersdelight:salmon_slice": [
+   100,
+   32
+  ],
+  "farmersdelight:smoked_ham": [
+   1400,
+   4
+  ],
+  "farmersdelight:tomato": [
+   150,
+   32
+  ],
+  "farmersdelight:tomato_crate": [
+   0,
+   1
+  ],
+  "herbalbrews:coffee_beans": [
+   50,
+   64
+  ],
+  "mekanism:salt": [
+   100,
+   32
+  ],
+  "minecraft:apple": [
+   150,
+   32
+  ],
+  "minecraft:baked_potato": [
+   150,
+   32
+  ],
+  "minecraft:beef": [
+   250,
+   16
+  ],
+  "minecraft:beetroot": [
+   150,
+   32
+  ],
+  "minecraft:brown_mushroom": [
+   150,
+   32
+  ],
+  "minecraft:carrot": [
+   150,
+   32
+  ],
+  "minecraft:chicken": [
+   800,
+   4
+  ],
+  "minecraft:cocoa_beans": [
+   50,
+   64
+  ],
+  "minecraft:cod": [
+   1500,
+   4
+  ],
+  "minecraft:cooked_beef": [
+   175,
+   16
+  ],
+  "minecraft:cooked_chicken": [
+   560,
+   4
+  ],
+  "minecraft:cooked_cod": [
+   1050,
+   4
+  ],
+  "minecraft:cooked_mutton": [
+   175,
+   16
+  ],
+  "minecraft:cooked_porkchop": [
+   175,
+   16
+  ],
+  "minecraft:cooked_rabbit": [
+   910,
+   4
+  ],
+  "minecraft:cooked_salmon": [
+   1400,
+   4
+  ],
+  "minecraft:dried_kelp": [
+   100,
+   32
+  ],
+  "minecraft:egg": [
+   60,
+   16
+  ],
+  "minecraft:glow_berries": [
+   50,
+   64
+  ],
+  "minecraft:golden_apple": [
+   150,
+   32
+  ],
+  "minecraft:golden_carrot": [
+   150,
+   32
+  ],
+  "minecraft:melon": [
+   3000,
+   4
+  ],
+  "minecraft:melon_slice": [
+   150,
+   32
+  ],
+  "minecraft:mutton": [
+   250,
+   16
+  ],
+  "minecraft:porkchop": [
+   250,
+   16
+  ],
+  "minecraft:potato": [
+   150,
+   32
+  ],
+  "minecraft:pumpkin": [
+   3000,
+   4
+  ],
+  "minecraft:rabbit": [
+   1300,
+   4
+  ],
+  "minecraft:red_mushroom": [
+   150,
+   32
+  ],
+  "minecraft:salmon": [
+   2000,
+   4
+  ],
+  "minecraft:sugar": [
+   100,
+   32
+  ],
+  "minecraft:sweet_berries": [
+   50,
+   64
+  ],
+  "minecraft:turtle_egg": [
+   60,
+   16
+  ],
+  "minecraft:wheat": [
+   100,
+   32
+  ],
+  "quark:apple_crate": [
+   0,
+   1
+  ],
+  "quark:beetroot_crate": [
+   0,
+   1
+  ],
+  "quark:berry_sack": [
+   0,
+   1
+  ],
+  "quark:carrot_crate": [
+   0,
+   1
+  ],
+  "quark:cocoa_beans_sack": [
+   0,
+   1
+  ],
+  "quark:glowberry_sack": [
+   0,
+   1
+  ],
+  "quark:golden_apple_crate": [
+   0,
+   1
+  ],
+  "quark:golden_carrot_crate": [
+   0,
+   1
+  ],
+  "quark:nether_wart_sack": [
+   0,
+   1
+  ],
+  "quark:potato_crate": [
+   0,
+   1
+  ],
+  "refurbished_furniture:sea_salt": [
+   100,
+   32
+  ],
+  "refurbished_furniture:wheat_flour": [
+   1000,
+   8
+  ],
+  "sa_combat:butter": [
+   100,
+   32
+  ],
+  "survival_instinct:orange": [
+   150,
+   32
+  ],
+  "vinery:apple_bag": [
+   0,
+   1
+  ],
+  "vinery:cherry": [
+   50,
+   64
+  ],
+  "vinery:cherry_bag": [
+   0,
+   1
+  ],
+  "vinery:red_grape_bag": [
+   0,
+   1
+  ],
+  "vinery:red_jungle_grape_bag": [
+   0,
+   1
+  ],
+  "vinery:red_savanna_grape_bag": [
+   0,
+   1
+  ],
+  "vinery:red_taiga_grape_bag": [
+   0,
+   1
+  ],
+  "vinery:white_grape_bag": [
+   0,
+   1
+  ],
+  "vinery:white_jungle_grape_bag": [
+   0,
+   1
+  ],
+  "vinery:white_savanna_grape_bag": [
+   0,
+   1
+  ],
+  "vinery:white_taiga_grape_bag": [
+   0,
+   1
+  ],
+  "zombie_extreme:green_apple": [
+   150,
+   32
+  ]
+ }
+}

@@ -1,16 +1,49 @@
 {
  "replace": false,
  "values": [
-  "butchery:brain",
-  "butchery:heart",
-  "butchery:liver",
-  "butchery:lungs",
-  "butchery:raw_chuck_steak",
-  "butchery:raw_lamb_shoulder",
-  "butchery:raw_leg_of_lamb",
-  "butchery:raw_pork_belly",
-  "butchery:raw_pork_shoulder",
-  "butchery:raw_rump_steak",
-  "butchery:stomach"
+  {
+   "id": "butchery:brain",
+   "required": false
+  },
+  {
+   "id": "butchery:heart",
+   "required": false
+  },
+  {
+   "id": "butchery:liver",
+   "required": false
+  },
+  {
+   "id": "butchery:lungs",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_chuck_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_lamb_shoulder",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_leg_of_lamb",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_pork_belly",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_pork_shoulder",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_rump_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:stomach",
+   "required": false
+  }
  ]
 }

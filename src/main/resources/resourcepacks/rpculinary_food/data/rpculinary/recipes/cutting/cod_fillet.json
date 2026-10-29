@@ -13,5 +13,15 @@
    "item": "farmersdelight:cod_slice",
    "count": 6
   }
+ ],
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "butchery"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  }
  ]
 }

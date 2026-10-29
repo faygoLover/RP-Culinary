@@ -17,5 +17,23 @@
  "result": {
   "item": "sa_combat:cheese",
   "count": 1
- }
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "butchery"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farm_and_charm"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "sa_combat"
+  }
+ ]
 }

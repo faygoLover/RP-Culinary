@@ -1,8 +1,17 @@
 {
  "replace": true,
  "values": [
-  "butchery:raw_ham",
-  "butchery:raw_pork_leg",
-  "butchery:raw_pork_loin"
+  {
+   "id": "butchery:raw_ham",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_pork_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_pork_loin",
+   "required": false
+  }
  ]
 }

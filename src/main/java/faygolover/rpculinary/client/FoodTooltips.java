@@ -35,10 +35,13 @@ public final class FoodTooltips {
     }
 
     public static void onTooltip(ItemTooltipEvent e) {
-        if (!ClientNutrition.known || e.getEntity() == null) return;
+        if (e.getEntity() == null) return;
+        weightLine(e);
+        if (!ClientNutrition.known) return;
         drinkLine(e);
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(e.getItemStack().getItem());
         Food f = id != null ? ClientNutrition.FOODS.get(id) : null;
+        if (f != null) f = f.scale(faygolover.rpculinary.core.Weights.nutritionFactor(e.getItemStack()));
         if (f == null || f.kcal() <= 0 && f.water() <= 0) return;
         List<Component> t = e.getToolTip();
         // Еда по частям: надкусанное — сколько осталось; большое целое — на сколько укусов (по шагу из таблицы).
@@ -89,6 +92,17 @@ public final class FoodTooltips {
     }
 
     /** Напиток: сколько воды (голубым), у пьющихся глотками — сколько осталось. */
+    /** Вес куска: «Корова · 6 кг» у крупных (вес в NBT), «250 г» у остальных из таблицы весов. */
+    static void weightLine(ItemTooltipEvent e) {
+        var st = e.getItemStack();
+        int g = faygolover.rpculinary.core.Weights.grams(st);
+        if (g <= 0) return;
+        String src = faygolover.rpculinary.core.Weights.source(st);
+        Component w = Component.literal(faygolover.rpculinary.core.Weights.format(g));
+        e.getToolTip().add(src.isEmpty() ? tr("weight", w).withStyle(ChatFormatting.GRAY)
+                : tr("weight_source", Component.translatable("rpculinary.source." + src), w).withStyle(ChatFormatting.GRAY));
+    }
+
     static void drinkLine(ItemTooltipEvent e) {
         if (ClientNutrition.thirstMode() == 0) return;
         int[] d = ClientNutrition.drink(e.getItemStack());

@@ -1,16 +1,25 @@
 {
- "type": "minecraft:crafting_shapeless",
- "conditions": [
-  {
-   "type": "forge:false"
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "key": {
+  "#": {
+   "item": "minecraft:wheat"
   }
- ],
- "ingredients": [
-  {
-   "item": "minecraft:barrier"
-  }
+ },
+ "pattern": [
+  "###"
  ],
  "result": {
-  "item": "minecraft:barrier"
- }
+  "item": "minecraft:bread"
+ },
+ "show_notification": true,
+ "conditions": [
+  {
+   "type": "forge:not",
+   "value": {
+    "type": "forge:mod_loaded",
+    "modid": "farmersdelight"
+   }
+  }
+ ]
 }

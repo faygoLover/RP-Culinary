@@ -1,16 +1,27 @@
 {
  "type": "minecraft:crafting_shapeless",
- "conditions": [
-  {
-   "type": "forge:false"
-  }
- ],
+ "category": "misc",
  "ingredients": [
   {
-   "item": "minecraft:barrier"
+   "item": "minecraft:pumpkin"
+  },
+  {
+   "item": "minecraft:sugar"
+  },
+  {
+   "item": "minecraft:egg"
   }
  ],
  "result": {
-  "item": "minecraft:barrier"
- }
+  "item": "minecraft:pumpkin_pie"
+ },
+ "conditions": [
+  {
+   "type": "forge:not",
+   "value": {
+    "type": "forge:mod_loaded",
+    "modid": "farm_and_charm"
+   }
+  }
+ ]
 }

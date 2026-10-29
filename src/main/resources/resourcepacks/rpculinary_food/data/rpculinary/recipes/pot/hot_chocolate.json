@@ -20,5 +20,15 @@
  },
  "container": {
   "item": "minecraft:glass_bottle"
- }
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "alexscaves"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  }
+ ]
 }

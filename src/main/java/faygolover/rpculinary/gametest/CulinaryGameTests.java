@@ -103,8 +103,10 @@ public final class CulinaryGameTests {
         Food steak = NutritionTable.get(server, Items.COOKED_BEEF);
         h.assertTrue(wheat != null && bread != null, "пшеница из датапака, хлеб из рецепта");
         // Хлеб — три пшеницы по составу, но калории не больше двух ванильных оценок (5 ед. × 90 × 2).
-        h.assertTrue(Math.abs(bread.carbs() / bread.kcal() - wheat.carbs() / wheat.kcal()) < 1e-6, "доли — как у пшеницы");
-        h.assertTrue(bread.kcal() <= 5 * Settings.get().kcalPerFoodPoint * 2 + 1e-6 && bread.kcal() >= 400, "хлеб " + bread.kcal() + " ккал");
+        // Со сборкой (FD) хлеб — из теста в печи (рецепт верстака убран датапаком), доли другие
+        if (!net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight"))
+            h.assertTrue(Math.abs(bread.carbs() / bread.kcal() - wheat.carbs() / wheat.kcal()) < 1e-6, "доли — как у пшеницы");
+        h.assertTrue(bread.kcal() <= 5 * Settings.get().kcalPerFoodPoint * 2 + 1e-6 && bread.kcal() >= (net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight") ? 300 : 400), "хлеб " + bread.kcal() + " ккал");
         h.assertTrue(beef != null && steak != null && Math.abs(steak.kcal() - beef.kcal()) < 1e-6, "жарка состав сохраняет");
         h.assertTrue(NutritionTable.get(server, Items.STONE) == null, "камень — не еда");
         h.assertTrue(NutritionTable.category(server, Items.BREAD) == NutritionState.category("grain"), "хлеб — зерно");

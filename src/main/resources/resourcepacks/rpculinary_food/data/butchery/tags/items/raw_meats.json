@@ -1,17 +1,53 @@
 {
  "replace": true,
  "values": [
-  "butchery:raw_ham",
-  "butchery:raw_lamb_loin",
-  "butchery:raw_lamb_rib",
-  "butchery:raw_lamb_sirloin",
-  "butchery:raw_pork_leg",
-  "butchery:raw_pork_loin",
-  "butchery:raw_ribeye_steak",
-  "butchery:raw_sirloin_steak",
-  "butchery:raw_tbone_steak",
-  "minecraft:beef",
-  "minecraft:mutton",
-  "minecraft:porkchop"
+  {
+   "id": "butchery:raw_ham",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_lamb_loin",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_lamb_rib",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_lamb_sirloin",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_pork_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_pork_loin",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_ribeye_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_sirloin_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_tbone_steak",
+   "required": false
+  },
+  {
+   "id": "minecraft:beef",
+   "required": false
+  },
+  {
+   "id": "minecraft:mutton",
+   "required": false
+  },
+  {
+   "id": "minecraft:porkchop",
+   "required": false
+  }
  ]
 }

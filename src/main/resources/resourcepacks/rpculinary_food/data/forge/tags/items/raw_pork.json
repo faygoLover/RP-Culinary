@@ -1,11 +1,29 @@
 {
  "replace": true,
  "values": [
-  "butchery:raw_ham",
-  "butchery:raw_pork_leg",
-  "butchery:raw_pork_loin",
-  "farm_and_charm:bacon",
-  "farmersdelight:bacon",
-  "minecraft:porkchop"
+  {
+   "id": "butchery:raw_ham",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_pork_leg",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_pork_loin",
+   "required": false
+  },
+  {
+   "id": "farm_and_charm:bacon",
+   "required": false
+  },
+  {
+   "id": "farmersdelight:bacon",
+   "required": false
+  },
+  {
+   "id": "minecraft:porkchop",
+   "required": false
+  }
  ]
 }

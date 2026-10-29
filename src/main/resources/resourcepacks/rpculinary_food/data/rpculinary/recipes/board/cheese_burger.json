@@ -18,5 +18,15 @@
    "item": "refurbished_furniture:bread_slice"
   }
  ],
- "result": "sa_combat:cheese_burger"
+ "result": "sa_combat:cheese_burger",
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "refurbished_furniture"
+  }
+ ]
 }

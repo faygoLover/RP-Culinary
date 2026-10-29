@@ -1,14 +1,41 @@
 {
  "replace": false,
  "values": [
-  "farmersdelight:ham",
-  "butchery:raw_leg_of_lamb",
-  "sa_combat:burger",
-  "butchery:cooked_leg_of_lamb",
-  "butchery:cooked_chuck_steak",
-  "butchery:cooked_rump_steak",
-  "butchery:cooked_pork_belly",
-  "butchery:cooked_pork_shoulder",
-  "butchery:cooked_lamb_shoulder"
+  {
+   "id": "farmersdelight:ham",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_leg_of_lamb",
+   "required": false
+  },
+  {
+   "id": "sa_combat:burger",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_leg_of_lamb",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_chuck_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_rump_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_pork_belly",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_pork_shoulder",
+   "required": false
+  },
+  {
+   "id": "butchery:cooked_lamb_shoulder",
+   "required": false
+  }
  ]
 }

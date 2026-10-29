@@ -1,8 +1,17 @@
 {
  "replace": true,
  "values": [
-  "butchery:raw_ribeye_steak",
-  "butchery:raw_sirloin_steak",
-  "butchery:raw_tbone_steak"
+  {
+   "id": "butchery:raw_ribeye_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_sirloin_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_tbone_steak",
+   "required": false
+  }
  ]
 }

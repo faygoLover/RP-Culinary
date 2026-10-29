@@ -11,9 +11,26 @@
    "item": "butchery:animal_fat"
   }
  ],
+ "container": {
+  "item": "minecraft:bowl"
+ },
  "result": {
   "item": "sa_combat:donut",
   "count": 4
  },
- "requiresLearning": false
+ "requiresLearning": false,
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "butchery"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farm_and_charm"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "sa_combat"
+  }
+ ]
 }

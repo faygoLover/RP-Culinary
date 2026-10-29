@@ -17,9 +17,30 @@
    "tag": "forge:salad_ingredients"
   }
  ],
+ "container": {
+  "item": "minecraft:bowl"
+ },
  "result": {
   "item": "scpo:pizza_neopolitan",
   "count": 1
  },
- "requiresLearning": false
+ "requiresLearning": false,
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "candlelight"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farm_and_charm"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "scpo"
+  }
+ ]
 }

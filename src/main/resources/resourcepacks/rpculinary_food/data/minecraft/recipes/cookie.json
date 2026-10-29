@@ -1,16 +1,29 @@
 {
- "type": "minecraft:crafting_shapeless",
- "conditions": [
-  {
-   "type": "forge:false"
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "key": {
+  "#": {
+   "item": "minecraft:wheat"
+  },
+  "X": {
+   "item": "minecraft:cocoa_beans"
   }
- ],
- "ingredients": [
-  {
-   "item": "minecraft:barrier"
-  }
+ },
+ "pattern": [
+  "#X#"
  ],
  "result": {
-  "item": "minecraft:barrier"
- }
+  "count": 8,
+  "item": "minecraft:cookie"
+ },
+ "show_notification": true,
+ "conditions": [
+  {
+   "type": "forge:not",
+   "value": {
+    "type": "forge:mod_loaded",
+    "modid": "farm_and_charm"
+   }
+  }
+ ]
 }

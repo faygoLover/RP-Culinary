@@ -1,16 +1,39 @@
 {
  "type": "minecraft:crafting_shapeless",
- "conditions": [
-  {
-   "type": "forge:false"
-  }
- ],
+ "category": "misc",
  "ingredients": [
   {
-   "item": "minecraft:barrier"
+   "item": "minecraft:bowl"
+  },
+  {
+   "item": "minecraft:beetroot"
+  },
+  {
+   "item": "minecraft:beetroot"
+  },
+  {
+   "item": "minecraft:beetroot"
+  },
+  {
+   "item": "minecraft:beetroot"
+  },
+  {
+   "item": "minecraft:beetroot"
+  },
+  {
+   "item": "minecraft:beetroot"
   }
  ],
  "result": {
-  "item": "minecraft:barrier"
- }
+  "item": "minecraft:beetroot_soup"
+ },
+ "conditions": [
+  {
+   "type": "forge:not",
+   "value": {
+    "type": "forge:mod_loaded",
+    "modid": "farmersdelight"
+   }
+  }
+ ]
 }

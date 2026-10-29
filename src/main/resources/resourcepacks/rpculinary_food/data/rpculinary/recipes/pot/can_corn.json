@@ -20,5 +20,23 @@
  },
  "container": {
   "item": "sa_core:empty_can"
- }
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farm_and_charm"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "sa_combat"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "sa_core"
+  }
+ ]
 }

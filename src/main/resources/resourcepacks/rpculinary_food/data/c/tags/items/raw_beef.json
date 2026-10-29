@@ -1,11 +1,29 @@
 {
  "replace": true,
  "values": [
-  "#candlelight:raw_beef",
-  "butchery:raw_ribeye_steak",
-  "butchery:raw_sirloin_steak",
-  "butchery:raw_tbone_steak",
-  "farm_and_charm:minced_beef",
-  "minecraft:beef"
+  {
+   "id": "#candlelight:raw_beef",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_ribeye_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_sirloin_steak",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_tbone_steak",
+   "required": false
+  },
+  {
+   "id": "farm_and_charm:minced_beef",
+   "required": false
+  },
+  {
+   "id": "minecraft:beef",
+   "required": false
+  }
  ]
 }

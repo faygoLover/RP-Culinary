@@ -12,5 +12,11 @@
    "item": "refurbished_furniture:bread_slice"
   }
  ],
- "result": "farmersdelight:egg_sandwich"
+ "result": "farmersdelight:egg_sandwich",
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "refurbished_furniture"
+  }
+ ]
 }

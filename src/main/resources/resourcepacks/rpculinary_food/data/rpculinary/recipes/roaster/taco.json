@@ -17,9 +17,22 @@
    "tag": "forge:cheeses"
   }
  ],
+ "container": {
+  "item": "minecraft:bowl"
+ },
  "result": {
   "item": "sa_combat:taco",
   "count": 2
  },
- "requiresLearning": false
+ "requiresLearning": false,
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farm_and_charm"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "sa_combat"
+  }
+ ]
 }

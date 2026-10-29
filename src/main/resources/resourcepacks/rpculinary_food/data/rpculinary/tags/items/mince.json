@@ -1,8 +1,17 @@
 {
  "replace": false,
  "values": [
-  "farm_and_charm:minced_beef",
-  "butchery:raw_beef_mince",
-  "butchery:raw_lamb_mince"
+  {
+   "id": "farm_and_charm:minced_beef",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_beef_mince",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_lamb_mince",
+   "required": false
+  }
  ]
 }

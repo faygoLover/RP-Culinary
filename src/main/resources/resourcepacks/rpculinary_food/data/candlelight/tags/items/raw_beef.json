@@ -1,6 +1,9 @@
 {
  "replace": true,
  "values": [
-  "minecraft:beef"
+  {
+   "id": "minecraft:beef",
+   "required": false
+  }
  ]
 }

@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "faygolover.rpculinary.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "rpculinary.refmap.json",
+  "mixins": [
+    "ItemStackMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

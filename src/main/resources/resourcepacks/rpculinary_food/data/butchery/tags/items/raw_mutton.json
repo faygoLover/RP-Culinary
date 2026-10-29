@@ -1,8 +1,17 @@
 {
  "replace": true,
  "values": [
-  "butchery:raw_lamb_loin",
-  "butchery:raw_lamb_rib",
-  "butchery:raw_lamb_sirloin"
+  {
+   "id": "butchery:raw_lamb_loin",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_lamb_rib",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_lamb_sirloin",
+   "required": false
+  }
  ]
 }

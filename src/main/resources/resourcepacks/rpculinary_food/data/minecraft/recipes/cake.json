@@ -1,16 +1,36 @@
 {
- "type": "minecraft:crafting_shapeless",
- "conditions": [
-  {
-   "type": "forge:false"
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "key": {
+  "A": {
+   "item": "minecraft:milk_bucket"
+  },
+  "B": {
+   "item": "minecraft:sugar"
+  },
+  "C": {
+   "item": "minecraft:wheat"
+  },
+  "E": {
+   "item": "minecraft:egg"
   }
- ],
- "ingredients": [
-  {
-   "item": "minecraft:barrier"
-  }
+ },
+ "pattern": [
+  "AAA",
+  "BEB",
+  "CCC"
  ],
  "result": {
-  "item": "minecraft:barrier"
- }
+  "item": "minecraft:cake"
+ },
+ "show_notification": true,
+ "conditions": [
+  {
+   "type": "forge:not",
+   "value": {
+    "type": "forge:mod_loaded",
+    "modid": "farm_and_charm"
+   }
+  }
+ ]
 }

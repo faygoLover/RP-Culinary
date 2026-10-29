@@ -1,7 +1,13 @@
 {
  "replace": false,
  "values": [
-  "refurbished_furniture:cheese",
-  "sa_combat:cheese"
+  {
+   "id": "refurbished_furniture:cheese",
+   "required": false
+  },
+  {
+   "id": "sa_combat:cheese",
+   "required": false
+  }
  ]
 }

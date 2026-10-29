@@ -18,5 +18,15 @@
    "item": "refurbished_furniture:bread_slice"
   }
  ],
- "result": "farmersdelight:hamburger"
+ "result": "farmersdelight:hamburger",
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "refurbished_furniture"
+  }
+ ]
 }

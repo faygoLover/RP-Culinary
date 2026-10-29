@@ -17,9 +17,18 @@
    "tag": "forge:butter"
   }
  ],
+ "container": {
+  "item": "minecraft:bowl"
+ },
  "result": {
   "item": "minecraft:cake",
   "count": 1
  },
- "requiresLearning": false
+ "requiresLearning": false,
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farm_and_charm"
+  }
+ ]
 }

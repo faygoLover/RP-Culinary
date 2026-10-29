@@ -12,8 +12,13 @@ VAN = os.path.expandvars(r"%APPDATA%\ElyPrismLauncher\libraries\com\mojang\minec
 D = json.load(open(os.path.join(ROOT, 'gallery', 'cache', 'db.json'), encoding='utf-8'))
 K = 0.25
 written = []
+if os.path.isdir(DATA):
+    shutil.rmtree(DATA)  # пак целиком из генератора — старое не остаётся
 
 def out(rel, obj):
+    # Записи тегов — необязательные: нет мода/предмета — тег не ломается целиком
+    if '/tags/' in rel and isinstance(obj.get('values'), list):
+        obj = dict(obj, values=[v if isinstance(v, dict) else {'id': v, 'required': False} for v in obj['values']])
     p = os.path.join(DATA, *rel.split('/'))
     os.makedirs(os.path.dirname(p), exist_ok=True)
     with open(p, 'w', encoding='utf-8', newline='\n') as f:

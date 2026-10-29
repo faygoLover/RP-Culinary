@@ -632,7 +632,8 @@ public final class CulinaryService {
         FoodProperties def = item.getFoodProperties();
         if (fp != null && def != null && def.getNutrition() > 0 && fp.getNutrition() != def.getNutrition())
             base = base.scale(Math.max(0.3, Math.min(2, fp.getNutrition() / (double) def.getNutrition())));
-        return base;
+        // Крупный кусок с весом в NBT: питание по весу (6 кг лопатки = 24 порции).
+        return base.scale(faygolover.rpculinary.core.Weights.nutritionFactor(stack));
     }
 
     /** Кликнул по блоку: если в этот тик прибавится ванильная сытость — значит, съел с него. */

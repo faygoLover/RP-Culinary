@@ -1,7 +1,13 @@
 {
  "replace": false,
  "values": [
-  "butchery:raw_sausage",
-  "butchery:raw_blood_sausage"
+  {
+   "id": "butchery:raw_sausage",
+   "required": false
+  },
+  {
+   "id": "butchery:raw_blood_sausage",
+   "required": false
+  }
  ]
 }

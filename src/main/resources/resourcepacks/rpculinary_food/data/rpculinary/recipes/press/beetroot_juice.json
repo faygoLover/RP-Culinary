@@ -6,5 +6,15 @@
  "output": {
   "item": "legendarysurvivaloverhaul:beetroot_juice",
   "count": 1
- }
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "legendarysurvivaloverhaul"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "vinery"
+  }
+ ]
 }
