@@ -498,15 +498,16 @@ public final class CulinaryGameTests {
         boolean exact = faygolover.rpculinary.server.Butchering.loss(4, faygolover.rpculinary.server.CookingService.level(p), Settings.get()) == 0;
         MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos,
                 new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false)));
-        h.assertTrue(handler.getStackInSlot(0).isEmpty(), "кусок снят с доски");
-        int beef = dropped(h, pos, "minecraft:beef");
-        // 6 кг × 0.95 / 250 г = 22 порции; выше порога — шанс +1
-        h.assertTrue(exact ? beef == 22 || beef == 23 : beef > 0 && beef <= 23, "лопатка 6 кг → порции говядины, было " + beef);
-        h.assertTrue(dropped(h, pos, "butchery:meat_scraps") >= 1, "обрезь — обрезками");
+        // один удар — одна порция (или обрезки), кусок худеет на 250 г и остаётся на доске; вид — «корова»
+        ItemStack left = handler.getStackInSlot(0);
+        h.assertTrue(left.is(chuck.getItem()) && faygolover.rpculinary.core.Weights.nbtGrams(left) == 5750, "на доске осталось 5,75 кг, было " + faygolover.rpculinary.core.Weights.nbtGrams(left));
+        int beef = dropped(h, pos, "minecraft:beef"), scraps = dropped(h, pos, "butchery:meat_scraps");
+        h.assertTrue(exact ? beef == 1 : beef + scraps == 1, "одна часть за удар: говядина " + beef + ", обрезки " + scraps);
+        for (var ie : h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(2)))
+            h.assertTrue(faygolover.rpculinary.core.Source.list(ie.getItem()).contains("cow"), "часть помнит вид: корова");
         if (net.minecraftforge.fml.ModList.get().isLoaded("farm_and_charm")) {
             var mix = h.getLevel().getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("rpculinary", "bowl/mince_beef_pork"));
-            h.assertTrue(mix.isPresent() && mix.get().getResultItem(h.getLevel().registryAccess()).getTag() != null
-                    && mix.get().getResultItem(h.getLevel().registryAccess()).getTag().getString("rpculinary:mix").equals("beef,pork"), "смешанный фарш: рецепт и состав");
+            h.assertTrue(mix.isPresent(), "смешанный фарш: рецепт есть (состав — из происхождения)");
         }
         h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         remove(h, p);

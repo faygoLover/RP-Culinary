@@ -11,6 +11,8 @@ def I(x):
     return {'tag': x[1:]} if x.startswith('#') else {'item': x}
 
 
+BOARD = {}  # вход доски → [[предмет, штук, шанс], ...] — assets/rpculinary/board.json
+
 def generate(out, read_json, D):
     by_out = {}
     for r in D['recipes']:
@@ -214,6 +216,8 @@ def generate(out, read_json, D):
 
     # -------------------------------------------------- 8. мясо: фарш — мясорубка F&C; бекон, курица — доска FD
     def cut(rid, ing, results, tool='#forge:tools/knives'):
+        if not ing.startswith('#'):  # план разделки на доске: по одной части за удар (Processing.onBoard)
+            BOARD[ing] = [[i, n, ch] for i, n, ch in results]
         rec(f'cutting/{rid}', {'type': 'farmersdelight:cutting', 'ingredients': [I(ing)], 'tool': I(tool) if tool.startswith('#') else {'item': tool},
                                'result': [dict({'item': i, 'count': n}, **({'chance': ch} if ch < 1 else {})) for i, n, ch in results]})
     # FD: говядина ножом → «фарш» (это сырая котлета) — убрать; бекон из свинины — убрать; F&C: бекон/окорок/курица из мясорубки — убрать
@@ -268,9 +272,8 @@ def generate(out, read_json, D):
     # Смешанный фарш (вариант А, решение 29.10): два фарша разного вида в миске F&C → 2 фарша, состав в NBT, цвет средний (красный)
     MIX = {DARK: 'beef', RED: 'mutton', PINK: 'pork'}
     for x, y in [(DARK, PINK), (DARK, RED), (RED, PINK)]:
-        tag = json.dumps({'rpculinary:mix': f'{MIX[x]},{MIX[y]}'}, separators=(',', ':'))
         rec(f'bowl/mince_{MIX[x]}_{MIX[y]}', {'type': 'farm_and_charm:crafting_bowl', 'ingredients': [I(x), I(y)],
-                                              'result': {'item': RED, 'count': 2, 'nbt': tag}})
+                                              'result': {'item': RED, 'count': 2}})
 
     # Мухомор (ванильный красный гриб) — ядовитый (решение 29.10): где он нужен по рецепту, есть вариант из шампиньонов
     for rid in ('farmersdelight:cooking/mushroom_stew', 'farmersdelight:cooking/mushroom_rice'):

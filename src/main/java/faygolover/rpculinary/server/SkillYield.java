@@ -43,6 +43,8 @@ public class SkillYield extends LootItemConditionalFunction {
         }
         cut.keptGrams += (double) kept * grams;
         stack.setCount(kept);
+        if (kept > 0 && cut.species != null && !cut.species.isEmpty() && !faygolover.rpculinary.core.Source.marked(stack))
+            faygolover.rpculinary.core.Source.set(stack, cut.species);
         return kept > 0 ? stack : ItemStack.EMPTY;
     }
 

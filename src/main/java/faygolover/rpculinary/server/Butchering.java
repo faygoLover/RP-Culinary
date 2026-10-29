@@ -78,6 +78,8 @@ public final class Butchering {
         final BlockPos pos;
         final int threshold, skill;
         final boolean board;
+        /** Вид туши — пометка на мясе, что с неё упало. */
+        String species;
         double keptGrams, lostGrams;
 
         Cut(ServerPlayer player, BlockPos pos, int threshold, boolean board) {
@@ -160,7 +162,8 @@ public final class Butchering {
     /** Мясо для нарезки: уровень вида (из NBT, иначе по предмету) или -1. */
     static int meatLevel(ItemStack st) {
         blocks();
-        Integer bySource = SPECIES_LEVEL.get(Weights.source(st));
+        var src = faygolover.rpculinary.core.Source.list(st);
+        Integer bySource = src.isEmpty() ? null : SPECIES_LEVEL.get(src.get(0));
         if (bySource != null) return bySource;
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(st.getItem());
         Integer byItem = id == null ? null : ITEM_LEVEL.get(id.toString());
@@ -174,8 +177,8 @@ public final class Butchering {
         if (e.getHand() != InteractionHand.MAIN_HAND || !(e.getEntity() instanceof ServerPlayer sp) || !Settings.get().butcherSkill) return;
         BlockPos pos = e.getPos();
         BlockState bs = e.getLevel().getBlockState(pos);
-        if (BOARD.equals(ForgeRegistries.BLOCKS.getKey(bs.getBlock()))) {
-            onBoard(e, sp, pos);
+        if (Processing.BOARD.equals(ForgeRegistries.BLOCKS.getKey(bs.getBlock()))) {
+            Processing.onBoard(e, sp, pos);
             return;
         }
         Carcass c = of(bs.getBlock());
@@ -184,6 +187,7 @@ public final class Butchering {
         boolean cleaver = tool.is(CLEAVER) || tool.is(C_CLEAVER);
         if (!cleaver && !tool.is(KNIFE) && !tool.is(C_KNIFE)) return;
         Cut cut = new Cut(sp, pos, c.level(), false);
+        cut.species = c.species();  // всё мясо с туши — с пометкой вида (Source)
         List<String> extra = cleaver ? c.extra().get(stage(bs)) : null;
         BlockEntity be = e.getLevel().getBlockEntity(pos);
         if (extra != null && be != null && be.getPersistentData().getBoolean("isDrained") && e.getLevel() instanceof ServerLevel level) {
@@ -222,91 +226,12 @@ public final class Butchering {
         finish(cut);
     }
 
-    // ------------------------------------------------------------------ доска FD (блок 4): нарезка по весу
-
-    private static final ResourceLocation BOARD = new ResourceLocation("farmersdelight", "cutting_board");
-    private static final TagKey<Item> KNIVES = tag("forge:tools/knives");
-    /** Не теряются при нарезке. */
-    private static final java.util.Set<String> NO_LOSS = java.util.Set.of("minecraft:bone", "minecraft:bone_meal", "butchery:meat_scraps",
-            "butchery:animal_fat", "butchery:hoof", "butchery:bird_foot", "butchery:wishbone");
-
-    private static void onBoard(PlayerInteractEvent.RightClickBlock e, ServerPlayer sp, BlockPos pos) {
-        ItemStack tool = sp.getMainHandItem();
-        if (!tool.is(KNIVES) || !(e.getLevel() instanceof ServerLevel level)) return;
-        BlockEntity be = level.getBlockEntity(pos);
-        var handler = be == null ? null : be.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER).orElse(null);
-        if (handler == null || handler.getSlots() < 1) return;
-        ItemStack stored = handler.getStackInSlot(0);
-        int lvl = stored.isEmpty() ? -1 : meatLevel(stored);
-        if (lvl < 0) return;
-        Cut cut = new Cut(sp, pos, Math.max(1, lvl - 1), true);  // доска — на 1 ниже туши (решение 29.10 §7)
-        int grams = Weights.nbtGrams(stored);
-        if (grams <= 0) {  // обычная нарезка FD: её результат проверит onItemJoin
-            CURRENT.set(cut);
-            return;
-        }
-        ItemStack portion = portionOf(level, stored);
-        int g = Weights.nominal(portion.getItem()) > 0 ? Weights.nominal(portion.getItem()) : 250;
-        Settings s = Settings.get();
-        int n = Math.max(1, (int) (grams * (1 - s.boardTrim) / g));
-        int kept = 0;
-        for (int i = 0; i < n; i++) {
-            if (sp.getRandom().nextDouble() < cut.lossShare()) cut.lostGrams += g;
-            else kept++;
-        }
-        if (cut.skill > cut.threshold && sp.getRandom().nextDouble() < s.boardBonusChance) kept++;  // выше порога — шанс +1 порция
-        cut.keptGrams += (double) kept * g;
-        int trim = Math.max(0, grams - n * g);  // обрезь куска — обрезками целиком
-        while (kept > 0) {
-            ItemStack st = portion.copyWithCount(Math.min(kept, portion.getMaxStackSize()));
-            kept -= st.getCount();
-            spawn(level, pos, st);
-        }
-        spawnScraps(level, pos, trim / 250);
-        handler.extractItem(0, 1, false);
-        be.setChanged();
-        level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
-        tool.hurtAndBreak(1, sp, p -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
-        sp.swing(InteractionHand.MAIN_HAND, true);
-        var knife = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("farmersdelight", "block.cutting_board.knife"));
-        level.playSound(null, pos, knife != null ? knife : SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 0.8f, 1f);
-        finish(cut);
-        e.setCanceled(true);
-        e.setCancellationResult(InteractionResult.SUCCESS);
+    /** Доля фарша, что уходит в обрезки в мясорубке: 15 % у новичка, −1 % за уровень, не меньше 5 % (решение 29.10 §7). */
+    public static double mincerLoss(int skill) {
+        return Math.max(0.05, 0.15 - 0.01 * skill);
     }
 
-    /** Порция для крупного куска: первый результат рецепта доски FD, а если рецепта нет — тот же предмет без веса в NBT. */
-    static ItemStack portionOf(ServerLevel level, ItemStack piece) {
-        var type = ForgeRegistries.RECIPE_TYPES.getValue(new ResourceLocation("farmersdelight", "cutting"));
-        ItemStack probe = new ItemStack(piece.getItem());
-        if (type != null) for (var r : level.getRecipeManager().getRecipes()) {
-            if (r.getType() != type || r.getIngredients().isEmpty() || !r.getIngredients().get(0).test(probe)) continue;
-            ItemStack res = r.getResultItem(level.registryAccess());
-            if (!res.isEmpty() && !NO_LOSS.contains(String.valueOf(ForgeRegistries.ITEMS.getKey(res.getItem())))) return new ItemStack(res.getItem());
-        }
-        return probe;
-    }
-
-    /** Результат обычной нарезки FD во время {@link Cut} доски: часть мяса — в потери. */
-    public static void onItemJoin(net.minecraftforge.event.entity.EntityJoinLevelEvent e) {
-        if (!e.getLevel().isClientSide() && e.getEntity() instanceof ItemEntity mince && !CRANKS.isEmpty() && onMince(e, mince)) return;
-        Cut cut = CURRENT.get();
-        if (cut == null || !cut.board || e.getLevel().isClientSide() || !(e.getEntity() instanceof ItemEntity ie)) return;
-        if (ie.distanceToSqr(Vec3.atCenterOf(cut.pos)) > 4) return;
-        ItemStack st = ie.getItem();
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(st.getItem());
-        if (id == null || NO_LOSS.contains(id.toString()) || Weights.nominal(st.getItem()) <= 0) return;
-        int g = Math.max(1, Weights.grams(st)), kept = 0;
-        for (int i = 0; i < st.getCount(); i++) {
-            if (ie.level().getRandom().nextDouble() < cut.lossShare()) cut.lostGrams += g;
-            else kept++;
-        }
-        cut.keptGrams += (double) kept * g;
-        if (kept == 0) e.setCanceled(true);
-        else if (kept < st.getCount()) ie.setItem(st.copyWithCount(kept));
-    }
-
-    private static void spawnScraps(ServerLevel level, BlockPos pos, int n) {
+    static void spawnScraps(ServerLevel level, BlockPos pos, int n) {
         Item scraps = ForgeRegistries.ITEMS.getValue(SCRAPS);
         if (scraps == null || scraps == net.minecraft.world.item.Items.AIR) return;
         while (n > 0) {
@@ -314,54 +239,6 @@ public final class Butchering {
             n -= st.getCount();
             spawn(level, pos, st);
         }
-    }
-
-    // ------------------------------------------------------------------ мясорубка F&C (блок 5): потери в обрезки
-
-    private static final ResourceLocation MINCER = new ResourceLocation("farm_and_charm", "mincer");
-    private static final TagKey<Item> MINCE = tag("rpculinary:mince");
-    /** Кто последним крутил мясорубку: место → (игрок, тик). Фарш она выдаёт сама, в своём тике. */
-    private static final Map<String, Object[]> CRANKS = new java.util.concurrent.ConcurrentHashMap<>();
-
-    private static String key(net.minecraft.world.level.Level level, BlockPos pos) {
-        return level.dimension().location() + "|" + pos.asLong();
-    }
-
-    /** Клик по мясорубке — запомнить, кто крутит. */
-    public static void onMincerClick(PlayerInteractEvent.RightClickBlock e) {
-        if (!(e.getEntity() instanceof ServerPlayer sp) || !MINCER.equals(ForgeRegistries.BLOCKS.getKey(e.getLevel().getBlockState(e.getPos()).getBlock())))
-            return;
-        CRANKS.put(key(e.getLevel(), e.getPos()), new Object[]{sp.getUUID(), sp.server.getTickCount(), e.getPos().immutable()});
-        if (CRANKS.size() > 256) CRANKS.values().removeIf(v -> sp.server.getTickCount() - (int) v[1] > 20 * 120);
-    }
-
-    /** Доля фарша, что уходит в обрезки: 15 % у новичка, −1 % за уровень, не меньше 5 % (решение 29.10 §7). */
-    public static double mincerLoss(int skill) {
-        return Math.max(0.05, 0.15 - 0.01 * skill);
-    }
-
-    /** Фарш из мясорубки: часть — обрезками, по навыку того, кто крутил (в последние 60 с). */
-    private static boolean onMince(net.minecraftforge.event.entity.EntityJoinLevelEvent e, ItemEntity ie) {
-        ItemStack st = ie.getItem();
-        if (!st.is(MINCE) || !(e.getLevel() instanceof ServerLevel level)) return false;
-        for (Object[] v : CRANKS.values()) {
-            BlockPos pos = (BlockPos) v[2];
-            if (ie.distanceToSqr(Vec3.atCenterOf(pos)) > 2.5 || !CRANKS.containsKey(key(level, pos))) continue;
-            if (level.getServer().getTickCount() - (int) v[1] > 20 * 60) continue;
-            ServerPlayer sp = level.getServer().getPlayerList().getPlayer((UUID) v[0]);
-            if (sp == null) return false;
-            int skill = CookingService.level(sp), lost = 0;
-            for (int i = 0; i < st.getCount(); i++) if (level.getRandom().nextDouble() < mincerLoss(skill)) lost++;
-            if (lost > 0) {
-                spawnScraps(level, pos, lost);
-                if (lost >= st.getCount()) e.setCanceled(true);
-                else ie.setItem(st.copyWithCount(st.getCount() - lost));
-            }
-            double xp = xp(1, skill, st.getCount() * 0.25) * 0.5 * Settings.get().butcherXp;
-            if (xp > 0) RpCoreAPI.practice(sp, RpIds.COOKING, xp);
-            return true;
-        }
-        return false;
     }
 
     private static int stage(BlockState bs) {

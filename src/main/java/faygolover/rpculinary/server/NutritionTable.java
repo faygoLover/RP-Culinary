@@ -198,6 +198,11 @@ public final class NutritionTable {
         return mask;
     }
 
+    /** Группы экзотики продукта: предмета и видов мяса, из которых он сделан ({@link faygolover.rpculinary.core.Source}). */
+    public static int exoticMask(MinecraftServer server, ItemStack st) {
+        return exoticMask(server, st.getItem()) | Exotic.speciesMask(faygolover.rpculinary.core.Source.list(st));
+    }
+
     /** Группы экзотики предмета (битовая маска {@link Exotic#GROUPS}): свои и от ингредиентов рецепта. */
     public static synchronized int exoticMask(MinecraftServer server, Item item) {
         if (get(server, item) == null) return Exotic.directMask(item);

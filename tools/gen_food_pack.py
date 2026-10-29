@@ -334,6 +334,14 @@ try:
 except ImportError:
     pass
 
+# ------------------------------------------------------------------ планы доски (по одной части за удар) — для кода
+try:
+    with open(os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'rpculinary', 'board.json'), 'w', encoding='utf-8', newline='\n') as f:
+        json.dump({'_': 'tools/gen_food_pack.py из recipes_spec.cut — не править руками', 'plans': recipes_spec.BOARD}, f, ensure_ascii=False, indent=1)
+        f.write('\n')
+except NameError:
+    pass
+
 # ------------------------------------------------------------------ мешки и ящики (блок 6) — таблица для кода
 import containers_spec as CS
 with open(os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'rpculinary', 'containers.json'), 'w', encoding='utf-8', newline='\n') as f:

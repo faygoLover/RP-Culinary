@@ -60,7 +60,7 @@ public final class ExoticEffects {
     /** Съел долю {@code fraction} предмета: действия всех его групп. */
     public static void afterEating(ServerPlayer sp, NutritionData d, ItemStack used, double fraction, Settings s) {
         if (!s.exoticEffects || fraction <= 0) return;
-        int mask = NutritionTable.exoticMask(sp.server, used.getItem());
+        int mask = NutritionTable.exoticMask(sp.server, used);
         if (mask == 0) return;
         var rnd = sp.getRandom();
         double k = Math.min(1, fraction * 2);

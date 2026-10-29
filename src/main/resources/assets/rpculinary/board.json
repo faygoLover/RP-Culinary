@@ -1,0 +1,237 @@
+{
+ "_": "tools/gen_food_pack.py из recipes_spec.cut — не править руками",
+ "plans": {
+  "butchery:raw_chuck_steak": [
+   [
+    "minecraft:beef",
+    24,
+    1
+   ],
+   [
+    "butchery:meat_scraps",
+    2,
+    1
+   ]
+  ],
+  "butchery:raw_rump_steak": [
+   [
+    "minecraft:beef",
+    20,
+    1
+   ],
+   [
+    "butchery:meat_scraps",
+    2,
+    1
+   ]
+  ],
+  "butchery:raw_ribeye_steak": [
+   [
+    "minecraft:beef",
+    1,
+    1
+   ],
+   [
+    "butchery:meat_scraps",
+    1,
+    0.6
+   ]
+  ],
+  "butchery:raw_tbone_steak": [
+   [
+    "minecraft:beef",
+    1,
+    1
+   ],
+   [
+    "minecraft:bone",
+    1,
+    1
+   ]
+  ],
+  "butchery:raw_sirloin_steak": [
+   [
+    "minecraft:beef",
+    1,
+    1
+   ],
+   [
+    "butchery:meat_scraps",
+    1,
+    0.6
+   ]
+  ],
+  "butchery:raw_pork_shoulder": [
+   [
+    "minecraft:porkchop",
+    4,
+    1
+   ],
+   [
+    "butchery:meat_scraps",
+    1,
+    1
+   ]
+  ],
+  "butchery:raw_pork_loin": [
+   [
+    "minecraft:porkchop",
+    1,
+    1
+   ],
+   [
+    "butchery:meat_scraps",
+    1,
+    0.6
+   ]
+  ],
+  "butchery:raw_pork_leg": [
+   [
+    "minecraft:porkchop",
+    2,
+    1
+   ],
+   [
+    "minecraft:bone",
+    1,
+    1
+   ]
+  ],
+  "butchery:raw_ham": [
+   [
+    "minecraft:porkchop",
+    6,
+    1
+   ],
+   [
+    "minecraft:bone",
+    1,
+    1
+   ]
+  ],
+  "butchery:raw_lamb_shoulder": [
+   [
+    "minecraft:mutton",
+    2,
+    1
+   ]
+  ],
+  "farm_and_charm:lamb_ham": [
+   [
+    "minecraft:mutton",
+    2,
+    1
+   ],
+   [
+    "minecraft:bone",
+    1,
+    1
+   ]
+  ],
+  "butchery:raw_lamb_loin": [
+   [
+    "farmersdelight:mutton_chops",
+    2,
+    1
+   ]
+  ],
+  "butchery:raw_lamb_rib": [
+   [
+    "farmersdelight:mutton_chops",
+    2,
+    1
+   ],
+   [
+    "minecraft:bone",
+    1,
+    1
+   ]
+  ],
+  "butchery:raw_lamb_sirloin": [
+   [
+    "minecraft:mutton",
+    1,
+    1
+   ],
+   [
+    "butchery:meat_scraps",
+    1,
+    0.6
+   ]
+  ],
+  "butchery:raw_pork_belly": [
+   [
+    "farmersdelight:bacon",
+    20,
+    1
+   ]
+  ],
+  "minecraft:chicken": [
+   [
+    "farmersdelight:chicken_cuts",
+    2,
+    1
+   ],
+   [
+    "farm_and_charm:chicken_parts",
+    2,
+    1
+   ],
+   [
+    "minecraft:bone",
+    1,
+    1
+   ]
+  ],
+  "butchery:raw_chicken_leg": [
+   [
+    "farm_and_charm:chicken_parts",
+    2,
+    1
+   ],
+   [
+    "minecraft:bone",
+    1,
+    0.5
+   ]
+  ],
+  "butchery:raw_cod_fillet": [
+   [
+    "farmersdelight:cod_slice",
+    6,
+    1
+   ]
+  ],
+  "butchery:raw_salmon": [
+   [
+    "farmersdelight:salmon_slice",
+    6,
+    1
+   ]
+  ],
+  "minecraft:cod": [
+   [
+    "butchery:raw_cod_fillet",
+    2,
+    1
+   ],
+   [
+    "minecraft:bone_meal",
+    1,
+    1
+   ]
+  ],
+  "minecraft:salmon": [
+   [
+    "butchery:raw_salmon",
+    2,
+    1
+   ],
+   [
+    "minecraft:bone_meal",
+    1,
+    1
+   ]
+  ]
+ }
+}

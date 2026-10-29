@@ -111,18 +111,25 @@ public final class FoodTooltips {
     static void weightLine(ItemTooltipEvent e) {
         var st = e.getItemStack();
         int g = faygolover.rpculinary.core.Weights.grams(st);
-        if (g <= 0) return;
-        String src = faygolover.rpculinary.core.Weights.source(st);
-        Component w = Component.literal(faygolover.rpculinary.core.Weights.format(g));
-        e.getToolTip().add(src.isEmpty() ? tr("weight", w).withStyle(ChatFormatting.GRAY)
-                : tr("weight_source", Component.translatable("rpculinary.source." + src), w).withStyle(ChatFormatting.GRAY));
-        var tag = st.getTag();
-        if (tag != null && tag.contains("rpculinary:mix")) {  // смешанный фарш: состав
-            Component[] parts = java.util.Arrays.stream(tag.getString("rpculinary:mix").split(","))
-                    .map(x -> (Component) Component.translatable("rpculinary.source." + x)).toArray(Component[]::new);
-            Component list = parts.length == 2 ? Component.translatable("rpculinary.tip.and", parts[0], parts[1]) : parts[0];
-            e.getToolTip().add(tr("mix", list).withStyle(ChatFormatting.GRAY));
+        Component src = sources(st);
+        if (g <= 0) {  // блюдо: только «из кого»
+            if (src != null) e.getToolTip().add(tr("meat_of", src).withStyle(ChatFormatting.GRAY));
+            return;
         }
+        Component w = Component.literal(faygolover.rpculinary.core.Weights.format(g));
+        e.getToolTip().add(src == null ? tr("weight", w).withStyle(ChatFormatting.GRAY) : tr("weight_source", src, w).withStyle(ChatFormatting.GRAY));
+    }
+
+    /** «Кенгуру» или «Корова, свинья» — из пометки происхождения; null — пометки нет. */
+    static Component sources(net.minecraft.world.item.ItemStack st) {
+        if (!faygolover.rpculinary.core.Source.marked(st)) return null;
+        var list = faygolover.rpculinary.core.Source.list(st);
+        net.minecraft.network.chat.MutableComponent out = Component.empty();
+        for (int k = 0; k < list.size(); k++) {
+            if (k > 0) out.append(", ");
+            out.append(Component.translatable("rpculinary.source." + list.get(k)));
+        }
+        return out;
     }
 
     static void drinkLine(ItemTooltipEvent e) {

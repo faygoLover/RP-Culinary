@@ -10,8 +10,7 @@
  ],
  "result": {
   "item": "butchery:raw_beef_mince",
-  "count": 2,
-  "nbt": "{\"rpculinary:mix\":\"beef,mutton\"}"
+  "count": 2
  },
  "conditions": [
   {

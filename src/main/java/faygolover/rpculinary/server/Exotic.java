@@ -71,6 +71,31 @@ public final class Exotic {
         return g >= 0 && g < GROUPS.size() && RESEARCH.contains(GROUPS.get(g));
     }
 
+    /** Вид мяса → группа (решения 29.10): котлета из кенгуру — «дичь», из кошки — «питомцы» и т. п. */
+    private static final Map<String, String> SPECIES_GROUP = Map.ofEntries(
+            Map.entry("kangaroo", "game"), Map.entry("moose", "game"), Map.entry("horse", "game"), Map.entry("donkey", "game"),
+            Map.entry("mule", "game"), Map.entry("camel", "game"), Map.entry("llama", "game"), Map.entry("polar_bear", "game"),
+            Map.entry("panda", "game"), Map.entry("sniffer", "game"), Map.entry("turtle", "game"), Map.entry("dolphin", "game"),
+            Map.entry("bat", "game"), Map.entry("fox", "game"), Map.entry("frog", "game"), Map.entry("axolotl", "game"), Map.entry("dinosaur", "game"),
+            Map.entry("cat", "pets"), Map.entry("wolf", "pets"), Map.entry("ocelot", "pets"),
+            Map.entry("squid", "seafood"), Map.entry("bee", "insects"), Map.entry("spider", "insects"), Map.entry("cave_spider", "insects"),
+            Map.entry("silverfish", "insects"), Map.entry("hoglin", "other_worlds"), Map.entry("strider", "other_worlds"),
+            Map.entry("enderman", "other_worlds"), Map.entry("endermite", "other_worlds"), Map.entry("shulker", "other_worlds"),
+            Map.entry("ender_dragon", "other_worlds"), Map.entry("creeper", "monsters"), Map.entry("guardian", "monsters"),
+            Map.entry("elder_guardian", "monsters"), Map.entry("warden", "monsters"), Map.entry("phantom", "monsters"), Map.entry("slime", "monsters"),
+            Map.entry("human", "human"), Map.entry("villager", "human"), Map.entry("pillager", "human"), Map.entry("vindicator", "human"),
+            Map.entry("evoker", "human"), Map.entry("witch", "human"), Map.entry("piglin", "human"), Map.entry("zombie", "spoiled"));
+
+    /** Группы по видам мяса (из пометки происхождения). */
+    public static int speciesMask(Iterable<String> species) {
+        int mask = 0;
+        for (String sp : species) {
+            String g = SPECIES_GROUP.get(sp);
+            if (g != null) mask |= bit(g);
+        }
+        return mask;
+    }
+
     /** Группы, к которым предмет отнесён прямо (тегом), битовой маской. */
     public static int directMask(Item item) {
         var holder = item.builtInRegistryHolder();

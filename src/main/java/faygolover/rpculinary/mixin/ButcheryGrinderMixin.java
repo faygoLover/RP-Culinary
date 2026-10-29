@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * Мясорубка Butchery — только колбасы и сосиски (решение Alex 29.10): фарш мелет мясорубка F&C. Без насадки для колбас
  * мясорубка Butchery говядину и баранину не мелет (её рецепты зашиты в процедуру MCreator — перехватываем её вход).
- * Butchery нет — миксин молча не применяется.
+ * Вид мяса (пометка {@code rpculinary:source}) с входа переходит на сосиски. Butchery нет — миксин молча не применяется.
  */
 @Pseudo
 @Mixin(targets = "net.mcreator.butchery.procedures.MeatgrinderrecipeprocedureProcedure", remap = false)
@@ -31,9 +31,29 @@ public abstract class ButcheryGrinderMixin {
         var h = be.getCapability(ForgeCapabilities.ITEM_HANDLER, null).orElse(null);
         if (h == null || h.getSlots() < 3) return;
         ItemStack input = h.getStackInSlot(0), tool = h.getStackInSlot(2);
+        RPCULINARY$SOURCE.set(faygolover.rpculinary.core.Source.marked(input) ? faygolover.rpculinary.core.Source.list(input) : null);
         if (RPCULINARY$ATTACHMENT.equals(ForgeRegistries.ITEMS.getKey(tool.getItem()))) return;  // колбасы — можно
         if (input.is(ItemTags.create(new ResourceLocation("forge", "raw_beef"))) || input.is(ItemTags.create(new ResourceLocation("c", "raw_beef")))
                 || input.is(ItemTags.create(new ResourceLocation("forge", "raw_mutton"))) || input.is(ItemTags.create(new ResourceLocation("c", "raw_mutton"))))
             ci.cancel();
+    }
+
+    private static final ThreadLocal<java.util.List<String>> RPCULINARY$SOURCE = new ThreadLocal<>();
+
+    /** После шага мясорубки: новые сосиски без пометки — из того мяса, что было на входе. */
+    @Inject(method = "execute(Lnet/minecraft/world/level/LevelAccessor;DDD)V", at = @At("RETURN"), require = 0, remap = false)
+    private static void rpculinary$source(LevelAccessor world, double x, double y, double z, CallbackInfo ci) {
+        java.util.List<String> src = RPCULINARY$SOURCE.get();
+        RPCULINARY$SOURCE.remove();
+        if (src == null || src.isEmpty()) return;
+        BlockEntity be = world.getBlockEntity(BlockPos.containing(x, y, z));
+        var h = be == null ? null : be.getCapability(ForgeCapabilities.ITEM_HANDLER, null).orElse(null);
+        if (h == null) return;
+        for (int i = 1; i < h.getSlots(); i++) {
+            ItemStack st = h.getStackInSlot(i);
+            String id = String.valueOf(ForgeRegistries.ITEMS.getKey(st.getItem()));
+            if (id.contains("sausage") && !id.contains("attachment") && !faygolover.rpculinary.core.Source.marked(st))
+                faygolover.rpculinary.core.Source.add(st, src);
+        }
     }
 }
