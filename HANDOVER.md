@@ -123,3 +123,8 @@
 - `server/Techniques.java` — «Винокур» (тег блоков `rpculinary:technique/vintner`) и «Заготовщик» (тег предметов `technique/preserver`).
 - Без RP Perks знания и техники — у всех (навык не ведёт никто).
 
+## Мешки и ящики (блок 6, 29.10)
+- Таблица — `tools/containers_spec.py` → `assets/rpculinary/containers.json` (gen_food_pack.py), рецепты — `recipes_spec.py` (раздел 6).
+- `core/Containers.java` — NBT `rpculinary:fill` {id, n}, вместимость по весу; `server/ContainerFill.java` — инвентарь (ItemStackedOnOtherEvent),
+  поставленная тара (SavedData `rpculinary_containers`, ключ «измерение|позиция»), выпадение с содержимым.
+

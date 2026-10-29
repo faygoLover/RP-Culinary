@@ -240,5 +240,8 @@
   "rpculinary.tip.and": "%s и %s",
   "rpculinary.source.beef": "говядина",
   "rpculinary.source.mutton": "баранина",
-  "rpculinary.source.pork": "свинина"
+  "rpculinary.source.pork": "свинина",
+  "rpculinary.tooltip.box_fill": "Внутри: %s ×%s (%s из %s)",
+  "rpculinary.tooltip.box_empty": "Пусто, вмещает %s",
+  "rpculinary.tooltip.box_hint": "Продуктом по таре — положить, ПКМ — достать"
 }

@@ -1,0 +1,16 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "minecraft:barrier"
+  }
+ ],
+ "result": {
+  "item": "minecraft:barrier"
+ },
+ "conditions": [
+  {
+   "type": "forge:false"
+  }
+ ]
+}

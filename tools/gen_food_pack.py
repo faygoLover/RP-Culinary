@@ -334,6 +334,13 @@ try:
 except ImportError:
     pass
 
+# ------------------------------------------------------------------ мешки и ящики (блок 6) — таблица для кода
+import containers_spec as CS
+with open(os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'rpculinary', 'containers.json'), 'w', encoding='utf-8', newline='\n') as f:
+    json.dump({'_': 'tools/gen_food_pack.py из tools/containers_spec.py — не править руками',
+               'containers': {c: {'accept': a, 'kg': kg} for c, (a, kg, m) in CS.CONTAINERS.items()}}, f, ensure_ascii=False, indent=1)
+    f.write('\n')
+
 # ------------------------------------------------------------------ pack.mcmeta + отчёт
 with open(os.path.join(PACK, 'pack.mcmeta'), 'w', encoding='utf-8', newline='\n') as f:
     json.dump({'pack': {'pack_format': 15, 'description': 'RP Culinary: разделка, теги, рецепты (поверх модов)'}}, f, ensure_ascii=False, indent=1)

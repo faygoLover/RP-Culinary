@@ -1,0 +1,27 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "tag": "minecraft:wool"
+  },
+  {
+   "tag": "minecraft:wool"
+  },
+  {
+   "tag": "minecraft:wool"
+  },
+  {
+   "item": "minecraft:glow_berries"
+  }
+ ],
+ "result": {
+  "item": "quark:glowberry_sack",
+  "count": 1
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "quark"
+  }
+ ]
+}

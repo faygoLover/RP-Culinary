@@ -94,7 +94,7 @@ public final class Weights {
      */
     public static int maxStack(ItemStack st) {
         if (st.isEmpty()) return -1;
-        if (nbtGrams(st) > 0) return 1;
+        if (nbtGrams(st) > 0 || Containers.of(st.getItem()) != null) return 1;  // крупный кусок и тара — не стакаются
         Entry e = entry(st.getItem());
         return e != null && e.stack() > 0 ? e.stack() : -1;
     }

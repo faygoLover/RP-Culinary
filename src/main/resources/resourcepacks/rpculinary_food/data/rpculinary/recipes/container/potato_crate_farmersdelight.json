@@ -1,0 +1,30 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "tag": "minecraft:planks"
+  },
+  {
+   "tag": "minecraft:planks"
+  },
+  {
+   "tag": "minecraft:planks"
+  },
+  {
+   "tag": "minecraft:planks"
+  },
+  {
+   "item": "minecraft:potato"
+  }
+ ],
+ "result": {
+  "item": "farmersdelight:potato_crate",
+  "count": 1
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  }
+ ]
+}

@@ -1,0 +1,27 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "tag": "minecraft:wool"
+  },
+  {
+   "tag": "minecraft:wool"
+  },
+  {
+   "tag": "minecraft:wool"
+  },
+  {
+   "item": "minecraft:cocoa_beans"
+  }
+ ],
+ "result": {
+  "item": "quark:cocoa_beans_sack",
+  "count": 1
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "quark"
+  }
+ ]
+}

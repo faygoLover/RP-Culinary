@@ -240,5 +240,8 @@
   "rpculinary.tip.and": "%s and %s",
   "rpculinary.source.beef": "beef",
   "rpculinary.source.mutton": "mutton",
-  "rpculinary.source.pork": "pork"
+  "rpculinary.source.pork": "pork",
+  "rpculinary.tooltip.box_fill": "Inside: %s ×%s (%s of %s)",
+  "rpculinary.tooltip.box_empty": "Empty, holds %s",
+  "rpculinary.tooltip.box_hint": "Click produce onto it to put in, right-click to take out"
 }

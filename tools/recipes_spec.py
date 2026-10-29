@@ -281,6 +281,20 @@ def generate(out, read_json, D):
             obj.pop('conditions', None)
             rec(f'cooking/{path.split("/")[-1]}_brown', obj)
 
+    # -------------------------------------------------- 6. мешки и ящики (блок 6): упаковка/распаковка «по 9» — убрать, пустая тара — шить/сбивать
+    import containers_spec as CS
+    for cont, (accept, kg, material) in CS.CONTAINERS.items():
+        for r in D['recipes']:
+            if r['type'] not in CRAFT:
+                continue
+            packs = r['out'] == [cont] and r['in'] and all(x in accept for x in r['in'])
+            unpacks = r['in'] == [cont] and r['out'] and r['out'][0] in accept
+            if packs or unpacks:
+                disable(r['id'])
+        ings = [material] * (3 if material != '#minecraft:planks' else 4) + [accept[0]]
+        rec(f'container/{cont.split(":")[1]}_{cont.split(":")[0]}', {'type': 'minecraft:crafting_shapeless',
+            'ingredients': [I(x) for x in ings], 'result': {'item': cont, 'count': 1}})
+
     # -------------------------------------------------- 9. соль, водка
     rec('mortar/rock_salt', {'type': 'butchery:pestleandmortarrecipetype', 'ingredients': [{'item': 'blocksyouneed_luna:rock_salt'}],
                              'output': {'item': 'butchery:salt', 'count': 2}})

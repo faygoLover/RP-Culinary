@@ -540,6 +540,40 @@ public final class CulinaryGameTests {
         h.succeed();
     }
 
+    /** Мешки и ящики (блок 6): наполнить из стака, достать, стак 1; поставленная — хранит содержимое и отдаёт его. */
+    @GameTest(template = T)
+    public static void containers(GameTestHelper h) {
+        var crate = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("farmersdelight", "potato_crate"));
+        if (crate == null || crate == Items.AIR) {
+            h.succeed();
+            return;
+        }
+        ItemStack box = new ItemStack(crate);
+        h.assertTrue(box.getMaxStackSize() == 1, "тара не стакается");
+        ItemStack potatoes = new ItemStack(Items.POTATO, 64);
+        int moved = faygolover.rpculinary.core.Containers.fill(box, potatoes);
+        h.assertTrue(moved > 0 && faygolover.rpculinary.core.Containers.count(box) == moved && potatoes.getCount() == 64 - moved, "картофель положен");
+        h.assertTrue(faygolover.rpculinary.core.Containers.fill(box, new ItemStack(Items.CARROT, 4)) == 0, "морковь в ящик картофеля — нет");
+        ItemStack out = faygolover.rpculinary.core.Containers.take(box);
+        h.assertTrue(out.is(Items.POTATO) && out.getCount() > 0, "достал стак");
+        int left = faygolover.rpculinary.core.Containers.count(box);
+        // поставленный ящик: ПКМ картофелем — положить, пустой рукой — достать
+        BlockPos pos = h.absolutePos(new BlockPos(1, 2, 1));
+        h.getLevel().setBlock(pos, ((net.minecraft.world.item.BlockItem) crate).getBlock().defaultBlockState(), 3);
+        ServerPlayer p = player(h);
+        p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.POTATO, 10));
+        var hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
+        MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos, hit));
+        h.assertTrue(faygolover.rpculinary.server.ContainerFill.storedCount(h.getLevel(), pos) == 10 && p.getMainHandItem().isEmpty(), "в поставленный ящик положено 10");
+        MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos, hit));
+        h.assertTrue(p.getMainHandItem().is(Items.POTATO) && p.getMainHandItem().getCount() == 10
+                && faygolover.rpculinary.server.ContainerFill.storedCount(h.getLevel(), pos) == 0, "достал обратно");
+        h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        h.assertTrue(left >= 0, "остаток считается");
+        remove(h, p);
+        h.succeed();
+    }
+
     private static int dropped(GameTestHelper h, BlockPos pos, String id) {
         var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation(id));
         int n = 0;

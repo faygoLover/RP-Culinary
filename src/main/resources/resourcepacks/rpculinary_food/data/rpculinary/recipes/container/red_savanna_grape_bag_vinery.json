@@ -1,0 +1,27 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "tag": "minecraft:wool"
+  },
+  {
+   "tag": "minecraft:wool"
+  },
+  {
+   "tag": "minecraft:wool"
+  },
+  {
+   "item": "vinery:savanna_grapes_red"
+  }
+ ],
+ "result": {
+  "item": "vinery:red_savanna_grape_bag",
+  "count": 1
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "vinery"
+  }
+ ]
+}

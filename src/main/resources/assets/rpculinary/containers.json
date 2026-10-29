@@ -1,0 +1,249 @@
+{
+ "_": "tools/gen_food_pack.py из tools/containers_spec.py — не править руками",
+ "containers": {
+  "farm_and_charm:beetroot_bag": {
+   "accept": [
+    "minecraft:beetroot"
+   ],
+   "kg": 25
+  },
+  "farm_and_charm:carrot_bag": {
+   "accept": [
+    "minecraft:carrot"
+   ],
+   "kg": 25
+  },
+  "farm_and_charm:cat_food_bag": {
+   "accept": [
+    "farm_and_charm:cat_food"
+   ],
+   "kg": 25
+  },
+  "farm_and_charm:corn_bag": {
+   "accept": [
+    "farm_and_charm:corn"
+   ],
+   "kg": 25
+  },
+  "farm_and_charm:dog_food_bag": {
+   "accept": [
+    "farm_and_charm:dog_food"
+   ],
+   "kg": 25
+  },
+  "farm_and_charm:flour_bag": {
+   "accept": [
+    "farm_and_charm:flour"
+   ],
+   "kg": 25
+  },
+  "farm_and_charm:lettuce_bag": {
+   "accept": [
+    "farm_and_charm:lettuce"
+   ],
+   "kg": 25
+  },
+  "farm_and_charm:onion_bag": {
+   "accept": [
+    "farmersdelight:onion",
+    "farm_and_charm:onion"
+   ],
+   "kg": 25
+  },
+  "farm_and_charm:potato_bag": {
+   "accept": [
+    "minecraft:potato"
+   ],
+   "kg": 25
+  },
+  "farm_and_charm:strawberry_bag": {
+   "accept": [
+    "farm_and_charm:strawberry"
+   ],
+   "kg": 25
+  },
+  "farm_and_charm:tomato_bag": {
+   "accept": [
+    "farmersdelight:tomato",
+    "farm_and_charm:tomato"
+   ],
+   "kg": 25
+  },
+  "farmersdelight:beetroot_crate": {
+   "accept": [
+    "minecraft:beetroot"
+   ],
+   "kg": 30
+  },
+  "farmersdelight:cabbage_crate": {
+   "accept": [
+    "farmersdelight:cabbage"
+   ],
+   "kg": 30
+  },
+  "farmersdelight:carrot_crate": {
+   "accept": [
+    "minecraft:carrot"
+   ],
+   "kg": 30
+  },
+  "farmersdelight:onion_crate": {
+   "accept": [
+    "farmersdelight:onion",
+    "farm_and_charm:onion"
+   ],
+   "kg": 30
+  },
+  "farmersdelight:potato_crate": {
+   "accept": [
+    "minecraft:potato"
+   ],
+   "kg": 30
+  },
+  "farmersdelight:tomato_crate": {
+   "accept": [
+    "farmersdelight:tomato",
+    "farm_and_charm:tomato"
+   ],
+   "kg": 30
+  },
+  "farmersdelight:rice_bag": {
+   "accept": [
+    "farmersdelight:rice"
+   ],
+   "kg": 25
+  },
+  "farmersdelight:rice_bale": {
+   "accept": [
+    "farmersdelight:rice_panicle"
+   ],
+   "kg": 20
+  },
+  "herbalbrews:tea_leaf_crate": {
+   "accept": [
+    "herbalbrews:green_tea_leaf"
+   ],
+   "kg": 30
+  },
+  "quark:apple_crate": {
+   "accept": [
+    "minecraft:apple"
+   ],
+   "kg": 30
+  },
+  "quark:beetroot_crate": {
+   "accept": [
+    "minecraft:beetroot"
+   ],
+   "kg": 30
+  },
+  "quark:carrot_crate": {
+   "accept": [
+    "minecraft:carrot"
+   ],
+   "kg": 30
+  },
+  "quark:potato_crate": {
+   "accept": [
+    "minecraft:potato"
+   ],
+   "kg": 30
+  },
+  "quark:golden_apple_crate": {
+   "accept": [
+    "minecraft:golden_apple"
+   ],
+   "kg": 30
+  },
+  "quark:golden_carrot_crate": {
+   "accept": [
+    "minecraft:golden_carrot"
+   ],
+   "kg": 30
+  },
+  "quark:berry_sack": {
+   "accept": [
+    "minecraft:sweet_berries"
+   ],
+   "kg": 20
+  },
+  "quark:cocoa_beans_sack": {
+   "accept": [
+    "minecraft:cocoa_beans"
+   ],
+   "kg": 20
+  },
+  "quark:glowberry_sack": {
+   "accept": [
+    "minecraft:glow_berries"
+   ],
+   "kg": 20
+  },
+  "quark:nether_wart_sack": {
+   "accept": [
+    "minecraft:nether_wart"
+   ],
+   "kg": 20
+  },
+  "vinery:apple_bag": {
+   "accept": [
+    "minecraft:apple"
+   ],
+   "kg": 25
+  },
+  "vinery:cherry_bag": {
+   "accept": [
+    "vinery:cherry"
+   ],
+   "kg": 25
+  },
+  "vinery:red_grape_bag": {
+   "accept": [
+    "vinery:red_grape"
+   ],
+   "kg": 25
+  },
+  "vinery:red_jungle_grape_bag": {
+   "accept": [
+    "vinery:jungle_grapes_red"
+   ],
+   "kg": 25
+  },
+  "vinery:red_savanna_grape_bag": {
+   "accept": [
+    "vinery:savanna_grapes_red"
+   ],
+   "kg": 25
+  },
+  "vinery:red_taiga_grape_bag": {
+   "accept": [
+    "vinery:taiga_grapes_red"
+   ],
+   "kg": 25
+  },
+  "vinery:white_grape_bag": {
+   "accept": [
+    "vinery:white_grape"
+   ],
+   "kg": 25
+  },
+  "vinery:white_jungle_grape_bag": {
+   "accept": [
+    "vinery:jungle_grapes_white"
+   ],
+   "kg": 25
+  },
+  "vinery:white_savanna_grape_bag": {
+   "accept": [
+    "vinery:savanna_grapes_white"
+   ],
+   "kg": 25
+  },
+  "vinery:white_taiga_grape_bag": {
+   "accept": [
+    "vinery:taiga_grapes_white"
+   ],
+   "kg": 25
+  }
+ }
+}

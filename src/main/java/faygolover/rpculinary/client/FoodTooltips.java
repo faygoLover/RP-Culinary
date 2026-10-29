@@ -35,6 +35,21 @@ public final class FoodTooltips {
     }
 
     public static void onTooltip(ItemTooltipEvent e) {
+        var box = faygolover.rpculinary.core.Containers.of(e.getItemStack().getItem());
+        if (box != null) {  // мешок или ящик: что внутри и сколько вмещает
+            var st = e.getItemStack();
+            int n = faygolover.rpculinary.core.Containers.count(st);
+            if (n > 0) {
+                var it = faygolover.rpculinary.core.Containers.content(st);
+                int g = faygolover.rpculinary.core.Weights.nominal(it);
+                e.getToolTip().add(tr("box_fill", it.getDescription(), n,
+                        Component.literal(faygolover.rpculinary.core.Weights.format((int) Math.min(Integer.MAX_VALUE, (long) n * Math.max(1, g)))),
+                        Component.literal(faygolover.rpculinary.core.Weights.format((int) (box.kg() * 1000)))).withStyle(ChatFormatting.GRAY));
+            } else {
+                e.getToolTip().add(tr("box_empty", Component.literal(faygolover.rpculinary.core.Weights.format((int) (box.kg() * 1000)))).withStyle(ChatFormatting.GRAY));
+            }
+            e.getToolTip().add(tr("box_hint").withStyle(ChatFormatting.DARK_GRAY));
+        }
         if (e.getEntity() == null) return;
         weightLine(e);
         if (!ClientNutrition.known) return;
