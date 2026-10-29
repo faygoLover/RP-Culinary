@@ -1,0 +1,45 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 200,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "item": "butchery:meat_scraps"
+  },
+  {
+   "item": "butchery:meat_scraps"
+  },
+  {
+   "tag": "forge:grain/wheat"
+  },
+  {
+   "tag": "forge:grain/wheat"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "zombie_extreme:canned_food",
+  "count": 2
+ },
+ "container": {
+  "item": "sa_core:empty_can"
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "butchery"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "sa_core"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "zombie_extreme"
+  }
+ ]
+}

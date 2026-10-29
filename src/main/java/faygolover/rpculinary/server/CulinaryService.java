@@ -390,7 +390,7 @@ public final class CulinaryService {
             fraction = 1.0 / sips;
         } else if (n > 1) {
             double kcal = dishKcal(sp, used, Settings.get());
-            if (kcal > 0) fraction = Math.max(0.05, 1 - (n - 1) * Settings.get().portionStepKcal / kcal);
+            if (kcal > 0) fraction = Math.max(0.05, 1 - (n - 1) * Settings.get().biteKcal / kcal);
         }
         // Вещества, бодрость, кофеин — по доле (RP Core), и в творческом тоже.
         MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpConsumeEvent(sp, used.copy(), fraction));
@@ -425,11 +425,14 @@ public final class CulinaryService {
         return true;
     }
 
-    /** Сколько укусов у целого блюда: от двух шагов — по шагу, остаток от 1 до 2 шагов — последним укусом. */
+    /** Сколько укусов у целого блюда: к ближайшему по {@link Settings#biteKcal} (299 — 1, 300 — 2), последний — остаток. */
     public static int bitesFor(ServerPlayer sp, ItemStack st, Settings s) {
-        if (!s.bitesEnabled || s.portionStepKcal <= 0 || st.getUseAnimation() != net.minecraft.world.item.UseAnim.EAT) return 1;
-        double kcal = dishKcal(sp, st, s);
-        return kcal < 2 * s.portionStepKcal ? 1 : (int) Math.floor(kcal / s.portionStepKcal);
+        if (!s.bitesEnabled || s.biteKcal <= 0 || st.getUseAnimation() != net.minecraft.world.item.UseAnim.EAT) return 1;
+        return bites(dishKcal(sp, st, s), s.biteKcal);
+    }
+
+    public static int bites(double kcal, double bite) {
+        return bite <= 0 ? 1 : Math.max(1, (int) Math.round(kcal / bite));
     }
 
     /** Калории целого блюда с качеством готовки. */
@@ -458,8 +461,8 @@ public final class CulinaryService {
         if (kcal <= 0) return false;
         ensureInit(sp, d);
         ItemStack piece = held.getCount() > 1 ? held.split(1) : held;
-        MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpConsumeEvent(sp, piece.copy(), s.portionStepKcal / kcal));
-        eatPortion(sp, d, piece.copy(), s.portionStepKcal / kcal);
+        MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpConsumeEvent(sp, piece.copy(), s.biteKcal / kcal));
+        eatPortion(sp, d, piece.copy(), s.biteKcal / kcal);
         piece.getOrCreateTag().putInt(BITES_N, n);
         piece.getTag().putInt(BITES, left - 1);
         if (piece != held && !sp.getInventory().add(piece)) sp.drop(piece, false);

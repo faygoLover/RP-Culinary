@@ -44,6 +44,15 @@ public final class NutritionTable {
     /** Сложность блюда: сколько разных ингредиентов в рецепте (базовый продукт — 0). */
     private static final Map<Item, Integer> COMPLEXITY = new HashMap<>();
     /** Группы экзотики (битовая маска {@link Exotic#GROUPS}): свои и унаследованные от ингредиентов. */
+    /** Входит ли продукт в какой-нибудь рецепт этого блюда (для состава мяса — {@link Provenance}). */
+    public static synchronized boolean usesIngredient(MinecraftServer server, Item result, ItemStack ingredient) {
+        get(server, result);
+        if (byResult == null) return false;
+        for (Recipe<?> r : byResult.getOrDefault(result, List.of()))
+            for (Ingredient ing : r.getIngredients()) if (!ing.isEmpty() && ing.test(ingredient)) return true;
+        return false;
+    }
+
     /** Мясная часть блюда из рецепта (на штуку). */
     private static final Map<Item, Food> MEAT = new java.util.HashMap<>();
     private static final int MEAT_CAT = NutritionState.category("meat"), FISH_CAT = NutritionState.category("fish");

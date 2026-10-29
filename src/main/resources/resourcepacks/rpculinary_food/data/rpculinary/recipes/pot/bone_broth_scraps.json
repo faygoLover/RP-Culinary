@@ -1,0 +1,34 @@
+{
+ "type": "farmersdelight:cooking",
+ "cookingtime": 200,
+ "experience": 1.0,
+ "ingredients": [
+  {
+   "item": "minecraft:bone"
+  },
+  {
+   "item": "minecraft:bone"
+  },
+  {
+   "item": "butchery:meat_scraps"
+  }
+ ],
+ "recipe_book_tab": "meals",
+ "result": {
+  "item": "farmersdelight:bone_broth",
+  "count": 1
+ },
+ "container": {
+  "item": "minecraft:bowl"
+ },
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "butchery"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  }
+ ]
+}

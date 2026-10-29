@@ -1,6 +1,27 @@
 {
  "_": "tools/gen_food_pack.py из recipes_spec.cut — не править руками",
  "plans": {
+  "farm_and_charm:minced_beef": [
+   [
+    "farmersdelight:minced_beef",
+    1,
+    1
+   ]
+  ],
+  "butchery:raw_beef_mince": [
+   [
+    "farmersdelight:minced_beef",
+    1,
+    1
+   ]
+  ],
+  "butchery:raw_lamb_mince": [
+   [
+    "farmersdelight:minced_beef",
+    1,
+    1
+   ]
+  ],
   "butchery:raw_chuck_steak": [
    [
     "minecraft:beef",
@@ -230,6 +251,13 @@
    [
     "minecraft:bone_meal",
     1,
+    1
+   ]
+  ],
+  "minecraft:cooked_chicken": [
+   [
+    "brewery:half_chicken",
+    2,
     1
    ]
   ]

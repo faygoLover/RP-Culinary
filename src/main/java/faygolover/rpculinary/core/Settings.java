@@ -209,6 +209,8 @@ public final class Settings {
     public double contentStaminaRegen = 0.1;
     @Cfg(section = "portions", doc = "Еда по частям: большое блюдо (от двух шагов) естся укусами по столько ккал; остаток от 1 до 2 шагов — последним укусом. Это же — «порция» для счётчиков «приелось».")
     public double portionStepKcal = 400;
+    @Cfg(section = "portions", doc = "Укус большого блюда, ккал (решение Alex 29.10): укусов — к ближайшему числу (299 — один, 300 — два: 200 + 100), последний — остаток.")
+    public double biteKcal = 200;
     @Cfg(section = "portions", doc = "Еда по частям включена.")
     public boolean bitesEnabled = true;
 

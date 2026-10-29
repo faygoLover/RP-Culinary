@@ -1,0 +1,27 @@
+{
+ "type": "farmersdelight:cutting",
+ "ingredients": [
+  {
+   "item": "minecraft:cooked_chicken"
+  }
+ ],
+ "tool": {
+  "tag": "forge:tools/knives"
+ },
+ "result": [
+  {
+   "item": "brewery:half_chicken",
+   "count": 2
+  }
+ ],
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "brewery"
+  },
+  {
+   "type": "forge:mod_loaded",
+   "modid": "farmersdelight"
+  }
+ ]
+}

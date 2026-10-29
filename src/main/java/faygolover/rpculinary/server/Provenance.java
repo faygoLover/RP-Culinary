@@ -8,25 +8,27 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 /**
- * Происхождение через любые станции (решение Alex 29.10): «что положил — то и в блюде». Пока игрок «у плиты» (контекст
- * готовки {@link CookingService}: открыто меню станции или недавно кликнул по ней), всё помеченное видом мяса, что ушло из
- * его инвентаря, копится; новые непомеченные продукты, появившиеся у него, получают эти виды. Так котлета из фарша кенгуру
- * — тоже «кенгуру», и бургер с ней. Доска, мясорубки и туши метят сами ({@link Processing}, {@link Butchering}).
+ * Состав через любые станции (решения Alex 29.10): «что положил — то и в блюде». Пока игрок «у плиты» (контекст готовки
+ * {@link CookingService}), помеченное составом мяса, что ушло из его инвентаря, запоминается поштучно. Новый непомеченный
+ * продукт, появившийся у него, получает состав из ушедшего — но только из того, что входит в рецепт этого продукта
+ * ({@link NutritionTable#usesIngredient}): котлета из фарша кенгуру — «кенгуру», а хлеб рядом — нет. Облик — первого
+ * мясного ингредиента. Доска, мясорубки, миска и туши метят сами ({@link Processing}, {@link Butchering}).
  */
 public final class Provenance {
     private Provenance() {}
 
     private static final class Ctx {
         Map<String, Integer> marked = new HashMap<>();
+        Map<String, ItemStack> samples = new HashMap<>();
         Map<Item, Integer> plain = new HashMap<>();
-        final Set<String> pending = new LinkedHashSet<>();
+        final List<ItemStack> gone = new ArrayList<>();
     }
 
     private static final Map<UUID, Ctx> CTX = new HashMap<>();
@@ -40,59 +42,66 @@ public final class Provenance {
             return;
         }
         Ctx c = CTX.get(sp.getUUID());
-        Map<String, Integer> marked = new HashMap<>();
-        Map<Item, Integer> plain = new HashMap<>();
-        count(sp, marked, plain);
+        Ctx now = new Ctx();
+        count(sp, now);
         if (c == null) {
-            c = new Ctx();
-            c.marked = marked;
-            c.plain = plain;
-            CTX.put(sp.getUUID(), c);
+            CTX.put(sp.getUUID(), now);
             return;
         }
-        for (var en : c.marked.entrySet())  // ушло помеченное — в станцию
-            if (marked.getOrDefault(en.getKey(), 0) < en.getValue()) c.pending.add(en.getKey());
-        if (!c.pending.isEmpty()) {
-            for (var en : plain.entrySet()) {  // появилось новое непомеченное — из того, что ушло
-                int added = en.getValue() - c.plain.getOrDefault(en.getKey(), 0);
-                if (added > 0) mark(sp, en.getKey(), added, c.pending);
-            }
-            marked.clear();
-            plain.clear();
-            count(sp, marked, plain);
+        for (var en : c.marked.entrySet()) {  // ушло помеченное — в станцию
+            int left = en.getValue() - now.marked.getOrDefault(en.getKey(), 0);
+            for (int i = 0; i < left && c.gone.size() < 64; i++) c.gone.add(c.samples.get(en.getKey()));
         }
-        c.marked = marked;
-        c.plain = plain;
+        boolean changed = false;
+        if (!c.gone.isEmpty()) {
+            for (var en : now.plain.entrySet()) {  // появилось новое непомеченное — из ушедших ингредиентов его рецепта
+                int added = en.getValue() - c.plain.getOrDefault(en.getKey(), 0);
+                if (added <= 0) continue;
+                List<ItemStack> used = new ArrayList<>();
+                for (ItemStack g : c.gone) if (NutritionTable.usesIngredient(sp.server, en.getKey(), g)) used.add(g);
+                if (used.isEmpty()) continue;
+                mark(sp, en.getKey(), added, Source.mix(used), Processing.lookOf(used.get(0)));
+                changed = true;
+            }
+        }
+        if (changed) {
+            now = new Ctx();
+            count(sp, now);
+        }
+        now.gone.addAll(c.gone);
+        CTX.put(sp.getUUID(), now);
     }
 
-    /** Помеченное — по видам (ключ — строка видов), непомеченная еда — по предмету. */
-    private static void count(ServerPlayer sp, Map<String, Integer> marked, Map<Item, Integer> plain) {
+    /** Помеченное — по составу (ключ — предмет и NBT), непомеченная еда — по предмету. */
+    private static void count(ServerPlayer sp, Ctx c) {
         Inventory inv = sp.getInventory();
-        for (int i = 0; i < inv.getContainerSize(); i++) add(inv.getItem(i), marked, plain);
-        add(sp.containerMenu.getCarried(), marked, plain);
+        for (int i = 0; i < inv.getContainerSize(); i++) add(inv.getItem(i), c);
+        add(sp.containerMenu.getCarried(), c);
     }
 
-    private static void add(ItemStack st, Map<String, Integer> marked, Map<Item, Integer> plain) {
+    private static void add(ItemStack st, Ctx c) {
         if (st.isEmpty()) return;
         if (Source.marked(st)) {
-            for (String s : Source.list(st)) marked.merge(s, st.getCount(), Integer::sum);
+            String k = st.getItem() + "|" + st.getTag();
+            c.marked.merge(k, st.getCount(), Integer::sum);
+            c.samples.putIfAbsent(k, st.copyWithCount(1));
         } else if (st.isEdible() || faygolover.rpculinary.core.Weights.nominal(st.getItem()) > 0) {
-            plain.merge(st.getItem(), st.getCount(), Integer::sum);
+            c.plain.merge(st.getItem(), st.getCount(), Integer::sum);
         }
     }
 
-    /** Пометить {@code n} новых штук предмета видами: отделить их от непомеченного стака. */
-    private static void mark(ServerPlayer sp, Item item, int n, Set<String> species) {
+    /** Пометить {@code n} новых штук предмета составом: отделить их от непомеченного стака. */
+    private static void mark(ServerPlayer sp, Item item, int n, Map<String, Integer> parts, String look) {
         Inventory inv = sp.getInventory();
         ItemStack carried = sp.containerMenu.getCarried();
         if (carried.is(item) && !Source.marked(carried) && n > 0) {
             int k = Math.min(n, carried.getCount());
             if (k == carried.getCount()) {
-                Source.add(carried, species);
+                Source.setParts(carried, parts, look);
             } else {
                 carried.shrink(k);
                 ItemStack part = new ItemStack(item, k);
-                Source.add(part, species);
+                Source.setParts(part, parts, look);
                 if (!inv.add(part)) sp.drop(part, false);
             }
             n -= k;
@@ -102,10 +111,10 @@ public final class Provenance {
             if (!st.is(item) || Source.marked(st)) continue;
             int k = Math.min(n, st.getCount());
             if (k == st.getCount()) {
-                Source.add(st, species);
+                Source.setParts(st, parts, look);
             } else {
                 ItemStack part = st.split(k);
-                Source.add(part, species);
+                Source.setParts(part, parts, look);
                 if (!inv.add(part)) sp.drop(part, false);
             }
             n -= k;

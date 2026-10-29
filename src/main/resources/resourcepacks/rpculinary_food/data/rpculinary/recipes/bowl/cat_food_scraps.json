@@ -2,15 +2,18 @@
  "type": "farm_and_charm:crafting_bowl",
  "ingredients": [
   {
-   "item": "butchery:raw_beef_mince"
+   "item": "butchery:meat_scraps"
   },
   {
-   "item": "butchery:raw_lamb_mince"
+   "tag": "minecraft:fishes"
+  },
+  {
+   "item": "minecraft:bone_meal"
   }
  ],
  "result": {
-  "item": "butchery:raw_beef_mince",
-  "count": 2
+  "item": "farm_and_charm:cat_food",
+  "count": 1
  },
  "conditions": [
   {

@@ -2,15 +2,21 @@
  "type": "farm_and_charm:crafting_bowl",
  "ingredients": [
   {
-   "item": "farm_and_charm:minced_beef"
+   "item": "butchery:meat_scraps"
   },
   {
-   "item": "butchery:raw_beef_mince"
+   "item": "butchery:meat_scraps"
+  },
+  {
+   "tag": "forge:grain/wheat"
+  },
+  {
+   "item": "minecraft:bone_meal"
   }
  ],
  "result": {
-  "item": "butchery:raw_beef_mince",
-  "count": 2
+  "item": "farm_and_charm:dog_food",
+  "count": 1
  },
  "conditions": [
   {

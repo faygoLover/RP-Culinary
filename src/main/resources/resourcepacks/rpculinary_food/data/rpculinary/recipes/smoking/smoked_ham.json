@@ -1,0 +1,15 @@
+{
+ "type": "minecraft:smoking",
+ "ingredient": {
+  "item": "butchery:raw_ham"
+ },
+ "result": "farmersdelight:smoked_ham",
+ "experience": 0.35,
+ "cookingtime": 600,
+ "conditions": [
+  {
+   "type": "forge:mod_loaded",
+   "modid": "butchery"
+  }
+ ]
+}

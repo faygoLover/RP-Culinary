@@ -66,9 +66,9 @@ public final class FoodTooltips {
             t.add(tr("bites_left", tag.getInt(faygolover.rpculinary.server.CulinaryService.BITES),
                     tag.getInt(faygolover.rpculinary.server.CulinaryService.BITES_N)).withStyle(ChatFormatting.YELLOW));
         } else {
-            double step = faygolover.rpculinary.core.Settings.get().portionStepKcal;
-            if (step > 0 && f.kcal() >= 2 * step && e.getItemStack().getUseAnimation() == net.minecraft.world.item.UseAnim.EAT)
-                t.add(tr("bites", (int) Math.floor(f.kcal() / step)).withStyle(ChatFormatting.GRAY));
+            int n = faygolover.rpculinary.server.CulinaryService.bites(f.kcal(), faygolover.rpculinary.core.Settings.get().biteKcal);
+            if (n > 1 && e.getItemStack().getUseAnimation() == net.minecraft.world.item.UseAnim.EAT)
+                t.add(tr("bites", n).withStyle(ChatFormatting.GRAY));
         }
         int q = faygolover.rpculinary.server.CookingService.quality(e.getItemStack());
         if (q >= 0 && q < faygolover.rpculinary.core.Cooking.QUALITY.length) {

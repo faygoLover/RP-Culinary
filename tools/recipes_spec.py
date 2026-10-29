@@ -11,6 +11,7 @@ def I(x):
     return {'tag': x[1:]} if x.startswith('#') else {'item': x}
 
 
+MINCES = ['farm_and_charm:minced_beef', 'butchery:raw_beef_mince', 'butchery:raw_lamb_mince']
 BOARD = {}  # вход доски → [[предмет, штук, шанс], ...] — assets/rpculinary/board.json
 
 def generate(out, read_json, D):
@@ -216,8 +217,9 @@ def generate(out, read_json, D):
 
     # -------------------------------------------------- 8. мясо: фарш — мясорубка F&C; бекон, курица — доска FD
     def cut(rid, ing, results, tool='#forge:tools/knives'):
-        if not ing.startswith('#'):  # план разделки на доске: по одной части за удар (Processing.onBoard)
-            BOARD[ing] = [[i, n, ch] for i, n, ch in results]
+        plan_in = MINCES if ing == '#rpculinary:mince' else [] if ing.startswith('#') else [ing]
+        for x in plan_in:  # план разделки на доске: по одной части за удар (Processing.onBoard)
+            BOARD[x] = [[i, n, ch] for i, n, ch in results]
         rec(f'cutting/{rid}', {'type': 'farmersdelight:cutting', 'ingredients': [I(ing)], 'tool': I(tool) if tool.startswith('#') else {'item': tool},
                                'result': [dict({'item': i, 'count': n}, **({'chance': ch} if ch < 1 else {})) for i, n, ch in results]})
     # FD: говядина ножом → «фарш» (это сырая котлета) — убрать; бекон из свинины — убрать; F&C: бекон/окорок/курица из мясорубки — убрать
@@ -295,6 +297,42 @@ def generate(out, read_json, D):
         ings = [material] * (3 if material != '#minecraft:planks' else 4) + [accept[0]]
         rec(f'container/{cont.split(":")[1]}_{cont.split(":")[0]}', {'type': 'minecraft:crafting_shapeless',
             'ingredients': [I(x) for x in ings], 'result': {'item': cont, 'count': 1}})
+
+    # -------------------------------------------------- 10. недостающее (сверка 29.10, docs/03_audit_and_plan_2026-10-29.md)
+    # Копчёный окорок — из окорока Butchery (окорок = butchery:raw_ham, q:ham); под «Заготовщиком» (тег technique/preserver)
+    rec('smoking/smoked_ham', {'type': 'minecraft:smoking', 'ingredient': I('butchery:raw_ham'), 'result': 'farmersdelight:smoked_ham',
+                               'experience': 0.35, 'cookingtime': 600})
+    # Бульон из костей и обрезков (q:bones) — полуфабрикат для супов
+    pot('bone_broth_scraps', ['minecraft:bone', 'minecraft:bone', 'butchery:meat_scraps'], 'farmersdelight:bone_broth', 'minecraft:bowl')
+    # Шкварки из жира (q:fat): жар — костёр, печь, коптильня
+    for kind, t in (('campfire_cooking', 600), ('smelting', 200), ('smoking', 100)):
+        rec(f'{kind}/crackling_from_fat', {'type': f'minecraft:{kind}', 'ingredient': I('butchery:animal_fat'), 'result': 'butchery:crackling',
+                                          'experience': 0.1, 'cookingtime': t})
+    # Обрезки — в корм: собачий и кошачий (миска F&C), «Киббл» — консервы из обрезков и зерна
+    bowl('dog_food_scraps', ['butchery:meat_scraps', 'butchery:meat_scraps', '#forge:grain/wheat', 'minecraft:bone_meal'], 'farm_and_charm:dog_food')
+    bowl('cat_food_scraps', ['butchery:meat_scraps', '#minecraft:fishes', 'minecraft:bone_meal'], 'farm_and_charm:cat_food')
+    pot('kibble', ['butchery:meat_scraps', 'butchery:meat_scraps', '#forge:grain/wheat', '#forge:grain/wheat'], 'zombie_extreme:canned_food', CAN, 2)
+    # Связка колбасок жареная + салат → 4 колбаски на листьях (q:sausage)
+    board('sausage_plate', ['butchery:cooked_sausage', '#forge:salad_ingredients'], 'brewery:sausage', 4)
+    # Половинка курицы: запечённая тушка → доска → 2 половинки (q:chicken_parts)
+    cut('half_chicken', 'minecraft:cooked_chicken', [('brewery:half_chicken', 2, 1)])
+    # Рыбные блюда FD — 2 ломтика вместо одного (план 1.5: ломтик теперь мелкий)
+    SLICES = {'farmersdelight:cod_slice', 'farmersdelight:salmon_slice'}
+    for r in D['recipes']:
+        if not r['id'].startswith('farmersdelight:') or not (set(r['in']) & SLICES) or r['type'] not in ('farmersdelight:cooking', 'minecraft:crafting_shapeless'):
+            continue
+        ns, path = r['id'].split(':', 1)
+        orig = read_json(f'data/{ns}/recipes/{path}.json')
+        if not orig or not isinstance(orig.get('ingredients'), list):
+            continue
+        ings = []
+        for x in orig['ingredients']:
+            ings.append(x)
+            if isinstance(x, dict) and x.get('item') in SLICES:
+                ings.append(dict(x))
+        if len(ings) > (9 if r['type'] == 'minecraft:crafting_shapeless' else 6):
+            continue
+        out(f'{ns}/recipes/{path}.json', dict(orig, ingredients=ings))
 
     # -------------------------------------------------- 9. соль, водка
     rec('mortar/rock_salt', {'type': 'butchery:pestleandmortarrecipetype', 'ingredients': [{'item': 'blocksyouneed_luna:rock_salt'}],

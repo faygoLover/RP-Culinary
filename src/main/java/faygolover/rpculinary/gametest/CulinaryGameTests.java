@@ -208,8 +208,10 @@ public final class CulinaryGameTests {
         Settings s = Settings.get();
         ItemStack stew = new ItemStack(Items.RABBIT_STEW);
         // Шаг поменьше, чтобы тушёный кролик (сколько бы ни дала таблица) точно елся укусами.
-        double oldStep = s.portionStepKcal;
-        s.portionStepKcal = 100;
+        double oldStep = s.biteKcal;
+        s.biteKcal = 100;
+        h.assertTrue(CulinaryService.bites(299, 200) == 1 && CulinaryService.bites(300, 200) == 2 && CulinaryService.bites(450, 200) == 2
+                && CulinaryService.bites(500, 200) == 3, "укусы к ближайшему: 299 — 1, 300 — 2, 450 — 2, 500 — 3");
         int n = CulinaryService.bitesFor(p, stew, s);
         h.assertTrue(n >= 2, "кролик укусами: " + n);
         double before = m.stomach;
@@ -219,9 +221,9 @@ public final class CulinaryGameTests {
         ItemStack held = p.getMainHandItem();
         h.assertTrue(!held.isEmpty() && held.getTag() != null && held.getTag().getInt(CulinaryService.BITES) == n - 1,
                 "блюдо осталось, укусов " + (n - 1));
-        h.assertTrue(Math.abs(m.stomach - before - s.portionStepKcal) < 1, "в желудке шаг: " + (m.stomach - before));
+        h.assertTrue(Math.abs(m.stomach - before - s.biteKcal) < 1, "в желудке укус: " + (m.stomach - before));
         p.stopUsingItem();
-        s.portionStepKcal = oldStep;
+        s.biteKcal = oldStep;
         remove(h, p);
         h.succeed();
     }
