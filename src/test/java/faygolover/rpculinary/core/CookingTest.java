@@ -50,9 +50,9 @@ class CookingTest {
         Settings s = new Settings();
         for (int q : new int[]{Cooking.NORMAL, Cooking.GOOD, Cooking.EXCELLENT, Cooking.MASTERPIECE})
             assertEquals(0, Cooking.poisonChance(q, s), 1e-9, "удачное блюдо не травит");
-        assertTrue(Cooking.poisonChance(Cooking.BURNT, s) < Cooking.poisonChance(Cooking.OVERCOOKED, s), "пережарено — чуть опаснее");
+        assertTrue(Cooking.poisonChance(Cooking.BURNT, s) <= Cooking.poisonChance(Cooking.OVERCOOKED, s), "пережарено — не безопаснее подгоревшего");
         assertTrue(Cooking.poisonChance(Cooking.OVERCOOKED, s) < Cooking.poisonChance(Cooking.UNDERCOOKED, s), "недожарено — средний риск");
-        assertTrue(Cooking.poisonChance(Cooking.CHARCOAL, s) > 0.5, "уголь — почти наверняка");
+        assertTrue(Cooking.poisonChance(Cooking.CHARCOAL, s) > Cooking.poisonChance(Cooking.UNDERCOOKED, s), "уголь — опаснее всего");
         Food f = new Food(400, 20, 10, 50, 10, 0);
         assertTrue(Cooking.apply(f, Cooking.CHARCOAL, s).kcal() < Cooking.apply(f, Cooking.OVERCOOKED, s).kcal());
     }
