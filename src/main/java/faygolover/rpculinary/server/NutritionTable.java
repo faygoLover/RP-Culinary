@@ -98,11 +98,12 @@ public final class NutritionTable {
         if (CACHE.containsKey(item)) return CACHE.get(item);
         NutritionRules.Entry entry = NutritionRules.entry(item);
         if (entry != null) {
-            CACHE.put(item, entry.food());
+            Food rule = sweet(item, entry.food());
+            CACHE.put(item, rule);
             CATEGORY.put(item, entry.category());
             SOURCE.put(item, Source.RULE);
             EXOTIC.put(item, Exotic.directMask(item));
-            return entry.food();
+            return rule;
         }
         if (depth >= MAX_DEPTH || !path.add(item)) return null;
         Food found = null;
@@ -156,6 +157,7 @@ public final class NutritionTable {
         }
         // Промежуточные «нет» не кэшируем: на другом пути цикл может разрешиться.
         if (found != null) {
+            found = sweet(item, found);
             CACHE.put(item, found);
             CATEGORY.put(item, foundCat);
             SOURCE.put(item, source);
@@ -163,6 +165,12 @@ public final class NutritionTable {
             EXOTIC.put(item, Exotic.directMask(item) | (source == Source.RECIPE ? foundExotic : 0));
         }
         return found;
+    }
+
+    /** Сладкое — для настроения, а не для сытости (решение Alex 29.10): калории и БЖУ в {@code sweets_kcal} раз. */
+    private static Food sweet(Item item, Food f) {
+        double k = faygolover.rpculinary.core.Settings.get().sweetsKcal;
+        return k < 1 && (Exotic.directMask(item) & Exotic.bit("sweets")) != 0 ? f.scaleNutrition(k, 1) : f;
     }
 
     /** Ингредиент рецепта: первый вариант, у которого известен состав. */

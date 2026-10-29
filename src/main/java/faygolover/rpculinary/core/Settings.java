@@ -303,6 +303,8 @@ public final class Settings {
     public double humanSanity = 15;
     @Cfg(section = "exotic", doc = "Человечина без «Каннибала»: шанс рвоты за порцию.")
     public double humanVomitChance = 0.7;
+    @Cfg(section = "exotic", doc = "Сладости: калории и БЖУ во столько раз от обычного (сладкое — для настроения, не для сытости).")
+    public double sweetsKcal = 0.35;
     @Cfg(section = "exotic", doc = "Сладости: прилив сил, потом сонливость. false — выключить.")
     public boolean candyDrowsy = true;
     @Cfg(section = "exotic", doc = "Сладости: прилив — выносливость восстанавливается быстрее столько секунд, потом 10 минут сонливости.")

@@ -574,6 +574,29 @@ public final class CulinaryGameTests {
         h.succeed();
     }
 
+    /** Мясорубка Butchery без насадки для колбас не мелет говядину в фарш (решение 29.10); сладкое — мало калорий. */
+    @GameTest(template = T)
+    public static void butcheryGrinderNoMince(GameTestHelper h) throws Exception {
+        if (!net.minecraftforge.fml.ModList.get().isLoaded("butchery")) {
+            h.succeed();
+            return;
+        }
+        var grinder = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("butchery", "meat_grinder"));
+        BlockPos pos = h.absolutePos(new BlockPos(1, 2, 1));
+        h.getLevel().setBlock(pos, grinder.defaultBlockState(), 3);
+        var handler = (net.minecraftforge.items.IItemHandlerModifiable) h.getLevel().getBlockEntity(pos)
+                .getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
+        handler.setStackInSlot(0, new ItemStack(Items.BEEF, 4));
+        var exec = Class.forName("net.mcreator.butchery.procedures.MeatgrinderrecipeprocedureProcedure")
+                .getMethod("execute", net.minecraft.world.level.LevelAccessor.class, double.class, double.class, double.class);
+        for (int i = 0; i < 300; i++) exec.invoke(null, h.getLevel(), (double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
+        h.assertTrue(handler.getStackInSlot(0).is(Items.BEEF) && handler.getStackInSlot(0).getCount() == 4, "говядина не перемолота");
+        for (int i = 0; i < handler.getSlots(); i++)
+            h.assertTrue(!String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(handler.getStackInSlot(i).getItem())).endsWith("_mince"), "фарша нет");
+        h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        h.succeed();
+    }
+
     private static int dropped(GameTestHelper h, BlockPos pos, String id) {
         var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation(id));
         int n = 0;

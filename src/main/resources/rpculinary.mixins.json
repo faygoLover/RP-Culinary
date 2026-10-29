@@ -6,7 +6,8 @@
   "refmap": "rpculinary.refmap.json",
   "mixins": [
     "ItemStackMixin",
-    "PackRepositoryMixin"
+    "PackRepositoryMixin",
+    "ButcheryGrinderMixin"
   ],
   "injectors": {
     "defaultRequire": 1
