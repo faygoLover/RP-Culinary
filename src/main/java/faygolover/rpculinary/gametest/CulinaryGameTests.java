@@ -320,16 +320,12 @@ public final class CulinaryGameTests {
         h.succeed();
     }
 
-    /** Человечина без «Каннибала»: после трёх порций — куру (сохраняется в NBT); гнилая плоть — экзотика «монстры». */
+    /** Человечина без «Каннибала» — без падения; гнилая плоть — экзотика «монстры». */
     @GameTest(template = T)
-    public static void humanMeatKuru(GameTestHelper h) {
+    public static void humanMeat(GameTestHelper h) {
         ServerPlayer p = player(h);
         NutritionData d = NutritionData.get(p);
         for (int i = 0; i < 3; i++) faygolover.rpculinary.server.ExoticEffects.human(p, d, 1, Settings.get());
-        h.assertTrue(d.kuruSeconds > 0, "три порции — куру");
-        NutritionData copy = new NutritionData();
-        copy.load(d.save());
-        h.assertTrue(copy.kuruSeconds == d.kuruSeconds && copy.humanMeals > 0, "куру сохраняется");
         finish(p, new ItemStack(Items.ROTTEN_FLESH));
         remove(h, p);
         h.succeed();

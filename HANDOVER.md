@@ -103,6 +103,5 @@
 - Medicine: `Medical.state(...).sepsis` и `spoiledBloodSeconds` (как испорченная кровь: сепсис → жар). Без неё — яд.
 - Mekanism: `IRadiationManager.INSTANCE.radiate` (Зв). Без него — яд. LSO: эффект `hot_food`, вода — своя или LSO.
 - Конфеты (сонливость, зубы) — `candy_drowsy`, `candy_teeth_chance`: ЖДУТ УТОЧНЕНИЯ ALEX.
-- Человечина без «Каннибала»: рассудок, рвота; `kuru_after_meals` порций (−1 за сутки RP) → куру на `kuru_hours`
-  (замедление, дрожь, смешки). Куру живёт в Culinary (`NutritionData.kuruSeconds`, NBT `kuru`): в Medicine API нет.
+- Человечина без «Каннибала»: рассудок, рвота. Куру и «икота» Края (телепорт) убраны 29.10 по решению Alex: серьёзное РП.
   Снимается `/rpculinary reset`.

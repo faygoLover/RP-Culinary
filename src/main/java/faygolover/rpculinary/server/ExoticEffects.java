@@ -12,7 +12,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -20,10 +19,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -75,11 +70,6 @@ public final class ExoticEffects {
             if (hot != null && Lso.loaded()) sp.addEffect(new MobEffectInstance(hot, (int) (s.netherWarmSeconds * 20), 0));
             thirst(sp, d, s.netherThirst * k, s);
             BodyEffects.sense(sp, d, "nether_heat", 30);
-        }
-        if ((mask & bit("end")) != 0 && !used.is(Items.CHORUS_FRUIT) && rnd.nextDouble() < s.endHiccupChance * k) {
-            hiccup(sp);
-            BodyEffects.hidden(sp, MobEffects.CONFUSION, 120, 0);
-            BodyEffects.sense(sp, d, "end_hiccup", 1);
         }
         if ((mask & bit("pets")) != 0) {
             Psyche.stress(sp, s.petsStress * k);
@@ -138,59 +128,12 @@ public final class ExoticEffects {
         else if (mode == 2) Lso.addWater(sp, -percent);
     }
 
-    /** «Икота» Края: короткий случайный телепорт, как от хоруса, но ближе. */
-    static void hiccup(ServerPlayer sp) {
-        var level = sp.serverLevel();
-        var rnd = sp.getRandom();
-        for (int i = 0; i < 16; i++) {
-            double x = sp.getX() + (rnd.nextDouble() - 0.5) * 8;
-            double y = Mth.clamp(sp.getY() + (rnd.nextInt(8) - 4), level.getMinBuildHeight(), level.getMinBuildHeight() + level.getLogicalHeight() - 1);
-            double z = sp.getZ() + (rnd.nextDouble() - 0.5) * 8;
-            if (sp.isPassenger()) sp.stopRiding();
-            Vec3 from = sp.position();
-            if (sp.randomTeleport(x, y, z, true)) {
-                level.gameEvent(GameEvent.TELEPORT, from, GameEvent.Context.of(sp));
-                level.playSound(null, x, y, z, SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 1f, 1f);
-                sp.resetFallDistance();
-                return;
-            }
-        }
-    }
-
-    /** Человечина без «Каннибала»: рассудок, рвота, а при повторах — куру. */
+    /** Человечина без «Каннибала»: рассудок и рвота (куру убрана 29.10.2026: серьёзное РП). */
     public static void human(ServerPlayer sp, NutritionData d, double k, Settings s) {
         Psyche.sanityHit(sp, s.humanSanity * k);
         Psyche.stress(sp, s.humanSanity * k);
         if (sp.getRandom().nextDouble() < s.humanVomitChance * k) BodyEffects.vomit(sp, d, s);
         else BodyEffects.sense(sp, d, "human", 1);
-        d.humanMeals += k;
-        if (d.humanMeals >= s.kuruAfterMeals && d.kuruSeconds <= 0) {
-            d.kuruSeconds = s.kuruHours * 3600;
-            RpCulinary.LOGGER.info("RP Culinary: у {} началась куру", sp.getScoreboardName());
-        }
-    }
-
-    /** Раз в секунду: куру (дрожь, смех, координация) и забывание съеденной человечины. */
-    public static void onPlayerTick(TickEvent.PlayerTickEvent e) {
-        if (e.phase != TickEvent.Phase.END || !(e.player instanceof ServerPlayer sp) || sp.tickCount % 20 != 0 || !sp.isAlive()) return;
-        NutritionData d = NutritionData.get(sp);
-        if (d == null || d.humanMeals <= 0 && d.kuruSeconds <= 0) return;
-        Settings s = Settings.get();
-        if (d.humanMeals > 0) d.humanMeals = Math.max(0, d.humanMeals - 1 / Math.max(60, s.hoursPerRpDay * 3600));
-        if (d.kuruSeconds <= 0 || sp.isCreative() || sp.isSpectator()) return;
-        d.kuruSeconds = Math.max(0, d.kuruSeconds - 1);
-        // Координация: всегда чуть медленнее ноги и руки.
-        BodyEffects.hidden(sp, MobEffects.MOVEMENT_SLOWDOWN, 60, 0);
-        BodyEffects.hidden(sp, MobEffects.DIG_SLOWDOWN, 60, 0);
-        var rnd = sp.getRandom();
-        if (rnd.nextInt(90) == 0) {
-            BodyEffects.hidden(sp, MobEffects.CONFUSION, 80, 0);
-            BodyEffects.sense(sp, d, "kuru_tremor", 60);
-        }
-        if (rnd.nextInt(240) == 0) {
-            sp.level().playSound(null, sp.getX(), sp.getY(), sp.getZ(), SoundEvents.WITCH_CELEBRATE, SoundSource.PLAYERS, 0.5f, 1.4f);
-            BodyEffects.sense(sp, d, "kuru_laugh", 120);
-        }
     }
 
     // ------------------------------------------------------------------ соседи (мягко)

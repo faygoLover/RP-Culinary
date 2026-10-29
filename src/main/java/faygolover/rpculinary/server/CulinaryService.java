@@ -715,8 +715,6 @@ public final class CulinaryService {
         e.getOriginal().invalidateCaps();
         if (from == null || to == null) return;
         to.state.copyFrom(from.state);
-        to.humanMeals = from.humanMeals;
-        to.kuruSeconds = from.kuruSeconds;
         if (e.isWasDeath()) {
             Settings s = Settings.get();
             NutritionState m = to.state;

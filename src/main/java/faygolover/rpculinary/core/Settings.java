@@ -234,9 +234,9 @@ public final class Settings {
     @Cfg(section = "cooking", doc = "Шанс отравления блюдом «подгорело».")
     public double poisonBurnt = 0.04;
     @Cfg(section = "cooking", doc = "Шанс отравления блюдом «пережарено».")
-    public double poisonOvercooked = 0.08;
+    public double poisonOvercooked = 0.04;
     @Cfg(section = "cooking", doc = "Шанс, что от «угля» вырвет (уголь ещё и естся втрое дольше).")
-    public double poisonCharcoal = 0.6;
+    public double poisonCharcoal = 0.2;
     @Cfg(section = "cooking", doc = "«Уголь» естся во столько раз дольше.")
     public double charcoalEatSlow = 3;
     @Cfg(section = "cooking", doc = "Чистюля (черта rpcore:clean): шанс отравления в столько раз — и когда ест сам, и у блюд, которые он приготовил.")
@@ -259,8 +259,6 @@ public final class Settings {
     public double netherWarmSeconds = 120;
     @Cfg(section = "exotic", doc = "Нижний мир: сильная жажда — минус столько процентов воды за порцию.")
     public double netherThirst = 15;
-    @Cfg(section = "exotic", doc = "Край: шанс «икоты» (случайный короткий телепорт и тошнота) за порцию; ванильный хорус телепортирует сам.")
-    public double endHiccupChance = 0.5;
     @Cfg(section = "exotic", doc = "Домашние звери: моральный стресс (RP Psyche) за порцию.")
     public double petsStress = 6;
     @Cfg(section = "exotic", doc = "Монстры: шанс отравиться за порцию (сверху к остальному).")
@@ -277,10 +275,6 @@ public final class Settings {
     public double humanSanity = 15;
     @Cfg(section = "exotic", doc = "Человечина без «Каннибала»: шанс рвоты за порцию.")
     public double humanVomitChance = 0.7;
-    @Cfg(section = "exotic", doc = "Куру: после стольких порций человечины (счёт убывает за сутки RP на одну).")
-    public double kuruAfterMeals = 3;
-    @Cfg(section = "exotic", doc = "Куру: сколько часов игры длится (дрожь, смех, плохая координация).")
-    public double kuruHours = 12;
     @Cfg(section = "cooking", doc = "Полевой повар (черта rpcore:field_cook): на костре и в коптильне — плюс столько уровней.")
     public double fieldCookBonus = 2;
     @Cfg(section = "cooking", doc = "Кухонный кошмар (черта rpcore:kitchen_nightmare): минус столько уровней при готовке.")

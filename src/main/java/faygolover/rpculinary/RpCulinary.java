@@ -79,7 +79,6 @@ public class RpCulinary {
         bus.addListener(faygolover.rpculinary.server.CookingService::forget);
         bus.addListener(faygolover.rpculinary.server.CookingService::onServerStopped);
         bus.addListener(CulinaryCommands::onTimeSkip);
-        bus.addListener(faygolover.rpculinary.server.ExoticEffects::onPlayerTick);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> faygolover.rpculinary.client.ClientSetup.init(modBus));
     }
 
