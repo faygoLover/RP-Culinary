@@ -293,6 +293,10 @@ public final class Settings {
     public double butcherLostToScraps = 0.5;
     @Cfg(section = "butchery", doc = "Опыт «Кулинарии» за разрез: множитель (0 — без опыта).")
     public double butcherXp = 1;
+    @Cfg(section = "butchery", doc = "Доска FD, крупный кусок: такая доля веса — обрезь (уходит обрезками), остальное — порции.")
+    public double boardTrim = 0.05;
+    @Cfg(section = "butchery", doc = "Доска FD, навык выше порога: шанс получить с куска +1 порцию.")
+    public double boardBonusChance = 0.25;
     @Cfg(section = "butchery", doc = "Туши в инвентаре: замедление растёт с весом и достигает максимума при стольких кг (корова ~125 кг).")
     public double carcassSlowKg = 160;
     @Cfg(section = "butchery", doc = "Туши в инвентаре: максимальное замедление, доля скорости (0 — без замедления).")

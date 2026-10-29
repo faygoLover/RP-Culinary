@@ -226,7 +226,7 @@ def generate(out, read_json, D):
             disable(r['id'])
     # Сырая котлета — из фарша на доске
     cut('raw_patty', '#rpculinary:mince', [('farmersdelight:minced_beef', 1, 1)])
-    # Крупные куски → порции (пока по номинальному весу; блок 4 — по весу из NBT)
+    # Крупные куски → порции. Кусок с весом в NBT режет RP Culinary по весу (Butchering.onBoard, блок 4); рецепт — для JEI и кусков без веса
     for src, res, n, extra in [
             ('butchery:raw_chuck_steak', 'minecraft:beef', 24, [('butchery:meat_scraps', 2, 1)]),
             ('butchery:raw_rump_steak', 'minecraft:beef', 20, [('butchery:meat_scraps', 2, 1)]),

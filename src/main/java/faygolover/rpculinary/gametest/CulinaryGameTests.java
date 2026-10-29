@@ -463,6 +463,37 @@ public final class CulinaryGameTests {
         h.succeed();
     }
 
+    /** Доска FD (блок 4): крупный кусок с весом в NBT режется ножом на порции по весу, доска пустеет. */
+    @GameTest(template = T)
+    public static void boardByWeight(GameTestHelper h) {
+        if (!net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight") || !net.minecraftforge.fml.ModList.get().isLoaded("butchery")) {
+            h.succeed();
+            return;
+        }
+        var board = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("farmersdelight", "cutting_board"));
+        BlockPos pos = h.absolutePos(new BlockPos(1, 2, 1));
+        h.getLevel().setBlock(pos, board.defaultBlockState(), 3);
+        var handler = h.getLevel().getBlockEntity(pos).getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
+        ItemStack chuck = new ItemStack(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("butchery", "raw_chuck_steak")));
+        chuck.getOrCreateTag().putInt(faygolover.rpculinary.core.Weights.TAG_WEIGHT, 6000);
+        chuck.getOrCreateTag().putString(faygolover.rpculinary.core.Weights.TAG_SOURCE, "cow");
+        handler.insertItem(0, chuck, false);
+        ServerPlayer p = player(h);
+        p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
+                new net.minecraft.resources.ResourceLocation("farmersdelight", "iron_knife"))));
+        boolean exact = faygolover.rpculinary.server.Butchering.loss(4, faygolover.rpculinary.server.CookingService.level(p), Settings.get()) == 0;
+        MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos,
+                new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false)));
+        h.assertTrue(handler.getStackInSlot(0).isEmpty(), "кусок снят с доски");
+        int beef = dropped(h, pos, "minecraft:beef");
+        // 6 кг × 0.95 / 250 г = 22 порции; выше порога — шанс +1
+        h.assertTrue(exact ? beef == 22 || beef == 23 : beef > 0 && beef <= 23, "лопатка 6 кг → порции говядины, было " + beef);
+        h.assertTrue(dropped(h, pos, "butchery:meat_scraps") >= 1, "обрезь — обрезками");
+        h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        remove(h, p);
+        h.succeed();
+    }
+
     private static int dropped(GameTestHelper h, BlockPos pos, String id) {
         var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation(id));
         int n = 0;

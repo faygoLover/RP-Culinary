@@ -102,7 +102,12 @@ def with_yield(pools):
 # Доп. разрезы между «родными» стадиями туши (решение 28.10 §5.6): таблица разреза → список своих таблиц, которые
 # выпадают ДО неё (каждая — отдельный клик колуном; «родной» разрез — последним и двигает стадию).
 EXTRA = {}
+TABLE_ITEMS = {}  # таблица (имя без _drop) → предметы: для порога нарезки на доске по виду
+def note_items(name, pools):
+    TABLE_ITEMS.setdefault(name, set()).update(e.get('name') for p in pools for e in p.get('entries', []) if e.get('type') == 'minecraft:item')
+
 def extra(native, name, pools):
+    note_items(native, pools)
     EXTRA.setdefault(native, []).append(f'rpculinary:carcass/{name}')
     out(f'rpculinary/loot_tables/carcass/{name}.json', {'type': 'minecraft:block', 'pools': with_yield(pools),
                                                         'random_sequence': f'rpculinary:carcass/{name}'})
@@ -110,6 +115,7 @@ def extra(native, name, pools):
 FD_COMPAT = {'pig_cut_1_drop', 'pig_cut_3_drop', 'goat_cut_1_drop', 'goat_cut_3_drop'}
 def table(name, pools):
     pools = with_yield(pools)
+    note_items(name[:-len('_drop')] if name.endswith('_drop') else name, pools)
     if name in FD_COMPAT:  # вариант Butchery при «Farmer's Delight» в конфиге — то же самое
         out(f'butchery/loot_tables/blocks/{name}_fd_compat.json', {'type': 'minecraft:block', 'pools': pools,
                                                                     'random_sequence': f'butchery:blocks/{name}_fd_compat'})
@@ -301,8 +307,19 @@ for b in sorted(set(BS['blocks']) | set(BS['stages'])):
     kg = sp[3] if sp[3] <= 5 else sp[3] * K
     ex = {st: EXTRA[v['table']] for st, v in BS['stages'].get(b, {}).items() if v['table'] in EXTRA and EXTRA[v['table']]}
     carc['butchery:' + b] = {'species': sp[1], 'level': sp[2], 'kg': round(kg, 2), **({'extra': ex} if ex else {})}
+# Порог нарезки на доске (уровень вида; доска — на 1 ниже): предмет → самый низкий уровень среди видов, с чьих туш он падает
+items_lvl = {'minecraft:chicken': 1, 'minecraft:rabbit': 1, 'minecraft:cod': 1, 'minecraft:salmon': 1, 'butchery:raw_cod_fillet': 1,
+             'butchery:raw_salmon': 1, 'alexsmobs:kangaroo_meat': 5, 'alexsmobs:moose_ribs': 5, 'alexscaves:dinosaur_chop': 10}
+for tname, its in TABLE_ITEMS.items():
+    sp = next((x for x in SPECIES if x[0] in tname), None)
+    if sp is None:
+        continue
+    for it in its:
+        if it in WEIGHTS and it not in NO_LOSS:
+            items_lvl[it] = min(items_lvl.get(it, 99), sp[2])
 with open(os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'rpculinary', 'carcasses.json'), 'w', encoding='utf-8', newline='\n') as f:
-    json.dump({'_': 'tools/gen_food_pack.py — не править руками', 'blocks': carc}, f, ensure_ascii=False, indent=1, sort_keys=True)
+    json.dump({'_': 'tools/gen_food_pack.py — не править руками', 'blocks': carc, 'items': items_lvl,
+               'species': {**{x[1]: x[2] for x in SPECIES}, 'kangaroo': 5, 'moose': 5, 'dinosaur': 10}}, f, ensure_ascii=False, indent=1, sort_keys=True)
     f.write('\n')
 # Свой вес туш вместо замедления Butchery (эффект по тегам) — теги пустые
 for t in ('weighted_carcass_l', 'weighted_carcass_ll'):
