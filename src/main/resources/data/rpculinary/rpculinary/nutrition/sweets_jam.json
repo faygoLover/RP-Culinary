@@ -1,0 +1,13 @@
+{
+  "_comment": "Сладкое (30.10): обычные цифры на штуку, без фанатизма — сытость сладкого от его калорий.",
+  "items": [
+    "refurbished_furniture:sweet_berry_jam",
+    "refurbished_furniture:glow_berry_jam",
+    "sa_combat:fruit_jam"
+  ],
+  "protein": 0,
+  "fat": 0,
+  "carbs": 48,
+  "vitamins": 1,
+  "category": "sweet"
+}

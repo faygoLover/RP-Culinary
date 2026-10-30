@@ -1,0 +1,15 @@
+{
+  "_comment": "Сладкое (30.10): обычные цифры на штуку, без фанатизма — сытость сладкого от его калорий.",
+  "items": [
+    "alexscaves:sweetish_fish_red",
+    "alexscaves:sweetish_fish_green",
+    "alexscaves:sweetish_fish_yellow",
+    "alexscaves:sweetish_fish_blue",
+    "alexscaves:sweetish_fish_pink"
+  ],
+  "protein": 1,
+  "fat": 0,
+  "carbs": 18,
+  "vitamins": 0,
+  "category": "sweet"
+}

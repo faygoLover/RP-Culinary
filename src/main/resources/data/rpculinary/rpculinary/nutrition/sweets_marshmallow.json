@@ -1,0 +1,13 @@
+{
+  "_comment": "Сладкое (30.10): обычные цифры на штуку, без фанатизма — сытость сладкого от его калорий.",
+  "items": [
+    "camping:marshmallow",
+    "camping:roasted_marshmallow",
+    "camping:marshmallow_on_a_stick"
+  ],
+  "protein": 0,
+  "fat": 0,
+  "carbs": 6,
+  "vitamins": 0,
+  "category": "sweet"
+}

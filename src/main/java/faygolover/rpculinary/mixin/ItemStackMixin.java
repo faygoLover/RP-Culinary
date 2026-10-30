@@ -7,13 +7,22 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/** Стак ингредиентов по весу (таблица {@link Weights}); крупный кусок с весом в NBT — 1. Только уменьшаем. */
-@Mixin(ItemStack.class)
+/**
+ * Стак ингредиентов по весу (таблица {@link Weights}); крупный кусок с весом в NBT — 1. Только уменьшаем.
+ * <p>OneStack задаёт стак в начале метода и сразу выходит (в сборке — почти всему 16), и проверка в конце до нас бы не
+ * доходила. Поэтому считаем первыми (приоритет ниже обычного): берём стак OneStack, если он задан, иначе — предмета,
+ * и ставим меньшее из него и своего (30.10).
+ */
+@Mixin(value = ItemStack.class, priority = 500)
 public abstract class ItemStackMixin {
-    @Inject(method = "getMaxStackSize", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getMaxStackSize", at = @At("HEAD"), cancellable = true)
     private void rpculinary$weightStack(CallbackInfoReturnable<Integer> cir) {
-        int ours = Weights.maxStack((ItemStack) (Object) this);
-        if (ours > 0 && ours < cir.getReturnValueI()) cir.setReturnValue(ours);
+        ItemStack st = (ItemStack) (Object) this;
+        int ours = Weights.maxStack(st);
+        if (ours <= 0) return;
+        int base = faygolover.rpculinary.integration.OneStackCompat.maxCount(st);
+        if (base <= 0) base = st.getItem().getMaxStackSize(st);
+        if (ours < base) cir.setReturnValue(ours);
     }
 
     /** Домашнее (смесь видов) и ливерный фарш — своё название формы (решения Alex 29.10). */

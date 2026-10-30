@@ -1,0 +1,13 @@
+{
+  "_comment": "Сладкое (30.10): обычные цифры на штуку, без фанатизма — сытость сладкого от его калорий.",
+  "items": [
+    "supplementaries:candy",
+    "scpo:candy_pink",
+    "scpo:zombie_candy"
+  ],
+  "protein": 0,
+  "fat": 0,
+  "carbs": 12,
+  "vitamins": 0,
+  "category": "sweet"
+}

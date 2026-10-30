@@ -1,0 +1,11 @@
+{
+  "_comment": "Сладкое (30.10): обычные цифры на штуку, без фанатизма — сытость сладкого от его калорий.",
+  "items": [
+    "sa_combat:candy_package"
+  ],
+  "protein": 1,
+  "fat": 4,
+  "carbs": 60,
+  "vitamins": 0,
+  "category": "sweet"
+}

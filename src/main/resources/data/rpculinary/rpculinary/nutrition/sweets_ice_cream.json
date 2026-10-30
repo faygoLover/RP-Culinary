@@ -1,0 +1,13 @@
+{
+  "_comment": "Сладкое (30.10): обычные цифры на штуку, без фанатизма — сытость сладкого от его калорий.",
+  "items": [
+    "alexscaves:vanilla_ice_cream_scoop",
+    "alexscaves:chocolate_ice_cream_scoop",
+    "alexscaves:sweetberry_ice_cream_scoop"
+  ],
+  "protein": 2,
+  "fat": 6,
+  "carbs": 16,
+  "vitamins": 0,
+  "category": "sweet"
+}
