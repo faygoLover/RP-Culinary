@@ -121,7 +121,7 @@ public final class NutritionTable {
         if (CACHE.containsKey(item)) return CACHE.get(item);
         NutritionRules.Entry entry = NutritionRules.entry(item);
         if (entry != null) {
-            Food rule = sweet(item, entry.food());
+            Food rule = entry.food();
             CACHE.put(item, rule);
             CATEGORY.put(item, entry.category());
             SOURCE.put(item, Source.RULE);
@@ -185,7 +185,6 @@ public final class NutritionTable {
         }
         // Промежуточные «нет» не кэшируем: на другом пути цикл может разрешиться.
         if (found != null) {
-            found = sweet(item, found);
             CACHE.put(item, found);
             if (source == Source.RECIPE && foundMeat.protein() > 0) MEAT.put(item, foundMeat);
             CATEGORY.put(item, foundCat);
@@ -200,12 +199,6 @@ public final class NutritionTable {
     public static synchronized Food meatPart(MinecraftServer server, Item item) {
         if (get(server, item) == null) return null;
         return MEAT.get(item);
-    }
-
-    /** Сладкое — для настроения, а не для сытости (решение Alex 29.10): калории и БЖУ в {@code sweets_kcal} раз. */
-    private static Food sweet(Item item, Food f) {
-        double k = faygolover.rpculinary.core.Settings.get().sweetsKcal;
-        return k < 1 && (Exotic.directMask(item) & Exotic.bit("sweets")) != 0 ? f.scaleNutrition(k, 1) : f;
     }
 
     /** Ингредиент рецепта: первый вариант, у которого известен состав. */
