@@ -48,6 +48,12 @@ public final class ClientNutrition {
     }
 
     /** Вышли из мира — забыть. */
+    /** Сервер засчитал глоток или укус: снять «использую», зажатая ПКМ начнёт следующий. */
+    public static void portionDone() {
+        var p = net.minecraft.client.Minecraft.getInstance().player;
+        if (p != null && p.isUsingItem()) p.stopUsingItem();
+    }
+
     public static void clear() {
         known = false;
         self = null;

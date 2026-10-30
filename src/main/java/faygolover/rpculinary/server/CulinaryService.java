@@ -353,14 +353,19 @@ public final class CulinaryService {
      * длительности предмета), а откатываем часть тиков — одинаково на клиенте и сервере (как в RP Medicine).
      */
     public static void onUseTick(LivingEntityUseItemEvent.Tick e) {
-        if (!(e.getEntity() instanceof Player p) || !e.getItem().isEdible()) return;
-        Settings s = Settings.get();
+        if (!(e.getEntity() instanceof Player p)) return;
         // Еда по частям и глотки: вместо «доел» откусил или отпил, предмет остаётся (сервер; последний — onUseFinish).
-        if (e.getDuration() <= 1 && p instanceof ServerPlayer sp && (sip(sp) || active(sp) && bite(sp))) {
+        // Глотки — и у питья, которое не «еда» (бутылка воды, напитки SA): раньше проверка шла после isEdible, и такая
+        // бутылка выпивалась целиком (30.10).
+        if (e.getDuration() <= 1 && p instanceof ServerPlayer sp && (sip(sp) || e.getItem().isEdible() && active(sp) && bite(sp))) {
             e.setDuration(0);
             sp.stopUsingItem();
+            // Клиент сам «использую» не снимет — зажатая ПКМ иначе так и стоит в конце анимации.
+            faygolover.rpculinary.network.Net.send(sp, new faygolover.rpculinary.network.PortionDonePacket());
             return;
         }
+        if (!e.getItem().isEdible()) return;
+        Settings s = Settings.get();
         boolean fedUp;
         if (p.level().isClientSide) {
             fedUp = faygolover.rpculinary.client.ClientNutrition.fedUp(e.getItem());

@@ -337,6 +337,9 @@ public final class NutritionTable {
         for (Item item : ForgeRegistries.ITEMS) {
             boolean food = item.isEdible() || NutritionRules.base(item) != null;
             if (!food) continue;
+            // Вода и прочее с "calories": false в базе RP Core не кормит — и в подсказке КБЖУ у неё нет (30.10).
+            var c = faygolover.rpcore.api.Consumables.forItem(new net.minecraft.world.item.ItemStack(item));
+            if (c != null && !c.calories()) continue;
             Food f = get(server, item);
             if (f != null && !f.isEmpty()) out.put(ForgeRegistries.ITEMS.getKey(item), f);
         }
