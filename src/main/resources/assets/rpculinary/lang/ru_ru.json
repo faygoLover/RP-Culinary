@@ -218,9 +218,6 @@
   "item.rpculinary.research_notes.mushrooms": "Записки грибника",
   "item.rpculinary.research_notes.other_worlds": "Записи исследований: Нижний мир и Край",
   "item.rpculinary.research_notes.monsters": "Записи исследований: монстры и мутанты",
-  "item.rpculinary.research_notes.desc": "Повседневный журнал. ПКМ — изучить; не тратится, ставится на книжную полку.",
-  "item.rpculinary.research_notes.desc_research": "Записи исследований. ПКМ — изучить; не тратятся, ставятся на книжную полку.",
-  "item.rpculinary.research_notes.skill": "Нужна «Кулинария» не ниже %s",
   "rpculinary.msg.notes_too_hard": "Слишком сложно: нужна «Кулинария» не ниже %s.",
   "rpculinary.msg.spoiled_sick": "Это было испорчено... живот скрутило.",
   "rpculinary.sense.parasites": "Ломит мышцы, знобит... то мясо было недожарено.",
@@ -296,5 +293,14 @@
   "rpculinary.name.home.brewery.sausage": "Домашняя колбаска",
   "rpculinary.name.offal.brewery.sausage": "Ливерная колбаска",
   "rpculinary.msg.mincer_more_scraps": "Нужно ещё обрезков: на порцию фарша — два.",
-  "rpculinary.cmd.speed": "Скорость расхода еды и воды: ×%s (сутки — %s ч)"
+  "rpculinary.cmd.speed": "Скорость расхода еды и воды: ×%s (сутки — %s ч)",
+  "item.rpculinary.research_notes.game.lore": "Потрёпанный журнал егеря. Между записями о следах и погоде —\nкак разделать зверя и дожарить мясо, чтобы оно не принесло хвори.",
+  "item.rpculinary.research_notes.seafood.lore": "Тетрадь рыбака с побережья, пахнет солью и керосином.\nЧто брать живым, что варить сразу, а что лучше оставить чайкам.",
+  "item.rpculinary.research_notes.fugu.lore": "Тонкие записи повара, пережившего свой первый иглобрюх.\nКаждая страница начинается одними словами: «Режь медленно».",
+  "item.rpculinary.research_notes.deep_sea.lore": "Судовой журнал траулера с набросками рыб, которых нет в справочниках,\nи сухими заметками, как готовить их без страха.",
+  "item.rpculinary.research_notes.insects.lore": "Записки натуралиста, сшитые бечёвкой. Голод учит смелости,\nа эти страницы — тому, что из жука выходит сытный ужин.",
+  "item.rpculinary.research_notes.offal.lore": "Рабочий журнал мясника — в пятнах, с загнутыми углами.\nКак вычистить требуху и не выбросить то, что можно съесть.",
+  "item.rpculinary.research_notes.mushrooms.lore": "Карманная тетрадь грибника, между страниц — засохшие шляпки.\nНа обороте обложки выведено: «Не уверен — не бери».",
+  "item.rpculinary.research_notes.other_worlds.lore": "Папка с грифом «Для служебного пользования». Отчёты экспедиций\nо пище, найденной там, где не должно быть ничего живого.",
+  "item.rpculinary.research_notes.monsters.lore": "Папка отдела биологии. Протоколы вскрытий и короткие выводы:\nчто из этого можно есть — и чем за это приходится платить."
 }

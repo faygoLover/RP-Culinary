@@ -23,7 +23,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * Журнал (охотника, грибника…) или записи исследований по группе экзотики — от ГМа (решения Alex 29.10.2026): ПКМ —
+ * Журнал (охотника, грибника…) или записи исследований по группе экзотики — от ГМа (решения Alex 29.10.2026; обложка
+ * по группе и описание вместо пояснений — 02.11): ПКМ —
  * изучить группу (служебный перк RP Perks). Книга не тратится и ставится на книжную полку (тег {@code minecraft:bookshelf_books});
  * для изучения нужен навык «Кулинарии» не ниже {@link Exotic#minSkill}. Группа — в NBT {@code group}.
  */
@@ -58,13 +59,13 @@ public class ResearchNotes extends Item {
         return g < 0 ? super.getName(st) : Component.translatable("item.rpculinary.research_notes." + Exotic.GROUPS.get(g));
     }
 
+    /** Подсказка — короткое описание журнала (о чём, кто писал), без пояснений механики (D1, 02.11). */
     @Override
     public void appendHoverText(ItemStack st, @Nullable Level level, List<Component> tip, TooltipFlag flag) {
         int g = group(st);
-        tip.add(Component.translatable(Exotic.research(g) ? "item.rpculinary.research_notes.desc_research" : "item.rpculinary.research_notes.desc")
-                .withStyle(ChatFormatting.GRAY));
-        if (Exotic.learnable(g))
-            tip.add(Component.translatable("item.rpculinary.research_notes.skill", Exotic.minSkill(g)).withStyle(ChatFormatting.DARK_GRAY));
+        if (g < 0) return;
+        for (String line : Component.translatable("item.rpculinary.research_notes." + Exotic.GROUPS.get(g) + ".lore").getString().split("\n"))
+            tip.add(Component.literal(line).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 
     @Override

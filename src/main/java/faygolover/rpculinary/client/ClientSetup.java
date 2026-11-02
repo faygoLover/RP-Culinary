@@ -38,6 +38,10 @@ public final class ClientSetup {
 
     private static void setup(FMLClientSetupEvent e) {
         e.enqueueWork(() -> {
+            // обложка журнала — по группе (D2): модель research_notes.json выбирает по этому значению
+            net.minecraft.client.renderer.item.ItemProperties.register(faygolover.rpculinary.item.ResearchNotes.NOTES.get(),
+                    new ResourceLocation("rpculinary", "group"),
+                    (st, level, entity, seed) -> (faygolover.rpculinary.item.ResearchNotes.group(st) + 1) / 100f);
             HudRegistry.register(new CulinaryHud.Satiety());
             HudRegistry.register(new CulinaryHud.Water());
         });

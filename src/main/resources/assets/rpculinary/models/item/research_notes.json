@@ -2,5 +2,61 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "minecraft:item/knowledge_book"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "rpculinary:group": 0.01
+      },
+      "model": "rpculinary:item/notes_game"
+    },
+    {
+      "predicate": {
+        "rpculinary:group": 0.04
+      },
+      "model": "rpculinary:item/notes_seafood"
+    },
+    {
+      "predicate": {
+        "rpculinary:group": 0.05
+      },
+      "model": "rpculinary:item/notes_fugu"
+    },
+    {
+      "predicate": {
+        "rpculinary:group": 0.06
+      },
+      "model": "rpculinary:item/notes_deep_sea"
+    },
+    {
+      "predicate": {
+        "rpculinary:group": 0.07
+      },
+      "model": "rpculinary:item/notes_insects"
+    },
+    {
+      "predicate": {
+        "rpculinary:group": 0.08
+      },
+      "model": "rpculinary:item/notes_offal"
+    },
+    {
+      "predicate": {
+        "rpculinary:group": 0.09
+      },
+      "model": "rpculinary:item/notes_mushrooms"
+    },
+    {
+      "predicate": {
+        "rpculinary:group": 0.1
+      },
+      "model": "rpculinary:item/notes_other_worlds"
+    },
+    {
+      "predicate": {
+        "rpculinary:group": 0.11
+      },
+      "model": "rpculinary:item/notes_monsters"
+    }
+  ]
 }
