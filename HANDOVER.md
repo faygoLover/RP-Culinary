@@ -132,3 +132,11 @@
 - `core/Source` (состав долями), `core/MeatFood` (виды, формы, блюдо), `client/MeatColors`, `server/Processing` (доска, мясорубка v2, миска),
   `server/Provenance` (станции по рецепту), `mixin/ButcheryGrinderMixin` (колбаски), миксин `getHoverName` в `ItemStackMixin`.
 
+
+## Поваренные книги (D3, 03.11) — см. docs/04_recipes_visibility_2026-11-02.md
+- `tools/gen_cookbook.py` → `assets/rpculinary/cookbook.json`; `core/Cookbook`, `item/CookbookItems`, `network/CookbookPacket`, `client/CookbookScreen`.
+- Свой текст рецепта — ключ `rpculinary.cookbook.text.<ns>.<path>`; длинный текст в окне крутится колесом справа (не обрезается).
+
+## Известные проблемы
+- **Английские строки поваренных книг** (`en_us.json`: `item.rpculinary.cookbook.*`, `rpculinary.cookbook.*`, `rpculinary.station.*`) —
+  пока копия русских. Нужен нормальный английский; для торта — оригинальный английский список (пришлёт Алекс через сессию багов).

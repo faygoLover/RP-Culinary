@@ -32,7 +32,7 @@ public class CookbookScreen extends Screen {
     private static final int W = 330, H = 210, ROWS = 10, ROW = 18;
     private final String section;
     private final List<Recipe<?>> list = new ArrayList<>();
-    private int scroll, selected, progress = -1, total;
+    private int scroll, selected, progress = -1, total, textScroll, textMax;
     private Button copy;
 
     private CookbookScreen(Component title, String section, List<String> ids) {
@@ -123,6 +123,7 @@ public class CookbookScreen extends Screen {
             int i = scroll + (int) ((my - y0) / ROW);
             if (i < list.size()) {
                 selected = i;
+                textScroll = 0;
                 updateButton();
                 return true;
             }
@@ -132,7 +133,11 @@ public class CookbookScreen extends Screen {
 
     @Override
     public boolean mouseScrolled(double mx, double my, double delta) {
-        scroll = Math.max(0, Math.min(Math.max(0, list.size() - ROWS), scroll - (int) Math.signum(delta)));
+        if (mx >= left() + 136) {  // справа — прокрутка текста рецепта (длинные тексты не обрезаем)
+            textScroll = Math.max(0, Math.min(textMax, textScroll - 3 * (int) Math.signum(delta)));
+            return true;
+        }
+        scroll =Math.max(0, Math.min(Math.max(0, list.size() - ROWS), scroll - (int) Math.signum(delta)));
         return true;
     }
 
@@ -201,12 +206,15 @@ public class CookbookScreen extends Screen {
         String howKey = "rpculinary.cookbook.how." + rtype.replace(':', '.');
         Component text = I18n.exists(textKey) ? Component.translatable(textKey)
                 : Component.translatable(I18n.exists(howKey) ? howKey : "rpculinary.cookbook.how.default", String.join(", ", parts), out.getHoverName());
-        int ty = ay + 24;
-        for (FormattedCharSequence line : font.split(text, W - 150)) {
-            if (ty > top() + H - 40) break;
-            g.drawString(font, line, x, ty, 0xFF4A3A28, false);
-            ty += 10;
-        }
+        int ty = ay + 24, bottom = top() + H - (section != null ? 40 : 10);
+        List<FormattedCharSequence> lines = font.split(text, W - 162);
+        int fit = Math.max(1, (bottom - ty) / 10);
+        textMax = Math.max(0, lines.size() - fit);
+        textScroll = Math.min(textScroll, textMax);
+        for (int i = textScroll; i < lines.size() && i < textScroll + fit; i++, ty += 10)
+            g.drawString(font, lines.get(i), x, ty, 0xFF4A3A28, false);
+        if (textScroll > 0) g.drawString(font, "▲", x + W - 160, ay + 24, 0xFF9C8B6A, false);
+        if (textScroll < textMax) g.drawString(font, "▼", x + W - 160, ay + 24 + (fit - 1) * 10, 0xFF9C8B6A, false);
     }
 
     @Override
