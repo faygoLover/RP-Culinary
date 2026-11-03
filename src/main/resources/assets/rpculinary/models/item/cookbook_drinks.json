@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "rpculinary:item/cookbook_drinks"
+  }
+}

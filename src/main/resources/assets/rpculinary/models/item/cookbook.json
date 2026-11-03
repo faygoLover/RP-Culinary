@@ -1,0 +1,62 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "rpculinary:item/cookbook_soups"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "rpculinary:section": 0.01
+      },
+      "model": "rpculinary:item/cookbook_soups"
+    },
+    {
+      "predicate": {
+        "rpculinary:section": 0.02
+      },
+      "model": "rpculinary:item/cookbook_baking"
+    },
+    {
+      "predicate": {
+        "rpculinary:section": 0.03
+      },
+      "model": "rpculinary:item/cookbook_meat"
+    },
+    {
+      "predicate": {
+        "rpculinary:section": 0.04
+      },
+      "model": "rpculinary:item/cookbook_fish"
+    },
+    {
+      "predicate": {
+        "rpculinary:section": 0.05
+      },
+      "model": "rpculinary:item/cookbook_salads"
+    },
+    {
+      "predicate": {
+        "rpculinary:section": 0.06
+      },
+      "model": "rpculinary:item/cookbook_drinks"
+    },
+    {
+      "predicate": {
+        "rpculinary:section": 0.07
+      },
+      "model": "rpculinary:item/cookbook_butchery"
+    },
+    {
+      "predicate": {
+        "rpculinary:section": 0.08
+      },
+      "model": "rpculinary:item/cookbook_preserves"
+    },
+    {
+      "predicate": {
+        "rpculinary:section": 0.09
+      },
+      "model": "rpculinary:item/cookbook_vintner"
+    }
+  ]
+}

@@ -1,0 +1,1394 @@
+{
+ "_": "tools/gen_cookbook.py — не править руками",
+ "base": [
+  "farm_and_charm:crafting_bowl/butter",
+  "farm_and_charm:crafting_bowl/dough",
+  "farm_and_charm:crafting_bowl/mozzarella",
+  "farm_and_charm:mincer/flour",
+  "farmersdelight:cooking/cooked_rice",
+  "farmersdelight:cooking/tomato_sauce",
+  "farmersdelight:cutting/apple_pie",
+  "farmersdelight:cutting/cabbage",
+  "farmersdelight:cutting/cake",
+  "farmersdelight:cutting/melon",
+  "farmersdelight:cutting/pumpkin",
+  "farmersdelight:cutting/rice_panicle",
+  "farmersdelight:cutting/tag_dough",
+  "farmersdelight:wheat_dough_from_egg",
+  "refurbished_furniture:combining/cheese_sandwich",
+  "refurbished_furniture:combining/wheat_flour",
+  "refurbished_furniture:dough",
+  "refurbished_furniture:slicing/bread_slice_from_bread",
+  "rpculinary:bowl/pie_crust",
+  "rpculinary:mortar/rock_salt",
+  "sa_combat:food/coxinha_dough",
+  "sa_combat:food/pastel_dough",
+  "vinery:apple_mashing/apple_mash"
+ ],
+ "books": {
+  "baking": {
+   "skill": 2,
+   "recipes": [
+    {
+     "id": "alexscaves:caramel_apple",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:chocolate_ice_cream",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:gummy_ring_blue",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:gummy_ring_green",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:gummy_ring_pink",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:gummy_ring_red",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:gummy_ring_yellow",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:large_peppermint",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:licoroot",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:peppermint_powder_from_candy_cane",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_black",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_blue",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_brown",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_cyan",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_gray",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_green",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_light_blue",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_light_gray",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_lime",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_magenta",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_orange",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_pink",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_purple",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_red",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:rock_candy_white",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:small_peppermint",
+     "skill": 2
+    },
+    {
+     "id": "alexscaves:sugar_glass",
+     "skill": 2
+    },
+    {
+     "id": "camping:marshmallow",
+     "skill": 2
+    },
+    {
+     "id": "camping:marshmallow_on_a_stick",
+     "skill": 2
+    },
+    {
+     "id": "camping:roasted_marshmallow",
+     "skill": 2
+    },
+    {
+     "id": "candlelight:chocolate_box",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/beef_tartare",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/chocolate_mousse",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/baked_lamb_ham",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/chicken_alfredo",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/chicken_with_vegetables",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/farmers_bread",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/gingerbread",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/grandmothers_strawberry_cake",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/pasta_with_onion_sauce",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/pork_knuckle",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/pork_ribs",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/potato_with_roast_meat",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/pretzel",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/roastbeef_with_glazed_carrots",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/roasted_chicken",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/roasted_corn",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/stuffed_chicken",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/stuffed_rabbit",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:melon_popsicle",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:baking/baked_potato",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:baking/cooked_meatlovers_pizza",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:baking/cooked_vegetable_pizza",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:baking/sea_salt",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:combining/glow_berry_jam_toast",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:combining/sweet_berry_jam_toast",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:frying/cheese_toastie",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:frying/glow_berry_jam",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:frying/sweet_berry_jam",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:slicing/meatlovers_pizza_slice_from_cooked_meatlovers_pizza",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:slicing/vegetable_pizza_slice_from_cooked_vegetable_pizza",
+     "skill": 2
+    },
+    {
+     "id": "refurbished_furniture:toasting/toast",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/apple_pie",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/cheesecake",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/chocolate_pie",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/donut",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/pancake",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/pizza_cheese",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/pizza_deepdish",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/pizza_greenpepper",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/pizza_margherita",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/pizza_olive_onion",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/pizza_pepperoni",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/pizza_square",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/pumpkin_pie",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/waffles",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:stove/biscuit",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:stove/cheese_bread",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:stove/cookie",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:stove/honey_cookie",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:stove/pizza_bianca",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:stove/pizza_biscuit",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:stove/pizza_calzone",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:stove/rice_cookie",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:stove/sweet_berry_cookie",
+     "skill": 2
+    },
+    {
+     "id": "supplementaries:candy",
+     "skill": 2
+    },
+    {
+     "id": "supplementaries:sugar_cube",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:roaster/oat_pancake",
+     "skill": 3
+    },
+    {
+     "id": "refurbished_furniture:combining/raw_meatlovers_pizza",
+     "skill": 3
+    },
+    {
+     "id": "refurbished_furniture:combining/raw_vegetable_pizza",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:roaster/cake",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:roaster/pizza_chicken",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:roaster/pizza_hawaiian",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:roaster/pizza_neopolitan",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:roaster/pizza_swedish",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:roaster/pizza_taco",
+     "skill": 3
+    }
+   ]
+  },
+  "butchery": {
+   "skill": 3,
+   "recipes": [
+    {
+     "id": "farmersdelight:cutting/chicken",
+     "skill": 3
+    },
+    {
+     "id": "farmersdelight:cutting/cod",
+     "skill": 3
+    },
+    {
+     "id": "farmersdelight:cutting/cooked_chicken",
+     "skill": 3
+    },
+    {
+     "id": "farmersdelight:cutting/cooked_cod",
+     "skill": 3
+    },
+    {
+     "id": "farmersdelight:cutting/cooked_mutton",
+     "skill": 3
+    },
+    {
+     "id": "farmersdelight:cutting/cooked_salmon",
+     "skill": 3
+    },
+    {
+     "id": "farmersdelight:cutting/salmon",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:cutting/chicken_leg",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:cutting/cod_whole",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:cutting/half_chicken",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:cutting/lamb_ham",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:cutting/pork_belly",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:cutting/raw_chuck_steak",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:cutting/raw_ham",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:cutting/raw_lamb_loin",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:cutting/raw_patty",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:cutting/salmon_whole",
+     "skill": 3
+    }
+   ]
+  },
+  "drinks": {
+   "skill": 0,
+   "recipes": [
+    {
+     "id": "farm_and_charm:pot_cooking/nettle_tea",
+     "skill": 0
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/ribwort_tea",
+     "skill": 0
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/strawberry_tea",
+     "skill": 0
+    },
+    {
+     "id": "farmersdelight:cooking/apple_cider",
+     "skill": 0
+    },
+    {
+     "id": "herbalbrews:kettle_brewing/coffee",
+     "skill": 0
+    },
+    {
+     "id": "herbalbrews:kettle_brewing/rooibos_tea",
+     "skill": 0
+    },
+    {
+     "id": "rpculinary:press/beetroot_juice",
+     "skill": 0
+    },
+    {
+     "id": "rpculinary:press/cactus_juice",
+     "skill": 0
+    },
+    {
+     "id": "rpculinary:press/carrot_juice",
+     "skill": 0
+    },
+    {
+     "id": "rpculinary:press/chorus_fruit_juice",
+     "skill": 0
+    },
+    {
+     "id": "rpculinary:press/glow_berries_juice",
+     "skill": 0
+    },
+    {
+     "id": "rpculinary:press/melon_juice",
+     "skill": 0
+    },
+    {
+     "id": "rpculinary:press/pumpkin_juice",
+     "skill": 0
+    },
+    {
+     "id": "rpculinary:press/sweet_berries_juice",
+     "skill": 0
+    },
+    {
+     "id": "farmersdelight:cooking/hot_cocoa",
+     "skill": 1
+    },
+    {
+     "id": "herbalbrews:kettle_brewing/black_tea",
+     "skill": 1
+    },
+    {
+     "id": "herbalbrews:kettle_brewing/hibiscus_tea",
+     "skill": 1
+    },
+    {
+     "id": "rpculinary:pot/hot_chocolate",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:roaster/fillet_steak",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/steak_and_potatoes",
+     "skill": 2
+    }
+   ]
+  },
+  "fish": {
+   "skill": 2,
+   "recipes": [
+    {
+     "id": "alexscaves:deep_sea_sushi_roll",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/salmon_on_white_wine",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:stove/tropical_fish_supreme",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cod_roll",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooked_cod_slice",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooked_salmon_slice",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/baked_cod_stew",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/fish_stew",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/squid_ink_pasta",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cutting/kelp_roll",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:kelp_roll",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:salmon_roll",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:roaster/cooked_cod",
+     "skill": 3
+    },
+    {
+     "id": "farm_and_charm:roaster/cooked_salmon",
+     "skill": 3
+    },
+    {
+     "id": "farmersdelight:grilled_salmon",
+     "skill": 3
+    }
+   ]
+  },
+  "meat": {
+   "skill": 2,
+   "recipes": [
+    {
+     "id": "farm_and_charm:mincer/half_chicken",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:mincer/minced_beef",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/chicken_teriyaki",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/sausage",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:roaster/bacon_with_eggs",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:roaster/pasta_broccoli",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:roaster/pasta_with_bolognese",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:roaster/roasted_lamb_with_lettuce",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:beef_patty",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooked_bacon",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooked_chicken_cuts",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooked_mutton_chops",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/pasta_with_meatballs",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/pasta_with_mutton_chop",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:board/bacon_and_eggs",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:board/bacon_sandwich",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:board/chicken_sandwich",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:board/hamburger",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:board/kangaroo_burger",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:mincer/chicken_cuts",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:mincer/dinosaur_chop",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/barbecue_stick",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/burrito",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/chips",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:roaster/roasted_mutton_chops",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:food/meat_pastel_from_raw",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:food/raw_meat_pastel",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:roaster/chicken_wrapped_in_bacon",
+     "skill": 3
+    },
+    {
+     "id": "farm_and_charm:roaster/lamb_with_corn",
+     "skill": 3
+    },
+    {
+     "id": "rpculinary:roaster/taco",
+     "skill": 3
+    }
+   ]
+  },
+  "preserves": {
+   "skill": 2,
+   "perk": "rpculinary:preserver",
+   "recipes": [
+    {
+     "id": "farmersdelight:smoked_ham",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_carrots",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_chilli",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_corn",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_corned_beef",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_dog_food",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_fruit_beverage",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_fruit_cocktail",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_fruit_si",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_meat_si",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_mushroom_soup",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_sardines",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_soup_ze",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_spaghetti",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_stew_ze",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_tuna",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/can_vegetable_soup",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:pot/kibble",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/canned_potato",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_beans",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_carrots",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_chilli",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_corn",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_corned_beef",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_dog_food",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_evaporated_milk",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_fruit_beverage",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_fruit_cocktail",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_mushroom_soup",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_peaches",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_peas",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_pineapple",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_potato",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_spaghetti_bolognese",
+     "skill": 2
+    },
+    {
+     "id": "sa_combat:canned/open_canned_vegetable_soup",
+     "skill": 2
+    },
+    {
+     "id": "sa_core:materials/empty_can",
+     "skill": 2
+    },
+    {
+     "id": "sa_core:tools/jerry_can",
+     "skill": 2
+    }
+   ]
+  },
+  "salads": {
+   "skill": 0,
+   "recipes": [
+    {
+     "id": "farm_and_charm:mincer/mashed_potatoes",
+     "skill": 0
+    },
+    {
+     "id": "farm_and_charm:mincer/melon_slice",
+     "skill": 0
+    },
+    {
+     "id": "farm_and_charm:mincer/raw_pasta",
+     "skill": 0
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/dumplings",
+     "skill": 0
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/khinkali",
+     "skill": 0
+    },
+    {
+     "id": "farmersdelight:fried_egg",
+     "skill": 0
+    },
+    {
+     "id": "farmersdelight:milk_bottle",
+     "skill": 0
+    },
+    {
+     "id": "minecraft:baked_potato",
+     "skill": 0
+    },
+    {
+     "id": "minecraft:dried_kelp",
+     "skill": 0
+    },
+    {
+     "id": "minecraft:honey_bottle",
+     "skill": 0
+    },
+    {
+     "id": "rpculinary:board/egg_sandwich",
+     "skill": 0
+    },
+    {
+     "id": "rpculinary:campfire_cooking/crackling_from_fat",
+     "skill": 0
+    },
+    {
+     "id": "sa_combat:drinks/milk_box",
+     "skill": 0
+    },
+    {
+     "id": "sa_combat:food/butter_from_raw",
+     "skill": 0
+    },
+    {
+     "id": "sa_combat:food/coxinha_from_raw",
+     "skill": 0
+    },
+    {
+     "id": "sa_combat:food/raw_cheese_pastel",
+     "skill": 0
+    },
+    {
+     "id": "sa_combat:food/raw_coxinha",
+     "skill": 0
+    },
+    {
+     "id": "sa_combat:food/raw_wind_pastel",
+     "skill": 0
+    },
+    {
+     "id": "sa_combat:food/saltine_cracker",
+     "skill": 0
+    },
+    {
+     "id": "sa_combat:food/wind_pastel",
+     "skill": 0
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/beetroot_salad",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/dog_food",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/oatmeal_with_strawberries",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/tomato_mozzarella_salad",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:farmers_breakfast",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/yeast",
+     "skill": 1
+    },
+    {
+     "id": "farmersdelight:stuffed_potato",
+     "skill": 1
+    },
+    {
+     "id": "rpculinary:board/big_burger",
+     "skill": 1
+    },
+    {
+     "id": "rpculinary:board/hot_dog",
+     "skill": 1
+    },
+    {
+     "id": "rpculinary:bowl/cheese",
+     "skill": 1
+    },
+    {
+     "id": "rpculinary:bowl/cheese_sa",
+     "skill": 1
+    },
+    {
+     "id": "rpculinary:bowl/nether_salad",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/cat_food",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/farmer_salad",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/fresh_garden_salad",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/harvest_plate",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/potato_salad",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:crafting_bowl/salad",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/pasta_with_mozzarella",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/dog_food",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/fried_rice",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/glow_berry_custard",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/ratatouille",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:board/cheese_burger",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:bowl/fruit_salad",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:bowl/mixed_salad",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/cabbage_rolls",
+     "skill": 3
+    },
+    {
+     "id": "farmersdelight:cooking/mushroom_rice",
+     "skill": 3
+    },
+    {
+     "id": "farmersdelight:cooking/vegetable_noodles",
+     "skill": 3
+    }
+   ]
+  },
+  "soups": {
+   "skill": 1,
+   "recipes": [
+    {
+     "id": "farm_and_charm:pot_cooking/barley_soup",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/corn_grits",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/onion_soup",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/potato_soup",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/simple_tomato_soup",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/tomato_soup",
+     "skill": 1
+    },
+    {
+     "id": "farmersdelight:cooking/beef_stew",
+     "skill": 1
+    },
+    {
+     "id": "farmersdelight:cooking/beetroot_soup",
+     "skill": 1
+    },
+    {
+     "id": "farmersdelight:cooking/mushroom_stew",
+     "skill": 1
+    },
+    {
+     "id": "farmersdelight:cooking/onion_soup",
+     "skill": 1
+    },
+    {
+     "id": "rpculinary:pot/mosquito_repellent_stew",
+     "skill": 1
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/mushroom_soup",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/chicken_soup",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/noodle_soup",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/pumpkin_soup",
+     "skill": 2
+    },
+    {
+     "id": "farmersdelight:cooking/vegetable_soup",
+     "skill": 2
+    },
+    {
+     "id": "farm_and_charm:pot_cooking/goulash",
+     "skill": 3
+    },
+    {
+     "id": "farmersdelight:cooking/bone_broth",
+     "skill": 3
+    }
+   ]
+  },
+  "vintner": {
+   "skill": 2,
+   "perk": "rpculinary:vintner",
+   "recipes": [
+    {
+     "id": "brewery:brewing/barley_beer",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/dark_brew",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/haley_beer",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/hops_beer",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/nettle_beer",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/oat_beer",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/wheat_beer",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/whiskey_ak",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/whiskey_cristelwalker",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/whiskey_hadarilabel",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/whiskey_highland_hearth",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/whiskey_jamesons_malt",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/whiskey_jojannik",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/whiskey_lilitusinglemalt",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/whiskey_maggoallan",
+     "skill": 2
+    },
+    {
+     "id": "brewery:brewing/whiskey_smokey_reverie",
+     "skill": 2
+    },
+    {
+     "id": "rpculinary:brewing/vodka",
+     "skill": 2
+    },
+    {
+     "id": "vinery:apple_fermenting/apple_juice",
+     "skill": 2
+    },
+    {
+     "id": "vinery:apple_fermenting/honey_bottle",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/aegis_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/apple_cider",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/apple_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/bolvar_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/bottle_mojang_noir",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/chenet_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/cherry_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/chorus_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/clark_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/cristel_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/glowing_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/jellie_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/jo_special_mixture",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/kelp_cider",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/lilitu_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/magnetic_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/mead",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/mellohi_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/noir_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/red_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/solaris_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/stal_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/strad_wine",
+     "skill": 2
+    },
+    {
+     "id": "vinery:wine_fermentation/villagers_fright",
+     "skill": 2
+    }
+   ]
+  }
+ },
+ "secret": [
+  "alexscaves:alex_meal",
+  "csaugmentations:nutriogloop",
+  "farm_and_charm:roaster/barley_patties_with_potatoes",
+  "farm_and_charm:roaster/beef_patty_with_vegetables",
+  "farm_and_charm:roaster/beef_with_mushroom_in_wine_and_potatoes",
+  "farm_and_charm:roaster/bolognese",
+  "farm_and_charm:roaster/fried_chicken",
+  "farm_and_charm:roaster/omelet",
+  "farm_and_charm:roaster/sausage_with_oat_patty",
+  "farm_and_charm:stove/beef_wellington",
+  "farm_and_charm:stove/lasagne",
+  "farmersdelight:cooking/dumplings",
+  "farmersdelight:cooking/rabbit_stew",
+  "rpculinary:pot/primordial_soup",
+  "rpculinary:pot/seething_stew"
+ ]
+}

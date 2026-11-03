@@ -332,6 +332,11 @@ public final class CulinaryGameTests {
         h.assertTrue(mix.get("pig") == 2 && mix.get("cow") == 1 && mix.get("chicken") == 1, "смесь фаршей: " + mix);
         faygolover.rpculinary.core.Source.setParts(m3, java.util.Map.of("cow", 2, "pig", 2), "cow");
         h.assertTrue(faygolover.rpculinary.core.Source.parts(m3).get("cow") == 1 && faygolover.rpculinary.core.Source.home(m3), "2+2 → 1+1, домашний");
+        // поваренные книги: база есть, разделы есть, запись в личную книгу — один раз
+        h.assertTrue(!faygolover.rpculinary.core.Cookbook.base().isEmpty() && faygolover.rpculinary.core.Cookbook.book("soups") != null, "книги прочитаны");
+        ItemStack nb = new ItemStack(faygolover.rpculinary.item.CookbookItems.NOTEBOOK.get());
+        h.assertTrue(faygolover.rpculinary.core.Cookbook.write(nb, "x:y") && !faygolover.rpculinary.core.Cookbook.write(nb, "x:y")
+                && faygolover.rpculinary.core.Cookbook.learned(nb).contains("x:y"), "рецепт переписан один раз");
         NutritionData copy = new NutritionData();
         d.insectMeals = 2;
         copy.load(d.save());

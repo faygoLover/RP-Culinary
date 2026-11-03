@@ -42,6 +42,9 @@ public final class ClientSetup {
             net.minecraft.client.renderer.item.ItemProperties.register(faygolover.rpculinary.item.ResearchNotes.NOTES.get(),
                     new ResourceLocation("rpculinary", "group"),
                     (st, level, entity, seed) -> (faygolover.rpculinary.item.ResearchNotes.group(st) + 1) / 100f);
+            net.minecraft.client.renderer.item.ItemProperties.register(faygolover.rpculinary.item.CookbookItems.COOKBOOK.get(),
+                    new ResourceLocation("rpculinary", "section"),
+                    (st, level, entity, seed) -> (faygolover.rpculinary.core.Cookbook.SECTIONS.indexOf(faygolover.rpculinary.core.Cookbook.section(st)) + 1) / 100f);
             HudRegistry.register(new CulinaryHud.Satiety());
             HudRegistry.register(new CulinaryHud.Water());
         });

@@ -41,6 +41,8 @@ public class RpCulinary {
         if (e.getTabKey() != RpCoreAPI.MISC_TAB) return;
         for (int g = 0; g < faygolover.rpculinary.server.Exotic.GROUPS.size(); g++)
             if (faygolover.rpculinary.server.Exotic.learnable(g)) e.accept(faygolover.rpculinary.item.ResearchNotes.of(g));
+        for (String s : faygolover.rpculinary.core.Cookbook.SECTIONS) e.accept(faygolover.rpculinary.item.CookbookItems.book(s));
+        e.accept(new net.minecraft.world.item.ItemStack(faygolover.rpculinary.item.CookbookItems.NOTEBOOK.get()));
     }
 
     public RpCulinary() {
@@ -50,6 +52,7 @@ public class RpCulinary {
         modBus.addListener(this::registerCaps);
         modBus.addListener(this::onConfig);
         modBus.addListener(this::onConfigReload);
+        faygolover.rpculinary.item.CookbookItems.init();
         faygolover.rpculinary.item.ResearchNotes.ITEMS.register(modBus);
         modBus.addListener(this::creativeTab);
         faygolover.rpculinary.pack.FoodPack.register(modBus);
