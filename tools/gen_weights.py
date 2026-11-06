@@ -40,6 +40,9 @@ COOKED = {'minecraft:cooked_beef': 'minecraft:beef', 'minecraft:cooked_porkchop'
 for c, r in COOKED.items():
     if r in W:
         W[c] = [round(W[r][0] * 0.7), W[r][1] if W[r][1] > 1 else 8]
+# Части готового: жареная связка 700 г → 4 колбаски, жареная тушка 560 г → 2 половинки
+W['brewery:sausage'] = [round(W['butchery:cooked_sausage'][0] / 4), 16]
+W['brewery:half_chicken'] = [round(W['minecraft:cooked_chicken'][0] / 2), 8]
 # Экзотика: готовые версии крупных кусков — порции
 for grp, lst in C.MEAT_ROLES:
     if grp.startswith('Дичь'):

@@ -91,6 +91,8 @@ PREP_TYPES = {'farmersdelight:cutting', 'refurbished_furniture:cutting_board_sli
               'butchery:pestleandmortarrecipetype', 'vinery:apple_mashing', 'refurbished_furniture:cutting_board_combining'}
 MIN_SKILL = {'base': 0, 'soups': 1, 'baking': 2, 'meat': 2, 'fish': 2, 'salads': 0, 'drinks': 0, 'butchery': 3, 'preserves': 2, 'vintner': 2}
 PERK = {'preserves': 'rpculinary:preserver', 'vintner': 'rpculinary:vintner'}
+# Второй рецепт того же блюда, который тоже нужен в книге (4 колбаски из жареной связки — рядом с колбаской из кастрюли F&C)
+ALSO = {'rpculinary:board/sausage_plate'}
 STATION_TYPES = {'farmersdelight:cooking', 'farmersdelight:cutting', 'farm_and_charm:pot_cooking', 'farm_and_charm:stove', 'farm_and_charm:roaster',
                  'farm_and_charm:crafting_bowl', 'farm_and_charm:mincer', 'minecraft:crafting_shaped', 'minecraft:crafting_shapeless',
                  'minecraft:smelting', 'minecraft:smoking', 'minecraft:campfire_cooking', 'refurbished_furniture:oven_baking',
@@ -126,7 +128,7 @@ for r in recipes:
         secret.append(r['id'])
         continue
     sec = section(r, out)
-    if any(e['out'] == out for e in books.get(sec, [])):
+    if any(e['out'] == out for e in books.get(sec, [])) and r['id'] not in ALSO:
         continue  # одно блюдо — один рецепт в книге
     skill = min(8, max(MIN_SKILL[sec], distinct - 2))
     books.setdefault(sec, []).append({'id': r['id'], 'skill': skill, 'out': out})
