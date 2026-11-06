@@ -212,7 +212,7 @@ public final class CulinaryService {
             return;
         }
         int thirst = thirstMode(sp, s);
-        s.liveDayHours = RpCoreAPI.dayLengthSeconds() / 3600.0;
+        s.liveDayHours = liveDayHours();
         Metabolism.Input in = new Metabolism.Input();
         in.dt = 1;
         in.lsoWater = thirst == 2 && s.lsoThirstByTime;
@@ -819,5 +819,19 @@ public final class CulinaryService {
         if (!force && h == d.lastSyncHash) return;
         d.lastSyncHash = h;
         Net.send(sp, p);
+    }
+
+    /**
+     * Сутки тела в реальных часах: время тела RP Core (длина суток и {@code /time speed} RP Time; слои 06.11).
+     * Старый Core без скорости — по длине суток.
+     */
+    static double liveDayHours() {
+        try {
+            double r = RpCoreAPI.rpPerReal();
+            if (r > 0) return 24.0 / r;
+        } catch (NoSuchMethodError old) {
+            // Core до 0.13.0.
+        }
+        return RpCoreAPI.dayLengthSeconds() / 3600.0;
     }
 }
