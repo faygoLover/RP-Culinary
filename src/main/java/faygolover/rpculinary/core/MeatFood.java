@@ -67,6 +67,13 @@ public final class MeatFood {
     /** Фарш из обрезков жирнее, мяса в нём меньше (2 обрезка → 1 фарш). */
     public static final String FATTY = "rpculinary:fatty", OFFAL_FORM = "rpculinary:offal";
 
+    /** Ливерное и жирное переходят на следующую форму (фарш → колбаски → жареные), если такими были все исходные. */
+    public static void carryFlags(java.util.List<ItemStack> from, ItemStack to) {
+        if (from.isEmpty() || form(to) == null) return;
+        for (String flag : new String[]{FATTY, OFFAL_FORM})
+            if (from.stream().allMatch(s -> s.getTag() != null && s.getTag().getBoolean(flag))) to.getOrCreateTag().putBoolean(flag, true);
+    }
+
     public static Form form(ItemStack st) {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(st.getItem());
         return id == null ? null : FORMS.get(id.toString());
@@ -111,7 +118,8 @@ public final class MeatFood {
             return new Food(m.protein() * pm * 4 + m.fat() * fmul * 9 + base.carbs() * 4, m.protein() * pm, m.fat() * fmul,
                     base.carbs(), m.vitamins(), base.water());
         }
-        return dish(base, meatPart, parts);
+        // Крупный кусок с весом в NBT: мясная часть — на весь вес, как и base.
+        return dish(base, meatPart == null ? null : meatPart.scale(Weights.nutritionFactor(st)), parts);
     }
 
     /** Блюдо: мясная часть рецепта (по белку — сколько граммов мяса) заменяется мясом состава. */

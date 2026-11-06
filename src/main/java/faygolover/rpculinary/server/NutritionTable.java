@@ -122,6 +122,12 @@ public final class NutritionTable {
         NutritionRules.Entry entry = NutritionRules.entry(item);
         if (entry != null) {
             Food rule = entry.food();
+            // Состав на граммы — по весу штуки; сам кусок — мясная часть, её пересчитывает состав (стейк кенгуру — по виду).
+            int nominal = entry.perGrams() > 0 ? faygolover.rpculinary.core.Weights.nominal(item) : 0;
+            if (nominal > 0) {
+                rule = rule.scale(nominal / (double) entry.perGrams());
+                MEAT.put(item, rule);
+            }
             CACHE.put(item, rule);
             CATEGORY.put(item, entry.category());
             SOURCE.put(item, Source.RULE);

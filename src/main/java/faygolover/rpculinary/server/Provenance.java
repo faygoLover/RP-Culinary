@@ -60,7 +60,7 @@ public final class Provenance {
                 List<ItemStack> used = new ArrayList<>();
                 for (ItemStack g : c.gone) if (NutritionTable.usesIngredient(sp.server, en.getKey(), g)) used.add(g);
                 if (used.isEmpty()) continue;
-                mark(sp, en.getKey(), added, Source.mix(used), Processing.lookOf(used.get(0)));
+                mark(sp, en.getKey(), added, Source.mix(used), Processing.lookOf(used.get(0)), used);
                 changed = true;
             }
         }
@@ -91,17 +91,19 @@ public final class Provenance {
     }
 
     /** Пометить {@code n} новых штук предмета составом: отделить их от непомеченного стака. */
-    private static void mark(ServerPlayer sp, Item item, int n, Map<String, Integer> parts, String look) {
+    private static void mark(ServerPlayer sp, Item item, int n, Map<String, Integer> parts, String look, List<ItemStack> used) {
         Inventory inv = sp.getInventory();
         ItemStack carried = sp.containerMenu.getCarried();
         if (carried.is(item) && !Source.marked(carried) && n > 0) {
             int k = Math.min(n, carried.getCount());
             if (k == carried.getCount()) {
                 Source.setParts(carried, parts, look);
+                faygolover.rpculinary.core.MeatFood.carryFlags(used, carried);
             } else {
                 carried.shrink(k);
                 ItemStack part = new ItemStack(item, k);
                 Source.setParts(part, parts, look);
+                faygolover.rpculinary.core.MeatFood.carryFlags(used, part);
                 if (!inv.add(part)) sp.drop(part, false);
             }
             n -= k;
@@ -112,9 +114,11 @@ public final class Provenance {
             int k = Math.min(n, st.getCount());
             if (k == st.getCount()) {
                 Source.setParts(st, parts, look);
+                faygolover.rpculinary.core.MeatFood.carryFlags(used, st);
             } else {
                 ItemStack part = st.split(k);
                 Source.setParts(part, parts, look);
+                faygolover.rpculinary.core.MeatFood.carryFlags(used, part);
                 if (!inv.add(part)) sp.drop(part, false);
             }
             n -= k;

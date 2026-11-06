@@ -46,6 +46,7 @@ public abstract class ButcheryGrinderMixin {
         boolean bloody = rpculinary$is(blood, "butchery:bottle_of_blood") || blood.is(ItemTags.create(new ResourceLocation("forge", "blood_bottle")));
         ItemStack bundle = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("butchery", bloody ? "raw_blood_sausage" : "raw_sausage")));
         faygolover.rpculinary.core.Source.copy(input, bundle);
+        faygolover.rpculinary.core.MeatFood.carryFlags(java.util.List.of(input), bundle);
         if (!out.isEmpty() && (!ItemStack.isSameItemSameTags(out, bundle) || out.getCount() >= out.getMaxStackSize())) return;
         var pd = be.getPersistentData();
         int t = pd.getInt("rpculinary:grind") + 1;

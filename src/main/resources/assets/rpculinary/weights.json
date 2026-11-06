@@ -29,9 +29,17 @@
    150,
    32
   ],
+  "brewery:half_chicken": [
+   280,
+   8
+  ],
   "brewery:hops": [
    50,
    64
+  ],
+  "brewery:sausage": [
+   175,
+   16
   ],
   "butchery:animal_fat": [
    250,
