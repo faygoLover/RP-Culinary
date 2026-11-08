@@ -65,6 +65,8 @@ public final class NutritionTable {
 
     /** Мясная часть блюда из рецепта (на штуку). */
     private static final Map<Item, Food> MEAT = new java.util.HashMap<>();
+    /** Куски тяжелее порции: состав одной порции, им они считаются в блюде из нескольких ингредиентов (окорок в супе). */
+    private static final Map<Item, Food> PORTION = new HashMap<>();
     private static final int MEAT_CAT = NutritionState.category("meat"), FISH_CAT = NutritionState.category("fish");
     private static final Map<Item, Integer> EXOTIC = new HashMap<>();
     /** Сырое ли (кэш {@link #raw}). */
@@ -83,6 +85,7 @@ public final class NutritionTable {
     public static synchronized void invalidate() {
         CACHE.clear();
         MEAT.clear();
+        PORTION.clear();
         CATEGORY.clear();
         SOURCE.clear();
         COMPLEXITY.clear();
@@ -127,6 +130,7 @@ public final class NutritionTable {
             if (nominal > 0) {
                 rule = rule.scale(nominal / (double) entry.perGrams());
                 MEAT.put(item, rule);
+                if (nominal > entry.perGrams()) PORTION.put(item, entry.food());
             }
             CACHE.put(item, rule);
             CATEGORY.put(item, entry.category());
@@ -150,16 +154,19 @@ public final class NutritionTable {
             Set<Item> distinct = new HashSet<>();
             double[] byCat = new double[NutritionState.CATEGORIES.length];
             int exotic = 0;
+            boolean dish = r.getIngredients().stream().filter(i -> !i.isEmpty()).count() > 1;
             for (Ingredient ing : r.getIngredients()) {
                 Item src = ingredientItem(ing, depth, path);
                 exotic |= ingredientExotic(ing);
                 if (src == null) continue;
                 Food part = CACHE.get(src);
                 if (part == null) continue;
+                Food portion = dish ? PORTION.get(src) : null;
+                if (portion != null) part = portion;
                 sum = sum.plus(part);
                 int cat = CATEGORY.getOrDefault(src, -1);
                 if (cat == MEAT_CAT || cat == FISH_CAT || faygolover.rpculinary.core.MeatFood.FORMS.containsKey(String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(src))))
-                    meat = meat.plus(MEAT.getOrDefault(src, part));  // мясная часть: само мясо или мясная часть полуфабриката
+                    meat = meat.plus(portion != null ? portion : MEAT.getOrDefault(src, part));  // мясная часть: само мясо или мясная часть полуфабриката
                 known++;
                 distinct.add(src);
                 int c = CATEGORY.getOrDefault(src, -1);
