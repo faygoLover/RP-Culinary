@@ -170,6 +170,7 @@ public final class CulinaryService {
 
     public static void onPlayerTick(TickEvent.PlayerTickEvent e) {
         if (e.phase != TickEvent.Phase.END || !(e.player instanceof ServerPlayer sp)) return;
+        if (plateEater == sp) plateEater = null;
         NutritionData d = NutritionData.get(sp);
         if (d == null) return;
         ensureInit(sp, d);
@@ -182,8 +183,10 @@ public final class CulinaryService {
             int cur = fd.getFoodLevel();
             // Прирост ванильной сытости сразу после клика по блоку — съел с блока (торт, тарелка). Без клика прирост
             // не считаем: на «Мирной» ваниль сама подкармливает игрока — это не еда.
-            if (d.mirroredFood >= 0 && cur > d.mirroredFood && d.ateItemTick != tick && d.clickedTick >= tick - 1 && active(sp))
-                eatFromBlock(sp, d, d.clickedBlock, cur - d.mirroredFood);
+            if (d.mirroredFood >= 0 && cur > d.mirroredFood && d.ateItemTick != tick && d.clickedTick >= tick - 1 && active(sp)) {
+                if (!d.clickedFood.isEmpty()) ate(sp, d.clickedFood);
+                else eatFromBlock(sp, d, d.clickedBlock, cur - d.mirroredFood);
+            }
             // Полный желудок не мешает есть — через силу (медленнее, переполнение). Не лезет только «до предела».
             int lock = Metabolism.overfill(d.state, s, stomachMult(sp, d.state, s)) >= 1 ? FOOD_FULL : FOOD_ROOM;
             fd.setFoodLevel(lock);
@@ -400,8 +403,24 @@ public final class CulinaryService {
 
     /** Доел или допил предмет (у большого блюда — последний укус: ровно остаток). */
     public static void onUseFinish(LivingEntityUseItemEvent.Finish e) {
-        if (!(e.getEntity() instanceof ServerPlayer sp)) return;
-        ItemStack used = e.getItem();
+        if (e.getEntity() instanceof ServerPlayer sp) ate(sp, e.getItem());
+    }
+
+    /** Кто только что кликнул по блоку Candlelight: еду с тарелки мод снимает сразу за кликом. */
+    @Nullable
+    private static ServerPlayer plateEater;
+
+    /** Еду с тарелки Candlelight считаем как порцию, а прирост сытости от неё — не считаем. */
+    public static void ateFromPlate(ItemStack food) {
+        ServerPlayer sp = plateEater;
+        if (sp == null) return;
+        plateEater = null;
+        NutritionData d = NutritionData.get(sp);
+        if (d != null) d.clickedTick = -1;
+        ate(sp, food);
+    }
+
+    private static void ate(ServerPlayer sp, ItemStack used) {
         double fraction = 1;
         int sips = Sips.total(used);
         int n = used.hasTag() ? used.getTag().getInt(BITES_N) : 0;
@@ -667,6 +686,10 @@ public final class CulinaryService {
         if (d == null) return;
         d.clickedBlock = sp.level().getBlockState(e.getPos()).getBlock();
         d.clickedTick = sp.server.getTickCount();
+        String id = String.valueOf(net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(d.clickedBlock));
+        plateEater = id.startsWith("candlelight:") ? sp : null;
+        d.clickedFood = "refurbished_furniture:plate".equals(id) && sp.level().getBlockEntity(e.getPos()) instanceof net.minecraft.world.Container c
+                ? c.getItem(0).copy() : ItemStack.EMPTY;
     }
 
     /** Кусок с блока: калории — по ванильной сытости куска, доли БЖУ — по составу блюда. */
