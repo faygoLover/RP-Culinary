@@ -31,6 +31,8 @@ public final class NutritionData {
     @Nullable
     public Block clickedBlock;
     public long clickedTick = -1;
+    /** Что лежало на тарелке Refurbished Furniture, по которой кликнули: мод не сообщает, что съедено. */
+    public net.minecraft.world.item.ItemStack clickedFood = net.minecraft.world.item.ItemStack.EMPTY;
     /** С прошлого шага: восстановленная выносливость RP Stamina (калории за отдых), тики бега без неё. */
     public double exertionStamina;
     /** Сверх обычного с прошлого шага (спорт: восстановление мышц, дожигание), ккал. */
