@@ -53,8 +53,16 @@ public final class ExoticEffects {
         return (long) (s.rpDayHours() * 3600 * 20);
     }
 
-    static long now(ServerPlayer sp) {
-        return sp.server.overworld().getGameTime();
+    /** Часы тела игрока (см. {@link NutritionData#bodyClock}): старые отметки были по игровому времени, с него и старт. */
+    static long now(ServerPlayer sp, NutritionData d) {
+        if (d.bodyClock <= 0) d.bodyClock = Math.max(1, sp.server.overworld().getGameTime());
+        return d.bodyClock;
+    }
+
+    /** Прокрутка {@code /rptime}: часы тела уходят вперёд на ту же долю суток. */
+    public static void advance(ServerPlayer sp, double seconds) {
+        NutritionData d = NutritionData.get(sp);
+        if (d != null) d.bodyClock = now(sp, d) + (long) (rpDayTicks(Settings.get()) * seconds / RpCoreAPI.dayLengthSeconds());
     }
 
     /** Съел долю {@code fraction} предмета: действия всех его групп. */
@@ -71,7 +79,7 @@ public final class ExoticEffects {
         boolean starving = Metabolism.hungerStage(d.state, s) >= 2;
 
         if (has(mask, "game") && under) {  // паразиты (трихинеллёз): признаки через 1–2 RP-суток
-            long at = now(sp) + (long) (rpDayTicks(s) * s.parasiteDelayRpDays * (0.7 + 0.6 * rnd.nextDouble()));
+            long at = now(sp, d) + (long) (rpDayTicks(s) * s.parasiteDelayRpDays * (0.7 + 0.6 * rnd.nextDouble()));
             if (d.parasitesAt <= 0 || at < d.parasitesAt) d.parasitesAt = at;
         }
         if (has(mask, "pets") && !starving) {
@@ -125,7 +133,7 @@ public final class ExoticEffects {
         }
         if (has(mask, "mushrooms")) {
             if (used.is(LIVER_POISON)) {  // поганка: сначала ничего, через RP-сутки — тяжёлое отравление
-                long at = now(sp) + (long) (rpDayTicks(s) * s.liverPoisonDelayRpDays);
+                long at = now(sp, d) + (long) (rpDayTicks(s) * s.liverPoisonDelayRpDays);
                 if (d.liverPoisonAt <= 0 || at < d.liverPoisonAt) d.liverPoisonAt = at;
             } else if (used.is(HALLUCINOGEN)) {  // мухомор и т. п. — ядовит всегда (решение 29.10)
                 trip(sp, d, k, s);
@@ -238,7 +246,8 @@ public final class ExoticEffects {
         if (d.insectMeals > 0) d.insectMeals = Math.max(0, d.insectMeals - perSecond * s.insectHabitPortions / 7.0);  // за неделю
         if (d.sweetPortions > 0) d.sweetPortions = Math.max(0, d.sweetPortions - perSecond * Math.max(1, s.sweetsTeethAfter));
         if (sp.isCreative() || sp.isSpectator()) return;
-        long now = now(sp);
+        if (RpCoreAPI.timeRunning()) d.bodyClock = now(sp, d) + 20;
+        long now = now(sp, d);
         if (d.parasitesAt > 0 && now >= d.parasitesAt) {
             d.parasitesAt = 0;
             if (!Medicine.infect(sp, s.parasiteSepsis, 2)) sp.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 60 * 10, 0));

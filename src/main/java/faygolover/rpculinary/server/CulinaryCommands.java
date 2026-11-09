@@ -165,7 +165,9 @@ public final class CulinaryCommands {
 
     /** Время RP: {@code /rptime sleep|skip} — прокрутить голод, воду и вес (кроме «только раны»). */
     public static void onTimeSkip(RpTimeSkipEvent e) {
-        if (e.food() && e.getEntity() instanceof ServerPlayer sp) advance(sp, e.hours(), e.sleeping());
+        if (!(e.getEntity() instanceof ServerPlayer sp)) return;
+        if (e.wounds()) ExoticEffects.advance(sp, e.seconds());
+        if (e.food()) advance(sp, e.hours(), e.sleeping());
     }
 
     /** Прокрутка голода и жажды на {@code hours} часов (без обмороков); во сне обмен веществ медленнее. */

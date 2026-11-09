@@ -47,6 +47,8 @@ public final class NutritionData {
     public long sugarUntil = -1;
     /** Время мира, когда проявятся паразиты (дичь сырая) и отравление поганкой; 0 — нет. Сохраняется. */
     public long parasitesAt, liverPoisonAt;
+    /** Часы тела в тиках: идут в сети и не на паузе. Отметки выше — по ним; 0 — ещё не заведены (старт от игрового времени). */
+    public long bodyClock;
     /** Привычка к насекомым (порций за RP-неделю) и сладкое за RP-сутки — убывают. Сохраняется. */
     public double insectMeals, sweetPortions;
     /** Тик, когда в последний раз был «обморок от отёка мозга» (без мода тела). */
@@ -126,6 +128,7 @@ public final class NutritionData {
             iv.putDouble("seconds", m.ivSeconds);
             t.put("iv", iv);
         }
+        if (bodyClock > 0) t.putLong("body_clock", bodyClock);
         if (parasitesAt > 0) t.putLong("parasites_at", parasitesAt);
         if (liverPoisonAt > 0) t.putLong("liver_poison_at", liverPoisonAt);
         if (insectMeals > 0) t.putDouble("insect_meals", insectMeals);
@@ -134,6 +137,7 @@ public final class NutritionData {
     }
 
     public void load(CompoundTag t) {
+        bodyClock = t.getLong("body_clock");
         parasitesAt = t.getLong("parasites_at");
         liverPoisonAt = t.getLong("liver_poison_at");
         insectMeals = t.getDouble("insect_meals");

@@ -320,7 +320,7 @@ public final class CulinaryGameTests {
             h.assertTrue(faygolover.rpculinary.server.Exotic.knows(p, g), "без Perks знает всё");
         }
         NutritionData d = NutritionData.get(p);
-        d.parasitesAt = server.overworld().getGameTime() - 1;
+        d.parasitesAt = Math.max(1, d.bodyClock);
         p.tickCount = 3;
         tick(p, 1);
         h.assertTrue(d.parasitesAt == 0 && p.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "паразиты проявились");
