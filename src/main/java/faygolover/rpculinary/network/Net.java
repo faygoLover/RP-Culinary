@@ -14,7 +14,7 @@ import java.util.Optional;
 public final class Net {
     private Net() {}
 
-    private static final String PROTOCOL = "4";
+    private static final String PROTOCOL = "5";
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(new ResourceLocation(RpCulinary.MODID, "main"),
             () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
 
@@ -26,6 +26,8 @@ public final class Net {
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         CHANNEL.registerMessage(id++, CookbookPacket.class, CookbookPacket::encode, CookbookPacket::decode, CookbookPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER));
+        CHANNEL.registerMessage(id++, FeedPosePacket.class, FeedPosePacket::encode, FeedPosePacket::decode, FeedPosePacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         CHANNEL.registerMessage(id++, PortionDonePacket.class, PortionDonePacket::encode, PortionDonePacket::decode, PortionDonePacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }

@@ -632,4 +632,26 @@ public final class CulinaryGameTests {
         RpCulinary.LOGGER.info("RP Culinary dish {}:{} = {} ({})", ns, path, f, NutritionState.CATEGORIES[Math.max(0,
                 NutritionTable.category(server, item))]);
     }
+
+
+    /** Кормление: через 3 секунды порция у того, кого кормят, а блюдо или тара — у кормящего. */
+    @GameTest(template = T, timeoutTicks = 120)
+    public static void feedingGivesPortionToOther(GameTestHelper h) {
+        ServerPlayer feeder = player(h), eater = player(h);
+        NutritionState m = state(eater);
+        double feederBefore = state(feeder).stomach, before = m.stomach;
+        feeder.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.RABBIT_STEW));
+        var click = new PlayerInteractEvent.EntityInteract(feeder, net.minecraft.world.InteractionHand.MAIN_HAND, eater);
+        MinecraftForge.EVENT_BUS.post(click);
+        h.assertTrue(click.isCanceled(), "ПКМ едой по человеку — кормление, а не своя еда");
+        h.runAfterDelay(20, () -> h.assertTrue(m.stomach == before, "за секунду ещё не съел"));
+        h.runAfterDelay(70, () -> {
+            h.assertTrue(m.stomach > before, "порция в желудке того, кого кормили: " + (m.stomach - before));
+            h.assertTrue(state(feeder).stomach <= feederBefore, "сам кормящий не ел");
+            h.assertTrue(!feeder.getMainHandItem().is(Items.AIR), "в руке надкусанное блюдо или миска");
+            remove(h, feeder);
+            remove(h, eater);
+            h.succeed();
+        });
+    }
 }

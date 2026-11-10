@@ -401,6 +401,24 @@ public final class CulinaryService {
         return Math.floor(tick * k) != Math.floor((tick - 1) * k);
     }
 
+    /** Без рабочих рук сам не ест и не пьёт: кормить может другой ({@link Feeding}). */
+    public static void onUseStart(LivingEntityUseItemEvent.Start e) {
+        if (!(e.getEntity() instanceof ServerPlayer sp) || !Feeding.feedable(e.getItem()) || RpCoreAPI.handsFree(sp)) return;
+        e.setCanceled(true);
+        sp.displayClientMessage(Component.translatable("rpcore.msg.no_hands"), true);
+        faygolover.rpculinary.network.Net.send(sp, new faygolover.rpculinary.network.PortionDonePacket());
+    }
+
+    /** Доля предмета, которую скормил другой: вещества и питание — как при обычной еде. */
+    static void feedPortion(ServerPlayer target, ItemStack used, double fraction) {
+        MinecraftForge.EVENT_BUS.post(new faygolover.rpcore.api.event.RpConsumeEvent(target, used.copy(), fraction));
+        if (!active(target)) return;
+        NutritionData d = NutritionData.get(target);
+        if (d == null) return;
+        ensureInit(target, d);
+        eatPortion(target, d, used, fraction);
+    }
+
     /** Доел или допил предмет (у большого блюда — последний укус: ровно остаток). */
     public static void onUseFinish(LivingEntityUseItemEvent.Finish e) {
         if (e.getEntity() instanceof ServerPlayer sp) ate(sp, e.getItem());
@@ -752,6 +770,21 @@ public final class CulinaryService {
         if (e.getSource().is(LSO_DEHYDRATION)) e.setCanceled(true);
         else if (s.hungerEnabled && e.getSource().is(DamageTypes.STARVE) && sp.getHealth() - e.getAmount() < s.healthFloor - 1e-3)
             e.setCanceled(true);
+    }
+
+    /** Вайп персонажа: питание и вес как у нового. Слушаем после мода тела: вес берём уже обнулённый. */
+    public static void onWipe(faygolover.rpcore.api.event.RpCharacterWipeEvent e) {
+        if (!(e.getEntity() instanceof ServerPlayer sp)) return;
+        NutritionData d = NutritionData.get(sp);
+        if (d == null) return;
+        d.state.copyFrom(new NutritionState());
+        d.bodyClock = 0;
+        d.parasitesAt = d.liverPoisonAt = 0;
+        d.insectMeals = d.sweetPortions = 0;
+        d.drowsyUntil = d.sugarUntil = -1;
+        d.sentConditions.clear();
+        ensureInit(sp, d);
+        sync(sp, d, true);
     }
 
     /** Смерть и возвращение из Края: тело то же; после смерти желудок пуст, но не на грани. */

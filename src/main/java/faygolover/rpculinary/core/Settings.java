@@ -251,6 +251,10 @@ public final class Settings {
     public double charcoalEatSlow = 3;
     @Cfg(section = "cooking", doc = "Чистюля (черта rpcore:clean): шанс отравления в столько раз — и когда ест сам, и у блюд, которые он приготовил.")
     public double cleanPoisonFactor = 0.5;
+    @Cfg(section = "cooking", doc = "Сонливость (RP Needs): готовит хуже на столько уровней.")
+    public double sleepStage2CookPenalty = 1;
+    @Cfg(section = "cooking", doc = "Валится с ног и дальше: готовит хуже на столько уровней.")
+    public double sleepStage3CookPenalty = 2;
     @Cfg(section = "exotic", doc = "Экзотика без знания группы (журнал или записи исследований): повар готовит на столько уровней хуже, и не выше «хорошего».")
     public double exoticCookPenalty = 3;
     @Cfg(section = "exotic", doc = "Экзотика без знания: блюдо ещё и травит с таким шансом — на любой стадии, даже «хорошее».")

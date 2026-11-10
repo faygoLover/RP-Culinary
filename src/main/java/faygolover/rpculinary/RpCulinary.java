@@ -64,6 +64,12 @@ public class RpCulinary {
         bus.addListener(CulinaryCommands::register);
         bus.addListener(CulinaryService::onPlayerTick);
         bus.addListener(CulinaryService::onUseTick);
+        bus.addListener(CulinaryService::onUseStart);
+        bus.addListener(faygolover.rpculinary.server.Feeding::onEntityInteract);
+        bus.addListener(faygolover.rpculinary.server.Feeding::onServerTick);
+        bus.addListener(faygolover.rpculinary.server.Feeding::onLogin);
+        bus.addListener(net.minecraftforge.eventbus.api.EventPriority.LOW, false, faygolover.rpcore.api.event.RpCharacterWipeEvent.class, CulinaryService::onWipe);
+        bus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, faygolover.rpculinary.server.CookingService::onHandsCheck);
         bus.addListener(CulinaryService::onUseFinish);
         bus.addListener(faygolover.rpculinary.server.Sips::onStackedOnOther);
         bus.addListener(faygolover.rpculinary.server.Sips::onRightClick);

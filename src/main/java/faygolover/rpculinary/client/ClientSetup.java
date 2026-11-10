@@ -26,6 +26,8 @@ public final class ClientSetup {
     private static final ResourceLocation LSO_COLD_HUNGER = new ResourceLocation("legendarysurvivaloverhaul", "cold_hunger");
 
     public static void init(IEventBus modBus) {
+        FeedPose.init();
+        MinecraftForge.EVENT_BUS.addListener(FeedPose::onRenderPre);
         modBus.addListener(ClientSetup::setup);
         modBus.addListener(ClientSetup::keys);
         modBus.addListener(PortionBars::register);

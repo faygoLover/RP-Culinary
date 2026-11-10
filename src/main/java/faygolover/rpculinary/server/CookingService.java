@@ -65,6 +65,16 @@ public final class CookingService {
 
     // ------------------------------------------------------------------ навык и метка
 
+    /** Без рабочих рук не готовит: блоки модов кулинарии, разделка, свои станки. */
+    public static void onHandsCheck(PlayerInteractEvent.RightClickBlock e) {
+        if (!(e.getEntity() instanceof ServerPlayer sp) || RpCoreAPI.handsFree(sp)) return;
+        var id = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(e.getLevel().getBlockState(e.getPos()).getBlock());
+        if (id == null || !(COOKING_MODS.contains(id.getNamespace()) || id.getNamespace().equals("butchery") || id.getNamespace().equals("rpculinary"))) return;
+        e.setCanceled(true);
+        e.setCancellationResult(net.minecraft.world.InteractionResult.FAIL);
+        sp.displayClientMessage(net.minecraft.network.chat.Component.translatable("rpcore.msg.no_hands"), true);
+    }
+
     /** Уровень «Кулинарии»: от RP Perks; без него — 10 (правило автора). */
     public static int level(Player p) {
         var lvl = RpCoreAPI.skill(p, RpIds.COOKING);
@@ -258,6 +268,9 @@ public final class CookingService {
         // Опыт — от настоящего уровня навыка, качество — с поправками перков.
         int level = level(sp);
         double cookLevel = cookingLevel(sp, NutritionData.get(sp));
+        int sleepStage = RpCoreAPI.sleepStage(sp);
+        if (sleepStage == 2) cookLevel -= s.sleepStage2CookPenalty;
+        else if (sleepStage >= 3) cookLevel -= s.sleepStage3CookPenalty;
         int complexity = NutritionTable.complexity(sp.server, item);
         // Экзотика без знания группы: заметно хуже и не выше «хорошего».
         boolean wild = Exotic.unknownMask(sp, NutritionTable.exoticMask(sp.server, item)) != 0;
