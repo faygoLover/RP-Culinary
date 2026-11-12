@@ -4,6 +4,17 @@ package faygolover.rpculinary.core;
 public final class NutritionState {
     public static final int PROTEIN = 0, FAT = 1, CARBS = 2, VITAMINS = 3, COUNT = 4;
     public static final String[] NUTRIENTS = {"protein", "fat", "carbs", "vitamins"};
+    /** Зоны запаса нутриента для слов: нехватка, на грани, норма, многовато, избыток. */
+    public static final String[] ZONES = {"low", "edge_low", "ok", "edge_high", "high"};
+
+    /** Зона 0–4 ({@link #ZONES}) по порогам нехватки, полосы баланса и избытка. */
+    public static int zone(double v, double low, double balMin, double balMax, double high) {
+        if (v < low) return 0;
+        if (v < balMin) return 1;
+        if (v <= balMax) return 2;
+        if (v <= high) return 3;
+        return 4;
+    }
     /**
      * Виды еды для «приелось»: однообразная еда одного вида надоедает (по виду, а не по предмету). Вид блюда — вид
      * ингредиента с наибольшими калориями.

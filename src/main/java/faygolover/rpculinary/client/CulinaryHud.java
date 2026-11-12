@@ -88,9 +88,9 @@ public final class CulinaryHud {
             g.fill(x0 + 1, 1, x0 + 1 + full, 8, color);
             // Ещё в желудке — светлее (правый край полосы).
             if (stomach > 0) g.fill(x0 + 1 + Math.max(0, full - stomach), 1, x0 + 1 + full, 8, 0xFFE6C27A);
-            // Переел — шкала идёт вторым кругом другим цветом (это не значок: видно, что съел через силу).
-            if (sat > 1.0) {
-                int over = (int) Math.round(Math.min(1, (sat - 1) / 0.75) * (BAR - 2));
+            // Переел (сытость выше 120 %) — шкала идёт вторым кругом другим цветом (это не значок: видно, что съел через силу).
+            if (sat > NutritionScreen.OVERFED) {
+                int over = (int) Math.round(Math.min(1, (sat - NutritionScreen.OVERFED) / (1.75 - NutritionScreen.OVERFED)) * (BAR - 2));
                 g.fill(x0 + 1, 1, x0 + 1 + over, 8, 0xFFD0502A);
                 g.fill(x0 + 1, 1, x0 + 1 + over, 3, 0xFFFF8A30);
             }

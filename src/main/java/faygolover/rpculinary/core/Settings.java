@@ -42,7 +42,7 @@ public final class Settings {
     /** Сутки RP в часах от RP Core (сервер ставит каждый тик); 0 — неизвестно. Не настройка. */
     public double liveDayHours = 0;
     @Cfg(section = "general", doc = "Ускорение изменения веса: 1 — как в жизни (1 кг жира ≈ 7700 ккал), 3 — втрое быстрее.")
-    public double weightChangeSpeed = 3;
+    public double weightChangeSpeed = 1;
 
     // ------------------------------------------------------------------ энергия
     @Cfg(section = "energy", doc = "Запас энергии при полной сытости (100 %), ккал.")
@@ -148,21 +148,21 @@ public final class Settings {
 
     // ------------------------------------------------------------------ нутриенты (перенесено из RP Medicine)
     @Cfg(section = "nutrients", doc = "Запас за грамм белка, жира, углеводов и за единицу витаминов.")
-    public double proteinPerGram = 0.9;
+    public double proteinPerGram = 0.2;
     @Cfg(section = "nutrients", doc = "Запас за грамм белка, жира, углеводов и за единицу витаминов.")
-    public double fatPerGram = 1.2;
+    public double fatPerGram = 0.27;
     @Cfg(section = "nutrients", doc = "Запас за грамм белка, жира, углеводов и за единицу витаминов.")
-    public double carbsPerGram = 0.45;
+    public double carbsPerGram = 0.1;
     @Cfg(section = "nutrients", doc = "Запас за грамм белка, жира, углеводов и за единицу витаминов.")
-    public double vitaminsPerUnit = 1.0;
+    public double vitaminsPerUnit = 0.22;
     @Cfg(section = "nutrients", doc = "Трата запаса в час игры при обычной активности (при «сутках» 6 часов; иначе пересчитывается).")
-    public double proteinDecayPerHour = 25;
+    public double proteinDecayPerHour = 5.5;
     @Cfg(section = "nutrients", doc = "Трата запаса в час игры при обычной активности (при «сутках» 6 часов; иначе пересчитывается).")
-    public double fatDecayPerHour = 15;
+    public double fatDecayPerHour = 3.3;
     @Cfg(section = "nutrients", doc = "Трата запаса в час игры при обычной активности (при «сутках» 6 часов; иначе пересчитывается).")
-    public double carbsDecayPerHour = 30;
+    public double carbsDecayPerHour = 6.7;
     @Cfg(section = "nutrients", doc = "Трата запаса в час игры при обычной активности (при «сутках» 6 часов; иначе пересчитывается).")
-    public double vitaminsDecayPerHour = 12;
+    public double vitaminsDecayPerHour = 2.7;
     @Cfg(section = "nutrients", doc = "Предел запаса нутриента.")
     public double nutrientMax = 120;
     @Cfg(section = "nutrients", doc = "Запас нутриентов нового игрока.")
@@ -360,7 +360,7 @@ public final class Settings {
     @Cfg(section = "weight", doc = "При полной сытости в жир уходит такая доля перевариваемого (плавно от fat_gain_above).")
     public double fatGainShare = 0.5;
     @Cfg(section = "weight", doc = "Сытость ниже этой доли — часть расхода тело берёт из жира (худеет); чем голоднее, тем больше, при 0 — весь.")
-    public double fatBurnBelow = 0.5;
+    public double fatBurnBelow = 0.2;
     @Cfg(section = "weight", doc = "Вес выше нормы (по полу и возрасту, RP Core): минус к скорости.")
     public double overweightSpeedPenalty = 0.03;
     @Cfg(section = "weight", doc = "Ожирение: минус к скорости.")

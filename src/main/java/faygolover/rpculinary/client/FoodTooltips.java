@@ -154,16 +154,16 @@ public final class FoodTooltips {
     private static void advice(List<Component> t, Food f) {
         var p = ClientNutrition.self;
         if (p == null) return;
-        if (p.hunger() && (!p.room() || p.satiety() > 1.0)) {
+        if (p.hunger() && (!p.room() || p.satiety() > NutritionScreen.OVERFED)) {
             t.add(tr("advice_full").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
             return;
         }
         if (p.nutrientsOn() && p.nutrients().length >= NutritionState.COUNT) {
             float[] n = p.nutrients();
-            double[] gain = {f.protein() * 0.9, f.fat() * 1.2, f.carbs() * 0.45, f.vitamins()};
+            double[] gain = {f.protein() * PER_GRAM[0], f.fat() * PER_GRAM[1], f.carbs() * PER_GRAM[2], f.vitamins() * PER_GRAM[3]};
             MutableComponent list = null;
             for (int i = 0; i < NutritionState.COUNT; i++) {
-                if (n[i] >= LOW || gain[i] < 8) continue;
+                if (n[i] >= BAL_MIN || gain[i] < NOTABLE) continue;
                 Component name = tr("nutrient_" + NutritionState.NUTRIENTS[i]);
                 list = list == null ? name.copy() : list.append(", ").append(name);
             }
@@ -171,7 +171,7 @@ public final class FoodTooltips {
                 t.add(tr("advice_covers", list).withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
                 return;
             }
-            if (n[NutritionState.FAT] > HIGH && gain[NutritionState.FAT] >= 8) {
+            if (n[NutritionState.FAT] > HIGH && gain[NutritionState.FAT] >= NOTABLE) {
                 t.add(tr("advice_too_fatty").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
                 return;
             }
@@ -181,7 +181,10 @@ public final class FoodTooltips {
     }
 
     /** Пороги нехватки и избытка — как на сервере по умолчанию (для совета, не для механики). */
-    private static final float LOW = 20, HIGH = 100;
+    private static final float BAL_MIN = 35, HIGH = 100;
+    /** Запас за грамм Б/Ж/У и за единицу витаминов — как на сервере по умолчанию; заметная прибавка от порции. */
+    private static final double[] PER_GRAM = {0.2, 0.27, 0.1, 0.22};
+    private static final double NOTABLE = 1.8;
 
     /** Словами: сытность, чего много, витамины. */
     private static void words(List<Component> t, Food f) {

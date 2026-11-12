@@ -111,6 +111,7 @@ public class RpCulinary {
         e.enqueueWork(() -> {
             RpCoreAPI.registerModule(MODID, "питание: сытость в калориях, вода, нутриенты, вес");
             RpCoreAPI.registerNutrition(new CulinaryProvider());
+            faygolover.rpcore.api.StatusLines.register(faygolover.rpculinary.server.CulinaryStatus.INSTANCE);
             CulinaryCommands.describe();
         });
     }

@@ -14,16 +14,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Окно «Питание» (клавиша N): что человек чувствует — голод, жажда, чего не хватает, что приелось, телосложение.
- * Ощущениями, без цифр; цифры — у врача (анализ крови RP Medicine) и, позже, у Диетолога.
+ * Окно «Питание» (клавиша K): что человек чувствует — голод, жажда, каждый нутриент словами (нехватка, на грани,
+ * норма, многовато, избыток), что приелось, телосложение. Без цифр; цифры — у Диетолога и в анализе крови.
+ * Высота по содержимому, все строки переносятся по ширине окна.
  */
 public class NutritionScreen extends Screen {
-    private static final int W = 270;
-    private static final int H = 180;
+    private static final int MAX_W = 330;
+    private static final int PAD = 10;
+    private static final int ICON = 22;
     /** Пороги, как на сервере по умолчанию (для слов, не для механики). */
     private static final float LOW = 20, HIGH = 100, BAL_MIN = 35, BAL_MAX = 85;
+    /** Сытость: с этой доли — «почти наелся», выше OVERFED — «переел». */
+    static final float ALMOST_FULL = 0.9f, OVERFED = 1.2f;
+    private static final String[] ICONS = {"protein", "fats_and_oil", "dietary_fiber", "vitamin"};
+    private static final ChatFormatting[] ZONE_COLOR = {ChatFormatting.RED, ChatFormatting.GOLD, ChatFormatting.GREEN,
+            ChatFormatting.GOLD, ChatFormatting.RED};
 
-    private record Feel(String icon, Component text) {}
+    /** Строка окна: значок (или null), текст, отступ после. */
+    private record Row(String icon, Component text, int gapAfter) {}
 
     public NutritionScreen() {
         super(Component.translatable("rpculinary.screen.title"));
@@ -33,26 +41,56 @@ public class NutritionScreen extends Screen {
         return Component.translatable("rpculinary.screen." + key, args);
     }
 
-    private List<Feel> feelings(SyncPacket p) {
-        List<Feel> out = new ArrayList<>();
+    private List<Row> rows(SyncPacket p) {
+        List<Row> out = new ArrayList<>();
+        if (p == null) {
+            out.add(new Row(null, tr("unknown").withStyle(ChatFormatting.GRAY), 0));
+            return out;
+        }
         if (p.hunger()) {
-            String key = p.satiety() > 1.05 ? "overfed" : !p.room() ? "full" : "hunger_" + p.hungerStage();
-            out.add(new Feel(null, tr(key).withStyle(p.hungerStage() >= 2 ? ChatFormatting.RED : ChatFormatting.WHITE)));
+            String key = p.satiety() > OVERFED ? "overfed" : !p.room() ? "full"
+                    : p.satiety() >= ALMOST_FULL ? "almost_full" : "hunger_" + p.hungerStage();
+            ChatFormatting c = p.satiety() > OVERFED || p.hungerStage() >= 2 ? ChatFormatting.RED
+                    : key.equals("almost_full") || key.equals("full") ? ChatFormatting.GOLD : ChatFormatting.WHITE;
+            out.add(new Row(null, tr(key).withStyle(c), 3));
         }
         if (p.thirstMode() != 0)
-            out.add(new Feel(null, tr("thirst_" + p.thirstStage()).withStyle(p.thirstStage() >= 2 ? ChatFormatting.RED : ChatFormatting.AQUA)));
-        if (p.poorAppetite()) out.add(new Feel(null, tr("poor_appetite").withStyle(ChatFormatting.GOLD)));
+            out.add(new Row(null, tr("thirst_" + p.thirstStage()).withStyle(p.thirstStage() >= 2 ? ChatFormatting.RED : ChatFormatting.AQUA), 3));
+        if (p.poorAppetite()) out.add(new Row(null, tr("poor_appetite").withStyle(ChatFormatting.GOLD), 3));
+        if (!out.isEmpty()) out.set(out.size() - 1, new Row(out.get(out.size() - 1).icon(), out.get(out.size() - 1).text(), 8));
         if (p.nutrientsOn() && p.nutrients().length >= NutritionState.COUNT) {
             float[] n = p.nutrients();
-            if (n[NutritionState.PROTEIN] < LOW) out.add(new Feel("protein", tr("low_protein").withStyle(ChatFormatting.RED)));
-            if (n[NutritionState.FAT] < LOW) out.add(new Feel("fats_and_oil", tr("low_fat").withStyle(ChatFormatting.RED)));
-            if (n[NutritionState.CARBS] < LOW) out.add(new Feel("dietary_fiber", tr("low_carbs").withStyle(ChatFormatting.RED)));
-            if (n[NutritionState.VITAMINS] < LOW) out.add(new Feel("vitamin", tr("low_vitamins").withStyle(ChatFormatting.RED)));
-            if (n[NutritionState.FAT] > HIGH) out.add(new Feel("fats_and_oil", tr("heavy").withStyle(ChatFormatting.GOLD)));
             boolean bal = true;
-            for (float v : n) if (v < BAL_MIN || v > BAL_MAX) bal = false;
-            if (bal) out.add(new Feel("vitamin", tr("balanced").withStyle(ChatFormatting.GREEN)));
+            for (int i = 0; i < NutritionState.COUNT; i++) {
+                int z = NutritionState.zone(n[i], LOW, BAL_MIN, BAL_MAX, HIGH);
+                if (z != 2) bal = false;
+                String id = NutritionState.NUTRIENTS[i];
+                MutableComponent line = tr("label_" + id).withStyle(ChatFormatting.GRAY).append(": ")
+                        .append(tr("n_" + id + "_" + NutritionState.ZONES[z]).withStyle(ZONE_COLOR[z]));
+                out.add(new Row(ICONS[i], line, 5));
+            }
+            if (bal) out.add(new Row(null, tr("balanced").withStyle(ChatFormatting.GREEN), 5));
+            out.set(out.size() - 1, new Row(out.get(out.size() - 1).icon(), out.get(out.size() - 1).text(), 8));
         }
+        if (p.fedUpMask() != 0) {
+            MutableComponent list = Component.empty();
+            boolean first = true;
+            for (int i = 0; i < NutritionState.CATEGORIES.length; i++) {
+                if ((p.fedUpMask() & (1 << i)) == 0) continue;
+                if (!first) list.append(", ");
+                list.append(Component.translatable("rpculinary.food_category." + NutritionState.CATEGORIES[i]));
+                first = false;
+            }
+            out.add(new Row(null, tr("fed_up", list).withStyle(ChatFormatting.GOLD), 3));
+        }
+        out.add(new Row(null, build(p).copy().withStyle(ChatFormatting.GRAY), 3));
+        // Диетолог знает цифры: свои запасы, сытость, воду, съеденное.
+        if (FoodTooltips.dietitian() && p.nutrients().length >= NutritionState.COUNT) {
+            float[] n = p.nutrients();
+            out.add(new Row(null, tr("dietitian_numbers", Math.round(p.satiety() * 100), Math.round(p.hydration() * 100), Math.round(n[0]),
+                    Math.round(n[1]), Math.round(n[2]), Math.round(n[3]), Math.round(p.recentKcal())).withStyle(ChatFormatting.LIGHT_PURPLE), 3));
+        }
+        out.add(new Row(null, tr("lab_hint").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC), 0));
         return out;
     }
 
@@ -66,47 +104,38 @@ public class NutritionScreen extends Screen {
     @Override
     public void render(GuiGraphics g, int mx, int my, float pt) {
         renderBackground(g);
-        int l = (width - W) / 2;
-        int t = (height - H) / 2;
-        g.fill(l, t, l + W, t + H, 0xF0201C18);
-        g.renderOutline(l, t, W, H, 0xFF7A6A50);
+        int w = Math.min(MAX_W, width - 2 * PAD);
+        int textW = w - PAD - ICON - PAD;
+        List<Row> rows = rows(ClientNutrition.self);
+        // Сначала высота: строки переносятся по ширине.
+        int contentH = 0;
+        List<List<net.minecraft.util.FormattedCharSequence>> split = new ArrayList<>();
+        for (Row r : rows) {
+            var lines = font.split(r.text(), textW);
+            split.add(lines);
+            contentH += Math.max(r.icon() != null ? 16 : 0, lines.size() * 10) + r.gapAfter();
+        }
+        int h = Math.min(height - 2 * PAD, 26 + contentH + PAD);
+        int l = (width - w) / 2;
+        int t = Math.max(PAD, (height - h) / 2);
+        g.fill(l, t, l + w, t + h, 0xF0201C18);
+        g.renderOutline(l, t, w, h, 0xFF7A6A50);
         g.drawCenteredString(font, title.copy().withStyle(ChatFormatting.GOLD), width / 2, t + 8, 0xFFFFFF);
-        SyncPacket p = ClientNutrition.self;
-        if (p == null) {
-            g.drawCenteredString(font, tr("unknown").withStyle(ChatFormatting.GRAY), width / 2, t + 40, 0xFFFFFF);
-            super.render(g, mx, my, pt);
-            return;
-        }
-        int y = t + 26;
-        for (Feel f : feelings(p)) {
-            if (f.icon() != null)
-                g.blit(new ResourceLocation(RpCulinary.MODID, "textures/gui/nutrition/" + f.icon() + ".png"), l + 10, y - 5, 0, 0, 16, 16, 16, 16);
-            for (var line : font.split(f.text(), W - 44)) {
-                g.drawString(font, line, l + 32, y, 0xFFFFFF, false);
-                y += 10;
+        int y = t + 24;
+        for (int i = 0; i < rows.size(); i++) {
+            Row r = rows.get(i);
+            var lines = split.get(i);
+            int rowH = Math.max(r.icon() != null ? 16 : 0, lines.size() * 10);
+            if (y + rowH > t + h) break;
+            if (r.icon() != null)
+                g.blit(new ResourceLocation(RpCulinary.MODID, "textures/gui/nutrition/" + r.icon() + ".png"), l + PAD, y, 0, 0, 16, 16, 16, 16);
+            int ty = y + (r.icon() != null && lines.size() == 1 ? 4 : 0);
+            for (var line : lines) {
+                g.drawString(font, line, l + PAD + ICON, ty, 0xFFFFFF, false);
+                ty += 10;
             }
-            y += 6;
+            y += rowH + r.gapAfter();
         }
-        if (p.fedUpMask() != 0) {
-            MutableComponent list = Component.empty();
-            boolean first = true;
-            for (int i = 0; i < NutritionState.CATEGORIES.length; i++) {
-                if ((p.fedUpMask() & (1 << i)) == 0) continue;
-                if (!first) list.append(", ");
-                list.append(Component.translatable("rpculinary.food_category." + NutritionState.CATEGORIES[i]));
-                first = false;
-            }
-            g.drawString(font, tr("fed_up", list).withStyle(ChatFormatting.GOLD), l + 10, t + H - 39, 0xFFFFFF, false);
-        }
-        g.drawString(font, build(p).copy().withStyle(ChatFormatting.GRAY), l + 10, t + H - 26, 0xFFFFFF, false);
-        // Диетолог знает цифры: свои запасы, сытость, воду, съеденное.
-        if (FoodTooltips.dietitian() && p.nutrients().length >= NutritionState.COUNT) {
-            float[] n = p.nutrients();
-            g.drawString(font, tr("dietitian_numbers", Math.round(p.satiety() * 100), Math.round(p.hydration() * 100), Math.round(n[0]),
-                    Math.round(n[1]), Math.round(n[2]), Math.round(n[3]), Math.round(p.recentKcal())).withStyle(ChatFormatting.LIGHT_PURPLE),
-                    l + 10, t + H - 52, 0xFFFFFF, false);
-        }
-        g.drawString(font, tr("lab_hint").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC), l + 10, t + H - 13, 0xFFFFFF, false);
         super.render(g, mx, my, pt);
     }
 
