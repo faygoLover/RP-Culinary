@@ -23,7 +23,7 @@
 - **Навык «Кулинария»** уже ведёт RP Perks (`rpcore:cooking`, перк «Кулинар» → 5): опыт за готовку через `RpCoreAPI.practice`; подсказки еды по уровню (ничего → вид → словами → цифры); перк «Диетолог».
 - **«Анорексичка»** (RP Perks) — перевести на новую логику (низкий вес, плохой аппетит), как сделано с перками при Medicine (`BodyProvider.handles(...)`).
 - **Внутривенное питание** (капельница Medicine, замечание 37 живого теста): поднимает за десятки минут, потом плохой аппетит.
-- Моды сборки для интеграции (разобрать jar перед работой): Kaleidoscope Cookery, Tavern (пивоварение), World Liquor (напитки — в вещества Medicine), Immersive Eating, Kaleidoscope Compat. Сборка: `%APPDATA%\ElyPrismLauncher\instances\DEPARTMENT_s5_client\minecraft\mods`.
+- Моды сборки для интеграции (разобрать jar перед работой): Kaleidoscope Cookery, Tavern (пивоварение), World Liquor (напитки — в вещества Medicine), Immersive Eating, Kaleidoscope Compat. Сборка: `D:\ElyPrismLauncher\instances\DEPARTMENT_s5_client\minecraft\mods`.
 - Связано: `/rptime` (время RP: стоп/старт/сон) — план в Core, §6.2 итогового дизайна Medicine.
 
 ## Сборка и проверка

@@ -1,5 +1,5 @@
 import zipfile, json, re, collections, sys
-z = zipfile.ZipFile(r'C:/Users/Alex/AppData/Roaming/ElyPrismLauncher/instances/DEP_S5_rev/minecraft/mods/butchery-5.1-forge-1.20.1.jar')
+z = zipfile.ZipFile(r'D:/ElyPrismLauncher/instances/DEP_S5_rev/minecraft/mods/butchery-5.1-forge-1.20.1.jar')
 P = 'data/butchery/loot_tables/blocks/'
 names = [x[len(P):-5] for x in z.namelist() if x.startswith(P) and x.endswith('.json')]
 STAGE = re.compile(r'^(.*?)_(cut(?:_\d)?_drop(?:_fd_compat)?|skin_drop|head_drop|leg(?:_\d)?_drop|organ_drop_\d|body_drop|arm_drop|fur_drop|wing_drop|heart_drop|eyes_drop|spike_drop|head_breakdown)$')

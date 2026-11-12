@@ -6,7 +6,7 @@ sys.path.insert(0, HERE)
 import content as C
 import content2 as C2
 
-MODS = os.path.expandvars(r"%APPDATA%\ElyPrismLauncher\instances\DEP_S5_rev\minecraft\mods")
+MODS = os.path.expandvars(r"D:\ElyPrismLauncher\instances\DEP_S5_rev\minecraft\mods")
 VAN = os.path.expandvars(r"%APPDATA%\ElyPrismLauncher\libraries\com\mojang\minecraft\1.20.1\minecraft-1.20.1-client.jar")
 D = json.load(open(os.path.join(HERE, 'cache', 'db.json'), encoding='utf-8'))
 rows = {r['id']: r for r in json.load(open(os.path.join(HERE, 'cache', 'cands.json'), encoding='utf-8'))}

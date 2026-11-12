@@ -1,5 +1,5 @@
 import zipfile, json, os, re, sys, glob
-MODS = os.path.expandvars(r"%APPDATA%\ElyPrismLauncher\instances\DEP_S5_rev\minecraft\mods")
+MODS = os.path.expandvars(r"D:\ElyPrismLauncher\instances\DEP_S5_rev\minecraft\mods")
 VAN = os.path.expandvars(r"%APPDATA%\ElyPrismLauncher\libraries\com\mojang\minecraft\1.20.1\minecraft-1.20.1-client.jar")
 ASSETS = os.path.expandvars(r"%APPDATA%\ElyPrismLauncher\assets")
 OUT = sys.argv[1]

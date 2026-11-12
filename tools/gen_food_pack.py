@@ -7,7 +7,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 PACK = os.path.join(ROOT, 'src', 'main', 'resources', 'resourcepacks', 'rpculinary_food')
 DATA = os.path.join(PACK, 'data')
-MODS = os.path.expandvars(r"%APPDATA%\ElyPrismLauncher\instances\DEP_S5_rev\minecraft\mods")
+MODS = os.path.expandvars(r"D:\ElyPrismLauncher\instances\DEP_S5_rev\minecraft\mods")
 VAN = os.path.expandvars(r"%APPDATA%\ElyPrismLauncher\libraries\com\mojang\minecraft\1.20.1\minecraft-1.20.1-client.jar")
 D = json.load(open(os.path.join(ROOT, 'gallery', 'cache', 'db.json'), encoding='utf-8'))
 K = 0.25
