@@ -66,6 +66,8 @@ class MetabolismTest {
     @Test
     void surplusGoesToFatWithSpeed() {
         Settings s = new Settings();
+        // Ускорение задаём явно: значение по умолчанию менялось (0.9.1: 3 → 1), тест проверяет множитель, а не его.
+        s.weightChangeSpeed = 3;
         NutritionState m = fresh(s);
         m.energy = s.reserveKcal;
         double fat = m.fatKg;
