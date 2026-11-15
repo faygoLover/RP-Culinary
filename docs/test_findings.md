@@ -16,3 +16,22 @@
 
 ## 03.11.2026 — известная проблема (решение Алекса: записать, исправить позже)
 4. **Английские строки поваренных книг пока стоят русские** (`rpculinary.cookbook.*` в `en_us.json`). Перевести.
+
+## 15.11.2026 — тесты краёв состояния (план `_family/refactor`, T0.3). Не исправлено.
+
+Тест `CulinaryEdgeTests.nbtCoversEveryField` меняет по одному каждое простое поле `NutritionData` и `NutritionState`
+(62 поля) и смотрит, попало ли изменение в NBT.
+
+- **Не пишутся в NBT и теряются при перезаходе** (из тех, что похожи на состояние, а не на служебное):
+  `state.lsoWaterDebt` (долг воды перед LSO), `state.exhaustionTimer`, `state.regenTimer`, `sugarUntil`, `drowsyUntil`,
+  `extraKcal`, `exertionStamina`, `edemaFaintTick`. Что из этого должно переживать перезаход, решает Алекс.
+- Служебные, не сохраняются по замыслу: `cookMenu`, `cookField`, `cookHeat`, `cookUntil`, `ateItemTick`, `clickedTick`,
+  `mirroredFood`, `sprintTicks`, `stepTicks`, `lastRoom`, `lastSyncHash`, `lastHungerStage`, `lastThirstStage`, `forcedNoted`.
+- Пишутся только вместе с другим полем (этим тестом не проверены): `state.iv*` (капельница), `state.condRecover[]`.
+- `state.initialized` чтение сбрасывает у тела без массы — так задумано (`NutritionData.load`).
+- Модульный тест `MetabolismTest.surplusGoesToFatWithSpeed` отставал от кода: ждал ускорение веса 3, а по умолчанию
+  с 0.9.1 стоит 1. Исправлен тест (множитель задан явно), код не менялся.
+
+Проверено и проходит: пустой тег даёт состояние нового игрока; смерть — желудок пуст, энергия не ниже половины
+резерва, вода не ниже 50, счётчики голода сброшены, привычки и отложенные последствия остаются; возврат из Края
+и перезаход ничего не меняют.

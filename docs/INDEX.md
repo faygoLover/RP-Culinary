@@ -1,10 +1,10 @@
 # RP Culinary — указатель кода
 
-Создано `python _family/tools/mapgen.py` 15.11.2026, версия 0.9.1-1.20.1-forge, коммит `9f1f553`.
+Создано `python _family/tools/mapgen.py`, версия мода 0.9.1-1.20.1-forge.
 **Руками не править**: пересоздаётся скриптом. Смысл, потоки работы и рецепты — в `docs/MAP.md`.
 Разбор по шаблонам, без компиляции: необычно оформленная регистрация может отсутствовать в списках.
 
-Всего: 62 файлов, 9769 строк Java.
+Всего: 64 файлов, 10100 строк Java.
 
 ## 1. Пакеты
 
@@ -16,7 +16,7 @@
 | `faygolover.rpculinary.config` | 1 | 93 |
 | `faygolover.rpculinary.core` | 13 | 1946 |
 | `faygolover.rpculinary.data` | 3 | 201 |
-| `faygolover.rpculinary.gametest` | 1 | 658 |
+| `faygolover.rpculinary.gametest` | 3 | 989 |
 | `faygolover.rpculinary.integration` | 2 | 93 |
 | `faygolover.rpculinary.item` | 2 | 182 |
 | `faygolover.rpculinary.mixin` | 4 | 173 |
@@ -67,7 +67,9 @@
 - `NutritionRules`, 77 — Датапак rpculinary/nutrition: состав базовых ингредиентов — тех, что не крафтятся, а идут в рецепты (зерно, овощи, сырое мясо, молоко).
 
 ### `faygolover.rpculinary.gametest`
+- `CulinaryEdgeTests`, 158 — Края состояния питания: каждое поле в сохранении, смерть, возврат из Края, перезаход.
 - `CulinaryGameTests`, 658 — Проверка в настоящем сервере: еда из руки и с блока, вода, замок ванильной сытости, API для соседей.
+- `NbtCoverage`, 173 — Проверка «каждое поле состояния попадает в сохранение и читается обратно» без ручного списка полей.
 
 ### `faygolover.rpculinary.integration`
 - `Lso`, 45 — Legendary Survival Overhaul (необязательный).
@@ -114,7 +116,7 @@
 - `SkillYield`, 58 — Функция добычи rpculinary:skill_yield (блок 3 переделки): на мясе и органах в таблицах разделки туш.
 - `Techniques`, 78 — Техники по умению (решения Alex 29.10.2026): без перка — «нельзя».
 
-Классов без описания: 0 из 62.
+Классов без описания: 0 из 64.
 
 ## 3. Подписки на события
 
