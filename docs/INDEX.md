@@ -1,6 +1,6 @@
 # RP Culinary — указатель кода
 
-Создано `python _family/tools/mapgen.py` 15.11.2026, версия 0.9.1-1.20.1-forge, коммит `81f8202`.
+Создано `python _family/tools/mapgen.py` 15.11.2026, версия 0.9.1-1.20.1-forge, коммит `9f1f553`.
 **Руками не править**: пересоздаётся скриптом. Смысл, потоки работы и рецепты — в `docs/MAP.md`.
 Разбор по шаблонам, без компиляции: необычно оформленная регистрация может отсутствовать в списках.
 
@@ -183,7 +183,6 @@
 
 ## 6. Данные
 
-- capability: `RpCulinary`
 - capability: `NutritionData`, ключ `rpculinary:nutrition`
 - getPersistentData: `CulinaryGameTests` ×1
 - getPersistentData: `ButcheryGrinderMixin` ×1
