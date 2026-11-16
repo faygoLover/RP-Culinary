@@ -1,5 +1,6 @@
 package faygolover.rpculinary.mixin;
 
+import faygolover.rpculinary.server.CulinaryEating;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
@@ -18,7 +19,7 @@ public abstract class CandlelightPlateMixin {
     @ModifyVariable(method = "remove(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/satisfy/candlelight/core/block/entity/StorageBlockEntity;I)V",
             at = @At("STORE"), ordinal = 0, require = 0, remap = false)
     private ItemStack rpculinary$ate(ItemStack stack) {
-        if (stack.isEdible()) CulinaryService.ateFromPlate(stack);
+        if (stack.isEdible()) CulinaryEating.ateFromPlate(stack);
         return stack;
     }
 }

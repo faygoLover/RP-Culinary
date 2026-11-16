@@ -1,5 +1,6 @@
 package faygolover.rpculinary.client;
 
+import faygolover.rpculinary.server.CulinaryEating;
 import faygolover.rpcore.api.RpCoreAPI;
 import faygolover.rpcore.api.RpIds;
 import faygolover.rpculinary.core.Food;
@@ -80,7 +81,7 @@ public final class FoodTooltips {
             t.add(tr("bites_left", tag.getInt(CulinaryService.BITES),
                     tag.getInt(CulinaryService.BITES_N)).withStyle(ChatFormatting.YELLOW));
         } else {
-            int n = CulinaryService.bites(f.kcal(), Settings.get().biteKcal);
+            int n = CulinaryEating.bites(f.kcal(), Settings.get().biteKcal);
             if (n > 1 && e.getItemStack().getUseAnimation() == UseAnim.EAT)
                 t.add(tr("bites", n).withStyle(ChatFormatting.GRAY));
         }

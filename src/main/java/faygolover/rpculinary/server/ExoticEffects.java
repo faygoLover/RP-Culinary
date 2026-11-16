@@ -90,7 +90,7 @@ public final class ExoticEffects {
             BodyEffects.sense(sp, d, "pet_food", 60);
         }
         if (has(mask, "seafood")) {
-            if (under && rnd.nextDouble() < s.seafoodPoison * k * CulinaryService.poisonFactor(sp, used, s)) {
+            if (under && rnd.nextDouble() < s.seafoodPoison * k * CulinaryEating.poisonFactor(sp, used, s)) {
                 sp.addEffect(new MobEffectInstance(MobEffects.POISON, 400, 0));
                 if (rnd.nextDouble() < 0.5) BodyEffects.vomit(sp, d, s);
                 thirst(sp, d, 10 * k, s);
@@ -127,7 +127,7 @@ public final class ExoticEffects {
                 thirst(sp, d, 15 * k, s);
                 BodyEffects.sense(sp, d, "gut", 1);
             }
-            if (used.is(BLOOD) && rnd.nextDouble() < s.bloodPoison * k * CulinaryService.poisonFactor(sp, used, s))
+            if (used.is(BLOOD) && rnd.nextDouble() < s.bloodPoison * k * CulinaryEating.poisonFactor(sp, used, s))
                 sp.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0));
         }
         if (has(mask, "mushrooms")) {
@@ -153,7 +153,7 @@ public final class ExoticEffects {
         }
         if (has(mask, "monsters")) {  // токсины: знание снижает шанс, но не убирает
             boolean known = quality >= 0 ? !cookWild : Exotic.knows(sp, "monsters");
-            double chance = s.monstersPoison * (known ? s.monstersKnownFactor : 1) * k * CulinaryService.poisonFactor(sp, ItemStack.EMPTY, s);
+            double chance = s.monstersPoison * (known ? s.monstersKnownFactor : 1) * k * CulinaryEating.poisonFactor(sp, ItemStack.EMPTY, s);
             if (rnd.nextDouble() < chance) {
                 sp.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 0));
                 sp.displayClientMessage(Component.translatable("rpculinary.msg.monster_sick").withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC), true);

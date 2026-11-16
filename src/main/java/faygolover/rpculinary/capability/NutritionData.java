@@ -1,5 +1,6 @@
 package faygolover.rpculinary.capability;
 
+import faygolover.rpculinary.server.CulinaryPlayerEvents;
 import faygolover.rpcore.api.data.PlayerStore;
 import faygolover.rpculinary.RpCulinary;
 import faygolover.rpculinary.core.NutritionState;
@@ -30,14 +31,14 @@ public final class NutritionData {
     /**
      * Описать данные для RP Core. Вызывается из конструктора мода. Имя ветки в сохранении — прежнее
      * ({@code rpculinary:nutrition}). Что переносится при возрождении и что отправляется клиенту —
-     * {@code CulinaryService.copyOnClone} и {@code CulinaryService.resync}.
+     * {@code CulinaryPlayerEvents.copyOnClone} и {@code CulinaryPlayerEvents.resync}.
      */
     public static void register() {
         STORE = PlayerStore.of(ID, NutritionData.class, CAP, NutritionData::new)
                 .save(NutritionData::save)
                 .load(NutritionData::load)
-                .clone((from, to, ctx) -> CulinaryService.copyOnClone(from, to, ctx.wasDeath()))
-                .resync(CulinaryService::resync)
+                .clone((from, to, ctx) -> CulinaryPlayerEvents.copyOnClone(from, to, ctx.wasDeath()))
+                .resync(CulinaryPlayerEvents::resync)
                 .register();
     }
 

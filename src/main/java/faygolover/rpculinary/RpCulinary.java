@@ -1,5 +1,7 @@
 package faygolover.rpculinary;
 
+import faygolover.rpculinary.server.CulinaryPlayerEvents;
+import faygolover.rpculinary.server.CulinaryEating;
 import com.mojang.logging.LogUtils;
 import faygolover.rpcore.api.RpCoreAPI;
 import faygolover.rpculinary.capability.NutritionData;
@@ -80,20 +82,20 @@ public class RpCulinary {
         bus.addListener(this::reloadListeners);
         bus.addListener(CulinaryCommands::register);
         bus.addListener(CulinaryService::onPlayerTick);
-        bus.addListener(CulinaryService::onUseTick);
-        bus.addListener(CulinaryService::onUseStart);
+        bus.addListener(CulinaryEating::onUseTick);
+        bus.addListener(CulinaryEating::onUseStart);
         bus.addListener(Feeding::onEntityInteract);
         bus.addListener(Feeding::onServerTick);
         bus.addListener(Feeding::onLogin);
-        bus.addListener(EventPriority.LOW, false, RpCharacterWipeEvent.class, CulinaryService::onWipe);
+        bus.addListener(EventPriority.LOW, false, RpCharacterWipeEvent.class, CulinaryPlayerEvents::onWipe);
         bus.addListener(EventPriority.HIGHEST, CookingService::onHandsCheck);
-        bus.addListener(CulinaryService::onUseFinish);
+        bus.addListener(CulinaryEating::onUseFinish);
         bus.addListener(Sips::onStackedOnOther);
         bus.addListener(Sips::onRightClick);
-        bus.addListener(CulinaryService::onRightClickBlock);
-        bus.addListener(CulinaryService::onStaminaRestored);
-        bus.addListener(CulinaryService::onAttack);
-        bus.addListener(CulinaryService::onDatapackSync);
+        bus.addListener(CulinaryEating::onRightClickBlock);
+        bus.addListener(CulinaryPlayerEvents::onStaminaRestored);
+        bus.addListener(CulinaryPlayerEvents::onAttack);
+        bus.addListener(CulinaryPlayerEvents::onDatapackSync);
         bus.addListener(CookingService::onRightClickBlock);
         bus.addListener(CookingService::onContainerOpen);
         bus.addListener(CookingService::onContainerClose);

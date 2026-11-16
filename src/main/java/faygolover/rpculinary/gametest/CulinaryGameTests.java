@@ -1,5 +1,6 @@
 package faygolover.rpculinary.gametest;
 
+import faygolover.rpculinary.server.CulinaryEating;
 import com.mojang.authlib.GameProfile;
 import faygolover.rpcore.api.RpCoreAPI;
 import faygolover.rpcore.api.RpIds;
@@ -229,7 +230,7 @@ public final class CulinaryGameTests {
         ItemStack bottle = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
         p.setItemInHand(InteractionHand.MAIN_HAND, bottle);
         p.startUsingItem(InteractionHand.MAIN_HAND);
-        h.assertTrue(CulinaryService.sip(p), "глоток");
+        h.assertTrue(CulinaryEating.sip(p), "глоток");
         h.assertTrue(Sips.left(p.getMainHandItem()) == 1, "остался 1 глоток из 2");
         h.assertTrue(Math.abs(m.water - 90) < 1e-6, "глоток +20, было " + m.water);
         p.stopUsingItem();
@@ -247,14 +248,14 @@ public final class CulinaryGameTests {
         // Шаг поменьше, чтобы тушёный кролик (сколько бы ни дала таблица) точно елся укусами.
         double oldStep = s.biteKcal;
         s.biteKcal = 100;
-        h.assertTrue(CulinaryService.bites(299, 200) == 1 && CulinaryService.bites(300, 200) == 2 && CulinaryService.bites(450, 200) == 2
-                && CulinaryService.bites(500, 200) == 3, "укусы к ближайшему: 299 — 1, 300 — 2, 450 — 2, 500 — 3");
-        int n = CulinaryService.bitesFor(p, stew, s);
+        h.assertTrue(CulinaryEating.bites(299, 200) == 1 && CulinaryEating.bites(300, 200) == 2 && CulinaryEating.bites(450, 200) == 2
+                && CulinaryEating.bites(500, 200) == 3, "укусы к ближайшему: 299 — 1, 300 — 2, 450 — 2, 500 — 3");
+        int n = CulinaryEating.bitesFor(p, stew, s);
         h.assertTrue(n >= 2, "кролик укусами: " + n);
         double before = m.stomach;
         p.setItemInHand(InteractionHand.MAIN_HAND, stew);
         p.startUsingItem(InteractionHand.MAIN_HAND);
-        h.assertTrue(CulinaryService.bite(p), "первый укус");
+        h.assertTrue(CulinaryEating.bite(p), "первый укус");
         ItemStack held = p.getMainHandItem();
         h.assertTrue(!held.isEmpty() && held.getTag() != null && held.getTag().getInt(CulinaryService.BITES) == n - 1,
                 "блюдо осталось, укусов " + (n - 1));
@@ -327,7 +328,7 @@ public final class CulinaryGameTests {
         ItemStack good = new ItemStack(Items.COOKED_BEEF);
         CookingService.put(good, Cooking.GOOD, 0);
         p.removeAllEffects();
-        for (int i = 0; i < 20; i++) CulinaryService.foodPoisoning(p, good, Cooking.GOOD, 1, Settings.get());
+        for (int i = 0; i < 20; i++) CulinaryEating.foodPoisoning(p, good, Cooking.GOOD, 1, Settings.get());
         h.assertTrue(!p.hasEffect(MobEffects.POISON), "хорошее блюдо не травит");
         remove(h, p);
         h.succeed();

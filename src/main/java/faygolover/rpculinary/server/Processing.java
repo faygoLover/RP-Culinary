@@ -422,8 +422,11 @@ public final class Processing {
 
     static final ResourceLocation BOWL = new ResourceLocation("farm_and_charm", "crafting_bowl");
     private static final TagKey<Item> MINCE = ItemTags.create(new ResourceLocation("rpculinary", "mince"));
-    /** Миски, где мешают фарш: место → {уровень, позиция, что лежало (фарши по штуке), до какого тика смотреть}. */
-    private static final Map<String, Object[]> BOWLS = new HashMap<>();
+    /** Миска, где мешают фарш: уровень, позиция, что лежало (фарши по штуке), до какого тика сервера за ней смотреть. */
+    private record WatchedBowl(ServerLevel level, BlockPos pos, List<ItemStack> minces, int untilTick) {}
+
+    /** Миски, где мешают фарш: место → что о миске запомнили. */
+    private static final Map<String, WatchedBowl> BOWLS = new HashMap<>();
 
     /** Клик по миске — запомнить, какие фарши в ней лежат (после перемешивания миска их уже съела). */
     public static void onBowlClick(PlayerInteractEvent.RightClickBlock e) {
@@ -435,7 +438,7 @@ public final class Processing {
             for (int k = 0; st.is(MINCE) && k < st.getCount() && minces.size() < 2; k++) minces.add(st.copyWithCount(1));
         }
         String k = level.dimension().location() + "|" + e.getPos().asLong();
-        if (minces.size() >= 2) BOWLS.put(k, new Object[]{level, e.getPos().immutable(), minces, level.getServer().getTickCount() + 20 * 60});
+        if (minces.size() >= 2) BOWLS.put(k, new WatchedBowl(level, e.getPos().immutable(), minces, level.getServer().getTickCount() + 20 * 60));
     }
 
     /** Раз в секунду: в выходе миски фарш без состава — домашний: предмет и облик первого фарша, доли — по смеси. */
@@ -443,20 +446,20 @@ public final class Processing {
         if (e.phase != TickEvent.Phase.END || BOWLS.isEmpty()) return;
         var it = BOWLS.values().iterator();
         while (it.hasNext()) {
-            Object[] w = it.next();
-            ServerLevel level = (ServerLevel) w[0];
+            WatchedBowl w = it.next();
+            ServerLevel level = w.level();
             if (level.getServer().getTickCount() % 10 != 0) return;
-            if (level.getServer().getTickCount() > (int) w[3]) {
+            if (level.getServer().getTickCount() > w.untilTick()) {
                 it.remove();
                 continue;
             }
-            if (!(level.getBlockEntity((BlockPos) w[1]) instanceof Container c) || c.getContainerSize() < 5) {
+            if (!(level.getBlockEntity(w.pos()) instanceof Container c) || c.getContainerSize() < 5) {
                 it.remove();
                 continue;
             }
             ItemStack out = c.getItem(4);
             if (out.isEmpty() || !out.is(MINCE) || Source.marked(out)) continue;
-            @SuppressWarnings("unchecked") List<ItemStack> minces = (List<ItemStack>) w[2];
+            List<ItemStack> minces = w.minces();
             ItemStack first = minces.get(0);
             ItemStack res = new ItemStack(first.getItem(), out.getCount());
             Source.setParts(res, Source.mix(minces), lookOf(first));

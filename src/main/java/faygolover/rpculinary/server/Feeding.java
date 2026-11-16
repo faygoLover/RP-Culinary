@@ -163,9 +163,9 @@ public final class Feeding {
             n = Sips.total(held);
             left = Sips.left(held);
         } else {
-            n = held.hasTag() && held.getTag().contains(CulinaryService.BITES_N) ? held.getTag().getInt(CulinaryService.BITES_N) : CulinaryService.bitesFor(feeder, held, s);
+            n = held.hasTag() && held.getTag().contains(CulinaryService.BITES_N) ? held.getTag().getInt(CulinaryService.BITES_N) : CulinaryEating.bitesFor(feeder, held, s);
             left = held.hasTag() && held.getTag().contains(CulinaryService.BITES) ? held.getTag().getInt(CulinaryService.BITES) : n;
-            kcal = CulinaryService.dishKcal(feeder, held, s);
+            kcal = CulinaryEating.dishKcal(feeder, held, s);
         }
         boolean more = n > 1 && left > 1 && (drink || kcal > 0);
         double fraction = n <= 1 ? 1 : drink ? 1.0 / n : kcal <= 0 ? 1 : more ? s.biteKcal / kcal : Math.max(0.05, 1 - (n - 1) * s.biteKcal / kcal);
@@ -188,7 +188,7 @@ public final class Feeding {
     }
 
     private static void eat(ServerPlayer target, ItemStack used, double fraction, boolean last) {
-        CulinaryService.feedPortion(target, used, fraction);
+        CulinaryEating.feedPortion(target, used, fraction);
         if (!last) return;
         // Зелья и золотые яблоки действуют, когда доедено.
         var food = used.getFoodProperties(target);
