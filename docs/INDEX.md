@@ -4,13 +4,13 @@
 **Руками не править**: пересоздаётся скриптом. Смысл, потоки работы и рецепты — в `docs/MAP.md`.
 Разбор по шаблонам, без компиляции: необычно оформленная регистрация может отсутствовать в списках.
 
-Всего: 65 файлов, 10224 строк Java.
+Всего: 65 файлов, 10229 строк Java.
 
 ## 1. Пакеты
 
 | Пакет | Файлов | Строк |
 |---|---:|---:|
-| `faygolover.rpculinary` | 1 | 148 |
+| `faygolover.rpculinary` | 1 | 153 |
 | `faygolover.rpculinary.capability` | 1 | 209 |
 | `faygolover.rpculinary.client` | 9 | 1118 |
 | `faygolover.rpculinary.config` | 1 | 40 |
@@ -27,7 +27,7 @@
 ## 2. Классы
 
 ### `faygolover.rpculinary`
-- `RpCulinary`, 148 — RP Culinary — питание для семейства RP-модов (дизайн — docs/01_design.md): сытость в калориях вместо окорочков, вода, нутриенты, вес и жир от еды.
+- `RpCulinary`, 153 — RP Culinary — питание для семейства RP-модов (дизайн — docs/01_design.md): сытость в калориях вместо окорочков, вода, нутриенты, вес и жир от еды.
 
 ### `faygolover.rpculinary.capability`
 - `NutritionData`, 209 — Питание игрока (сохраняется) и служебное состояние сервера (не сохраняется).
@@ -196,7 +196,7 @@
 
 ## 8. Что берёт из RP Core и что ему даёт
 
-Методы `RpCoreAPI` (сколько вызовов): `MISC_TAB` 1, `body` 8, `bodyHandles` 2, `dayLengthSeconds` 4, `debugCommands` 1, `grantKnowledge` 1, `handsFree` 4, `hasTrait` 29, `isSkillManaged` 2, `practice` 3, `profile` 2, `registerCommand` 5, `registerModule` 1, `registerNutrition` 1, `rpPerReal` 1, `sanityHit` 1, `skill` 2, `skipFloor` 1, `sleepStage` 1, `stamina` 1, `staminaAttribute` 2, `stressImpulse` 1, `taste` 2, `timeRunning` 2.
+Методы `RpCoreAPI` (сколько вызовов): `MISC_TAB` 1, `body` 8, `bodyHandles` 2, `dayLengthSeconds` 4, `debugCommands` 1, `grantKnowledge` 1, `handsFree` 4, `hasTrait` 29, `isSkillManaged` 2, `practice` 3, `profile` 2, `registerCommand` 5, `registerModule` 1, `registerNutrition` 1, `reportCompat` 4, `rpPerReal` 1, `sanityHit` 1, `skill` 2, `skipFloor` 1, `sleepStage` 1, `stamina` 1, `staminaAttribute` 2, `stressImpulse` 1, `taste` 2, `timeRunning` 2.
 
 Реализует розетки: NutritionProvider ← `CulinaryProvider`; Source ← `CulinaryStatus`.
 

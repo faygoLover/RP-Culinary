@@ -126,6 +126,11 @@ public class RpCulinary {
         Net.register();
         e.enqueueWork(() -> {
             RpCoreAPI.registerModule(MODID, "питание: сытость в калориях, вода, нутриенты, вес");
+            // Необязательные интеграции — в общий отчёт RP Core (/rpcore compat).
+            faygolover.rpcore.api.RpCoreAPI.reportCompat(MODID, "legendarysurvivaloverhaul");
+            faygolover.rpcore.api.RpCoreAPI.reportCompat(MODID, "butchery");
+            faygolover.rpcore.api.RpCoreAPI.reportCompat(MODID, "farm_and_charm");
+            faygolover.rpcore.api.RpCoreAPI.reportCompat(MODID, "mekanism");
             RpCoreAPI.registerNutrition(new CulinaryProvider());
             StatusLines.register(CulinaryStatus.INSTANCE);
             CulinaryCommands.describe();
