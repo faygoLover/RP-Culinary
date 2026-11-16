@@ -4,6 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
+import faygolover.rpculinary.client.FeedPose;
 
 /** Сервер: игрок начал или закончил кормить другого (рука вытянута). */
 public record FeedPosePacket(int entity, boolean on) {
@@ -18,7 +19,7 @@ public record FeedPosePacket(int entity, boolean on) {
     }
 
     public static void handle(FeedPosePacket p, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> faygolover.rpculinary.client.FeedPose.set(p.entity, p.on));
+        ctx.get().enqueueWork(() -> FeedPose.set(p.entity, p.on));
         ctx.get().setPacketHandled(true);
     }
 }

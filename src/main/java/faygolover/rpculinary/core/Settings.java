@@ -1,13 +1,18 @@
 package faygolover.rpculinary.core;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * Числа питания. Поля с комментариями — настройки сервера ({@code rpculinary-server.toml}): конфиг заполняет их
  * по имени поля (см. {@code CulinaryConfig}). Логика ядра читает только этот класс — её можно проверять без игры.
  */
 public final class Settings {
     /** Поле — настройка сервера: раздел конфига и описание. */
-    @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
-    @java.lang.annotation.Target(java.lang.annotation.ElementType.FIELD)
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.FIELD)
     public @interface Cfg {
         String section();
 

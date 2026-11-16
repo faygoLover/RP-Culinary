@@ -17,6 +17,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import faygolover.rpculinary.client.CookbookScreen;
 
 /**
  * Поваренная книга раздела (выдаёт ГМ, раскладывают как лут) и личная книга рецептов повара (D3, решения Алекса 03.11).
@@ -62,7 +63,7 @@ public final class CookbookItems {
         public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
             ItemStack st = player.getItemInHand(hand);
             if (level.isClientSide && !Cookbook.section(st).isEmpty())
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> faygolover.rpculinary.client.CookbookScreen.openBook(Cookbook.section(st)));
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> CookbookScreen.openBook(Cookbook.section(st)));
             return InteractionResultHolder.sidedSuccess(st, level.isClientSide);
         }
     }
@@ -82,7 +83,7 @@ public final class CookbookItems {
         public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
             ItemStack st = player.getItemInHand(hand);
             if (level.isClientSide)
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> faygolover.rpculinary.client.CookbookScreen.openNotebook(st));
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> CookbookScreen.openNotebook(st));
             return InteractionResultHolder.sidedSuccess(st, level.isClientSide);
         }
     }

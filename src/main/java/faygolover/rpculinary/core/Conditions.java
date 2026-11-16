@@ -1,5 +1,7 @@
 package faygolover.rpculinary.core;
 
+import java.util.Arrays;
+
 /**
  * Долгие последствия нехватки и избытка (RP Stamina Sports docs/08 п. 2): если элемент долго вне нормы, через
  * несколько суток тела появляется состояние; оно проходит, когда питание в норме половину того срока.
@@ -30,9 +32,9 @@ public final class Conditions {
     /** Шаг: {@code hydration} — вода 0–1 (−1 — не ведётся). */
     public static void update(NutritionState m, Settings s, double hydration, double dt) {
         if (!s.conditionsEnabled || !s.nutrientsEnabled) {
-            java.util.Arrays.fill(m.condActive, false);
-            java.util.Arrays.fill(m.condProgress, 0);
-            java.util.Arrays.fill(m.condRecover, 0);
+            Arrays.fill(m.condActive, false);
+            Arrays.fill(m.condProgress, 0);
+            Arrays.fill(m.condRecover, 0);
             return;
         }
         double day = s.rpDayHours() * 3600;

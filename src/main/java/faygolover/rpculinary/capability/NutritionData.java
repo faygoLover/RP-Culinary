@@ -11,6 +11,14 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
 import org.jetbrains.annotations.Nullable;
+import faygolover.rpculinary.core.Conditions;
+import faygolover.rpculinary.server.CulinaryService;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 /** Питание игрока (сохраняется) и служебное состояние сервера (не сохраняется). */
 public final class NutritionData {
@@ -28,8 +36,8 @@ public final class NutritionData {
         STORE = PlayerStore.of(ID, NutritionData.class, CAP, NutritionData::new)
                 .save(NutritionData::save)
                 .load(NutritionData::load)
-                .clone((from, to, ctx) -> faygolover.rpculinary.server.CulinaryService.copyOnClone(from, to, ctx.wasDeath()))
-                .resync(faygolover.rpculinary.server.CulinaryService::resync)
+                .clone((from, to, ctx) -> CulinaryService.copyOnClone(from, to, ctx.wasDeath()))
+                .resync(CulinaryService::resync)
                 .register();
     }
 
@@ -45,15 +53,15 @@ public final class NutritionData {
     public Block clickedBlock;
     public long clickedTick = -1;
     /** Что лежало на тарелке Refurbished Furniture, по которой кликнули: мод не сообщает, что съедено. */
-    public net.minecraft.world.item.ItemStack clickedFood = net.minecraft.world.item.ItemStack.EMPTY;
+    public ItemStack clickedFood = ItemStack.EMPTY;
     /** С прошлого шага: восстановленная выносливость RP Stamina (калории за отдых), тики бега без неё. */
     public double exertionStamina;
     /** Сверх обычного с прошлого шага (спорт: восстановление мышц, дожигание), ккал. */
     public double extraKcal;
     /** Последние отправленные мод тела тяжести состояний (слать только изменения). */
-    public final java.util.Map<String, Double> sentConditions = new java.util.HashMap<>();
+    public final Map<String, Double> sentConditions = new HashMap<>();
     /** Ощущения: ключ → тик, когда показано в последний раз. */
-    public final java.util.Map<String, Long> sensationTicks = new java.util.HashMap<>();
+    public final Map<String, Long> sensationTicks = new HashMap<>();
     /** Тик, до которого «сонливость после сладкого» (−10 % восстановления выносливости). */
     public long drowsyUntil = -1;
     /** Тик, до которого прилив сил после сладкого (быстрее восстановление выносливости). */
@@ -83,10 +91,10 @@ public final class NutritionData {
     /** Последняя «плита» греет (печь, плита, сковорода) — неудачи бывают; холодная сборка (верстак, доска) — нет. */
     public boolean cookHeat;
     /** Из {@link #cookPending}: что вынуто из печи (тепло), остальное — с верстака. */
-    public final java.util.Set<net.minecraft.world.item.Item> cookPendingHeat = new java.util.HashSet<>();
+    public final Set<Item> cookPendingHeat = new HashSet<>();
     @Nullable
-    public java.util.Map<net.minecraft.world.item.Item, Integer> cookBaseline;
-    public final java.util.Map<net.minecraft.world.item.Item, Integer> cookPending = new java.util.HashMap<>();
+    public Map<Item, Integer> cookBaseline;
+    public final Map<Item, Integer> cookPending = new HashMap<>();
 
     @Nullable
     public static NutritionData get(Player p) {
@@ -119,13 +127,13 @@ public final class NutritionData {
         t.putDouble("faint_in", m.faintCountdown);
         t.putDouble("poor_appetite", m.poorAppetiteSeconds);
         CompoundTag cond = new CompoundTag();
-        for (int i = 0; i < faygolover.rpculinary.core.Conditions.COUNT; i++) {
+        for (int i = 0; i < Conditions.COUNT; i++) {
             if (m.condProgress[i] <= 0 && !m.condActive[i]) continue;
             CompoundTag c = new CompoundTag();
             c.putDouble("p", m.condProgress[i]);
             c.putDouble("r", m.condRecover[i]);
             c.putBoolean("a", m.condActive[i]);
-            cond.put(faygolover.rpculinary.core.Conditions.IDS[i], c);
+            cond.put(Conditions.IDS[i], c);
         }
         t.put("conditions", cond);
         t.putInt("overfill_hits", m.overfillLimitHits);
@@ -178,8 +186,8 @@ public final class NutritionData {
         m.faintCountdown = t.contains("faint_in") ? t.getDouble("faint_in") : -1;
         m.poorAppetiteSeconds = t.getDouble("poor_appetite");
         CompoundTag cond = t.getCompound("conditions");
-        for (int i = 0; i < faygolover.rpculinary.core.Conditions.COUNT; i++) {
-            CompoundTag c = cond.getCompound(faygolover.rpculinary.core.Conditions.IDS[i]);
+        for (int i = 0; i < Conditions.COUNT; i++) {
+            CompoundTag c = cond.getCompound(Conditions.IDS[i]);
             m.condProgress[i] = c.getDouble("p");
             m.condRecover[i] = c.getDouble("r");
             m.condActive[i] = c.getBoolean("a");

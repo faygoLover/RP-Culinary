@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
+import net.minecraft.world.effect.MobEffectInstance;
 
 /**
  * Покормить или напоить другого (решение Alex 10.11): ПКМ едой или водой по игроку или телу вышедшего, ровно 3 секунды
@@ -193,9 +194,9 @@ public final class Feeding {
         var food = used.getFoodProperties(target);
         if (food != null) {
             for (var effect : food.getEffects())
-                if (target.getRandom().nextFloat() < effect.getSecond()) target.addEffect(new net.minecraft.world.effect.MobEffectInstance(effect.getFirst()));
+                if (target.getRandom().nextFloat() < effect.getSecond()) target.addEffect(new MobEffectInstance(effect.getFirst()));
         }
-        for (var effect : PotionUtils.getMobEffects(used)) target.addEffect(new net.minecraft.world.effect.MobEffectInstance(effect));
+        for (var effect : PotionUtils.getMobEffects(used)) target.addEffect(new MobEffectInstance(effect));
     }
 
     /** Вошёл тот, чьё тело кормили. */

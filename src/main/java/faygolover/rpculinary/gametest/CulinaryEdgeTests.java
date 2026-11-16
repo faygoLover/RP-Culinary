@@ -13,6 +13,8 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 import java.util.Set;
 import java.util.TreeSet;
+import faygolover.rpcore.api.RpCoreAPI;
+import faygolover.rpculinary.server.Exotic;
 
 /**
  * Края состояния питания: каждое поле в сохранении, смерть, возврат из Края, перезаход. Страховка перед переводом
@@ -163,12 +165,12 @@ public final class CulinaryEdgeTests {
     public static void coreLinks(GameTestHelper h) {
         ServerPlayer p = CulinaryGameTests.player(h);
         try {
-            boolean body = faygolover.rpcore.api.RpCoreAPI.body() != null;
-            boolean infected = faygolover.rpculinary.server.Exotic.infectForTest(p, 40, 2);
+            boolean body = RpCoreAPI.body() != null;
+            boolean infected = Exotic.infectForTest(p, 40, 2);
             if (infected && !body) h.fail("Без мода тела заражение «принято»");
-            int learned = faygolover.rpculinary.server.Exotic.learnAnyForTest(p);
-            if (faygolover.rpcore.api.RpCoreAPI.providerNames().isEmpty() && learned != -1) h.fail("Без мода черт знание «выдано»: " + learned);
-            faygolover.rpculinary.server.Exotic.mindForTest(p);
+            int learned = Exotic.learnAnyForTest(p);
+            if (RpCoreAPI.providerNames().isEmpty() && learned != -1) h.fail("Без мода черт знание «выдано»: " + learned);
+            Exotic.mindForTest(p);
         } finally {
             CulinaryGameTests.remove(h, p);
         }

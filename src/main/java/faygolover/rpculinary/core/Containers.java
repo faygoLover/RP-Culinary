@@ -16,6 +16,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Мешки и ящики с продуктами (блок 6 переделки, решения Alex 29.10): таблица {@code assets/rpculinary/containers.json}
@@ -32,7 +34,7 @@ public final class Containers {
 
     private static final Box NONE = new Box(List.of(), 0);
     private static Map<String, Box> raw;
-    private static final Map<Item, Box> CACHE = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final Map<Item, Box> CACHE = new ConcurrentHashMap<>();
 
     private static Map<String, Box> raw() {
         if (raw != null) return raw;
@@ -42,7 +44,7 @@ public final class Containers {
                 JsonObject all = JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject().getAsJsonObject("containers");
                 for (var e : all.entrySet()) {
                     JsonObject o = e.getValue().getAsJsonObject();
-                    List<String> acc = new java.util.ArrayList<>();
+                    List<String> acc = new ArrayList<>();
                     o.getAsJsonArray("accept").forEach(x -> acc.add(x.getAsString()));
                     m.put(e.getKey(), new Box(List.copyOf(acc), o.get("kg").getAsDouble()));
                 }

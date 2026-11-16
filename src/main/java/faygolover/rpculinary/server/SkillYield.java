@@ -12,6 +12,7 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+import faygolover.rpculinary.core.Source;
 
 /**
  * Функция добычи {@code rpculinary:skill_yield} (блок 3 переделки): на мясе и органах в таблицах разделки туш. Пока идёт
@@ -43,8 +44,8 @@ public class SkillYield extends LootItemConditionalFunction {
         }
         cut.keptGrams += (double) kept * grams;
         stack.setCount(kept);
-        if (kept > 0 && cut.species != null && !cut.species.isEmpty() && !faygolover.rpculinary.core.Source.marked(stack))
-            faygolover.rpculinary.core.Source.set(stack, cut.species);
+        if (kept > 0 && cut.species != null && !cut.species.isEmpty() && !Source.marked(stack))
+            Source.set(stack, cut.species);
         return kept > 0 ? stack : ItemStack.EMPTY;
     }
 

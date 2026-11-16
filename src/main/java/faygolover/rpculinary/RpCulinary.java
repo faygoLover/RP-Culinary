@@ -21,6 +21,28 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import faygolover.rpcore.api.StatusLines;
+import faygolover.rpcore.api.event.RpCharacterWipeEvent;
+import faygolover.rpculinary.client.ClientSetup;
+import faygolover.rpculinary.core.Cookbook;
+import faygolover.rpculinary.item.CookbookItems;
+import faygolover.rpculinary.item.ResearchNotes;
+import faygolover.rpculinary.pack.FoodPack;
+import faygolover.rpculinary.server.Butchering;
+import faygolover.rpculinary.server.ContainerFill;
+import faygolover.rpculinary.server.CookingService;
+import faygolover.rpculinary.server.CulinaryStatus;
+import faygolover.rpculinary.server.Exotic;
+import faygolover.rpculinary.server.ExoticEffects;
+import faygolover.rpculinary.server.Feeding;
+import faygolover.rpculinary.server.Processing;
+import faygolover.rpculinary.server.Provenance;
+import faygolover.rpculinary.server.Sips;
+import faygolover.rpculinary.server.SkillYield;
+import faygolover.rpculinary.server.Techniques;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 
 /**
  * RP Culinary — питание для семейства RP-модов (дизайн — {@code docs/01_design.md}): сытость в калориях вместо
@@ -33,12 +55,12 @@ public class RpCulinary {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     /** Книги «Записи исследований» — во вкладку ГМа «RP: разное» (RP Core), по одной на группу с книгой. */
-    private void creativeTab(net.minecraftforge.event.BuildCreativeModeTabContentsEvent e) {
+    private void creativeTab(BuildCreativeModeTabContentsEvent e) {
         if (e.getTabKey() != RpCoreAPI.MISC_TAB) return;
-        for (int g = 0; g < faygolover.rpculinary.server.Exotic.GROUPS.size(); g++)
-            if (faygolover.rpculinary.server.Exotic.learnable(g)) e.accept(faygolover.rpculinary.item.ResearchNotes.of(g));
-        for (String s : faygolover.rpculinary.core.Cookbook.SECTIONS) e.accept(faygolover.rpculinary.item.CookbookItems.book(s));
-        e.accept(new net.minecraft.world.item.ItemStack(faygolover.rpculinary.item.CookbookItems.NOTEBOOK.get()));
+        for (int g = 0; g < Exotic.GROUPS.size(); g++)
+            if (Exotic.learnable(g)) e.accept(ResearchNotes.of(g));
+        for (String s : Cookbook.SECTIONS) e.accept(CookbookItems.book(s));
+        e.accept(new ItemStack(CookbookItems.NOTEBOOK.get()));
     }
 
     public RpCulinary() {
@@ -48,11 +70,11 @@ public class RpCulinary {
         NutritionData.register();
         modBus.addListener(this::onConfig);
         modBus.addListener(this::onConfigReload);
-        faygolover.rpculinary.item.CookbookItems.init();
-        faygolover.rpculinary.item.ResearchNotes.ITEMS.register(modBus);
+        CookbookItems.init();
+        ResearchNotes.ITEMS.register(modBus);
         modBus.addListener(this::creativeTab);
-        faygolover.rpculinary.pack.FoodPack.register(modBus);
-        faygolover.rpculinary.server.SkillYield.TYPES.register(modBus);
+        FoodPack.register(modBus);
+        SkillYield.TYPES.register(modBus);
 
         var bus = MinecraftForge.EVENT_BUS;
         bus.addListener(this::reloadListeners);
@@ -60,42 +82,42 @@ public class RpCulinary {
         bus.addListener(CulinaryService::onPlayerTick);
         bus.addListener(CulinaryService::onUseTick);
         bus.addListener(CulinaryService::onUseStart);
-        bus.addListener(faygolover.rpculinary.server.Feeding::onEntityInteract);
-        bus.addListener(faygolover.rpculinary.server.Feeding::onServerTick);
-        bus.addListener(faygolover.rpculinary.server.Feeding::onLogin);
-        bus.addListener(net.minecraftforge.eventbus.api.EventPriority.LOW, false, faygolover.rpcore.api.event.RpCharacterWipeEvent.class, CulinaryService::onWipe);
-        bus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, faygolover.rpculinary.server.CookingService::onHandsCheck);
+        bus.addListener(Feeding::onEntityInteract);
+        bus.addListener(Feeding::onServerTick);
+        bus.addListener(Feeding::onLogin);
+        bus.addListener(EventPriority.LOW, false, RpCharacterWipeEvent.class, CulinaryService::onWipe);
+        bus.addListener(EventPriority.HIGHEST, CookingService::onHandsCheck);
         bus.addListener(CulinaryService::onUseFinish);
-        bus.addListener(faygolover.rpculinary.server.Sips::onStackedOnOther);
-        bus.addListener(faygolover.rpculinary.server.Sips::onRightClick);
+        bus.addListener(Sips::onStackedOnOther);
+        bus.addListener(Sips::onRightClick);
         bus.addListener(CulinaryService::onRightClickBlock);
         bus.addListener(CulinaryService::onStaminaRestored);
         bus.addListener(CulinaryService::onAttack);
         bus.addListener(CulinaryService::onDatapackSync);
-        bus.addListener(faygolover.rpculinary.server.CookingService::onRightClickBlock);
-        bus.addListener(faygolover.rpculinary.server.CookingService::onContainerOpen);
-        bus.addListener(faygolover.rpculinary.server.CookingService::onContainerClose);
-        bus.addListener(faygolover.rpculinary.server.CookingService::onCrafted);
-        bus.addListener(faygolover.rpculinary.server.CookingService::onSmelted);
-        bus.addListener(faygolover.rpculinary.server.CookingService::onPlayerTick);
-        bus.addListener(faygolover.rpculinary.server.CookingService::forget);
-        bus.addListener(faygolover.rpculinary.server.CookingService::onServerStopped);
+        bus.addListener(CookingService::onRightClickBlock);
+        bus.addListener(CookingService::onContainerOpen);
+        bus.addListener(CookingService::onContainerClose);
+        bus.addListener(CookingService::onCrafted);
+        bus.addListener(CookingService::onSmelted);
+        bus.addListener(CookingService::onPlayerTick);
+        bus.addListener(CookingService::forget);
+        bus.addListener(CookingService::onServerStopped);
         bus.addListener(CulinaryCommands::onTimeSkip);
-        bus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, faygolover.rpculinary.server.Butchering::onRightClick);
-        bus.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, true, faygolover.rpculinary.server.Butchering::afterRightClick);
-        bus.addListener(faygolover.rpculinary.server.Butchering::onPlayerTick);
-        bus.addListener(faygolover.rpculinary.server.ExoticEffects::onPlayerTick);
-        bus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGH, faygolover.rpculinary.server.Techniques::onRightClickBlock);
-        bus.addListener(net.minecraftforge.eventbus.api.EventPriority.HIGHEST, faygolover.rpculinary.server.Processing::onMincer);
-        bus.addListener(faygolover.rpculinary.server.Provenance::onPlayerTick);
-        bus.addListener(faygolover.rpculinary.server.Processing::onBowlClick);
-        bus.addListener(faygolover.rpculinary.server.Processing::onServerTick);
-        bus.addListener(faygolover.rpculinary.server.ContainerFill::onStackedOnOther);
-        bus.addListener(faygolover.rpculinary.server.ContainerFill::onRightClickBlock);
-        bus.addListener(faygolover.rpculinary.server.ContainerFill::onPlace);
-        bus.addListener(faygolover.rpculinary.server.ContainerFill::onBreak);
-        bus.addListener(faygolover.rpculinary.server.ContainerFill::onItemJoin);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> faygolover.rpculinary.client.ClientSetup.init(modBus));
+        bus.addListener(EventPriority.HIGHEST, Butchering::onRightClick);
+        bus.addListener(EventPriority.LOWEST, true, Butchering::afterRightClick);
+        bus.addListener(Butchering::onPlayerTick);
+        bus.addListener(ExoticEffects::onPlayerTick);
+        bus.addListener(EventPriority.HIGH, Techniques::onRightClickBlock);
+        bus.addListener(EventPriority.HIGHEST, Processing::onMincer);
+        bus.addListener(Provenance::onPlayerTick);
+        bus.addListener(Processing::onBowlClick);
+        bus.addListener(Processing::onServerTick);
+        bus.addListener(ContainerFill::onStackedOnOther);
+        bus.addListener(ContainerFill::onRightClickBlock);
+        bus.addListener(ContainerFill::onPlace);
+        bus.addListener(ContainerFill::onBreak);
+        bus.addListener(ContainerFill::onItemJoin);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientSetup.init(modBus));
     }
 
     private void commonSetup(FMLCommonSetupEvent e) {
@@ -103,7 +125,7 @@ public class RpCulinary {
         e.enqueueWork(() -> {
             RpCoreAPI.registerModule(MODID, "питание: сытость в калориях, вода, нутриенты, вес");
             RpCoreAPI.registerNutrition(new CulinaryProvider());
-            faygolover.rpcore.api.StatusLines.register(faygolover.rpculinary.server.CulinaryStatus.INSTANCE);
+            StatusLines.register(CulinaryStatus.INSTANCE);
             CulinaryCommands.describe();
         });
     }

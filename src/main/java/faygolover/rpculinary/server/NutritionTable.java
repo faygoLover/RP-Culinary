@@ -20,6 +20,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import faygolover.rpcore.api.Consumables;
+import faygolover.rpculinary.core.MeatFood;
+import faygolover.rpculinary.core.Settings;
+import faygolover.rpculinary.core.Weights;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Items;
 
 /**
  * Состав любой еды (перенесено из RP Medicine; по образцу Nutritional Balance, но количественно): базовые ингредиенты — из датапака;
@@ -45,11 +52,11 @@ public final class NutritionTable {
     private static final Map<Item, Integer> COMPLEXITY = new HashMap<>();
     /** Группы экзотики (битовая маска {@link Exotic#GROUPS}): свои и унаследованные от ингредиентов. */
     /** Мясные части блюд для клиента: ключ {@code rpculinary_meat:<ns>/<path>}. */
-    public static synchronized Map<net.minecraft.resources.ResourceLocation, Food> meatSnapshot() {
-        Map<net.minecraft.resources.ResourceLocation, Food> out = new HashMap<>();
+    public static synchronized Map<ResourceLocation, Food> meatSnapshot() {
+        Map<ResourceLocation, Food> out = new HashMap<>();
         for (var e : MEAT.entrySet()) {
-            var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(e.getKey());
-            if (id != null) out.put(new net.minecraft.resources.ResourceLocation("rpculinary_meat", id.getNamespace() + "/" + id.getPath()), e.getValue());
+            var id = ForgeRegistries.ITEMS.getKey(e.getKey());
+            if (id != null) out.put(new ResourceLocation("rpculinary_meat", id.getNamespace() + "/" + id.getPath()), e.getValue());
         }
         return out;
     }
@@ -64,7 +71,7 @@ public final class NutritionTable {
     }
 
     /** Мясная часть блюда из рецепта (на штуку). */
-    private static final Map<Item, Food> MEAT = new java.util.HashMap<>();
+    private static final Map<Item, Food> MEAT = new HashMap<>();
     /** Куски тяжелее порции: состав одной порции, им они считаются в блюде из нескольких ингредиентов (окорок в супе). */
     private static final Map<Item, Food> PORTION = new HashMap<>();
     private static final int MEAT_CAT = NutritionState.category("meat"), FISH_CAT = NutritionState.category("fish");
@@ -72,8 +79,8 @@ public final class NutritionTable {
     /** Сырое ли (кэш {@link #raw}). */
     private static final Map<Item, Boolean> RAW = new HashMap<>();
     /** Датапак: сырое сверх правил ({@code #rpculinary:raw}) и точно не сырое ({@code #rpculinary:not_raw}). */
-    static final net.minecraft.tags.TagKey<Item> RAW_TAG = net.minecraft.tags.ItemTags.create(new ResourceLocation("rpculinary", "raw"));
-    static final net.minecraft.tags.TagKey<Item> NOT_RAW_TAG = net.minecraft.tags.ItemTags.create(new ResourceLocation("rpculinary", "not_raw"));
+    static final TagKey<Item> RAW_TAG = ItemTags.create(new ResourceLocation("rpculinary", "raw"));
+    static final TagKey<Item> NOT_RAW_TAG = ItemTags.create(new ResourceLocation("rpculinary", "not_raw"));
     /** Слова в id, по которым продукт уже готов (копчёный окорок, вяленое мясо). */
     private static final String[] COOKED_WORDS = {"cooked", "smoked", "roast", "fried", "grilled", "baked", "dried", "jerky",
             "salted", "cured", "boiled", "steamed", "stew", "soup", "pickled", "fermented", "burnt", "charred"};
@@ -126,7 +133,7 @@ public final class NutritionTable {
         if (entry != null) {
             Food rule = entry.food();
             // Состав на граммы — по весу штуки; сам кусок — мясная часть, её пересчитывает состав (стейк кенгуру — по виду).
-            int nominal = entry.perGrams() > 0 ? faygolover.rpculinary.core.Weights.nominal(item) : 0;
+            int nominal = entry.perGrams() > 0 ? Weights.nominal(item) : 0;
             if (nominal > 0) {
                 rule = rule.scale(nominal / (double) entry.perGrams());
                 MEAT.put(item, rule);
@@ -165,7 +172,7 @@ public final class NutritionTable {
                 if (portion != null) part = portion;
                 sum = sum.plus(part);
                 int cat = CATEGORY.getOrDefault(src, -1);
-                if (cat == MEAT_CAT || cat == FISH_CAT || faygolover.rpculinary.core.MeatFood.FORMS.containsKey(String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(src))))
+                if (cat == MEAT_CAT || cat == FISH_CAT || MeatFood.FORMS.containsKey(String.valueOf(ForgeRegistries.ITEMS.getKey(src))))
                     meat = meat.plus(portion != null ? portion : MEAT.getOrDefault(src, part));  // мясная часть: само мясо или мясная часть полуфабриката
                 known++;
                 distinct.add(src);
@@ -279,7 +286,7 @@ public final class NutritionTable {
     }
 
     private static boolean computeRaw(MinecraftServer server, Item item) {
-        if (item == net.minecraft.world.item.Items.ROTTEN_FLESH || item == net.minecraft.world.item.Items.SPIDER_EYE) return false;
+        if (item == Items.ROTTEN_FLESH || item == Items.SPIDER_EYE) return false;
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
         if (id == null) return false;
         var holder = item.builtInRegistryHolder();
@@ -320,7 +327,7 @@ public final class NutritionTable {
     private static Food sane(Item item, Food f) {
         FoodProperties fp = item.getFoodProperties(new ItemStack(item), null);
         if (fp == null || fp.getNutrition() <= 0 || f.kcal() <= 0) return f;
-        double est = fp.getNutrition() * faygolover.rpculinary.core.Settings.get().kcalPerFoodPoint;
+        double est = fp.getNutrition() * Settings.get().kcalPerFoodPoint;
         double ratio = f.kcal() / est;
         if (ratio > SANE_RATIO) return f.withKcalScaled(est * SANE_RATIO);
         if (ratio < 1 / SANE_RATIO) return f.withKcalScaled(est / SANE_RATIO);
@@ -332,7 +339,7 @@ public final class NutritionTable {
     private static Food estimate(Item item) {
         FoodProperties fp = item.getFoodProperties(new ItemStack(item), null);
         if (fp == null) return null;
-        double kcal = fp.getNutrition() * faygolover.rpculinary.core.Settings.get().kcalPerFoodPoint;
+        double kcal = fp.getNutrition() * Settings.get().kcalPerFoodPoint;
         if (fp.isMeat()) return new Food(kcal, kcal * 0.45 / 4, kcal * 0.55 / 9, 0, 1, 0);
         return new Food(kcal, kcal * 0.08 / 4, kcal * 0.12 / 9, kcal * 0.8 / 4, 4, 0);
     }
@@ -344,7 +351,7 @@ public final class NutritionTable {
             boolean food = item.isEdible() || NutritionRules.base(item) != null;
             if (!food) continue;
             // Вода и прочее с "calories": false в базе RP Core не кормит — и в подсказке КБЖУ у неё нет (30.10).
-            var c = faygolover.rpcore.api.Consumables.forItem(new net.minecraft.world.item.ItemStack(item));
+            var c = Consumables.forItem(new ItemStack(item));
             if (c != null && !c.calories()) continue;
             Food f = get(server, item);
             if (f != null && !f.isEmpty()) out.put(ForgeRegistries.ITEMS.getKey(item), f);

@@ -5,6 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
+import java.util.List;
 
 /**
  * КБЖУ по виду мяса (решение Alex 29.10): у фарша, обрезков, котлеты, колбасок своё питание — от 100 г сырого мяса вида,
@@ -68,7 +69,7 @@ public final class MeatFood {
     public static final String FATTY = "rpculinary:fatty", OFFAL_FORM = "rpculinary:offal";
 
     /** Ливерное и жирное переходят на следующую форму (фарш → колбаски → жареные), если такими были все исходные. */
-    public static void carryFlags(java.util.List<ItemStack> from, ItemStack to) {
+    public static void carryFlags(List<ItemStack> from, ItemStack to) {
         if (from.isEmpty() || form(to) == null) return;
         for (String flag : new String[]{FATTY, OFFAL_FORM})
             if (from.stream().allMatch(s -> s.getTag() != null && s.getTag().getBoolean(flag))) to.getOrCreateTag().putBoolean(flag, true);

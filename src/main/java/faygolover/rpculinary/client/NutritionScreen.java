@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.util.FormattedCharSequence;
 
 /**
  * Окно «Питание» (клавиша K): что человек чувствует — голод, жажда, каждый нутриент словами (нехватка, на грани,
@@ -109,7 +110,7 @@ public class NutritionScreen extends Screen {
         List<Row> rows = rows(ClientNutrition.self);
         // Сначала высота: строки переносятся по ширине.
         int contentH = 0;
-        List<List<net.minecraft.util.FormattedCharSequence>> split = new ArrayList<>();
+        List<List<FormattedCharSequence>> split = new ArrayList<>();
         for (Row r : rows) {
             var lines = font.split(r.text(), textW);
             split.add(lines);

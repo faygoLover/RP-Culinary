@@ -16,6 +16,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.ToIntFunction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Напитки глотками (решение Alex 26.10): глоток — одна короткая анимация питья, предмет остаётся, пока не допит
@@ -42,7 +48,7 @@ public final class Sips {
     }
 
     /** Клиент: глотки по таблице с сервера (на выделенном клиенте базы RP Core нет). */
-    public static volatile java.util.function.ToIntFunction<ItemStack> clientTotal;
+    public static volatile ToIntFunction<ItemStack> clientTotal;
 
     /** Сколько глотков осталось. */
     public static int left(ItemStack st) {
@@ -97,11 +103,11 @@ public final class Sips {
         String id = id(st);
         if (CLEAN.contains(id)) return 1;
         if (DIRTY.contains(id)) return -1;
-        if (st.is(Items.POTION) && net.minecraft.world.item.alchemy.PotionUtils.getPotion(st) == net.minecraft.world.item.alchemy.Potions.WATER) return -1;
+        if (st.is(Items.POTION) && PotionUtils.getPotion(st) == Potions.WATER) return -1;
         return 0;
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     private static ItemStack item(String id) {
         var it = ForgeRegistries.ITEMS.getValue(new ResourceLocation(id));
         return it == null || it == Items.AIR ? null : new ItemStack(it);
@@ -111,7 +117,7 @@ public final class Sips {
      * Наполнить одну пустую из {@code empties} водой из {@code from}. Возвращает {остаток источника, наполненная}
      * (null — нельзя). {@code empties} уменьшается на одну.
      */
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     static ItemStack[] refill(ItemStack from, ItemStack empties) {
         Refill r = REFILL.get(id(empties));
         if (r == null || from.getCount() != 1) return null;
@@ -182,8 +188,8 @@ public final class Sips {
                 e.getCarriedSlotAccess().set(filled[0]);
                 e.getSlot().setChanged();
                 if (!p.getInventory().add(filled[1])) p.drop(filled[1], false);
-                p.level().playSound(null, p.getX(), p.getY(), p.getZ(), net.minecraft.sounds.SoundEvents.BOTTLE_FILL,
-                        net.minecraft.sounds.SoundSource.PLAYERS, 0.6f, 1f);
+                p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.BOTTLE_FILL,
+                        SoundSource.PLAYERS, 0.6f, 1f);
                 e.setCanceled(true);
                 return;
             }
@@ -211,8 +217,8 @@ public final class Sips {
         if (filled != null) {
             p.setItemInHand(InteractionHand.OFF_HAND, filled[0]);
             if (!p.getInventory().add(filled[1])) p.drop(filled[1], false);
-            p.level().playSound(null, p.getX(), p.getY(), p.getZ(), net.minecraft.sounds.SoundEvents.BOTTLE_FILL,
-                    net.minecraft.sounds.SoundSource.PLAYERS, 0.6f, 1f);
+            p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.BOTTLE_FILL,
+                    SoundSource.PLAYERS, 0.6f, 1f);
             e.setCancellationResult(InteractionResult.SUCCESS);
             e.setCanceled(true);
             return;

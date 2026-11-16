@@ -23,6 +23,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
+import net.minecraft.world.entity.LivingEntity;
 
 /**
  * Группы экзотики действуют на того, кто ест (решения Alex 29.10.2026, группы — {@link Exotic}): от природы продукта и от
@@ -289,7 +290,7 @@ public final class ExoticEffects {
                 Class<?> api = Class.forName("mekanism.api.radiation.IRadiationManager");
                 Object mgr = api.getField("INSTANCE").get(null);
                 if (!(Boolean) api.getMethod("isRadiationEnabled").invoke(mgr)) return false;
-                api.getMethod("radiate", net.minecraft.world.entity.LivingEntity.class, double.class).invoke(mgr, sp, sv);
+                api.getMethod("radiate", LivingEntity.class, double.class).invoke(mgr, sp, sv);
                 return true;
             } catch (ReflectiveOperationException | LinkageError | ClassCastException ignored) {
                 return false;

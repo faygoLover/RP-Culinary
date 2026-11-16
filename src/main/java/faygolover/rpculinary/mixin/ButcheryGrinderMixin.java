@@ -14,6 +14,9 @@ import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import faygolover.rpculinary.core.MeatFood;
+import faygolover.rpculinary.core.Source;
+import java.util.List;
 
 /**
  * Мясорубка Butchery — только колбаски (решения Alex 29.10): фарш мелет мясорубка F&C, а колбаски делаются из фарша + кишки
@@ -45,8 +48,8 @@ public abstract class ButcheryGrinderMixin {
         if (input.getCount() < RPCULINARY$MINCE_PER_BUNDLE || !rpculinary$is(guts, "butchery:intestines")) return;
         boolean bloody = rpculinary$is(blood, "butchery:bottle_of_blood") || blood.is(ItemTags.create(new ResourceLocation("forge", "blood_bottle")));
         ItemStack bundle = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("butchery", bloody ? "raw_blood_sausage" : "raw_sausage")));
-        faygolover.rpculinary.core.Source.copy(input, bundle);
-        faygolover.rpculinary.core.MeatFood.carryFlags(java.util.List.of(input), bundle);
+        Source.copy(input, bundle);
+        MeatFood.carryFlags(List.of(input), bundle);
         if (!out.isEmpty() && (!ItemStack.isSameItemSameTags(out, bundle) || out.getCount() >= out.getMaxStackSize())) return;
         var pd = be.getPersistentData();
         int t = pd.getInt("rpculinary:grind") + 1;

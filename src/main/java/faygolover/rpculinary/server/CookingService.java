@@ -31,6 +31,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.inventory.SmokerMenu;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraftforge.event.server.ServerStoppedEvent;
 
 /**
  * Готовка (дизайн, §6.2). Моды готовки не сообщают «приготовлено» (котёл Farmer's Delight, кастрюли Kaleidoscope),
@@ -56,23 +65,23 @@ public final class CookingService {
     /** «Плиты» с огнём (тег {@code rpculinary:heat_stations}): жарка, варка, запекание — бывает недожарено и подгорело. */
     static final TagKey<Block> HEAT = BlockTags.create(new ResourceLocation(RpCulinary.MODID, "heat_stations"));
     /** Полуфабрикаты (тег {@code rpculinary:no_quality}): фарш, тесто, нарезка, сырая пицца, сыр — без качества и опыта. */
-    static final TagKey<Item> NO_QUALITY = net.minecraft.tags.ItemTags.create(new ResourceLocation(RpCulinary.MODID, "no_quality"));
+    static final TagKey<Item> NO_QUALITY = ItemTags.create(new ResourceLocation(RpCulinary.MODID, "no_quality"));
 
     /** Повторы: повар → блюдо → {сколько подряд, когда последнее (тик)}. Через 10 минут счёт обнуляется. */
     private static final Map<UUID, Map<Item, long[]>> REPEATS = new HashMap<>();
     private static final long REPEAT_RESET_TICKS = 20 * 60 * 10;
-    private static final java.util.Random RANDOM = new java.util.Random();
+    private static final Random RANDOM = new Random();
 
     // ------------------------------------------------------------------ навык и метка
 
     /** Без рабочих рук не готовит: блоки модов кулинарии, разделка, свои станки. */
     public static void onHandsCheck(PlayerInteractEvent.RightClickBlock e) {
         if (!(e.getEntity() instanceof ServerPlayer sp) || RpCoreAPI.handsFree(sp)) return;
-        var id = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(e.getLevel().getBlockState(e.getPos()).getBlock());
+        var id = ForgeRegistries.BLOCKS.getKey(e.getLevel().getBlockState(e.getPos()).getBlock());
         if (id == null || !(COOKING_MODS.contains(id.getNamespace()) || id.getNamespace().equals("butchery") || id.getNamespace().equals("rpculinary"))) return;
         e.setCanceled(true);
-        e.setCancellationResult(net.minecraft.world.InteractionResult.FAIL);
-        sp.displayClientMessage(net.minecraft.network.chat.Component.translatable("rpcore.msg.no_hands"), true);
+        e.setCancellationResult(InteractionResult.FAIL);
+        sp.displayClientMessage(Component.translatable("rpcore.msg.no_hands"), true);
     }
 
     /** Уровень «Кулинарии»: от RP Perks; без него — 10 (правило автора). */
@@ -124,7 +133,7 @@ public final class CookingService {
 
     /** Греет ли «плита»: печь, костёр, плиты и сковороды модов (тег), иначе — холодная сборка. */
     public static boolean heat(Block b) {
-        return b instanceof net.minecraft.world.level.block.AbstractFurnaceBlock || b instanceof net.minecraft.world.level.block.CampfireBlock
+        return b instanceof AbstractFurnaceBlock || b instanceof CampfireBlock
                 || b.defaultBlockState().is(HEAT);
     }
 
@@ -181,7 +190,7 @@ public final class CookingService {
         if (d == null) return;
         open(sp, d);
         d.cookMenu = true;
-        d.cookField = menu instanceof net.minecraft.world.inventory.SmokerMenu;
+        d.cookField = menu instanceof SmokerMenu;
         // Окно мода — от блока, по которому кликнули (клик раньше окна).
         if (menu instanceof AbstractFurnaceMenu) d.cookHeat = true;
         else if (menu instanceof CraftingMenu) d.cookHeat = false;
@@ -323,7 +332,7 @@ public final class CookingService {
     /** Сдвинуть качество {@code k} штук (−1 — лучше, +1 — хуже). Стопку целиком — на месте, иначе отделить. */
     private static void shiftKaleidoscope(ServerPlayer sp, Item item, int k, int delta) {
         Inventory inv = sp.getInventory();
-        java.util.List<ItemStack> sources = new java.util.ArrayList<>();
+        List<ItemStack> sources = new ArrayList<>();
         sources.add(sp.containerMenu.getCarried());
         for (int i = 0; i < inv.getContainerSize(); i++) sources.add(inv.getItem(i));
         for (ItemStack st : sources) {
@@ -398,7 +407,7 @@ public final class CookingService {
         REPEATS.remove(e.getEntity().getUUID());
     }
 
-    public static void onServerStopped(net.minecraftforge.event.server.ServerStoppedEvent e) {
+    public static void onServerStopped(ServerStoppedEvent e) {
         REPEATS.clear();
     }
 }

@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import faygolover.rpculinary.core.MeatFood;
+import faygolover.rpculinary.core.Weights;
 
 /**
  * Состав через любые станции (решения Alex 29.10): «что положил — то и в блюде». Пока игрок «у плиты» (контекст готовки
@@ -85,7 +87,7 @@ public final class Provenance {
             String k = st.getItem() + "|" + st.getTag();
             c.marked.merge(k, st.getCount(), Integer::sum);
             c.samples.putIfAbsent(k, st.copyWithCount(1));
-        } else if (st.isEdible() || faygolover.rpculinary.core.Weights.nominal(st.getItem()) > 0) {
+        } else if (st.isEdible() || Weights.nominal(st.getItem()) > 0) {
             c.plain.merge(st.getItem(), st.getCount(), Integer::sum);
         }
     }
@@ -98,12 +100,12 @@ public final class Provenance {
             int k = Math.min(n, carried.getCount());
             if (k == carried.getCount()) {
                 Source.setParts(carried, parts, look);
-                faygolover.rpculinary.core.MeatFood.carryFlags(used, carried);
+                MeatFood.carryFlags(used, carried);
             } else {
                 carried.shrink(k);
                 ItemStack part = new ItemStack(item, k);
                 Source.setParts(part, parts, look);
-                faygolover.rpculinary.core.MeatFood.carryFlags(used, part);
+                MeatFood.carryFlags(used, part);
                 if (!inv.add(part)) sp.drop(part, false);
             }
             n -= k;
@@ -114,11 +116,11 @@ public final class Provenance {
             int k = Math.min(n, st.getCount());
             if (k == st.getCount()) {
                 Source.setParts(st, parts, look);
-                faygolover.rpculinary.core.MeatFood.carryFlags(used, st);
+                MeatFood.carryFlags(used, st);
             } else {
                 ItemStack part = st.split(k);
                 Source.setParts(part, parts, look);
-                faygolover.rpculinary.core.MeatFood.carryFlags(used, part);
+                MeatFood.carryFlags(used, part);
                 if (!inv.add(part)) sp.drop(part, false);
             }
             n -= k;

@@ -39,6 +39,43 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import faygolover.rpculinary.core.Containers;
+import faygolover.rpculinary.core.Cookbook;
+import faygolover.rpculinary.core.Cooking;
+import faygolover.rpculinary.core.Source;
+import faygolover.rpculinary.core.Weights;
+import faygolover.rpculinary.item.CookbookItems;
+import faygolover.rpculinary.item.ResearchNotes;
+import faygolover.rpculinary.server.Butchering;
+import faygolover.rpculinary.server.ContainerFill;
+import faygolover.rpculinary.server.CookingService;
+import faygolover.rpculinary.server.Exotic;
+import faygolover.rpculinary.server.ExoticEffects;
+import faygolover.rpculinary.server.Sips;
+import faygolover.rpculinary.server.Techniques;
+import io.netty.channel.embedded.EmbeddedChannel;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /** Проверка в настоящем сервере: еда из руки и с блока, вода, замок ванильной сытости, API для соседей. */
 @GameTestHolder(RpCulinary.MODID)
@@ -53,7 +90,7 @@ public final class CulinaryGameTests {
         var server = h.getLevel().getServer();
         ServerPlayer p = new ServerPlayer(server, h.getLevel(), new GameProfile(UUID.randomUUID(), "rpc-test-" + (counter++)));
         Connection conn = new Connection(PacketFlow.SERVERBOUND);
-        new io.netty.channel.embedded.EmbeddedChannel(conn);
+        new EmbeddedChannel(conn);
         server.getPlayerList().placeNewPlayer(conn, p);
         p.setGameMode(GameType.SURVIVAL);
         Vec3 pos = h.absoluteVec(new Vec3(2.5, 1, 2.5));
@@ -104,9 +141,9 @@ public final class CulinaryGameTests {
         h.assertTrue(wheat != null && bread != null, "пшеница из датапака, хлеб из рецепта");
         // Хлеб — три пшеницы по составу, но калории не больше двух ванильных оценок (5 ед. × 90 × 2).
         // Со сборкой (FD) хлеб — из теста в печи (рецепт верстака убран датапаком), доли другие
-        if (!net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight"))
+        if (!ModList.get().isLoaded("farmersdelight"))
             h.assertTrue(Math.abs(bread.carbs() / bread.kcal() - wheat.carbs() / wheat.kcal()) < 1e-6, "доли — как у пшеницы");
-        h.assertTrue(bread.kcal() <= 5 * Settings.get().kcalPerFoodPoint * 2 + 1e-6 && bread.kcal() >= (net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight") ? 300 : 400), "хлеб " + bread.kcal() + " ккал");
+        h.assertTrue(bread.kcal() <= 5 * Settings.get().kcalPerFoodPoint * 2 + 1e-6 && bread.kcal() >= (ModList.get().isLoaded("farmersdelight") ? 300 : 400), "хлеб " + bread.kcal() + " ккал");
         h.assertTrue(beef != null && steak != null && Math.abs(steak.kcal() - beef.kcal()) < 1e-6, "жарка состав сохраняет");
         h.assertTrue(NutritionTable.get(server, Items.STONE) == null, "камень — не еда");
         h.assertTrue(NutritionTable.category(server, Items.BREAD) == NutritionState.category("grain"), "хлеб — зерно");
@@ -123,7 +160,7 @@ public final class CulinaryGameTests {
         Consumer<FoodEatenEvent> listener = e -> {
             if (e.getEntity() == p) heard.set(heard.get() + e.kcal());
         };
-        MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.NORMAL, false, FoodEatenEvent.class, listener);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, FoodEatenEvent.class, listener);
         double before = m.stomach;
         finish(p, new ItemStack(Items.BREAD));
         MinecraftForge.EVENT_BUS.unregister(listener);
@@ -190,10 +227,10 @@ public final class CulinaryGameTests {
         h.assertTrue(Math.abs(m.water - 70) < 1e-6, "последний глоток +20, было " + m.water);
         // Глоток из полной бутылки в руке: бутылка остаётся, глотков 1 из 2.
         ItemStack bottle = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
-        p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, bottle);
-        p.startUsingItem(net.minecraft.world.InteractionHand.MAIN_HAND);
+        p.setItemInHand(InteractionHand.MAIN_HAND, bottle);
+        p.startUsingItem(InteractionHand.MAIN_HAND);
         h.assertTrue(CulinaryService.sip(p), "глоток");
-        h.assertTrue(faygolover.rpculinary.server.Sips.left(p.getMainHandItem()) == 1, "остался 1 глоток из 2");
+        h.assertTrue(Sips.left(p.getMainHandItem()) == 1, "остался 1 глоток из 2");
         h.assertTrue(Math.abs(m.water - 90) < 1e-6, "глоток +20, было " + m.water);
         p.stopUsingItem();
         remove(h, p);
@@ -215,8 +252,8 @@ public final class CulinaryGameTests {
         int n = CulinaryService.bitesFor(p, stew, s);
         h.assertTrue(n >= 2, "кролик укусами: " + n);
         double before = m.stomach;
-        p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, stew);
-        p.startUsingItem(net.minecraft.world.InteractionHand.MAIN_HAND);
+        p.setItemInHand(InteractionHand.MAIN_HAND, stew);
+        p.startUsingItem(InteractionHand.MAIN_HAND);
         h.assertTrue(CulinaryService.bite(p), "первый укус");
         ItemStack held = p.getMainHandItem();
         h.assertTrue(!held.isEmpty() && held.getTag() != null && held.getTag().getInt(CulinaryService.BITES) == n - 1,
@@ -239,8 +276,8 @@ public final class CulinaryGameTests {
         h.assertTrue(Metabolism.hungerStage(m, Settings.get()) == 3, "голодает");
         h.assertTrue(p.getFoodData().getFoodLevel() >= CulinaryService.FOOD_ROOM, "ванильная сытость не ниже замка");
         h.assertTrue(p.getHealth() == p.getMaxHealth(), "голодного урона нет");
-        h.assertTrue(p.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).getModifier(
-                java.util.UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c11")) != null, "нет сил — медленнее");
+        h.assertTrue(p.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(
+                UUID.fromString("0f1e7a46-3c2b-4f1a-9c0e-7a6d2b5e8c11")) != null, "нет сил — медленнее");
         remove(h, p);
         h.succeed();
     }
@@ -267,20 +304,20 @@ public final class CulinaryGameTests {
     public static void cookingMarksQuality(GameTestHelper h) {
         ServerPlayer p = player(h);
         p.getInventory().add(new ItemStack(Items.COOKED_BEEF, 3));
-        MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerEvent.ItemSmeltedEvent(p, new ItemStack(Items.COOKED_BEEF, 3)));
+        MinecraftForge.EVENT_BUS.post(new PlayerEvent.ItemSmeltedEvent(p, new ItemStack(Items.COOKED_BEEF, 3)));
         p.tickCount = 10;
         tick(p, 1);
         int marked = 0;
         for (int i = 0; i < p.getInventory().getContainerSize(); i++) {
             ItemStack st = p.getInventory().getItem(i);
-            if (st.is(Items.COOKED_BEEF) && faygolover.rpculinary.server.CookingService.quality(st) >= 0) marked += st.getCount();
+            if (st.is(Items.COOKED_BEEF) && CookingService.quality(st) >= 0) marked += st.getCount();
         }
         h.assertTrue(marked == 3, "три стейка с качеством, было " + marked);
         // Качество при еде: хорошее — витамины сохраннее, подгоревшее — меньше калорий.
         ItemStack burnt = new ItemStack(Items.COOKED_BEEF);
         CompoundTag q = new CompoundTag();
-        q.putInt(faygolover.rpculinary.server.CookingService.Q, faygolover.rpculinary.core.Cooking.BURNT);
-        burnt.getOrCreateTag().put(faygolover.rpculinary.server.CookingService.TAG, q);
+        q.putInt(CookingService.Q, Cooking.BURNT);
+        burnt.getOrCreateTag().put(CookingService.TAG, q);
         NutritionState m = state(p);
         double before = m.stomach;
         finish(p, burnt);
@@ -288,10 +325,10 @@ public final class CulinaryGameTests {
         h.assertTrue(Math.abs(m.stomach - before - kcal * 0.85) < 1e-6, "подгорело — 85 % калорий, было " + (m.stomach - before));
         // Удачное блюдо не травит, даже если раньше считалось «сырым».
         ItemStack good = new ItemStack(Items.COOKED_BEEF);
-        faygolover.rpculinary.server.CookingService.put(good, faygolover.rpculinary.core.Cooking.GOOD, 0);
+        CookingService.put(good, Cooking.GOOD, 0);
         p.removeAllEffects();
-        for (int i = 0; i < 20; i++) CulinaryService.foodPoisoning(p, good, faygolover.rpculinary.core.Cooking.GOOD, 1, Settings.get());
-        h.assertTrue(!p.hasEffect(net.minecraft.world.effect.MobEffects.POISON), "хорошее блюдо не травит");
+        for (int i = 0; i < 20; i++) CulinaryService.foodPoisoning(p, good, Cooking.GOOD, 1, Settings.get());
+        h.assertTrue(!p.hasEffect(MobEffects.POISON), "хорошее блюдо не травит");
         remove(h, p);
         h.succeed();
     }
@@ -300,48 +337,48 @@ public final class CulinaryGameTests {
     @GameTest(template = T)
     public static void exoticGroups(GameTestHelper h) {
         var server = h.getLevel().getServer();
-        h.assertTrue((NutritionTable.exoticMask(server, Items.CHORUS_FRUIT) & faygolover.rpculinary.server.Exotic.bit("other_worlds")) != 0, "хорус — иные миры");
-        h.assertTrue((NutritionTable.exoticMask(server, Items.ROTTEN_FLESH) & faygolover.rpculinary.server.Exotic.bit("spoiled")) != 0, "гнилая плоть — испорченное");
-        h.assertTrue((NutritionTable.exoticMask(server, Items.RED_MUSHROOM) & faygolover.rpculinary.server.Exotic.bit("mushrooms")) != 0, "мухомор — дикие грибы");
+        h.assertTrue((NutritionTable.exoticMask(server, Items.CHORUS_FRUIT) & Exotic.bit("other_worlds")) != 0, "хорус — иные миры");
+        h.assertTrue((NutritionTable.exoticMask(server, Items.ROTTEN_FLESH) & Exotic.bit("spoiled")) != 0, "гнилая плоть — испорченное");
+        h.assertTrue((NutritionTable.exoticMask(server, Items.RED_MUSHROOM) & Exotic.bit("mushrooms")) != 0, "мухомор — дикие грибы");
         h.assertTrue(NutritionTable.exoticMask(server, Items.BREAD) == 0 && NutritionTable.exoticMask(server, Items.COOKED_BEEF) == 0
                 && NutritionTable.exoticMask(server, Items.BROWN_MUSHROOM) == 0, "хлеб, стейк, шампиньон — не экзотика");
-        h.assertTrue(new ItemStack(faygolover.rpculinary.item.ResearchNotes.NOTES.get()).is(net.minecraft.tags.ItemTags.BOOKSHELF_BOOKS), "журнал ставится на полку");
+        h.assertTrue(new ItemStack(ResearchNotes.NOTES.get()).is(ItemTags.BOOKSHELF_BOOKS), "журнал ставится на полку");
         ServerPlayer p = player(h);
-        int g = faygolover.rpculinary.server.Exotic.index("other_worlds");
+        int g = Exotic.index("other_worlds");
         if (RpCoreAPI.isSkillManaged(RpIds.COOKING)) {
-            h.assertTrue(!faygolover.rpculinary.server.Exotic.knows(p, g), "с Perks без записей — не знает");
-            ItemStack book = faygolover.rpculinary.item.ResearchNotes.of(g);
+            h.assertTrue(!Exotic.knows(p, g), "с Perks без записей — не знает");
+            ItemStack book = ResearchNotes.of(g);
             p.setItemInHand(InteractionHand.MAIN_HAND, book);
             book.use(h.getLevel(), p, InteractionHand.MAIN_HAND);
-            boolean able = faygolover.rpculinary.server.CookingService.level(p) >= faygolover.rpculinary.server.Exotic.minSkill(g);
-            h.assertTrue(faygolover.rpculinary.server.Exotic.knows(p, g) == able, "изучил только при нужном навыке");
+            boolean able = CookingService.level(p) >= Exotic.minSkill(g);
+            h.assertTrue(Exotic.knows(p, g) == able, "изучил только при нужном навыке");
             h.assertTrue(!p.getMainHandItem().isEmpty(), "записи не тратятся");
         } else {
-            h.assertTrue(faygolover.rpculinary.server.Exotic.knows(p, g), "без Perks знает всё");
+            h.assertTrue(Exotic.knows(p, g), "без Perks знает всё");
         }
         NutritionData d = NutritionData.get(p);
         d.parasitesAt = Math.max(1, d.bodyClock);
         p.tickCount = 3;
         tick(p, 1);
-        h.assertTrue(d.parasitesAt == 0 && p.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN), "паразиты проявились");
+        h.assertTrue(d.parasitesAt == 0 && p.hasEffect(MobEffects.MOVEMENT_SLOWDOWN), "паразиты проявились");
         // домашний фарш: (свинина+говядина)+(свинина+курица) = 2 свинина + говядина + курица; кратные доли сокращаются
         ItemStack m1 = new ItemStack(Items.PORKCHOP), m2 = new ItemStack(Items.PORKCHOP), m3 = new ItemStack(Items.BEEF);
-        faygolover.rpculinary.core.Source.setParts(m1, java.util.Map.of("pig", 1, "cow", 1), "pig");
-        faygolover.rpculinary.core.Source.setParts(m2, java.util.Map.of("pig", 1, "chicken", 1), "pig");
-        var mix = faygolover.rpculinary.core.Source.mix(java.util.List.of(m1, m2));
+        Source.setParts(m1, Map.of("pig", 1, "cow", 1), "pig");
+        Source.setParts(m2, Map.of("pig", 1, "chicken", 1), "pig");
+        var mix = Source.mix(List.of(m1, m2));
         h.assertTrue(mix.get("pig") == 2 && mix.get("cow") == 1 && mix.get("chicken") == 1, "смесь фаршей: " + mix);
-        faygolover.rpculinary.core.Source.setParts(m3, java.util.Map.of("cow", 2, "pig", 2), "cow");
-        h.assertTrue(faygolover.rpculinary.core.Source.parts(m3).get("cow") == 1 && faygolover.rpculinary.core.Source.home(m3), "2+2 → 1+1, домашний");
+        Source.setParts(m3, Map.of("cow", 2, "pig", 2), "cow");
+        h.assertTrue(Source.parts(m3).get("cow") == 1 && Source.home(m3), "2+2 → 1+1, домашний");
         // поваренные книги: база есть, разделы есть, запись в личную книгу — один раз
-        h.assertTrue(!faygolover.rpculinary.core.Cookbook.base().isEmpty() && faygolover.rpculinary.core.Cookbook.book("soups") != null, "книги прочитаны");
-        ItemStack nb = new ItemStack(faygolover.rpculinary.item.CookbookItems.NOTEBOOK.get());
-        h.assertTrue(faygolover.rpculinary.core.Cookbook.write(nb, "x:y") && !faygolover.rpculinary.core.Cookbook.write(nb, "x:y")
-                && faygolover.rpculinary.core.Cookbook.learned(nb).contains("x:y"), "рецепт переписан один раз");
+        h.assertTrue(!Cookbook.base().isEmpty() && Cookbook.book("soups") != null, "книги прочитаны");
+        ItemStack nb = new ItemStack(CookbookItems.NOTEBOOK.get());
+        h.assertTrue(Cookbook.write(nb, "x:y") && !Cookbook.write(nb, "x:y")
+                && Cookbook.learned(nb).contains("x:y"), "рецепт переписан один раз");
         NutritionData copy = new NutritionData();
         d.insectMeals = 2;
         copy.load(d.save());
         h.assertTrue(copy.insectMeals == 2, "привычка к насекомым сохраняется");
-        for (int i = 0; i < 6; i++) faygolover.rpculinary.server.ExoticEffects.sweets(p, d, 1, Settings.get());
+        for (int i = 0; i < 6; i++) ExoticEffects.sweets(p, d, 1, Settings.get());
         h.assertTrue(d.sweetPortions >= 5 && d.sugarUntil > server.getTickCount(), "сладкое: прилив и счёт порций");
         remove(h, p);
         h.succeed();
@@ -352,7 +389,7 @@ public final class CulinaryGameTests {
     public static void humanMeat(GameTestHelper h) {
         ServerPlayer p = player(h);
         NutritionData d = NutritionData.get(p);
-        for (int i = 0; i < 3; i++) faygolover.rpculinary.server.ExoticEffects.human(p, d, 1, Settings.get());
+        for (int i = 0; i < 3; i++) ExoticEffects.human(p, d, 1, Settings.get());
         finish(p, new ItemStack(Items.ROTTEN_FLESH));
         remove(h, p);
         h.succeed();
@@ -361,14 +398,14 @@ public final class CulinaryGameTests {
     /** Качество — только у финальных блюд: печь и костёр греют, верстак — нет; полуфабрикаты (тег no_quality) — не блюдо. */
     @GameTest(template = T)
     public static void finalDishesOnly(GameTestHelper h) {
-        h.assertTrue(faygolover.rpculinary.server.CookingService.heat(Blocks.FURNACE) && faygolover.rpculinary.server.CookingService.heat(Blocks.CAMPFIRE)
-                && !faygolover.rpculinary.server.CookingService.heat(Blocks.CRAFTING_TABLE), "печь и костёр греют, верстак — нет");
+        h.assertTrue(CookingService.heat(Blocks.FURNACE) && CookingService.heat(Blocks.CAMPFIRE)
+                && !CookingService.heat(Blocks.CRAFTING_TABLE), "печь и костёр греют, верстак — нет");
         ServerPlayer p = player(h);
-        h.assertTrue(faygolover.rpculinary.server.CookingService.dish(p, new ItemStack(Items.BREAD)), "хлеб — блюдо");
-        if (net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight")) {
-            for (String path : java.util.List.of("wheat_dough", "minced_beef", "raw_pasta", "cabbage_leaf")) {
-                var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("farmersdelight", path));
-                h.assertTrue(!faygolover.rpculinary.server.CookingService.dish(p, new ItemStack(item)), "farmersdelight:" + path + " — полуфабрикат");
+        h.assertTrue(CookingService.dish(p, new ItemStack(Items.BREAD)), "хлеб — блюдо");
+        if (ModList.get().isLoaded("farmersdelight")) {
+            for (String path : List.of("wheat_dough", "minced_beef", "raw_pasta", "cabbage_leaf")) {
+                var item = ForgeRegistries.ITEMS.getValue(new ResourceLocation("farmersdelight", path));
+                h.assertTrue(!CookingService.dish(p, new ItemStack(item)), "farmersdelight:" + path + " — полуфабрикат");
             }
         }
         remove(h, p);
@@ -383,11 +420,11 @@ public final class CulinaryGameTests {
                 "сырые говядина, курица, треска");
         h.assertTrue(!NutritionTable.raw(server, Items.COOKED_BEEF) && !NutritionTable.raw(server, Items.BREAD)
                 && !NutritionTable.raw(server, Items.ROTTEN_FLESH) && !NutritionTable.raw(server, Items.APPLE), "готовое и не мясо — не сырое");
-        if (net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight")) {
-            java.util.function.Function<String, net.minecraft.world.item.Item> fd = path ->
-                    net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("farmersdelight", path));
+        if (ModList.get().isLoaded("farmersdelight")) {
+            Function<String, Item> fd = path ->
+                    ForgeRegistries.ITEMS.getValue(new ResourceLocation("farmersdelight", path));
             h.assertTrue(!NutritionTable.raw(server, fd.apply("smoked_ham")), "копчёный окорок — не сырой");
-            for (String path : java.util.List.of("ham", "bacon", "minced_beef", "chicken_cuts", "cod_slice"))
+            for (String path : List.of("ham", "bacon", "minced_beef", "chicken_cuts", "cod_slice"))
                 h.assertTrue(NutritionTable.raw(server, fd.apply(path)), "farmersdelight:" + path + " — сырое");
         }
         h.succeed();
@@ -400,13 +437,13 @@ public final class CulinaryGameTests {
     @GameTest(template = T)
     public static void packDishesFromRecipes(GameTestHelper h) {
         var server = h.getLevel().getServer();
-        for (String ns : java.util.List.of("minecraft", "kaleidoscope_cookery", "kaleidoscope_tavern", "farmersdelight", "farm_and_charm",
+        for (String ns : List.of("minecraft", "kaleidoscope_cookery", "kaleidoscope_tavern", "farmersdelight", "farm_and_charm",
                 "brewery", "vinery", "candlelight", "herbalbrews")) {
-            if (!ns.equals("minecraft") && !net.minecraftforge.fml.ModList.get().isLoaded(ns)) continue;
-            java.util.EnumMap<NutritionTable.Source, Integer> counts = new java.util.EnumMap<>(NutritionTable.Source.class);
-            java.util.List<String> estimated = new java.util.ArrayList<>();
-            for (var item : net.minecraftforge.registries.ForgeRegistries.ITEMS) {
-                var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item);
+            if (!ns.equals("minecraft") && !ModList.get().isLoaded(ns)) continue;
+            EnumMap<NutritionTable.Source, Integer> counts = new EnumMap<>(NutritionTable.Source.class);
+            List<String> estimated = new ArrayList<>();
+            for (var item : ForgeRegistries.ITEMS) {
+                var id = ForgeRegistries.ITEMS.getKey(item);
                 if (id == null || !id.getNamespace().equals(ns)) continue;
                 var src = NutritionTable.source(server, item);
                 if (src == null) continue;
@@ -423,13 +460,13 @@ public final class CulinaryGameTests {
 
     /** Kaleidoscope: мастер (без RP Perks — уровень 10) поднимает их качество на ступень: обычное → отличное. */
     private static void kaleidoscopeQualityShift(GameTestHelper h) {
-        if (!net.minecraftforge.fml.ModList.get().isLoaded("kaleidoscope_cookery") || RpCoreAPI.isSkillManaged(RpIds.COOKING)) return;
-        var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("kaleidoscope_cookery", "borscht"));
+        if (!ModList.get().isLoaded("kaleidoscope_cookery") || RpCoreAPI.isSkillManaged(RpIds.COOKING)) return;
+        var item = ForgeRegistries.ITEMS.getValue(new ResourceLocation("kaleidoscope_cookery", "borscht"));
         ServerPlayer p = player(h);
         ItemStack bowl = new ItemStack(item, 2);
         bowl.getOrCreateTag().putInt("kaleidoscope_cookery:quality", 2);
         p.getInventory().add(bowl);
-        MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent(p, new ItemStack(item, 2), p.getInventory()));
+        MinecraftForge.EVENT_BUS.post(new PlayerEvent.ItemCraftedEvent(p, new ItemStack(item, 2), p.getInventory()));
         p.tickCount = 10;
         tick(p, 1);
         int better = 0;
@@ -445,38 +482,38 @@ public final class CulinaryGameTests {
     @GameTest(template = T)
     public static void butchery(GameTestHelper h) {
         Settings s = Settings.get();
-        h.assertTrue(faygolover.rpculinary.server.Butchering.loss(5, 2, s) == s.butcherLossFar
-                && faygolover.rpculinary.server.Butchering.loss(5, 4, s) == s.butcherLossNear
-                && faygolover.rpculinary.server.Butchering.loss(5, 5, s) == s.butcherLossAt
-                && faygolover.rpculinary.server.Butchering.loss(5, 6, s) == 0, "потери по порогу");
-        h.assertTrue(faygolover.rpculinary.server.Butchering.xp(5, 10, 12) == 0 && faygolover.rpculinary.server.Butchering.xp(5, 5, 12) > 0
-                && faygolover.rpculinary.server.Butchering.xp(10, 5, 12) > faygolover.rpculinary.server.Butchering.xp(1, 1, 12), "опыт за разрез");
-        double cow = faygolover.rpculinary.server.Butchering.slow(125, s), chicken = faygolover.rpculinary.server.Butchering.slow(2, s);
-        h.assertTrue(cow > 0.5 && cow <= s.carcassSlowMax && chicken <= 0.02 && faygolover.rpculinary.server.Butchering.slow(0, s) == 0,
+        h.assertTrue(Butchering.loss(5, 2, s) == s.butcherLossFar
+                && Butchering.loss(5, 4, s) == s.butcherLossNear
+                && Butchering.loss(5, 5, s) == s.butcherLossAt
+                && Butchering.loss(5, 6, s) == 0, "потери по порогу");
+        h.assertTrue(Butchering.xp(5, 10, 12) == 0 && Butchering.xp(5, 5, 12) > 0
+                && Butchering.xp(10, 5, 12) > Butchering.xp(1, 1, 12), "опыт за разрез");
+        double cow = Butchering.slow(125, s), chicken = Butchering.slow(2, s);
+        h.assertTrue(cow > 0.5 && cow <= s.carcassSlowMax && chicken <= 0.02 && Butchering.slow(0, s) == 0,
                 "замедление: корова " + cow + ", курица " + chicken);
-        h.assertTrue(faygolover.rpculinary.server.Butchering.mincerLoss(0) == 0.15 && faygolover.rpculinary.server.Butchering.mincerLoss(10) == 0.05,
+        h.assertTrue(Butchering.mincerLoss(0) == 0.15 && Butchering.mincerLoss(10) == 0.05,
                 "мясорубка: 15 % у новичка, 5 % у мастера");
-        if (!net.minecraftforge.fml.ModList.get().isLoaded("butchery")) {
+        if (!ModList.get().isLoaded("butchery")) {
             h.succeed();
             return;
         }
         var server = h.getLevel().getServer();
         for (String t : new String[]{"butchery:blocks/cow_cut_2_drop", "rpculinary:carcass/cow_forequarter", "minecraft:cow_cut_1_drop"})
-            h.assertTrue(server.getLootData().getLootTable(new net.minecraft.resources.ResourceLocation(t))
-                    != net.minecraft.world.level.storage.loot.LootTable.EMPTY, "таблица " + t + " загружена");
-        var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("butchery", "drained_cow_carcass"));
+            h.assertTrue(server.getLootData().getLootTable(new ResourceLocation(t))
+                    != LootTable.EMPTY, "таблица " + t + " загружена");
+        var block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("butchery", "drained_cow_carcass"));
         BlockPos rel = new BlockPos(1, 2, 1), pos = h.absolutePos(rel);
-        var prop = (net.minecraft.world.level.block.state.properties.IntegerProperty) block.getStateDefinition().getProperty("blockstate");
+        var prop = (IntegerProperty) block.getStateDefinition().getProperty("blockstate");
         h.getLevel().setBlock(pos, block.defaultBlockState().setValue(prop, 8), 3);
         var be = h.getLevel().getBlockEntity(pos);
         h.assertTrue(be != null, "у туши есть блок-сущность");
         be.getPersistentData().putBoolean("isDrained", true);
         ServerPlayer p = player(h);
-        p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
-                new net.minecraft.resources.ResourceLocation("butchery", "iron_cleaver"))));
+        p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ForgeRegistries.ITEMS.getValue(
+                new ResourceLocation("butchery", "iron_cleaver"))));
         var hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
         // Без Perks навык — 10 (порог коровы 5): без потерь, всё ровно. С Perks у тестового игрока 0: часть — в обрезки.
-        boolean exact = faygolover.rpculinary.server.Butchering.loss(5, faygolover.rpculinary.server.CookingService.level(p), s) == 0;
+        boolean exact = Butchering.loss(5, CookingService.level(p), s) == 0;
         MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos, hit));
         h.assertTrue(h.getLevel().getBlockState(pos).getValue(prop) == 8, "доп. разрез стадию не двигает");
         int chuck = dropped(h, pos, "butchery:raw_chuck_steak");
@@ -495,33 +532,33 @@ public final class CulinaryGameTests {
     /** Доска FD (блок 4): крупный кусок с весом в NBT режется ножом на порции по весу, доска пустеет. */
     @GameTest(template = T)
     public static void boardByWeight(GameTestHelper h) {
-        if (!net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight") || !net.minecraftforge.fml.ModList.get().isLoaded("butchery")) {
+        if (!ModList.get().isLoaded("farmersdelight") || !ModList.get().isLoaded("butchery")) {
             h.succeed();
             return;
         }
-        var board = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("farmersdelight", "cutting_board"));
+        var board = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("farmersdelight", "cutting_board"));
         BlockPos pos = h.absolutePos(new BlockPos(1, 2, 1));
         h.getLevel().setBlock(pos, board.defaultBlockState(), 3);
-        var handler = h.getLevel().getBlockEntity(pos).getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
-        ItemStack chuck = new ItemStack(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("butchery", "raw_chuck_steak")));
-        chuck.getOrCreateTag().putInt(faygolover.rpculinary.core.Weights.TAG_WEIGHT, 6000);
-        chuck.getOrCreateTag().putString(faygolover.rpculinary.core.Weights.TAG_SOURCE, "cow");
+        var handler = h.getLevel().getBlockEntity(pos).getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
+        ItemStack chuck = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("butchery", "raw_chuck_steak")));
+        chuck.getOrCreateTag().putInt(Weights.TAG_WEIGHT, 6000);
+        chuck.getOrCreateTag().putString(Weights.TAG_SOURCE, "cow");
         handler.insertItem(0, chuck, false);
         ServerPlayer p = player(h);
-        p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
-                new net.minecraft.resources.ResourceLocation("farmersdelight", "iron_knife"))));
-        boolean exact = faygolover.rpculinary.server.Butchering.loss(4, faygolover.rpculinary.server.CookingService.level(p), Settings.get()) == 0;
+        p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ForgeRegistries.ITEMS.getValue(
+                new ResourceLocation("farmersdelight", "iron_knife"))));
+        boolean exact = Butchering.loss(4, CookingService.level(p), Settings.get()) == 0;
         MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos,
                 new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false)));
         // один удар — одна порция (или обрезки), кусок худеет на 250 г и остаётся на доске; вид — «корова»
         ItemStack left = handler.getStackInSlot(0);
-        h.assertTrue(left.is(chuck.getItem()) && faygolover.rpculinary.core.Weights.nbtGrams(left) == 5750, "на доске осталось 5,75 кг, было " + faygolover.rpculinary.core.Weights.nbtGrams(left));
+        h.assertTrue(left.is(chuck.getItem()) && Weights.nbtGrams(left) == 5750, "на доске осталось 5,75 кг, было " + Weights.nbtGrams(left));
         int beef = dropped(h, pos, "minecraft:beef"), scraps = dropped(h, pos, "butchery:meat_scraps");
         h.assertTrue(exact ? beef == 1 : beef + scraps == 1, "одна часть за удар: говядина " + beef + ", обрезки " + scraps);
-        for (var ie : h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(2)))
-            h.assertTrue(faygolover.rpculinary.core.Source.list(ie.getItem()).contains("cow"), "часть помнит вид: корова");
-        if (net.minecraftforge.fml.ModList.get().isLoaded("farm_and_charm")) {
-            var mix = h.getLevel().getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("rpculinary", "bowl/home_mince"));
+        for (var ie : h.getLevel().getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(2)))
+            h.assertTrue(Source.list(ie.getItem()).contains("cow"), "часть помнит вид: корова");
+        if (ModList.get().isLoaded("farm_and_charm")) {
+            var mix = h.getLevel().getRecipeManager().byKey(new ResourceLocation("rpculinary", "bowl/home_mince"));
             h.assertTrue(mix.isPresent(), "смешанный фарш: рецепт есть (состав — из происхождения)");
         }
         h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
@@ -534,16 +571,16 @@ public final class CulinaryGameTests {
     public static void techniques(GameTestHelper h) {
         ServerPlayer p = player(h);
         boolean managed = RpCoreAPI.isSkillManaged(RpIds.COOKING);
-        h.assertTrue(faygolover.rpculinary.server.Techniques.allowed(p, faygolover.rpculinary.server.Techniques.VINTNER) == !managed,
+        h.assertTrue(Techniques.allowed(p, Techniques.VINTNER) == !managed,
                 "без Perks можно всем, с Perks без умения — нельзя");
-        var ham = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("farmersdelight", "smoked_ham"));
+        var ham = ForgeRegistries.ITEMS.getValue(new ResourceLocation("farmersdelight", "smoked_ham"));
         if (ham != null && ham != Items.AIR) {
             p.getInventory().add(new ItemStack(ham, 2));
-            boolean spoiled = faygolover.rpculinary.server.Techniques.spoilPreserves(p, ham, 2);
+            boolean spoiled = Techniques.spoilPreserves(p, ham, 2);
             h.assertTrue(spoiled == managed, "копчёный окорок без «Заготовщика» не вышел");
             h.assertTrue(p.getInventory().countItem(ham) == (managed ? 0 : 2), "испорченное убрано, у умеющего — осталось");
         }
-        var station = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("brewery", "wooden_brewingstation"));
+        var station = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("brewery", "wooden_brewingstation"));
         if (station != null && station != Blocks.AIR) {
             BlockPos pos = h.absolutePos(new BlockPos(1, 2, 1));
             h.getLevel().setBlock(pos, station.defaultBlockState(), 3);
@@ -559,7 +596,7 @@ public final class CulinaryGameTests {
     /** Мешки и ящики (блок 6): наполнить из стака, достать, стак 1; поставленная — хранит содержимое и отдаёт его. */
     @GameTest(template = T)
     public static void containers(GameTestHelper h) {
-        var crate = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("farmersdelight", "potato_crate"));
+        var crate = ForgeRegistries.ITEMS.getValue(new ResourceLocation("farmersdelight", "potato_crate"));
         if (crate == null || crate == Items.AIR) {
             h.succeed();
             return;
@@ -567,23 +604,23 @@ public final class CulinaryGameTests {
         ItemStack box = new ItemStack(crate);
         h.assertTrue(box.getMaxStackSize() == 1, "тара не стакается");
         ItemStack potatoes = new ItemStack(Items.POTATO, 64);
-        int moved = faygolover.rpculinary.core.Containers.fill(box, potatoes);
-        h.assertTrue(moved > 0 && faygolover.rpculinary.core.Containers.count(box) == moved && potatoes.getCount() == 64 - moved, "картофель положен");
-        h.assertTrue(faygolover.rpculinary.core.Containers.fill(box, new ItemStack(Items.CARROT, 4)) == 0, "морковь в ящик картофеля — нет");
-        ItemStack out = faygolover.rpculinary.core.Containers.take(box);
+        int moved = Containers.fill(box, potatoes);
+        h.assertTrue(moved > 0 && Containers.count(box) == moved && potatoes.getCount() == 64 - moved, "картофель положен");
+        h.assertTrue(Containers.fill(box, new ItemStack(Items.CARROT, 4)) == 0, "морковь в ящик картофеля — нет");
+        ItemStack out = Containers.take(box);
         h.assertTrue(out.is(Items.POTATO) && out.getCount() > 0, "достал стак");
-        int left = faygolover.rpculinary.core.Containers.count(box);
+        int left = Containers.count(box);
         // поставленный ящик: ПКМ картофелем — положить, пустой рукой — достать
         BlockPos pos = h.absolutePos(new BlockPos(1, 2, 1));
-        h.getLevel().setBlock(pos, ((net.minecraft.world.item.BlockItem) crate).getBlock().defaultBlockState(), 3);
+        h.getLevel().setBlock(pos, ((BlockItem) crate).getBlock().defaultBlockState(), 3);
         ServerPlayer p = player(h);
         p.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.POTATO, 10));
         var hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
         MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos, hit));
-        h.assertTrue(faygolover.rpculinary.server.ContainerFill.storedCount(h.getLevel(), pos) == 10 && p.getMainHandItem().isEmpty(), "в поставленный ящик положено 10");
+        h.assertTrue(ContainerFill.storedCount(h.getLevel(), pos) == 10 && p.getMainHandItem().isEmpty(), "в поставленный ящик положено 10");
         MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(p, InteractionHand.MAIN_HAND, pos, hit));
         h.assertTrue(p.getMainHandItem().is(Items.POTATO) && p.getMainHandItem().getCount() == 10
-                && faygolover.rpculinary.server.ContainerFill.storedCount(h.getLevel(), pos) == 0, "достал обратно");
+                && ContainerFill.storedCount(h.getLevel(), pos) == 0, "достал обратно");
         h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         h.assertTrue(left >= 0, "остаток считается");
         remove(h, p);
@@ -593,37 +630,37 @@ public final class CulinaryGameTests {
     /** Мясорубка Butchery без насадки для колбас не мелет говядину в фарш (решение 29.10); сладкое — мало калорий. */
     @GameTest(template = T)
     public static void butcheryGrinderNoMince(GameTestHelper h) throws Exception {
-        if (!net.minecraftforge.fml.ModList.get().isLoaded("butchery")) {
+        if (!ModList.get().isLoaded("butchery")) {
             h.succeed();
             return;
         }
-        var grinder = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("butchery", "meat_grinder"));
+        var grinder = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("butchery", "meat_grinder"));
         BlockPos pos = h.absolutePos(new BlockPos(1, 2, 1));
         h.getLevel().setBlock(pos, grinder.defaultBlockState(), 3);
-        var handler = (net.minecraftforge.items.IItemHandlerModifiable) h.getLevel().getBlockEntity(pos)
-                .getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
+        var handler = (IItemHandlerModifiable) h.getLevel().getBlockEntity(pos)
+                .getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
         handler.setStackInSlot(0, new ItemStack(Items.BEEF, 4));
         var exec = Class.forName("net.mcreator.butchery.procedures.MeatgrinderrecipeprocedureProcedure")
-                .getMethod("execute", net.minecraft.world.level.LevelAccessor.class, double.class, double.class, double.class);
+                .getMethod("execute", LevelAccessor.class, double.class, double.class, double.class);
         for (int i = 0; i < 300; i++) exec.invoke(null, h.getLevel(), (double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
         h.assertTrue(handler.getStackInSlot(0).is(Items.BEEF) && handler.getStackInSlot(0).getCount() == 4, "говядина не перемолота");
         for (int i = 0; i < handler.getSlots(); i++)
-            h.assertTrue(!String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(handler.getStackInSlot(i).getItem())).endsWith("_mince"), "фарша нет");
+            h.assertTrue(!String.valueOf(ForgeRegistries.ITEMS.getKey(handler.getStackInSlot(i).getItem())).endsWith("_mince"), "фарша нет");
         h.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         h.succeed();
     }
 
     private static int dropped(GameTestHelper h, BlockPos pos, String id) {
-        var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation(id));
+        var item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(id));
         int n = 0;
-        for (var ie : h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, new net.minecraft.world.phys.AABB(pos).inflate(2)))
+        for (var ie : h.getLevel().getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(2)))
             if (ie.getItem().is(item)) n += ie.getItem().getCount();
         return n;
     }
 
     private static void dish(GameTestHelper h, String ns, String path) {
-        if (!net.minecraftforge.fml.ModList.get().isLoaded(ns)) return;
-        var item = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation(ns, path));
+        if (!ModList.get().isLoaded(ns)) return;
+        var item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ns, path));
         h.assertTrue(item != null && item != Items.AIR, ns + ":" + path + " есть");
         var server = h.getLevel().getServer();
         Food f = NutritionTable.get(server, item);
@@ -640,8 +677,8 @@ public final class CulinaryGameTests {
         ServerPlayer feeder = player(h), eater = player(h);
         NutritionState m = state(eater);
         double feederBefore = state(feeder).stomach, before = m.stomach;
-        feeder.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.RABBIT_STEW));
-        var click = new PlayerInteractEvent.EntityInteract(feeder, net.minecraft.world.InteractionHand.MAIN_HAND, eater);
+        feeder.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.RABBIT_STEW));
+        var click = new PlayerInteractEvent.EntityInteract(feeder, InteractionHand.MAIN_HAND, eater);
         MinecraftForge.EVENT_BUS.post(click);
         h.assertTrue(click.isCanceled(), "ПКМ едой по человеку — кормление, а не своя еда");
         h.runAfterDelay(20, () -> h.assertTrue(m.stomach == before, "за секунду ещё не съел"));

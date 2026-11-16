@@ -15,6 +15,10 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.lwjgl.glfw.GLFW;
+import faygolover.rpculinary.core.Cookbook;
+import faygolover.rpculinary.item.CookbookItems;
+import faygolover.rpculinary.item.ResearchNotes;
+import net.minecraft.client.renderer.item.ItemProperties;
 
 /** Клиент: полоски в общем HUD, скрыть ванильные окорочка (и капли LSO), клавиша окна «Питание», подсказки. */
 public final class ClientSetup {
@@ -41,12 +45,12 @@ public final class ClientSetup {
     private static void setup(FMLClientSetupEvent e) {
         e.enqueueWork(() -> {
             // обложка журнала — по группе (D2): модель research_notes.json выбирает по этому значению
-            net.minecraft.client.renderer.item.ItemProperties.register(faygolover.rpculinary.item.ResearchNotes.NOTES.get(),
+            ItemProperties.register(ResearchNotes.NOTES.get(),
                     new ResourceLocation("rpculinary", "group"),
-                    (st, level, entity, seed) -> (faygolover.rpculinary.item.ResearchNotes.group(st) + 1) / 100f);
-            net.minecraft.client.renderer.item.ItemProperties.register(faygolover.rpculinary.item.CookbookItems.COOKBOOK.get(),
+                    (st, level, entity, seed) -> (ResearchNotes.group(st) + 1) / 100f);
+            ItemProperties.register(CookbookItems.COOKBOOK.get(),
                     new ResourceLocation("rpculinary", "section"),
-                    (st, level, entity, seed) -> (faygolover.rpculinary.core.Cookbook.SECTIONS.indexOf(faygolover.rpculinary.core.Cookbook.section(st)) + 1) / 100f);
+                    (st, level, entity, seed) -> (Cookbook.SECTIONS.indexOf(Cookbook.section(st)) + 1) / 100f);
             HudRegistry.register(new CulinaryHud.Satiety());
             HudRegistry.register(new CulinaryHud.Water());
         });

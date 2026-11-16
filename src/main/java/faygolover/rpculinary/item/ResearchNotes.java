@@ -21,6 +21,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import faygolover.rpculinary.server.CookingService;
 
 /**
  * Журнал (охотника, грибника…) или записи исследований по группе экзотики — от ГМа (решения Alex 29.10.2026; обложка
@@ -74,7 +75,7 @@ public class ResearchNotes extends Item {
         if (!(player instanceof ServerPlayer sp)) return InteractionResultHolder.success(st);
         int g = group(st);
         if (!Exotic.learnable(g)) return InteractionResultHolder.fail(st);
-        if (!Exotic.knows(sp, g) && faygolover.rpculinary.server.CookingService.level(sp) < Exotic.minSkill(g)) {
+        if (!Exotic.knows(sp, g) && CookingService.level(sp) < Exotic.minSkill(g)) {
             sp.displayClientMessage(Component.translatable("rpculinary.msg.notes_too_hard", Exotic.minSkill(g)).withStyle(ChatFormatting.GRAY), true);
             return InteractionResultHolder.fail(st);
         }

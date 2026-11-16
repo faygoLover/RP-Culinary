@@ -13,6 +13,17 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
+import faygolover.rpculinary.core.Containers;
+import faygolover.rpculinary.core.Cooking;
+import faygolover.rpculinary.core.MeatFood;
+import faygolover.rpculinary.core.Settings;
+import faygolover.rpculinary.core.Source;
+import faygolover.rpculinary.core.Weights;
+import faygolover.rpculinary.server.CookingService;
+import faygolover.rpculinary.server.CulinaryService;
+import faygolover.rpculinary.server.Sips;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
 
 /**
  * Подсказка у еды по навыку «Кулинария» (дизайн, §6.1): 0–1 — «съедобно», 2–3 — вид еды, 4–5 — словами, 6–8 —
@@ -35,18 +46,18 @@ public final class FoodTooltips {
     }
 
     public static void onTooltip(ItemTooltipEvent e) {
-        var box = faygolover.rpculinary.core.Containers.of(e.getItemStack().getItem());
+        var box = Containers.of(e.getItemStack().getItem());
         if (box != null) {  // мешок или ящик: что внутри и сколько вмещает
             var st = e.getItemStack();
-            int n = faygolover.rpculinary.core.Containers.count(st);
+            int n = Containers.count(st);
             if (n > 0) {
-                var it = faygolover.rpculinary.core.Containers.content(st);
-                int g = faygolover.rpculinary.core.Weights.nominal(it);
+                var it = Containers.content(st);
+                int g = Weights.nominal(it);
                 e.getToolTip().add(tr("box_fill", it.getDescription(), n,
-                        Component.literal(faygolover.rpculinary.core.Weights.format((int) Math.min(Integer.MAX_VALUE, (long) n * Math.max(1, g)))),
-                        Component.literal(faygolover.rpculinary.core.Weights.format((int) (box.kg() * 1000)))).withStyle(ChatFormatting.GRAY));
+                        Component.literal(Weights.format((int) Math.min(Integer.MAX_VALUE, (long) n * Math.max(1, g)))),
+                        Component.literal(Weights.format((int) (box.kg() * 1000)))).withStyle(ChatFormatting.GRAY));
             } else {
-                e.getToolTip().add(tr("box_empty", Component.literal(faygolover.rpculinary.core.Weights.format((int) (box.kg() * 1000)))).withStyle(ChatFormatting.GRAY));
+                e.getToolTip().add(tr("box_empty", Component.literal(Weights.format((int) (box.kg() * 1000)))).withStyle(ChatFormatting.GRAY));
             }
             e.getToolTip().add(tr("box_hint").withStyle(ChatFormatting.DARK_GRAY));
         }
@@ -57,34 +68,34 @@ public final class FoodTooltips {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(e.getItemStack().getItem());
         Food f = id != null ? ClientNutrition.FOODS.get(id) : null;
         if (f != null) {
-            var iid = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(e.getItemStack().getItem());
+            var iid = ForgeRegistries.ITEMS.getKey(e.getItemStack().getItem());
             Food meatPart = iid == null ? null : ClientNutrition.FOODS.get(new ResourceLocation("rpculinary_meat", iid.getNamespace() + "/" + iid.getPath()));
-            f = faygolover.rpculinary.core.MeatFood.adjust(e.getItemStack(), f.scale(faygolover.rpculinary.core.Weights.nutritionFactor(e.getItemStack())), meatPart);
+            f = MeatFood.adjust(e.getItemStack(), f.scale(Weights.nutritionFactor(e.getItemStack())), meatPart);
         }
         if (f == null || f.kcal() <= 0 && f.water() <= 0) return;
         List<Component> t = e.getToolTip();
         // Еда по частям: надкусанное — сколько осталось; большое целое — на сколько укусов (по шагу из таблицы).
         var tag = e.getItemStack().getTag();
-        if (tag != null && tag.getInt(faygolover.rpculinary.server.CulinaryService.BITES_N) > 1) {
-            t.add(tr("bites_left", tag.getInt(faygolover.rpculinary.server.CulinaryService.BITES),
-                    tag.getInt(faygolover.rpculinary.server.CulinaryService.BITES_N)).withStyle(ChatFormatting.YELLOW));
+        if (tag != null && tag.getInt(CulinaryService.BITES_N) > 1) {
+            t.add(tr("bites_left", tag.getInt(CulinaryService.BITES),
+                    tag.getInt(CulinaryService.BITES_N)).withStyle(ChatFormatting.YELLOW));
         } else {
-            int n = faygolover.rpculinary.server.CulinaryService.bites(f.kcal(), faygolover.rpculinary.core.Settings.get().biteKcal);
-            if (n > 1 && e.getItemStack().getUseAnimation() == net.minecraft.world.item.UseAnim.EAT)
+            int n = CulinaryService.bites(f.kcal(), Settings.get().biteKcal);
+            if (n > 1 && e.getItemStack().getUseAnimation() == UseAnim.EAT)
                 t.add(tr("bites", n).withStyle(ChatFormatting.GRAY));
         }
-        int q = faygolover.rpculinary.server.CookingService.quality(e.getItemStack());
-        if (q >= 0 && q < faygolover.rpculinary.core.Cooking.QUALITY.length) {
+        int q = CookingService.quality(e.getItemStack());
+        if (q >= 0 && q < Cooking.QUALITY.length) {
             ChatFormatting c = switch (q) {
-                case faygolover.rpculinary.core.Cooking.BURNT, faygolover.rpculinary.core.Cooking.OVERCOOKED -> ChatFormatting.DARK_GRAY;
-                case faygolover.rpculinary.core.Cooking.CHARCOAL -> ChatFormatting.DARK_RED;
-                case faygolover.rpculinary.core.Cooking.UNDERCOOKED -> ChatFormatting.RED;
-                case faygolover.rpculinary.core.Cooking.GOOD -> ChatFormatting.GREEN;
-                case faygolover.rpculinary.core.Cooking.EXCELLENT -> ChatFormatting.AQUA;
-                case faygolover.rpculinary.core.Cooking.MASTERPIECE -> ChatFormatting.GOLD;
+                case Cooking.BURNT, Cooking.OVERCOOKED -> ChatFormatting.DARK_GRAY;
+                case Cooking.CHARCOAL -> ChatFormatting.DARK_RED;
+                case Cooking.UNDERCOOKED -> ChatFormatting.RED;
+                case Cooking.GOOD -> ChatFormatting.GREEN;
+                case Cooking.EXCELLENT -> ChatFormatting.AQUA;
+                case Cooking.MASTERPIECE -> ChatFormatting.GOLD;
                 default -> ChatFormatting.WHITE;
             };
-            t.add(tr("quality", Component.translatable("rpculinary.quality." + faygolover.rpculinary.core.Cooking.QUALITY[q])).withStyle(c));
+            t.add(tr("quality", Component.translatable("rpculinary.quality." + Cooking.QUALITY[q])).withStyle(c));
         }
         int lvl = level();
         int cat = ClientNutrition.CATEGORIES.getOrDefault(id, -1);
@@ -114,21 +125,21 @@ public final class FoodTooltips {
     /** Вес куска: «Корова · 6 кг» у крупных (вес в NBT), «250 г» у остальных из таблицы весов. */
     static void weightLine(ItemTooltipEvent e) {
         var st = e.getItemStack();
-        int g = faygolover.rpculinary.core.Weights.grams(st);
+        int g = Weights.grams(st);
         Component src = sources(st);
         if (g <= 0) {  // блюдо: только «из кого»
             if (src != null) e.getToolTip().add(tr("meat_of", src).withStyle(ChatFormatting.GRAY));
             return;
         }
-        Component w = Component.literal(faygolover.rpculinary.core.Weights.format(g));
+        Component w = Component.literal(Weights.format(g));
         e.getToolTip().add(src == null ? tr("weight", w).withStyle(ChatFormatting.GRAY) : tr("weight_source", src, w).withStyle(ChatFormatting.GRAY));
     }
 
     /** «Кенгуру» или «Корова, свинья» — из пометки происхождения; null — пометки нет. */
-    static Component sources(net.minecraft.world.item.ItemStack st) {
-        if (!faygolover.rpculinary.core.Source.marked(st)) return null;
-        var list = faygolover.rpculinary.core.Source.entries(st);
-        net.minecraft.network.chat.MutableComponent out = Component.empty();
+    static Component sources(ItemStack st) {
+        if (!Source.marked(st)) return null;
+        var list = Source.entries(st);
+        MutableComponent out = Component.empty();
         for (int k = 0; k < list.size(); k++) {
             if (k > 0) out.append(", ");
             out.append(Component.translatable("rpculinary.source." + list.get(k).getKey()));
@@ -143,7 +154,7 @@ public final class FoodTooltips {
         if (d == null) return;
         int n = Math.max(1, d[0]), water = d[1];
         if (n > 1) {
-            int left = faygolover.rpculinary.server.Sips.left(e.getItemStack());
+            int left = Sips.left(e.getItemStack());
             e.getToolTip().add(tr("sips", left, n, Math.round(water / (double) n)).withStyle(ChatFormatting.AQUA));
         } else if (water != 0) {
             e.getToolTip().add(tr("drink_water", water).withStyle(ChatFormatting.AQUA));

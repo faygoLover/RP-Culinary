@@ -6,6 +6,14 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
+import faygolover.rpculinary.network.FoodTablePacket;
+import faygolover.rpculinary.server.Sips;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /** Что клиент знает о своём питании (от сервера). */
 public final class ClientNutrition {
@@ -31,26 +39,26 @@ public final class ClientNutrition {
         CATEGORIES.putAll(cats);
         DRINKS.clear();
         DRINKS.putAll(drinks);
-        faygolover.rpculinary.server.Sips.clientTotal = st -> {
+        Sips.clientTotal = st -> {
             int[] d = drink(st);
             return d == null ? 1 : d[0];
         };
     }
 
     /** Глотки и вода напитка по таблице (зелье воды — отдельно), или null. */
-    public static int[] drink(net.minecraft.world.item.ItemStack st) {
-        if (st.getItem() instanceof net.minecraft.world.item.PotionItem) {
-            var potion = net.minecraft.world.item.alchemy.PotionUtils.getPotion(st);
-            return potion == net.minecraft.world.item.alchemy.Potions.WATER
-                    ? DRINKS.get(faygolover.rpculinary.network.FoodTablePacket.WATER_POTION) : null;
+    public static int[] drink(ItemStack st) {
+        if (st.getItem() instanceof PotionItem) {
+            var potion = PotionUtils.getPotion(st);
+            return potion == Potions.WATER
+                    ? DRINKS.get(FoodTablePacket.WATER_POTION) : null;
         }
-        return DRINKS.get(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(st.getItem()));
+        return DRINKS.get(ForgeRegistries.ITEMS.getKey(st.getItem()));
     }
 
     /** Вышли из мира — забыть. */
     /** Сервер засчитал глоток или укус: снять «использую», зажатая ПКМ начнёт следующий. */
     public static void portionDone() {
-        var p = net.minecraft.client.Minecraft.getInstance().player;
+        var p = Minecraft.getInstance().player;
         if (p != null && p.isUsingItem()) p.stopUsingItem();
     }
 
@@ -67,9 +75,9 @@ public final class ClientNutrition {
     }
 
     /** Этот вид еды сейчас приелся (для замедления еды на клиенте). */
-    public static boolean fedUp(net.minecraft.world.item.ItemStack stack) {
+    public static boolean fedUp(ItemStack stack) {
         if (!known) return false;
-        Integer cat = CATEGORIES.get(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem()));
+        Integer cat = CATEGORIES.get(ForgeRegistries.ITEMS.getKey(stack.getItem()));
         return cat != null && cat >= 0 && (self.fedUpMask() & (1 << cat)) != 0;
     }
 

@@ -25,6 +25,18 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.function.BiConsumer;
+import com.mojang.brigadier.builder.ArgumentBuilder;
+import faygolover.rpculinary.RpCulinary;
+import faygolover.rpculinary.config.CulinaryConfig;
+import faygolover.rpculinary.item.ResearchNotes;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * {@code /rpculinary} (ГМ, уровень 2): посмотреть питание игрока, выставить сытость, воду, нутриенты, вес и жир.
@@ -59,17 +71,17 @@ public final class CulinaryCommands {
                 .then(set)
                 .then(Commands.literal("speed")
                         .executes(c -> speed(c.getSource(), -1))
-                        .then(Commands.argument("value", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg(0, 20))
-                                .executes(c -> speed(c.getSource(), com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "value")))))
+                        .then(Commands.argument("value", DoubleArgumentType.doubleArg(0, 20))
+                                .executes(c -> speed(c.getSource(), DoubleArgumentType.getDouble(c, "value")))))
                 .then(Commands.literal("audit").requires(src -> RpCoreAPI.debugCommands())
                         .executes(c -> audit(c.getSource(), ""))
                         .then(Commands.argument("namespace", StringArgumentType.word()).executes(c -> audit(c.getSource(),
                                 StringArgumentType.getString(c, "namespace")))))
                 .then(Commands.literal("notes").then(Commands.argument("group", StringArgumentType.word())
-                        .suggests((c, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(
+                        .suggests((c, b) -> SharedSuggestionProvider.suggest(
                                 Exotic.GROUPS.stream().filter(g -> Exotic.learnable(Exotic.index(g))), b))
                         .executes(c -> notes(c.getSource(), StringArgumentType.getString(c, "group"),
-                                java.util.List.of(c.getSource().getPlayerOrException())))
+                                List.of(c.getSource().getPlayerOrException())))
                         .then(Commands.argument("targets", EntityArgument.players()).executes(c -> notes(c.getSource(),
                                 StringArgumentType.getString(c, "group"), EntityArgument.getPlayers(c, "targets"))))))
                 .then(Commands.literal("reset").then(Commands.argument("targets", EntityArgument.players()).executes(c -> {
@@ -93,14 +105,14 @@ public final class CulinaryCommands {
             return 0;
         }
         for (ServerPlayer sp : targets) {
-            var st = faygolover.rpculinary.item.ResearchNotes.of(g);
+            var st = ResearchNotes.of(g);
             if (!sp.getInventory().add(st)) sp.drop(st, false);
         }
-        src.sendSuccess(() -> Component.translatable("rpculinary.cmd.notes", faygolover.rpculinary.item.ResearchNotes.groupName(g), targets.size()), true);
+        src.sendSuccess(() -> Component.translatable("rpculinary.cmd.notes", ResearchNotes.groupName(g), targets.size()), true);
         return targets.size();
     }
 
-    private static com.mojang.brigadier.builder.ArgumentBuilder<CommandSourceStack, ?> value(String name, double min, double max,
+    private static ArgumentBuilder<CommandSourceStack, ?> value(String name, double min, double max,
                                                                                          BiConsumer<NutritionState, Double> apply) {
         return Commands.literal(name).then(Commands.argument("value", DoubleArgumentType.doubleArg(min, max)).executes(c -> {
             double v = DoubleArgumentType.getDouble(c, "value");
@@ -123,11 +135,11 @@ public final class CulinaryCommands {
      */
     private static int audit(CommandSourceStack src, String namespace) {
         var server = src.getServer();
-        java.util.EnumMap<NutritionTable.Source, Integer> counts = new java.util.EnumMap<>(NutritionTable.Source.class);
-        java.util.List<String> estimated = new java.util.ArrayList<>();
+        EnumMap<NutritionTable.Source, Integer> counts = new EnumMap<>(NutritionTable.Source.class);
+        List<String> estimated = new ArrayList<>();
         StringBuilder file = new StringBuilder("# RP Culinary: состав еды (id, источник, ккал, Б, Ж, У, вит., вода)").append(System.lineSeparator());
-        for (net.minecraft.world.item.Item item : net.minecraftforge.registries.ForgeRegistries.ITEMS) {
-            var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item);
+        for (Item item : ForgeRegistries.ITEMS) {
+            var id = ForgeRegistries.ITEMS.getKey(item);
             if (id == null || (!namespace.isEmpty() && !id.getNamespace().equals(namespace))) continue;
             NutritionTable.Source src0 = NutritionTable.source(server, item);
             if (src0 == null) continue;
@@ -138,8 +150,8 @@ public final class CulinaryCommands {
             if (src0 == NutritionTable.Source.ESTIMATE) estimated.add(id.toString());
         }
         try {
-            java.nio.file.Files.writeString(server.getServerDirectory().toPath().resolve("rpculinary-audit.txt"), file.toString());
-        } catch (java.io.IOException ex) {
+            Files.writeString(server.getServerDirectory().toPath().resolve("rpculinary-audit.txt"), file.toString());
+        } catch (IOException ex) {
             src.sendFailure(Component.literal(ex.toString()));
         }
         src.sendSuccess(() -> Component.translatable("rpculinary.cmd.audit", counts.getOrDefault(NutritionTable.Source.RULE, 0),
@@ -154,7 +166,7 @@ public final class CulinaryCommands {
 
     /** Команды для общего списка {@code /rpcore commands}. */
     public static void describe() {
-        String m = faygolover.rpculinary.RpCulinary.MODID;
+        String m = RpCulinary.MODID;
         RpCoreAPI.registerCommand(m, "/rpculinary status [игрок]", "rpculinary.help.status", 2, false);
         RpCoreAPI.registerCommand(m, "/rpculinary set <игроки> satiety|water|protein|fat|carbs|vitamins|weight|bodyfat <число>",
                 "rpculinary.help.set", 2, false);
@@ -194,11 +206,11 @@ public final class CulinaryCommands {
 
     /** Скорость расхода еды и воды поверх суток RP: показать или поставить (в конфиг). */
     private static int speed(CommandSourceStack src, double value) {
-        if (value >= 0 && !faygolover.rpculinary.config.CulinaryConfig.setDouble("consumptionSpeed", value)) return 0;
+        if (value >= 0 && !CulinaryConfig.setDouble("consumptionSpeed", value)) return 0;
         Settings s = Settings.get();
         double day = RpCoreAPI.dayLengthSeconds() / 3600.0;
-        src.sendSuccess(() -> Component.translatable("rpculinary.cmd.speed", String.format(java.util.Locale.ROOT, "%.2f", s.consumptionSpeed),
-                String.format(java.util.Locale.ROOT, "%.1f", s.followRpDay ? day : s.hoursPerRpDay)).withStyle(ChatFormatting.GOLD), value >= 0);
+        src.sendSuccess(() -> Component.translatable("rpculinary.cmd.speed", String.format(Locale.ROOT, "%.2f", s.consumptionSpeed),
+                String.format(Locale.ROOT, "%.1f", s.followRpDay ? day : s.hoursPerRpDay)).withStyle(ChatFormatting.GOLD), value >= 0);
         return 1;
     }
 

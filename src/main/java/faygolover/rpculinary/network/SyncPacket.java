@@ -4,6 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
+import faygolover.rpculinary.client.ClientNutrition;
 
 /**
  * Своё питание — игроку: полоски HUD и окно «Питание».
@@ -47,7 +48,7 @@ public record SyncPacket(boolean hunger, int thirstMode, float satiety, float st
     }
 
     public static void handle(SyncPacket p, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> faygolover.rpculinary.client.ClientNutrition.set(p));
+        ctx.get().enqueueWork(() -> ClientNutrition.set(p));
         ctx.get().setPacketHandled(true);
     }
 }

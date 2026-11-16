@@ -9,6 +9,7 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
+import net.minecraft.world.item.Items;
 
 /**
  * Подкраска форм мяса в цвет вида (решения Alex 29.10, галерея q:tint, q:mince): у вида нет своего фарша, обрезков, котлеты,
@@ -39,7 +40,7 @@ public final class MeatColors {
     public static void register(RegisterColorHandlersEvent.Item e) {
         for (var en : MeatFood.FORMS.entrySet()) {
             Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(en.getKey()));
-            if (item == null || item == net.minecraft.world.item.Items.AIR) continue;
+            if (item == null || item == Items.AIR) continue;
             String nativeSp = en.getValue().nativeSpecies();
             e.register((stack, tint) -> tint == 0 ? tint(stack, nativeSp) : -1, item);
         }

@@ -21,6 +21,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Поваренная книга и личная книга рецептов (D3, решения Алекса 03.11): без красивых схем — список рецептов, справа ингредиенты
@@ -171,8 +173,8 @@ public class CookbookScreen extends Screen {
     private void renderRecipe(GuiGraphics g, Recipe<?> r, int x, int y, int mx, int my) {
         ItemStack out = r.getResultItem(minecraft.level.registryAccess());
         g.drawString(font, out.getHoverName(), x, y, 0xFF3B2A1A, false);
-        String type = String.valueOf(net.minecraftforge.registries.ForgeRegistries.RECIPE_SERIALIZERS.getKey(r.getSerializer()));
-        String rtype = String.valueOf(net.minecraft.core.registries.BuiltInRegistries.RECIPE_TYPE.getKey(r.getType()));
+        String type = String.valueOf(ForgeRegistries.RECIPE_SERIALIZERS.getKey(r.getSerializer()));
+        String rtype = String.valueOf(BuiltInRegistries.RECIPE_TYPE.getKey(r.getType()));
         String stKey = "rpculinary.station." + rtype.replace(':', '.');
         Component station = I18n.exists(stKey) ? Component.translatable(stKey) : Component.literal(rtype);
         g.drawString(font, Component.translatable("rpculinary.cookbook.station", station), x, y + 12, 0xFF6B5A44, false);

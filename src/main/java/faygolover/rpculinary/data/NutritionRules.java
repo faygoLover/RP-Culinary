@@ -19,6 +19,7 @@ import net.minecraft.world.item.Item;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Датапак {@code rpculinary/nutrition}: состав базовых ингредиентов — тех, что не крафтятся, а идут в рецепты
@@ -34,7 +35,7 @@ public final class NutritionRules {
     private NutritionRules() {}
 
     /** {@code category} — вид еды для «приелось» (−1 — не считается: напитки, исключения). */
-    public record Entry(Matcher<Item> items, Food food, int priority, int category, @org.jetbrains.annotations.Nullable Boolean raw, int perGrams) {}
+    public record Entry(Matcher<Item> items, Food food, int priority, int category, @Nullable Boolean raw, int perGrams) {}
 
     private static volatile List<Entry> entries = List.of();
 

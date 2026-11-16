@@ -43,6 +43,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import faygolover.rpculinary.core.MeatFood;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.Container;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.event.TickEvent;
 
 /**
  * Переработка мяса по одной части (решения Alex 29.10): вид мяса ({@link Source}) переходит на всё, что из него вышло.
@@ -127,7 +133,7 @@ public final class Processing {
         ItemStack tool = sp.getMainHandItem();
         if (!tool.is(KNIVES) || !(e.getLevel() instanceof ServerLevel level)) return;
         BlockEntity be = level.getBlockEntity(pos);
-        var cap = be == null ? null : be.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER).orElse(null);
+        var cap = be == null ? null : be.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
         if (!(cap instanceof IItemHandlerModifiable handler) || handler.getSlots() < 1) return;
         ItemStack stored = handler.getStackInSlot(0);
         int lvl = stored.isEmpty() ? -1 : Butchering.meatLevel(stored);
@@ -277,7 +283,7 @@ public final class Processing {
     private static CompoundTag load(ItemStack held, boolean creative) {
         CompoundTag t = new CompoundTag();
         if (id(held.getItem()).equals(SCRAPS_ID)) {
-            net.minecraft.nbt.ListTag q = new net.minecraft.nbt.ListTag();
+            ListTag q = new ListTag();
             int n = Math.min(MAX_SCRAPS, held.getCount());
             for (int i = 0; i < n; i++) q.add(held.copyWithCount(1).save(new CompoundTag()));
             t.put("scraps", q);
@@ -307,7 +313,7 @@ public final class Processing {
     private static boolean topUp(CompoundTag t, ItemStack held, boolean creative) {
         if (t.contains("scraps")) {
             if (!id(held.getItem()).equals(SCRAPS_ID)) return false;
-            net.minecraft.nbt.ListTag q = t.getList("scraps", 10);
+            ListTag q = t.getList("scraps", 10);
             int n = Math.min(held.getCount(), MAX_SCRAPS - q.size());
             if (n <= 0) return false;
             for (int i = 0; i < n; i++) q.add(held.copyWithCount(1).save(new CompoundTag()));
@@ -347,7 +353,7 @@ public final class Processing {
         ItemStack out = ItemStack.EMPTY;
         boolean done;
         if (cur.contains("scraps")) {  // 2 обрезка → 1 фарш, жирнее; разные виды — домашний
-            net.minecraft.nbt.ListTag q = cur.getList("scraps", 10);
+            ListTag q = cur.getList("scraps", 10);
             if (q.size() < 2) {
                 sp.displayClientMessage(Component.translatable("rpculinary.msg.mincer_more_scraps").withStyle(ChatFormatting.GRAY), true);
                 return;
@@ -357,7 +363,7 @@ public final class Processing {
             q.remove(0);
             out = new ItemStack(minceFor(level, a, lookOf(a)));
             Source.setParts(out, Source.mix(List.of(a, b)), lookOf(a));
-            out.getOrCreateTag().putBoolean(faygolover.rpculinary.core.MeatFood.FATTY, true);
+            out.getOrCreateTag().putBoolean(MeatFood.FATTY, true);
             cur.put("scraps", q);
             done = q.size() < 2 && q.isEmpty();
         } else {
@@ -367,7 +373,7 @@ public final class Processing {
             if (g >= PORTION) {
                 boolean fail = level.getRandom().nextDouble() < Butchering.mincerLoss(skill);
                 out = fail ? new ItemStack(item(SCRAPS_ID)) : new ItemStack(offal ? item("butchery:raw_beef_mince") : minceFor(level, piece, lookOf(piece)));
-                if (offal && !fail) out.getOrCreateTag().putBoolean(faygolover.rpculinary.core.MeatFood.OFFAL_FORM, true);
+                if (offal && !fail) out.getOrCreateTag().putBoolean(MeatFood.OFFAL_FORM, true);
                 g -= PORTION;
             } else {
                 if (g >= PORTION / 2) out = new ItemStack(item(SCRAPS_ID));
@@ -422,7 +428,7 @@ public final class Processing {
     /** Клик по миске — запомнить, какие фарши в ней лежат (после перемешивания миска их уже съела). */
     public static void onBowlClick(PlayerInteractEvent.RightClickBlock e) {
         if (!(e.getLevel() instanceof ServerLevel level) || !BOWL.equals(ForgeRegistries.BLOCKS.getKey(level.getBlockState(e.getPos()).getBlock()))) return;
-        if (!(level.getBlockEntity(e.getPos()) instanceof net.minecraft.world.Container c) || c.getContainerSize() < 5) return;
+        if (!(level.getBlockEntity(e.getPos()) instanceof Container c) || c.getContainerSize() < 5) return;
         List<ItemStack> minces = new ArrayList<>();
         for (int i = 0; i < 4 && minces.size() < 2; i++) {  // рецепт берёт два фарша: по порядку слотов, из одного слота — и два
             ItemStack st = c.getItem(i);
@@ -433,8 +439,8 @@ public final class Processing {
     }
 
     /** Раз в секунду: в выходе миски фарш без состава — домашний: предмет и облик первого фарша, доли — по смеси. */
-    public static void onServerTick(net.minecraftforge.event.TickEvent.ServerTickEvent e) {
-        if (e.phase != net.minecraftforge.event.TickEvent.Phase.END || BOWLS.isEmpty()) return;
+    public static void onServerTick(TickEvent.ServerTickEvent e) {
+        if (e.phase != TickEvent.Phase.END || BOWLS.isEmpty()) return;
         var it = BOWLS.values().iterator();
         while (it.hasNext()) {
             Object[] w = it.next();
@@ -444,7 +450,7 @@ public final class Processing {
                 it.remove();
                 continue;
             }
-            if (!(level.getBlockEntity((BlockPos) w[1]) instanceof net.minecraft.world.Container c) || c.getContainerSize() < 5) {
+            if (!(level.getBlockEntity((BlockPos) w[1]) instanceof Container c) || c.getContainerSize() < 5) {
                 it.remove();
                 continue;
             }
@@ -454,8 +460,8 @@ public final class Processing {
             ItemStack first = minces.get(0);
             ItemStack res = new ItemStack(first.getItem(), out.getCount());
             Source.setParts(res, Source.mix(minces), lookOf(first));
-            if (minces.stream().allMatch(m -> m.getTag() != null && m.getTag().getBoolean(faygolover.rpculinary.core.MeatFood.FATTY)))
-                res.getOrCreateTag().putBoolean(faygolover.rpculinary.core.MeatFood.FATTY, true);
+            if (minces.stream().allMatch(m -> m.getTag() != null && m.getTag().getBoolean(MeatFood.FATTY)))
+                res.getOrCreateTag().putBoolean(MeatFood.FATTY, true);
             c.setItem(4, res);
             c.setChanged();
             it.remove();
@@ -472,8 +478,8 @@ public final class Processing {
     }
 
     private static void spawnFront(ServerLevel level, BlockPos pos, BlockState bs, ItemStack st) {
-        Direction d = bs.hasProperty(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING)
-                ? bs.getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING).getClockWise() : Direction.NORTH;
+        Direction d = bs.hasProperty(HorizontalDirectionalBlock.FACING)
+                ? bs.getValue(HorizontalDirectionalBlock.FACING).getClockWise() : Direction.NORTH;
         Vec3 at = Vec3.atCenterOf(pos).relative(d, 0.7);
         ItemEntity ie = new ItemEntity(level, at.x, at.y, at.z, st);
         ie.setDeltaMovement(d.getStepX() * 0.1, 0.05, d.getStepZ() * 0.1);

@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Группы экзотики (собраны заново 29.10.2026, ответы Alex в галерее; состав — {@code tools/groups_spec.py} →
@@ -32,7 +33,7 @@ public final class Exotic {
     private static final Map<String, Integer> SKILL = Map.of("game", 3, "seafood", 3, "fugu", 7, "deep_sea", 4, "insects", 2,
             "offal", 3, "mushrooms", 4, "other_worlds", 6, "monsters", 7);
     /** Знание — записи исследований, а не повседневный журнал. */
-    private static final java.util.Set<String> RESEARCH = java.util.Set.of("other_worlds", "monsters");
+    private static final Set<String> RESEARCH = Set.of("other_worlds", "monsters");
     /** Черта «Каннибал» и «Аллергия на морепродукты» (перки RP Perks). */
     public static final ResourceLocation CANNIBAL = new ResourceLocation(RpCulinary.MODID, "cannibal"),
             SEAFOOD_ALLERGY = new ResourceLocation(RpCulinary.MODID, "seafood_allergy");

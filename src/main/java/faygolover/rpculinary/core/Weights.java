@@ -14,6 +14,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Вес и стак ингредиентов (блок 2 переделки, решения Alex 28–29.10): таблица {@code assets/rpculinary/weights.json}
@@ -34,7 +36,7 @@ public final class Weights {
     private static final Entry NONE = new Entry(0, 0);
     private static Map<String, Entry> raw;
     /** Кэш по предмету; «нет в таблице» тоже кэшируется, но только после регистрации предмета. */
-    private static final Map<Item, Entry> CACHE = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final Map<Item, Entry> CACHE = new ConcurrentHashMap<>();
 
     private static Entry entry(Item item) {
         Entry e = CACHE.get(item);
@@ -109,7 +111,7 @@ public final class Weights {
     public static String format(int grams) {
         if (grams >= 1000) {
             double kg = grams / 1000.0;
-            return (kg == Math.rint(kg) ? String.valueOf((int) kg) : String.format(java.util.Locale.ROOT, "%.1f", kg).replace('.', ',')) + " кг";
+            return (kg == Math.rint(kg) ? String.valueOf((int) kg) : String.format(Locale.ROOT, "%.1f", kg).replace('.', ',')) + " кг";
         }
         return grams + " г";
     }

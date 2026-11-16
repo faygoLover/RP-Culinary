@@ -8,6 +8,7 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import faygolover.rpculinary.client.ClientNutrition;
 
 /** Состав всей известной еды и её виды — для подсказок (шлётся при входе и перезагрузке датапаков). */
 public record FoodTablePacket(Map<ResourceLocation, Food> foods, Map<ResourceLocation, Integer> categories,
@@ -54,7 +55,7 @@ public record FoodTablePacket(Map<ResourceLocation, Food> foods, Map<ResourceLoc
     }
 
     public static void handle(FoodTablePacket p, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> faygolover.rpculinary.client.ClientNutrition.setFoods(p.foods, p.categories, p.drinks));
+        ctx.get().enqueueWork(() -> ClientNutrition.setFoods(p.foods, p.categories, p.drinks));
         ctx.get().setPacketHandled(true);
     }
 }

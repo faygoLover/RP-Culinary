@@ -1,5 +1,8 @@
 package faygolover.rpculinary.core;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+
 /** Питание одного игрока. Чистые данные: сохраняет их {@code NutritionData}, считает {@link Metabolism}. */
 public final class NutritionState {
     public static final int PROTEIN = 0, FAT = 1, CARBS = 2, VITAMINS = 3, COUNT = 4;
@@ -51,7 +54,7 @@ public final class NutritionState {
     public final double[] monotony = new double[CATEGORIES.length];
     /** То же по способам и по блюдам (id предмета → порции; старые вытесняются). */
     public final double[] methodMono = new double[METHODS.length];
-    public final java.util.LinkedHashMap<String, Double> dishMono = new java.util.LinkedHashMap<>();
+    public final LinkedHashMap<String, Double> dishMono = new LinkedHashMap<>();
     /** «Сыт и доволен»: RP-сутки ({@code dayTime / 24000}), какие виды за них ели (биты), уже было ли. */
     public long varietyDay = -1;
     public int varietyMask;
@@ -109,9 +112,9 @@ public final class NutritionState {
         energy = Math.min(1, s.startSatiety) * s.reserveKcal;
         stomach = 0;
         water = s.startWater;
-        java.util.Arrays.fill(nutrients, s.nutrientStart);
-        java.util.Arrays.fill(monotony, 0);
-        java.util.Arrays.fill(methodMono, 0);
+        Arrays.fill(nutrients, s.nutrientStart);
+        Arrays.fill(monotony, 0);
+        Arrays.fill(methodMono, 0);
         dishMono.clear();
         setBody(Double.isNaN(weightKg) ? s.defaultWeightKg : weightKg, Double.isNaN(fatPercent) ? s.defaultFatPercent : fatPercent, s);
         initialized = true;

@@ -4,6 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
+import faygolover.rpculinary.client.ClientNutrition;
 
 /**
  * Сервер: глоток или укус сделан, предмет остался в руке. Клиент снимает «использую» (у своего игрока оно не
@@ -18,7 +19,7 @@ public record PortionDonePacket() {
     }
 
     public static void handle(PortionDonePacket p, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(faygolover.rpculinary.client.ClientNutrition::portionDone);
+        ctx.get().enqueueWork(ClientNutrition::portionDone);
         ctx.get().setPacketHandled(true);
     }
 }

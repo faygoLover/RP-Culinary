@@ -45,6 +45,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import faygolover.rpculinary.core.Source;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import net.minecraft.world.item.Items;
 
 /**
  * Разделка туш Butchery (блок 3 переделки, решения Alex 28–29.10): доп. разрезы между «родными» стадиями, потери в
@@ -112,7 +116,7 @@ public final class Butchering {
     private static Map<String, Carcass> blocks;
     /** Порог нарезки по предмету (самый простой вид, с чьей туши он падает) и по виду из NBT {@code rpculinary:source}. */
     private static final Map<String, Integer> ITEM_LEVEL = new HashMap<>(), SPECIES_LEVEL = new HashMap<>();
-    private static final Map<Item, Carcass> BY_ITEM = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final Map<Item, Carcass> BY_ITEM = new ConcurrentHashMap<>();
     private static final Carcass NONE = new Carcass("", 0, 0, Map.of());
 
     static Map<String, Carcass> blocks() {
@@ -128,7 +132,7 @@ public final class Butchering {
                     JsonObject o = e.getValue().getAsJsonObject();
                     Map<Integer, List<String>> extra = new HashMap<>();
                     if (o.has("extra")) for (var x : o.getAsJsonObject("extra").entrySet()) {
-                        List<String> tables = new java.util.ArrayList<>();
+                        List<String> tables = new ArrayList<>();
                         x.getValue().getAsJsonArray().forEach(t -> tables.add(t.getAsString()));
                         extra.put(Integer.parseInt(x.getKey()), List.copyOf(tables));
                     }
@@ -162,7 +166,7 @@ public final class Butchering {
     /** Мясо для нарезки: уровень вида (из NBT, иначе по предмету) или -1. */
     static int meatLevel(ItemStack st) {
         blocks();
-        var src = faygolover.rpculinary.core.Source.list(st);
+        var src = Source.list(st);
         Integer bySource = src.isEmpty() ? null : SPECIES_LEVEL.get(src.get(0));
         if (bySource != null) return bySource;
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(st.getItem());
@@ -233,7 +237,7 @@ public final class Butchering {
 
     static void spawnScraps(ServerLevel level, BlockPos pos, int n) {
         Item scraps = ForgeRegistries.ITEMS.getValue(SCRAPS);
-        if (scraps == null || scraps == net.minecraft.world.item.Items.AIR) return;
+        if (scraps == null || scraps == Items.AIR) return;
         while (n > 0) {
             ItemStack st = new ItemStack(scraps, Math.min(n, new ItemStack(scraps).getMaxStackSize()));
             n -= st.getCount();
