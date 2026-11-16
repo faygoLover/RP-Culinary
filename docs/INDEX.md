@@ -1,36 +1,36 @@
 # RP Culinary — указатель кода
 
-Создано `python _family/tools/mapgen.py`, версия мода 0.9.1-1.20.1-forge.
+Создано `python _family/tools/mapgen.py`, версия мода 0.9.2-1.20.1-forge.
 **Руками не править**: пересоздаётся скриптом. Смысл, потоки работы и рецепты — в `docs/MAP.md`.
 Разбор по шаблонам, без компиляции: необычно оформленная регистрация может отсутствовать в списках.
 
-Всего: 64 файлов, 10100 строк Java.
+Всего: 63 файлов, 9961 строк Java.
 
 ## 1. Пакеты
 
 | Пакет | Файлов | Строк |
 |---|---:|---:|
-| `faygolover.rpculinary` | 1 | 140 |
-| `faygolover.rpculinary.capability` | 1 | 208 |
+| `faygolover.rpculinary` | 1 | 124 |
+| `faygolover.rpculinary.capability` | 1 | 200 |
 | `faygolover.rpculinary.client` | 9 | 1089 |
-| `faygolover.rpculinary.config` | 1 | 93 |
+| `faygolover.rpculinary.config` | 1 | 40 |
 | `faygolover.rpculinary.core` | 13 | 1946 |
-| `faygolover.rpculinary.data` | 3 | 201 |
+| `faygolover.rpculinary.data` | 2 | 141 |
 | `faygolover.rpculinary.gametest` | 3 | 989 |
 | `faygolover.rpculinary.integration` | 2 | 93 |
 | `faygolover.rpculinary.item` | 2 | 182 |
 | `faygolover.rpculinary.mixin` | 4 | 173 |
 | `faygolover.rpculinary.network` | 6 | 307 |
 | `faygolover.rpculinary.pack` | 1 | 35 |
-| `faygolover.rpculinary.server` | 18 | 4644 |
+| `faygolover.rpculinary.server` | 18 | 4642 |
 
 ## 2. Классы
 
 ### `faygolover.rpculinary`
-- `RpCulinary`, 140 — RP Culinary — питание для семейства RP-модов (дизайн — docs/01_design.md): сытость в калориях вместо окорочков, вода, нутриенты, вес и жир от еды.
+- `RpCulinary`, 124 — RP Culinary — питание для семейства RP-модов (дизайн — docs/01_design.md): сытость в калориях вместо окорочков, вода, нутриенты, вес и жир от еды.
 
 ### `faygolover.rpculinary.capability`
-- `NutritionData`, 208 — Питание игрока (сохраняется) и служебное состояние сервера (не сохраняется).
+- `NutritionData`, 200 — Питание игрока (сохраняется) и служебное состояние сервера (не сохраняется).
 
 ### `faygolover.rpculinary.client`
 - `ClientNutrition`, 88 — Что клиент знает о своём питании (от сервера).
@@ -44,7 +44,7 @@
 - `PortionBars`, 51 — Шкала на иконке, как у прочности: сколько глотков осталось у начатого напитка (голубая) и укусов у надкусанного блюда (тёплая).
 
 ### `faygolover.rpculinary.config`
-- `CulinaryConfig`, 93 — Настройки сервера (serverconfig/rpculinary-server.toml): по одной на каждое поле Settings с пометкой Settings.Cfg.
+- `CulinaryConfig`, 40 — Настройки сервера (serverconfig/rpculinary-server.toml): по одной на каждое поле Settings с пометкой Settings.Cfg.
 
 ### `faygolover.rpculinary.core`
 - `Boredom`, 98 — «Приелось» по трём осям (решения Alex 26.10): вид еды («из чего», NutritionState#CATEGORIES), способ («как приготовлено», NutritionState#METHODS) и само блюдо (id предмета).
@@ -63,8 +63,7 @@
 
 ### `faygolover.rpculinary.data`
 - `DrinkRules`, 63 — Датапак rpculinary/drinks: сколько воды (проценты полоски) даёт напиток.
-- `Matcher`, 61 — Список id и тегов (#namespace:path) для сопоставления с объектом реестра.
-- `NutritionRules`, 77 — Датапак rpculinary/nutrition: состав базовых ингредиентов — тех, что не крафтятся, а идут в рецепты (зерно, овощи, сырое мясо, молоко).
+- `NutritionRules`, 78 — Датапак rpculinary/nutrition: состав базовых ингредиентов — тех, что не крафтятся, а идут в рецепты (зерно, овощи, сырое мясо, молоко).
 
 ### `faygolover.rpculinary.gametest`
 - `CulinaryEdgeTests`, 158 — Края состояния питания: каждое поле в сохранении, смерть, возврат из Края, перезаход.
@@ -103,7 +102,7 @@
 - `CookingService`, 405 — Готовка (дизайн, §6.2).
 - `CulinaryCommands`, 241 — /rpculinary (ГМ, уровень 2): посмотреть питание игрока, выставить сытость, воду, нутриенты, вес и жир.
 - `CulinaryProvider`, 143 — RP Culinary — мод питания для RP Core: остальные моды семейства берут голод, воду, нутриенты и вес отсюда.
-- `CulinaryService`, 895 — Питание на сервере (дизайн, §3–4).
+- `CulinaryService`, 893 — Питание на сервере (дизайн, §3–4).
 - `CulinaryStatus`, 37 — Жалобы на питание для осмотра RP Medicine: врач слышит то же, что пациент видит у себя в окне «Питание» — голод и каждый нутриент не в норме, словами.
 - `Exotic`, 145 — Группы экзотики (собраны заново 29.10.2026, ответы Alex в галерее; состав — tools/groups_spec.py → tools/gen_groups.py → теги rpculinary:exotic/ ).
 - `ExoticEffects`, 326 — Группы экзотики действуют на того, кто ест (решения Alex 29.10.2026, группы — Exotic): от природы продукта и от того, как его приготовили.
@@ -116,7 +115,7 @@
 - `SkillYield`, 58 — Функция добычи rpculinary:skill_yield (блок 3 переделки): на мясе и органах в таблицах разделки туш.
 - `Techniques`, 78 — Техники по умению (решения Alex 29.10.2026): без перка — «нельзя».
 
-Классов без описания: 0 из 64.
+Классов без описания: 0 из 63.
 
 ## 3. Подписки на события
 
@@ -124,7 +123,6 @@
 |---|---|
 | `AddPackFindersEvent` | `FoodPack.addPacks` |
 | `AddReloadListenerEvent` | `RpCulinary.reloadListeners` |
-| `AttachCapabilitiesEvent` | `RpCulinary.attachCaps` |
 | `BlockEvent.BreakEvent` | `ContainerFill.onBreak` |
 | `BlockEvent.EntityPlaceEvent` | `ContainerFill.onPlace` |
 | `ClientPlayerNetworkEvent.LoggingOut` | `ClientSetup.onLogout` |
@@ -142,16 +140,13 @@
 | `OnDatapackSyncEvent` | `CulinaryService.onDatapackSync` |
 | `PlayerContainerEvent.Close` | `CookingService.onContainerClose` |
 | `PlayerContainerEvent.Open` | `CookingService.onContainerOpen` |
-| `PlayerEvent.Clone` | `CulinaryService.onClone` |
 | `PlayerEvent.ItemCraftedEvent` | `CookingService.onCrafted` |
 | `PlayerEvent.ItemSmeltedEvent` | `CookingService.onSmelted` |
-| `PlayerEvent.PlayerLoggedInEvent` | `CulinaryService.onLogin`, `Feeding.onLogin` |
+| `PlayerEvent.PlayerLoggedInEvent` | `Feeding.onLogin` |
 | `PlayerEvent.PlayerLoggedOutEvent` | `CookingService.forget` |
-| `PlayerEvent.PlayerRespawnEvent` | `CulinaryService.onRespawn` |
 | `PlayerInteractEvent.EntityInteract` | `Feeding.onEntityInteract` |
 | `PlayerInteractEvent.RightClickBlock` | `Butchering.afterRightClick`, `Butchering.onRightClick`, `ContainerFill.onRightClickBlock`, `CookingService.onHandsCheck`, `CookingService.onRightClickBlock`, `CulinaryService.onRightClickBlock`, `Processing.onBowlClick`, `Processing.onMincer`, `Techniques.onRightClickBlock` |
 | `PlayerInteractEvent.RightClickItem` | `Sips.onRightClick` |
-| `RegisterCapabilitiesEvent` | `RpCulinary.registerCaps` |
 | `RegisterColorHandlersEvent.Item` | `MeatColors.register` |
 | `RegisterCommandsEvent` | `CulinaryCommands.register` |
 | `RegisterItemDecorationsEvent` | `PortionBars.register` |
@@ -196,7 +191,7 @@
 
 ## 7. Конфиги
 
-- server: `CulinaryConfig`, вызовов define 2
+- server: `CulinaryConfig`, вызовов define 0
 
 ## 8. Что берёт из RP Core и что ему даёт
 
@@ -219,7 +214,7 @@
 - `ExoticEffects` → `faygolover.rpmedicine.server.Medical`
 - `ExoticEffects` → `mekanism.api.radiation.IRadiationManager`
 
-Пакеты других модов семейства в коде: `rpcore` — 18 файлов; `rpmedicine` — 1 файлов; `rpperks` — 1 файлов; `rppsyche` — 1 файлов.
+Пакеты других модов семейства в коде: `rpcore` — 21 файлов; `rpmedicine` — 1 файлов; `rpperks` — 1 файлов; `rppsyche` — 1 файлов.
 
 Миксины (4):
 - `ItemStackMixin` (mixins) → ItemStack.class, priority = 500

@@ -10,13 +10,9 @@ import faygolover.rpculinary.network.Net;
 import faygolover.rpculinary.server.CulinaryCommands;
 import faygolover.rpculinary.server.CulinaryProvider;
 import faygolover.rpculinary.server.CulinaryService;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraft.world.entity.Entity;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -49,7 +45,7 @@ public class RpCulinary {
         var modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CulinaryConfig.SPEC);
         modBus.addListener(this::commonSetup);
-        modBus.addListener(this::registerCaps);
+        NutritionData.register();
         modBus.addListener(this::onConfig);
         modBus.addListener(this::onConfigReload);
         faygolover.rpculinary.item.CookbookItems.init();
@@ -59,7 +55,6 @@ public class RpCulinary {
         faygolover.rpculinary.server.SkillYield.TYPES.register(modBus);
 
         var bus = MinecraftForge.EVENT_BUS;
-        bus.addGenericListener(Entity.class, this::attachCaps);
         bus.addListener(this::reloadListeners);
         bus.addListener(CulinaryCommands::register);
         bus.addListener(CulinaryService::onPlayerTick);
@@ -76,9 +71,6 @@ public class RpCulinary {
         bus.addListener(CulinaryService::onRightClickBlock);
         bus.addListener(CulinaryService::onStaminaRestored);
         bus.addListener(CulinaryService::onAttack);
-        bus.addListener(CulinaryService::onClone);
-        bus.addListener(CulinaryService::onLogin);
-        bus.addListener(CulinaryService::onRespawn);
         bus.addListener(CulinaryService::onDatapackSync);
         bus.addListener(faygolover.rpculinary.server.CookingService::onRightClickBlock);
         bus.addListener(faygolover.rpculinary.server.CookingService::onContainerOpen);
@@ -114,14 +106,6 @@ public class RpCulinary {
             faygolover.rpcore.api.StatusLines.register(faygolover.rpculinary.server.CulinaryStatus.INSTANCE);
             CulinaryCommands.describe();
         });
-    }
-
-    private void registerCaps(RegisterCapabilitiesEvent e) {
-        e.register(NutritionData.class);
-    }
-
-    private void attachCaps(AttachCapabilitiesEvent<Entity> e) {
-        if (e.getObject() instanceof Player) e.addCapability(NutritionData.ID, new NutritionData.Provider());
     }
 
     private void reloadListeners(AddReloadListenerEvent e) {

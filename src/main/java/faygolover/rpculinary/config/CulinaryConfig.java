@@ -1,67 +1,29 @@
 package faygolover.rpculinary.config;
 
+import faygolover.rpcore.api.config.SettingsBinder;
 import faygolover.rpculinary.RpCulinary;
 import faygolover.rpculinary.core.Settings;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Настройки сервера ({@code serverconfig/rpculinary-server.toml}): по одной на каждое поле {@link Settings} с пометкой
- * {@link Settings.Cfg}. Имя в файле — имя поля через подчёркивания, раздел и описание — из пометки.
+ * {@link Settings.Cfg}. Имя в файле — имя поля через подчёркивания, раздел и описание — из пометки. Привязку ведёт
+ * {@link SettingsBinder} RP Core; новая настройка — это поле с пометкой в {@link Settings}, здесь править нечего.
  */
 public final class CulinaryConfig {
     private CulinaryConfig() {}
 
-    private record Bound(Field field, ForgeConfigSpec.ConfigValue<?> value) {}
-
-    private static final List<Bound> BOUND = new ArrayList<>();
-    public static final ForgeConfigSpec SPEC;
-
-    static {
-        ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
-        Settings def = new Settings();
-        Map<String, List<Field>> sections = new LinkedHashMap<>();
-        for (Field f : Settings.class.getFields()) {
-            if (Modifier.isStatic(f.getModifiers())) continue;
-            Settings.Cfg c = f.getAnnotation(Settings.Cfg.class);
-            if (c != null) sections.computeIfAbsent(c.section(), k -> new ArrayList<>()).add(f);
-        }
-        try {
-            for (var e : sections.entrySet()) {
-                b.push(e.getKey());
-                for (Field f : e.getValue()) {
-                    String doc = f.getAnnotation(Settings.Cfg.class).doc();
-                    if (!doc.isEmpty()) b.comment(" " + doc);
-                    String key = snake(f.getName());
-                    ForgeConfigSpec.ConfigValue<?> v = f.getType() == boolean.class
-                            ? b.define(key, f.getBoolean(def))
-                            : b.defineInRange(key, f.getDouble(def), -1e9, 1e9);
-                    BOUND.add(new Bound(f, v));
-                }
-                b.pop();
-            }
-        } catch (IllegalAccessException ex) {
-            throw new IllegalStateException(ex);
-        }
-        SPEC = b.build();
-    }
+    /** Описание в файле пишется с пробелом в начале — так сложилось, и файлы на серверах уже такие. */
+    private static final SettingsBinder<Settings> S = SettingsBinder.of(Settings.class, Settings::new)
+            .bindAnnotated(Settings.Cfg.class, Settings.Cfg::section, c -> c.doc().isEmpty() ? "" : " " + c.doc());
+    public static final ForgeConfigSpec SPEC = S.build();
 
     /** Перечитать конфиг в {@link Settings} (загрузка мира, правка файла). */
     public static void bake() {
-        Settings s = new Settings();
+        Settings s;
         try {
-            for (Bound bd : BOUND) {
-                Object v = bd.value().get();
-                if (bd.field().getType() == boolean.class) bd.field().setBoolean(s, (Boolean) v);
-                else bd.field().setDouble(s, ((Number) v).doubleValue());
-            }
-        } catch (Exception ex) {
+            s = S.bake();
+        } catch (RuntimeException ex) {
             RpCulinary.LOGGER.error("RP Culinary: конфиг не прочитан: {}", ex.toString());
             return;
         }
@@ -69,24 +31,9 @@ public final class CulinaryConfig {
     }
 
     /** Поменять числовую настройку на ходу (команда): в файл и сразу в {@link Settings}. */
-    @SuppressWarnings("unchecked")
     public static boolean setDouble(String field, double value) {
-        for (Bound bd : BOUND) {
-            if (!bd.field().getName().equals(field) || bd.field().getType() == boolean.class) continue;
-            ((ForgeConfigSpec.ConfigValue<Double>) bd.value()).set(value);
-            SPEC.save();
-            bake();
-            return true;
-        }
-        return false;
-    }
-
-    static String snake(String camel) {
-        StringBuilder sb = new StringBuilder();
-        for (char ch : camel.toCharArray()) {
-            if (Character.isUpperCase(ch)) sb.append('_').append(Character.toLowerCase(ch));
-            else sb.append(ch);
-        }
-        return sb.toString();
+        if (!S.set(field, value)) return false;
+        bake();
+        return true;
     }
 }

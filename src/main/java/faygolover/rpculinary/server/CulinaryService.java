@@ -47,7 +47,6 @@ import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
@@ -788,19 +787,18 @@ public final class CulinaryService {
     }
 
     /** Смерть и возвращение из Края: тело то же; после смерти желудок пуст, но не на грани. */
-    public static void onClone(PlayerEvent.Clone e) {
-        e.getOriginal().reviveCaps();
-        NutritionData from = NutritionData.get(e.getOriginal());
-        NutritionData to = NutritionData.get(e.getEntity());
-        e.getOriginal().invalidateCaps();
-        if (from == null || to == null) return;
+    /**
+     * Что переносится при возрождении (зовёт RP Core через {@code NutritionData.STORE}): состояние питания и отметки
+     * тела; после смерти желудок пуст, энергия не ниже половины резерва, вода не ниже 50, счётчики голода сброшены.
+     */
+    public static void copyOnClone(NutritionData from, NutritionData to, boolean wasDeath) {
         to.state.copyFrom(from.state);
         to.bodyClock = from.bodyClock;
         to.parasitesAt = from.parasitesAt;
         to.liverPoisonAt = from.liverPoisonAt;
         to.insectMeals = from.insectMeals;
         to.sweetPortions = from.sweetPortions;
-        if (e.isWasDeath()) {
+        if (wasDeath) {
             Settings s = Settings.get();
             NutritionState m = to.state;
             m.stomach = 0;
@@ -812,16 +810,16 @@ public final class CulinaryService {
         }
     }
 
-    public static void onLogin(PlayerEvent.PlayerLoggedInEvent e) {
-        if (!(e.getEntity() instanceof ServerPlayer sp)) return;
-        state(sp);
-        sendFoodTable(sp);
-        NutritionData d = NutritionData.get(sp);
-        if (d != null) sync(sp, d, true);
-    }
-
-    public static void onRespawn(PlayerEvent.PlayerRespawnEvent e) {
-        if (!(e.getEntity() instanceof ServerPlayer sp)) return;
+    /**
+     * Отправить клиенту заново (зовёт RP Core): на входе — таблица еды и полный снимок, после возрождения — снимок.
+     * При смене измерения не отправляется, как и раньше.
+     */
+    public static void resync(ServerPlayer sp, faygolover.rpcore.api.data.PlayerStore.Sync why) {
+        if (why == faygolover.rpcore.api.data.PlayerStore.Sync.DIMENSION) return;
+        if (why == faygolover.rpcore.api.data.PlayerStore.Sync.LOGIN) {
+            state(sp);
+            sendFoodTable(sp);
+        }
         NutritionData d = NutritionData.get(sp);
         if (d != null) sync(sp, d, true);
     }

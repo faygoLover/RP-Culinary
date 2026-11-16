@@ -1,8 +1,8 @@
 package faygolover.rpculinary.capability;
 
+import faygolover.rpcore.api.data.PlayerStore;
 import faygolover.rpculinary.RpCulinary;
 import faygolover.rpculinary.core.NutritionState;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -10,15 +10,28 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /** Питание игрока (сохраняется) и служебное состояние сервера (не сохраняется). */
 public final class NutritionData {
     public static final Capability<NutritionData> CAP = CapabilityManager.get(new CapabilityToken<>() {});
     public static final ResourceLocation ID = new ResourceLocation(RpCulinary.MODID, "nutrition");
+    /** Общий жизненный цикл данных игрока (RP Core). Заполняется в {@link #register()}. */
+    public static PlayerStore<NutritionData> STORE;
+
+    /**
+     * Описать данные для RP Core. Вызывается из конструктора мода. Имя ветки в сохранении — прежнее
+     * ({@code rpculinary:nutrition}). Что переносится при возрождении и что отправляется клиенту —
+     * {@code CulinaryService.copyOnClone} и {@code CulinaryService.resync}.
+     */
+    public static void register() {
+        STORE = PlayerStore.of(ID, NutritionData.class, CAP, NutritionData::new)
+                .save(NutritionData::save)
+                .load(NutritionData::load)
+                .clone((from, to, ctx) -> faygolover.rpculinary.server.CulinaryService.copyOnClone(from, to, ctx.wasDeath()))
+                .resync(faygolover.rpculinary.server.CulinaryService::resync)
+                .register();
+    }
 
     public final NutritionState state = new NutritionState();
 
@@ -182,26 +195,5 @@ public final class NutritionData {
         m.ivVitamins = iv.getDouble("vitamins");
         m.ivSeconds = iv.getDouble("seconds");
         if (m.initialized && m.leanKg <= 0) m.initialized = false;
-    }
-
-    /** Провайдер для AttachCapabilitiesEvent. */
-    public static final class Provider implements ICapabilitySerializable<CompoundTag> {
-        private final NutritionData data = new NutritionData();
-        private final LazyOptional<NutritionData> opt = LazyOptional.of(() -> data);
-
-        @Override
-        public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-            return CAP.orEmpty(cap, opt);
-        }
-
-        @Override
-        public CompoundTag serializeNBT() {
-            return data.save();
-        }
-
-        @Override
-        public void deserializeNBT(CompoundTag nbt) {
-            data.load(nbt);
-        }
     }
 }

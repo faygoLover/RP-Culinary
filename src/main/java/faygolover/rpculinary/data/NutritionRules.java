@@ -1,5 +1,6 @@
 package faygolover.rpculinary.data;
 
+import faygolover.rpcore.api.data.Matcher;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
