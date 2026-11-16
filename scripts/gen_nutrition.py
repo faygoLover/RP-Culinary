@@ -1,3 +1,8 @@
+# ЗАЩИТА ОТ ЗАПУСКА (16.11.2026): скрипт не знает поле per_grams и перезапишет датапак состава без него.
+import sys as _guard_sys
+if "--force" not in _guard_sys.argv:
+    raise SystemExit("Скрипт отстал от файлов, которые он перезаписывает: скрипт не знает поле per_grams и перезапишет датапак состава без него. Сначала сверь; запуск всё равно — с ключом --force.")
+_guard_sys.argv.remove("--force")
 # Датапак RP Culinary по умолчанию: состав базовых ингредиентов (rpculinary/nutrition).
 # Напитки (сколько поят) с Culinary 0.4.0 — в общей базе RP Core (rpcore/consumables, scripts/gen_consumables.py там);
 # свой датапак rpculinary/drinks остаётся для сторонних наборов, по умолчанию пуст.
