@@ -128,17 +128,26 @@ public final class Exotic {
     }
 
     /**
-     * Изучить группу: служебный перк через RP Perks (отражением — Culinary от Perks не зависит).
-     * 1 — изучил, 0 — уже знал, −1 — некому выдать (нет RP Perks или нет такого знания).
+     * Изучить группу: служебное знание через RP Core (выдаёт мод черт; сейчас — RP Perks).
+     * 1 — изучил, 0 — уже знал, −1 — некому выдать (нет мода черт или нет такого знания).
      */
     public static int learn(ServerPlayer sp, int g) {
         if (!learnable(g)) return -1;
-        try {
-            Class<?> c = Class.forName("faygolover.rpperks.compat.CoreTraits");
-            Object r = c.getMethod("grantKnowledge", ServerPlayer.class, ResourceLocation.class).invoke(null, sp, KNOWLEDGE[g]);
-            return r instanceof Integer i ? i : -1;
-        } catch (ReflectiveOperationException | LinkageError e) {
-            return -1;
-        }
+        return RpCoreAPI.grantKnowledge(sp, KNOWLEDGE[g]);
+    }
+
+    // Для игровых тестов: розетки соседей закрыты в пакете.
+    public static boolean infectForTest(ServerPlayer sp, double sepsis, double hours) {
+        return ExoticEffects.Medicine.infect(sp, sepsis, hours);
+    }
+
+    public static int learnAnyForTest(ServerPlayer sp) {
+        for (int g = 0; g < KNOWLEDGE.length; g++) if (learnable(g)) return learn(sp, g);
+        return -1;
+    }
+
+    public static void mindForTest(ServerPlayer sp) {
+        ExoticEffects.Psyche.stress(sp, 1);
+        ExoticEffects.Psyche.sanityHit(sp, 1);
     }
 }

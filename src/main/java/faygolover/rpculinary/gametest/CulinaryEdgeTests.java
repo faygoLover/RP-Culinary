@@ -154,4 +154,24 @@ public final class CulinaryEdgeTests {
         }
         h.succeed();
     }
+
+    /**
+     * Соседи только через RP Core. Без мода тела заражение отвечает «некому» (тогда еда даёт простой эффект), без
+     * мода черт знание не выдаётся, без мода психики вызовы не падают. С соседями ответ даёт розетка.
+     */
+    @GameTest(template = T, batch = "culinary_edge_core_links")
+    public static void coreLinks(GameTestHelper h) {
+        ServerPlayer p = CulinaryGameTests.player(h);
+        try {
+            boolean body = faygolover.rpcore.api.RpCoreAPI.body() != null;
+            boolean infected = faygolover.rpculinary.server.Exotic.infectForTest(p, 40, 2);
+            if (infected && !body) h.fail("Без мода тела заражение «принято»");
+            int learned = faygolover.rpculinary.server.Exotic.learnAnyForTest(p);
+            if (faygolover.rpcore.api.RpCoreAPI.providerNames().isEmpty() && learned != -1) h.fail("Без мода черт знание «выдано»: " + learned);
+            faygolover.rpculinary.server.Exotic.mindForTest(p);
+        } finally {
+            CulinaryGameTests.remove(h, p);
+        }
+        h.succeed();
+    }
 }

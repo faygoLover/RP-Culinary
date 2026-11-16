@@ -1,10 +1,10 @@
 # RP Culinary — указатель кода
 
-Создано `python _family/tools/mapgen.py`, версия мода 0.9.2-1.20.1-forge.
+Создано `python _family/tools/mapgen.py`, версия мода 0.9.3-1.20.1-forge.
 **Руками не править**: пересоздаётся скриптом. Смысл, потоки работы и рецепты — в `docs/MAP.md`.
 Разбор по шаблонам, без компиляции: необычно оформленная регистрация может отсутствовать в списках.
 
-Всего: 63 файлов, 9961 строк Java.
+Всего: 63 файлов, 9964 строк Java.
 
 ## 1. Пакеты
 
@@ -16,13 +16,13 @@
 | `faygolover.rpculinary.config` | 1 | 40 |
 | `faygolover.rpculinary.core` | 13 | 1946 |
 | `faygolover.rpculinary.data` | 2 | 141 |
-| `faygolover.rpculinary.gametest` | 3 | 989 |
+| `faygolover.rpculinary.gametest` | 3 | 1009 |
 | `faygolover.rpculinary.integration` | 2 | 93 |
 | `faygolover.rpculinary.item` | 2 | 182 |
 | `faygolover.rpculinary.mixin` | 4 | 173 |
 | `faygolover.rpculinary.network` | 6 | 307 |
 | `faygolover.rpculinary.pack` | 1 | 35 |
-| `faygolover.rpculinary.server` | 18 | 4642 |
+| `faygolover.rpculinary.server` | 18 | 4625 |
 
 ## 2. Классы
 
@@ -66,7 +66,7 @@
 - `NutritionRules`, 78 — Датапак rpculinary/nutrition: состав базовых ингредиентов — тех, что не крафтятся, а идут в рецепты (зерно, овощи, сырое мясо, молоко).
 
 ### `faygolover.rpculinary.gametest`
-- `CulinaryEdgeTests`, 158 — Края состояния питания: каждое поле в сохранении, смерть, возврат из Края, перезаход.
+- `CulinaryEdgeTests`, 178 — Края состояния питания: каждое поле в сохранении, смерть, возврат из Края, перезаход.
 - `CulinaryGameTests`, 658 — Проверка в настоящем сервере: еда из руки и с блока, вода, замок ванильной сытости, API для соседей.
 - `NbtCoverage`, 173 — Проверка «каждое поле состояния попадает в сохранение и читается обратно» без ручного списка полей.
 
@@ -104,8 +104,8 @@
 - `CulinaryProvider`, 143 — RP Culinary — мод питания для RP Core: остальные моды семейства берут голод, воду, нутриенты и вес отсюда.
 - `CulinaryService`, 893 — Питание на сервере (дизайн, §3–4).
 - `CulinaryStatus`, 37 — Жалобы на питание для осмотра RP Medicine: врач слышит то же, что пациент видит у себя в окне «Питание» — голод и каждый нутриент не в норме, словами.
-- `Exotic`, 145 — Группы экзотики (собраны заново 29.10.2026, ответы Alex в галерее; состав — tools/groups_spec.py → tools/gen_groups.py → теги rpculinary:exotic/ ).
-- `ExoticEffects`, 326 — Группы экзотики действуют на того, кто ест (решения Alex 29.10.2026, группы — Exotic): от природы продукта и от того, как его приготовили.
+- `Exotic`, 154 — Группы экзотики (собраны заново 29.10.2026, ответы Alex в галерее; состав — tools/groups_spec.py → tools/gen_groups.py → теги rpculinary:exotic/ ).
+- `ExoticEffects`, 300 — Группы экзотики действуют на того, кто ест (решения Alex 29.10.2026, группы — Exotic): от природы продукта и от того, как его приготовили.
 - `Feeding`, 234 — Покормить или напоить другого (решение Alex 10.11): ПКМ едой или водой по игроку или телу вышедшего, ровно 3 секунды — один укус или глоток.
 - `FoodMethods`, 71 — Способ «как приготовлено» (NutritionState#METHODS): сначала тег rpculinary:method/ (им поправлять, где угадано неверно), потом название предмета.
 - `NutritionTable`, 366 — Состав любой еды (перенесено из RP Medicine; по образцу Nutritional Balance, но количественно): базовые ингредиенты — из датапака; блюдо — сумма ингредиентов рецепта, которым оно получается, делённая на число получаемых штук (жарк…
@@ -195,7 +195,7 @@
 
 ## 8. Что берёт из RP Core и что ему даёт
 
-Методы `RpCoreAPI` (сколько вызовов): `MISC_TAB` 1, `body` 7, `bodyHandles` 2, `dayLengthSeconds` 4, `debugCommands` 1, `handsFree` 4, `hasTrait` 29, `isSkillManaged` 2, `practice` 3, `profile` 2, `registerCommand` 5, `registerModule` 1, `registerNutrition` 1, `rpPerReal` 1, `skill` 2, `skipFloor` 1, `sleepStage` 1, `stamina` 1, `staminaAttribute` 2, `taste` 2, `timeRunning` 2.
+Методы `RpCoreAPI` (сколько вызовов): `MISC_TAB` 1, `body` 8, `bodyHandles` 2, `dayLengthSeconds` 4, `debugCommands` 1, `grantKnowledge` 1, `handsFree` 4, `hasTrait` 29, `isSkillManaged` 2, `practice` 3, `profile` 2, `registerCommand` 5, `registerModule` 1, `registerNutrition` 1, `rpPerReal` 1, `sanityHit` 1, `skill` 2, `skipFloor` 1, `sleepStage` 1, `stamina` 1, `staminaAttribute` 2, `stressImpulse` 1, `taste` 2, `timeRunning` 2.
 
 Реализует розетки: NutritionProvider ← `CulinaryProvider`; Source ← `CulinaryStatus`.
 
@@ -207,14 +207,9 @@
 
 Отражение (`Class.forName`):
 - `CulinaryGameTests` → `net.mcreator.butchery.procedures.MeatgrinderrecipeprocedureProcedure`
-- `Exotic` → `faygolover.rpperks.compat.CoreTraits`
-- `ExoticEffects` → `faygolover.rppsyche.server.PsycheService`
-- `ExoticEffects` → `faygolover.rppsyche.server.PsycheService`
-- `ExoticEffects` → `faygolover.rppsyche.capability.PsycheData`
-- `ExoticEffects` → `faygolover.rpmedicine.server.Medical`
 - `ExoticEffects` → `mekanism.api.radiation.IRadiationManager`
 
-Пакеты других модов семейства в коде: `rpcore` — 21 файлов; `rpmedicine` — 1 файлов; `rpperks` — 1 файлов; `rppsyche` — 1 файлов.
+Пакеты других модов семейства в коде: `rpcore` — 21 файлов.
 
 Миксины (4):
 - `ItemStackMixin` (mixins) → ItemStack.class, priority = 500

@@ -17,8 +17,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
@@ -263,48 +261,24 @@ public final class ExoticEffects {
         }
     }
 
-    // ------------------------------------------------------------------ соседи (мягко)
+    // ------------------------------------------------------------------ соседи — через розетки RP Core
 
-    /** RP Psyche: стресс и рассудок. */
+    /** Психика (мод психики RP Core; сейчас — RP Psyche): стресс и рассудок. Нет мода — без них. */
     static final class Psyche {
         static void stress(ServerPlayer sp, double amount) {
-            if (amount <= 0) return;
-            try {
-                Class.forName("faygolover.rppsyche.server.PsycheService").getMethod("impulse", ServerPlayer.class, double.class).invoke(null, sp, amount);
-            } catch (ReflectiveOperationException | LinkageError ignored) {
-                // Нет RP Psyche — без стресса.
-            }
+            if (amount > 0) RpCoreAPI.stressImpulse(sp, amount);
         }
 
         static void sanityHit(ServerPlayer sp, double amount) {
-            if (amount <= 0) return;
-            try {
-                Class<?> svc = Class.forName("faygolover.rppsyche.server.PsycheService");
-                if (!(Boolean) svc.getMethod("affected", Player.class).invoke(null, sp)) return;
-                Object d = Class.forName("faygolover.rppsyche.capability.PsycheData").getMethod("get", Player.class).invoke(null, sp);
-                if (d == null) return;
-                var f = d.getClass().getField("sanityHit");
-                f.setDouble(d, f.getDouble(d) + amount);
-            } catch (ReflectiveOperationException | LinkageError | ClassCastException ignored) {
-                // Нет RP Psyche — без удара по рассудку.
-            }
+            if (amount > 0) RpCoreAPI.sanityHit(sp, amount);
         }
     }
 
-    /** RP Medicine: заражение — сепсис (дальше жар) и его рост ещё какое-то время. false — Medicine нет. */
+    /** Тело (мод тела RP Core; сейчас — RP Medicine): заражение — сепсис и его рост ещё какое-то время. false — некому. */
     static final class Medicine {
         static boolean infect(ServerPlayer sp, double sepsis, double hours) {
-            try {
-                Object m = Class.forName("faygolover.rpmedicine.server.Medical").getMethod("state", Entity.class).invoke(null, sp);
-                if (m == null) return false;
-                var sep = m.getClass().getField("sepsis");
-                sep.setDouble(m, Math.min(100, Math.max(sep.getDouble(m), sepsis)));
-                var spoiled = m.getClass().getField("spoiledBloodSeconds");
-                spoiled.setDouble(m, Math.max(spoiled.getDouble(m), hours * 3600));
-                return true;
-            } catch (ReflectiveOperationException | LinkageError ignored) {
-                return false;
-            }
+            var body = RpCoreAPI.body();
+            return body != null && body.infect(sp, sepsis, hours);
         }
     }
 
